@@ -6,7 +6,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages\Dashboard;
+use App\Filament\Developer\Pages\DeveloperDashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -18,7 +18,8 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-
+use Illuminate\Support\Facades\Blade;
+use Filament\Navigation\NavigationItem;
 class DeveloperPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -26,13 +27,35 @@ class DeveloperPanelProvider extends PanelProvider
         return $panel
             ->id('developer')
             ->path('developer')
+            ->login()
+            ->brandName('PlayTest ID')
+            ->brandLogo(fn () => view('filament.developer.logo'))
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Indigo,
+            ])
+            ->renderHook(
+                'panels::head.end',
+                fn(): string => Blade::render("@vite('resources/css/app.css')"),
+            )
+            ->navigationItems([
+                NavigationItem::make('My Apps')
+                    ->icon('heroicon-o-squares-2x2')
+                    ->url('#'),
+                NavigationItem::make('New Test Case')
+                    ->icon('heroicon-o-plus-circle')
+                    ->url('#'),
+                NavigationItem::make('Settings')
+                    ->icon('heroicon-o-cog-6-tooth')
+                    ->url('#'),
+                NavigationItem::make('Support')
+                    ->icon('heroicon-o-question-mark-circle')
+                    ->url('#')
+                    ->sort(100),
             ])
             ->discoverResources(in: app_path('Filament/Developer/Resources'), for: 'App\Filament\Developer\Resources')
             ->discoverPages(in: app_path('Filament/Developer/Pages'), for: 'App\Filament\Developer\Pages')
             ->pages([
-                Dashboard::class,
+                DeveloperDashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Developer/Widgets'), for: 'App\Filament\Developer\Widgets')
             ->widgets([
