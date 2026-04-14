@@ -14,17 +14,19 @@ class DashboardSeeder extends Seeder
     {
         // 1. Ensure a few Packages exist
         $p1 = Paket::updateOrCreate(['id' => 1], [
-            'price' => 50000,
+            'name' => 'Basic Playtest',
+            'price' => 250000,
             'fee' => 5000,
-            'desc' => 'Basic Playtest (20 Testers)',
+            'desc' => '20 Testers, Low Price, Standard Quality',
             'most_popular' => false,
             'point' => 100,
         ]);
 
         $p2 = Paket::updateOrCreate(['id' => 2], [
-            'price' => 150000,
-            'fee' => 10000,
-            'desc' => 'Pro Playtest (50 Testers)',
+            'name' => 'Premium Playtest',
+            'price' => 650000,
+            'fee' => 20000,
+            'desc' => '50 Trusted Testers, Warranty',
             'most_popular' => true,
             'point' => 250,
         ]);

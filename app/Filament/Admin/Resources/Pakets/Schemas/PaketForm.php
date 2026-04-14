@@ -2,9 +2,9 @@
 
 namespace App\Filament\Admin\Resources\Pakets\Schemas;
 
+use Filament\Forms\Components\RichEditor;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Group;
@@ -15,7 +15,23 @@ class PaketForm
     {
         return $schema
             ->components([
-                // Section 1 - Pricing
+                // Section 1 - Name
+                Section::make("Information")
+                    ->description("Set information details for this package")
+                    ->icon('heroicon-o-document-text')
+                    ->columnSpan(3)
+                    ->schema([
+                        TextInput::make("name")
+                            ->label("Name")
+                            ->required()
+                            ->columnSpanFull(),
+                        RichEditor::make("desc")
+                            ->label("Description")
+                            ->required()
+                            ->columnSpanFull(),
+                    ]),
+
+                // Section 3 - Pricing
                 Section::make("Pricing")
                     ->description("Set the pricing details for this package")
                     ->icon('heroicon-o-currency-dollar')
@@ -37,7 +53,7 @@ class PaketForm
                         ])->columns(2),
                     ]),
 
-                // Section 2 - Additional
+                // Section 4 - Additional
                 Section::make("Additional")
                     ->description("Set additional information for this package")
                     ->icon('heroicon-o-cog')
@@ -56,19 +72,6 @@ class PaketForm
                                 ->inline(false)
                                 ->default(false),
                         ])->columns(2),
-                    ]),
-
-                // Section 3 - Description
-                Section::make("Description")
-                    ->description("Provide a description for this package")
-                    ->icon('heroicon-o-document-text')
-                    ->columnSpan(3)
-                    ->schema([
-                        Textarea::make("desc")
-                            ->label("Description")
-                            ->rows(3)
-                            ->required()
-                            ->columnSpanFull(),
                     ]),
             ])->columns(3);
     }

@@ -10,6 +10,7 @@ class Paket extends Model
     protected $table = 'paket';
 
     protected $fillable = [
+        'name',
         'price',
         'fee',
         'desc',

@@ -20,7 +20,15 @@ class PaketResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Cube;
 
-    protected static ?string $recordTitleAttribute = 'desc';
+    protected static ?string $recordTitleAttribute = 'name';
+
+    protected static ?string $navigationLabel = 'Packets';
+
+    protected static ?string $modelLabel = 'Packet';
+
+    protected static ?string $pluralModelLabel = 'Packets';
+
+    protected static ?string $slug = 'packets';
 
     public static function form(Schema $schema): Schema
     {

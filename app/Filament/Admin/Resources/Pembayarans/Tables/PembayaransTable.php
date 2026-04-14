@@ -21,17 +21,17 @@ class PembayaransTable
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('paket.desc')
-                    ->label('Paket')
+                    ->label('Packet')
                     ->searchable()
                     ->sortable()
                     ->default('-'),
                 TextColumn::make('misi.nama_aplikasi')
-                    ->label('Nama Aplikasi')
+                    ->label('Application')
                     ->searchable()
                     ->sortable()
                     ->default('-'),
                 ImageColumn::make('image')
-                    ->label('Bukti Pembayaran'),
+                    ->label('Transfer Receipt'),
                 TextColumn::make('status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
@@ -54,7 +54,24 @@ class PembayaransTable
                     ->color('success')
                     ->icon('heroicon-o-check-circle')
                     ->requiresConfirmation()
-                    ->action(fn ($record) => $record->update(['status' => 'success']))
+                    ->action(function ($record) {
+                        $record->update(['status' => 'success']);
+                        if ($record->misi) {
+                            $record->misi->update(['status' => 'active']);
+                        }
+                    })
+                    ->visible(fn ($record) => $record->status === 'pending'),
+                Action::make('reject')
+                    ->label('Reject')
+                    ->color('danger')
+                    ->icon('heroicon-o-x-circle')
+                    ->requiresConfirmation()
+                    ->action(function ($record) {
+                        $record->update(['status' => 'failed']);
+                        if ($record->misi) {
+                            $record->misi->update(['status' => 'failed']);
+                        }
+                    })
                     ->visible(fn ($record) => $record->status === 'pending'),
                 DeleteAction::make(),
             ])
