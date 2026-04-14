@@ -26,7 +26,7 @@ class PembayaransTable
                     ->sortable()
                     ->default('-'),
                 TextColumn::make('misi.nama_aplikasi')
-                    ->label('Misi')
+                    ->label('Nama Aplikasi')
                     ->searchable()
                     ->sortable()
                     ->default('-'),
