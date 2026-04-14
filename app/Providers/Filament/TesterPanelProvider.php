@@ -29,6 +29,7 @@ class TesterPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->login()
             ->discoverResources(in: app_path('Filament/Tester/Resources'), for: 'App\Filament\Tester\Resources')
             ->discoverPages(in: app_path('Filament/Tester/Pages'), for: 'App\Filament\Tester\Pages')
             ->pages([
