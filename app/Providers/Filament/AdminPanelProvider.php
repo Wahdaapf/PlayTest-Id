@@ -20,6 +20,8 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Illuminate\Support\Facades\Blade;
 use Filament\Navigation\NavigationItem;
+use Hammadzafar05\MobileBottomNav\MobileBottomNav;
+use Hammadzafar05\MobileBottomNav\MobileBottomNavItem;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -34,6 +36,24 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->colors([
                 'primary' => Color::Green,
+            ])
+            //Ini berfungsi untuk ketika masuk mode mobile dia navbarnya jadi ganti ke bawah
+            ->plugins([
+                MobileBottomNav::make()
+                    ->items([
+                        MobileBottomNavItem::make('Home')
+                            ->icon('heroicon-o-home')
+                            ->activeIcon('heroicon-s-home')
+                            ->url('/admin')
+                            ->isActive(fn () => request()->is('admin')),
+                        MobileBottomNavItem::make('Inbox')
+                            ->icon('heroicon-o-inbox')
+                            ->url('/admin/inbox')
+                            ->badge(5, 'danger'),
+                        MobileBottomNavItem::make('Profile')
+                            ->icon('heroicon-o-user')
+                            ->url('/admin/profile'),
+                    ]),
             ])
             ->renderHook(
                 'panels::head.end',

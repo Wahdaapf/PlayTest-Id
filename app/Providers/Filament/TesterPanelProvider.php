@@ -18,6 +18,10 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+//Jangan lupa use ini
+use Hammadzafar05\MobileBottomNav\MobileBottomNav;
+use Hammadzafar05\MobileBottomNav\MobileBottomNavItem;
+
 
 class TesterPanelProvider extends PanelProvider
 {
@@ -28,6 +32,24 @@ class TesterPanelProvider extends PanelProvider
             ->path('tester')
             ->colors([
                 'primary' => Color::Amber,
+            ])  
+            //Ini berfungsi untuk ketika masuk mode mobile dia navbarnya jadi ganti
+            ->plugins([
+                MobileBottomNav::make()
+                    ->items([
+                        MobileBottomNavItem::make('Home')
+                            ->icon('heroicon-o-home')
+                            ->activeIcon('heroicon-s-home')
+                            ->url('/tester')
+                            ->isActive(fn () => request()->is('tester')),
+                        MobileBottomNavItem::make('Inbox')
+                            ->icon('heroicon-o-inbox')
+                            ->url('/tester/inbox')
+                            ->badge(5, 'danger'),
+                        MobileBottomNavItem::make('Profile')
+                            ->icon('heroicon-o-user')
+                            ->url('/tester/profile'),
+                    ]),
             ])
             ->login()
             ->discoverResources(in: app_path('Filament/Tester/Resources'), for: 'App\Filament\Tester\Resources')
