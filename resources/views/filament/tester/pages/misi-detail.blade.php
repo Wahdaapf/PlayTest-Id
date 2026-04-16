@@ -33,13 +33,23 @@
             </div>
 
             <div class="mt-8 flex justify-end">
-                <x-filament::button 
-                    wire:click="takeMission" 
-                    size="lg"
-                    class="shadow-lg transform transition hover:scale-105"
-                >
-                    Ambil Misi
-                </x-filament::button>
+                @if($misi->kapasitas >= 20 || $misi->status === 'closed')
+                    <x-filament::button 
+                        disabled
+                        color="gray"
+                        size="lg"
+                    >
+                        Misi Penuh
+                    </x-filament::button>
+                @else
+                    <x-filament::button 
+                        wire:click="takeMission" 
+                        size="lg"
+                        class="shadow-lg transform transition hover:scale-105"
+                    >
+                        Ambil Misi
+                    </x-filament::button>
+                @endif
             </div>
         </x-filament::card>
 

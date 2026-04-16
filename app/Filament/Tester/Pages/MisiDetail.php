@@ -40,8 +40,22 @@ class MisiDetail extends Page
             return;
         }
 
+        // Check if mission is already full
+        if ($this->misi->kapasitas >= 20) {
+            Notification::make()
+                ->title('Mission is Full')
+                ->danger()
+                ->send();
+            return;
+        }
+
         // Increment kapasitas
         $this->misi->increment('kapasitas');
+
+        // Check if it should be closed
+        if ($this->misi->kapasitas >= 20) {
+            $this->misi->update(['status' => 'closed']);
+        }
 
         // Create anggota record
         MisiAnggota::create([
