@@ -60,7 +60,6 @@ class TesterPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Tester/Widgets'), for: 'App\Filament\Tester\Widgets')
             ->widgets([
                 AccountWidget::class,
-                FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

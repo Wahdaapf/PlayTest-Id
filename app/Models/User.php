@@ -75,4 +75,9 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->role === UserRole::tester;
     }
+
+    public function userBalance(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(UserBalance::class, 'id_user');
+    }
 }
