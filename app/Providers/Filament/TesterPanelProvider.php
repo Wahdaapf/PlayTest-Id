@@ -18,10 +18,12 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-//Jangan lupa use ini
 use Hammadzafar05\MobileBottomNav\MobileBottomNav;
 use Hammadzafar05\MobileBottomNav\MobileBottomNavItem;
-
+use App\Filament\Auth\Pages\Login;
+use App\Filament\Auth\Pages\Register;
+use App\Filament\Auth\Pages\RequestResetPassword;
+use App\Filament\Auth\Pages\ResetPassword;
 
 class TesterPanelProvider extends PanelProvider
 {
@@ -30,9 +32,12 @@ class TesterPanelProvider extends PanelProvider
         return $panel
             ->id('tester')
             ->path('tester')
+            ->brandName('PlayTest ID')
+            ->registration(Register::class)
+            ->passwordReset(RequestResetPassword::class, ResetPassword::class)
             ->colors([
-                'primary' => Color::Amber,
-            ])  
+                'primary' => Color::Indigo,
+            ])
             //Ini berfungsi untuk ketika masuk mode mobile dia navbarnya jadi ganti
             ->plugins([
                 MobileBottomNav::make()
@@ -41,7 +46,7 @@ class TesterPanelProvider extends PanelProvider
                             ->icon('heroicon-o-home')
                             ->activeIcon('heroicon-s-home')
                             ->url('/tester')
-                            ->isActive(fn () => request()->is('tester')),
+                            ->isActive(fn() => request()->is('tester')),
                         MobileBottomNavItem::make('Inbox')
                             ->icon('heroicon-o-inbox')
                             ->url('/tester/inbox')
@@ -51,7 +56,7 @@ class TesterPanelProvider extends PanelProvider
                             ->url('/tester/profile'),
                     ]),
             ])
-            ->login()
+            ->login(Login::class)
             ->discoverResources(in: app_path('Filament/Tester/Resources'), for: 'App\Filament\Tester\Resources')
             ->discoverPages(in: app_path('Filament/Tester/Pages'), for: 'App\Filament\Tester\Pages')
             ->pages([

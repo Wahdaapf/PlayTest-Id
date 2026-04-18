@@ -22,6 +22,9 @@ use Illuminate\Support\Facades\Blade;
 use Filament\Navigation\NavigationItem;
 use Hammadzafar05\MobileBottomNav\MobileBottomNav;
 use Hammadzafar05\MobileBottomNav\MobileBottomNavItem;
+use App\Filament\Auth\Pages\Login;
+use App\Filament\Auth\Pages\RequestResetPassword;
+use App\Filament\Auth\Pages\ResetPassword;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -32,10 +35,10 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->brandName('PlayTest ID')
-
-            ->login()
+            ->passwordReset(RequestResetPassword::class, ResetPassword::class)
+            ->login(Login::class)
             ->colors([
-                'primary' => Color::Green,
+                'primary' => Color::Indigo,
             ])
             //Ini berfungsi untuk ketika masuk mode mobile dia navbarnya jadi ganti ke bawah
             ->plugins([
@@ -45,7 +48,7 @@ class AdminPanelProvider extends PanelProvider
                             ->icon('heroicon-o-home')
                             ->activeIcon('heroicon-s-home')
                             ->url('/admin')
-                            ->isActive(fn () => request()->is('admin')),
+                            ->isActive(fn() => request()->is('admin')),
                         MobileBottomNavItem::make('Inbox')
                             ->icon('heroicon-o-inbox')
                             ->url('/admin/inbox')

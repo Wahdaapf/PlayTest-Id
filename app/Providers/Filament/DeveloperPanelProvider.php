@@ -22,6 +22,11 @@ use Illuminate\Support\Facades\Blade;
 use Filament\Navigation\NavigationItem;
 use Hammadzafar05\MobileBottomNav\MobileBottomNav;
 use Hammadzafar05\MobileBottomNav\MobileBottomNavItem;
+use App\Filament\Auth\Pages\Login;
+use App\Filament\Auth\Pages\Register;
+use App\Filament\Auth\Pages\RequestResetPassword;
+use App\Filament\Auth\Pages\ResetPassword;
+
 class DeveloperPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -29,9 +34,10 @@ class DeveloperPanelProvider extends PanelProvider
         return $panel
             ->id('developer')
             ->path('developer')
-            ->login()
+            ->login(Login::class)
+            ->registration(Register::class)
+            ->passwordReset(RequestResetPassword::class, ResetPassword::class)
             ->brandName('PlayTest ID')
-            ->brandLogo(fn() => view('filament.developer.logo'))
             ->colors([
                 'primary' => Color::Indigo,
             ])
