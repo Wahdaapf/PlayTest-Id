@@ -18,6 +18,12 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Hammadzafar05\MobileBottomNav\MobileBottomNav;
+use Hammadzafar05\MobileBottomNav\MobileBottomNavItem;
+use App\Filament\Auth\Pages\Login;
+use App\Filament\Auth\Pages\Register;
+use App\Filament\Auth\Pages\RequestResetPassword;
+use App\Filament\Auth\Pages\ResetPassword;
 
 class TesterPanelProvider extends PanelProvider
 {
@@ -26,9 +32,32 @@ class TesterPanelProvider extends PanelProvider
         return $panel
             ->id('tester')
             ->path('tester')
+            ->brandName('PlayTest ID')
+            ->registration(Register::class)
+            ->passwordReset(RequestResetPassword::class, ResetPassword::class)
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Indigo,
             ])
+            //Ini berfungsi untuk ketika masuk mode mobile dia navbarnya jadi ganti
+            //Icon dari https://heroicons.com/
+            ->plugins([
+                MobileBottomNav::make()
+                    ->items([
+                        MobileBottomNavItem::make('Dashboard')
+                            ->icon('heroicon-o-home')
+                            ->activeIcon('heroicon-s-home')
+                            ->url('/tester')
+                            ->isActive(fn() => request()->is('tester')),
+                        MobileBottomNavItem::make('Apps')
+                            ->icon('heroicon-o-rocket-launch')
+                            ->url('/tester/inbox')
+                            ->badge(5, 'danger'),
+                        MobileBottomNavItem::make('Profile')
+                            ->icon('heroicon-o-user')
+                            ->url('/tester/profile'),
+                    ]),
+            ])
+            ->login(Login::class)
             ->discoverResources(in: app_path('Filament/Tester/Resources'), for: 'App\Filament\Tester\Resources')
             ->discoverPages(in: app_path('Filament/Tester/Pages'), for: 'App\Filament\Tester\Pages')
             ->pages([
@@ -37,7 +66,6 @@ class TesterPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Tester/Widgets'), for: 'App\Filament\Tester\Widgets')
             ->widgets([
                 AccountWidget::class,
-                FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

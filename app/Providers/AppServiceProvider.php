@@ -11,7 +11,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Replace Filament's default reset-password notification with our custom one
+        // so the branded email template is used instead of the default Laravel layout.
+        $this->app->bind(
+            \Filament\Auth\Notifications\ResetPassword::class,
+            \App\Notifications\ResetPasswordNotification::class,
+        );
     }
 
     /**

@@ -6,7 +6,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages\Dashboard;
+use App\Filament\Developer\Pages\DeveloperDashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -18,6 +18,14 @@ use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Support\Facades\Blade;
+use Filament\Navigation\NavigationItem;
+use Hammadzafar05\MobileBottomNav\MobileBottomNav;
+use Hammadzafar05\MobileBottomNav\MobileBottomNavItem;
+use App\Filament\Auth\Pages\Login;
+use App\Filament\Auth\Pages\Register;
+use App\Filament\Auth\Pages\RequestResetPassword;
+use App\Filament\Auth\Pages\ResetPassword;
 
 class DeveloperPanelProvider extends PanelProvider
 {
@@ -26,13 +34,40 @@ class DeveloperPanelProvider extends PanelProvider
         return $panel
             ->id('developer')
             ->path('developer')
+            ->login(Login::class)
+            ->registration(Register::class)
+            ->passwordReset(RequestResetPassword::class, ResetPassword::class)
+            ->brandName('PlayTest ID')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Indigo,
             ])
+            //Ini berfungsi untuk ketika masuk mode mobile dia navbarnya jadi ganti ke bawah
+            //Icon dari https://heroicons.com/
+            ->plugins([
+                MobileBottomNav::make()
+                    ->items([
+                        MobileBottomNavItem::make('Dashboard')
+                            ->icon('heroicon-o-home')
+                            ->activeIcon('heroicon-s-home')
+                            ->url('/developer')
+                            ->isActive(fn() => request()->is('developer')),
+                        MobileBottomNavItem::make('Apps')
+                            ->icon('heroicon-o-rocket-launch')
+                            ->url('/developer/inbox')
+                            ->badge(5, 'danger'),
+                        MobileBottomNavItem::make('Profile')
+                            ->icon('heroicon-o-user')
+                            ->url('/developer/profile'),
+                    ]),
+            ])
+            ->renderHook(
+                'panels::head.end',
+                fn(): string => Blade::render("@vite('resources/css/app.css')"),
+            )
             ->discoverResources(in: app_path('Filament/Developer/Resources'), for: 'App\Filament\Developer\Resources')
             ->discoverPages(in: app_path('Filament/Developer/Pages'), for: 'App\Filament\Developer\Pages')
             ->pages([
-                Dashboard::class,
+                DeveloperDashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Developer/Widgets'), for: 'App\Filament\Developer\Widgets')
             ->widgets([
