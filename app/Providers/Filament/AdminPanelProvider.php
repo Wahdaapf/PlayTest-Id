@@ -19,12 +19,6 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Illuminate\Support\Facades\Blade;
-use Filament\Navigation\NavigationItem;
-use Hammadzafar05\MobileBottomNav\MobileBottomNav;
-use Hammadzafar05\MobileBottomNav\MobileBottomNavItem;
-use App\Filament\Auth\Pages\Login;
-use App\Filament\Auth\Pages\RequestResetPassword;
-use App\Filament\Auth\Pages\ResetPassword;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -34,37 +28,16 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->brandName('PlayTest ID')
-            ->passwordReset(RequestResetPassword::class, ResetPassword::class)
-            ->login(Login::class)
+            ->login()
             ->colors([
-                'primary' => Color::Indigo,
-            ])
-            //Ini berfungsi untuk ketika masuk mode mobile dia navbarnya jadi ganti ke bawah
-            //Icon dari https://heroicons.com/
-            ->plugins([
-                MobileBottomNav::make()
-                    ->items([
-                        MobileBottomNavItem::make('Dashboard')
-                            ->icon('heroicon-o-home')
-                            ->activeIcon('heroicon-s-home')
-                            ->url('/admin')
-                            ->isActive(fn() => request()->is('admin')),
-                        MobileBottomNavItem::make('Apps')
-                            ->icon('heroicon-o-rocket-launch')
-                            ->url('/admin/inbox')
-                            ->badge(5, 'danger'),
-                        MobileBottomNavItem::make('Profile')
-                            ->icon('heroicon-o-user')
-                            ->url('/admin/profile'),
-                    ]),
+                'primary' => Color::Amber,
             ])
             ->renderHook(
                 'panels::head.end',
                 fn(): string => Blade::render("@vite('resources/css/app.css')"),
             )
-            ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\Filament\Admin\Resources')
-            ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\Filament\Admin\Pages')
+            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
+            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
                 AdminDashboard::class,
             ])

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "123ae3f0fa75cd8f0079104b00ac36dc",
+    "content-hash": "be8792e39046bdfc5b89bd780b18e5e2",
     "packages": [
         {
             "name": "blade-ui-kit/blade-heroicons",
@@ -1955,78 +1955,6 @@
                 }
             ],
             "time": "2025-08-22T14:27:06+00:00"
-        },
-        {
-            "name": "hammadzafar05/mobile-bottom-nav",
-            "version": "v1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/hammadzafar05/mobile-bottom-nav",
-                "reference": "7eaaa9cec8b99efea3cceb79657c8790da1a70c0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/hammadzafar05/mobile-bottom-nav/zipball/7eaaa9cec8b99efea3cceb79657c8790da1a70c0",
-                "reference": "7eaaa9cec8b99efea3cceb79657c8790da1a70c0",
-                "shasum": ""
-            },
-            "require": {
-                "filament/filament": "^4.0 || ^5.0",
-                "php": "^8.2",
-                "spatie/laravel-package-tools": "^1.15.0"
-            },
-            "require-dev": {
-                "larastan/larastan": "^3.0",
-                "laravel/pint": "^1.0",
-                "nunomaduro/collision": "^8.0",
-                "orchestra/testbench": "^9.0|^10.0",
-                "pestphp/pest": "^3.7|^4.0",
-                "pestphp/pest-plugin-arch": "^3.0|^4.0",
-                "pestphp/pest-plugin-laravel": "^3.0|^4.0",
-                "pestphp/pest-plugin-livewire": "^3.0|^4.0",
-                "rector/rector": "^2.0",
-                "ryangjchandler/blade-capture-directive": "^1.1",
-                "spatie/laravel-ray": "^1.26"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Hammadzafar05\\MobileBottomNav\\MobileBottomNavServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Hammadzafar05\\MobileBottomNav\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Hammad Zafar",
-                    "email": "hammadarain05@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A thumb-friendly mobile bottom navigation bar for Filament panels. It programmatically integrates with the Filament navigation registry to provide a seamless, ergonomic mobile experience with full support for dark mode and safe-area insets.",
-            "homepage": "https://github.com/hammadzafar05/mobile-bottom-nav",
-            "keywords": [
-                "filament",
-                "filament-plugin",
-                "filamentphp",
-                "hammadzafar05",
-                "laravel",
-                "mobile-bottom-nav"
-            ],
-            "support": {
-                "issues": "https://github.com/hammadzafar05/mobile-bottom-nav/issues",
-                "source": "https://github.com/hammadzafar05/mobile-bottom-nav"
-            },
-            "time": "2026-04-01T17:23:21+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",
