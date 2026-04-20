@@ -1,58 +1,114 @@
-<?php
-
-namespace App\Filament\Developer\Pages;
-
+<?php  
+  
+namespace App\Filament\Developer\Pages;  
+  
 use App\Models\Misi;
 use App\Models\MisiAnggota;
-use Filament\Pages\Dashboard;
+use Filament\Pages\Page;  
+use Illuminate\Support\Facades\Auth;
+  
+class DeveloperDashboard extends Page  
+{  
+    protected static string | \BackedEnum | null $navigationIcon  = 'heroicon-o-squares-2x2';  
+    protected static ?string $navigationLabel = 'Overview';  
+    protected static string | \UnitEnum | null $navigationGroup = 'MAIN';  
+    protected static ?int    $navigationSort  = 1;  
+    protected static ?string $slug            = '/';  
+    protected static ?string $title           = 'Developer Dashboard';  
+  
+    public function getHeading(): string  
+    {  
+        return '';  
+    }  
+  
+    protected string  $view            = 'filament.developer.pages.developer-dashboard';  
+  
+    public function getViewData(): array  
+    {  
+        $userId = Auth::id();
+        
+        // ── 1. Statistik Dasar ──────────────────────────────────
+        $misiList = Misi::where('id_user', $userId)->get();
+        $misiIds = $misiList->pluck('id');
 
-class DeveloperDashboard extends Dashboard
-{
-    protected static ?string $title = 'Overview';
+        $statAktif   = $misiList->whereIn('status', ['open', 'progress'])->count();
+        $statSelesai = $misiList->where('status', 'selesai')->count();
+        $statTester  = MisiAnggota::whereIn('id_misi', $misiIds)->count();
 
-    protected static ?string $slug = 'dashboard';
+        // ── 2. Mapping aplikasiList (Recent Applications) ─────
+        $warnaSiklus = ['blue', 'amber', 'purple', 'green'];
+        
+        $aplikasiList = $misiList->sortByDesc('created_at')->take(5)->map(function ($m, $index) use ($warnaSiklus) {
+            $testerCount = $m->misiAnggotas()->count();
+            $maxTester = $m->kapasitas ?: 20;
+            $persen = $maxTester > 0 ? round(($testerCount / $maxTester) * 100) : 0;
+            
+            // Mapping status internal ke label UI
+            $statusUI = match($m->status) {
+                'pending' => ['status' => 'pending', 'label' => 'PENDING', 'warna' => 'amber'],
+                'rejected' => ['status' => 'pending', 'label' => 'REJECTED', 'warna' => 'red'],
+                'selesai' => ['status' => 'selesai', 'label' => 'COMPLETED', 'warna' => 'purple'],
+                default    => ['status' => 'progress', 'label' => 'IN PROGRESS', 'warna' => 'blue'],
+            };
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-home';
+            return [
+                'inisial' => strtoupper(substr($m->nama_aplikasi, 0, 2)),
+                'nama'    => $m->nama_aplikasi,
+                'versi'   => 'v1.0.0', // Default karena kolom versi tdk ada di DB
+                'status'  => $statusUI['status'],
+                'label'   => $statusUI['label'],
+                'tester'  => "$testerCount / $maxTester",
+                'persen'  => $persen,
+                'tanggal' => $m->created_at->format('d M Y'),
+                'warna'   => $statusUI['warna'],
+            ];
+        })->toArray();
 
-    public function getHeading(): string
-    {
-        return '';
-    }
+        // ── 3. Mapping kampanyeList (14-Day Progress Tracker) ──
+        $kampanyeList = $misiList->whereIn('status', ['open', 'progress', 'selesai'])->take(3)->map(function ($m) {
+            // Hitung hari aktif (asumsi 14 hari)
+            $diff = $m->created_at->diffInDays(now());
+            $hariAktif = min($diff + 1, 14); 
 
-    protected function getViewData(): array
-    {
-        $userId = auth()->id();
+            $statusUI = match($m->status) {
+                'selesai' => ['status' => 'selesai', 'warna' => 'purple'],
+                default    => ['status' => 'progress', 'warna' => 'blue'],
+            };
 
-        // Count Active (In Progress or Pending)
-        $activeCount = Misi::where('id_user', $userId)
-            ->whereIn('status', ['In Progress', 'Pending', 'running'])
-            ->count();
+            return [
+                'inisial'   => strtoupper(substr($m->nama_aplikasi, 0, 2)),
+                'nama'      => $m->nama_aplikasi,
+                'versi'     => 'v1.0.0',
+                'hariAktif' => $m->status === 'selesai' ? 14 : $hariAktif,
+                'totalHari' => 14,
+                'status'    => $statusUI['status'],
+                'warna'     => $statusUI['warna'],
+            ];
+        })->toArray();
 
-        // Count Completed
-        $completedCount = Misi::where('id_user', $userId)
-            ->where('status', 'Completed')
-            ->count();
-
-        // Count Total Testers (Anggota) for all missions of this user
-        $testersCount = MisiAnggota::whereIn('id_misi', function ($query) use ($userId) {
-            $query->select('id')->from('misi')->where('id_user', $userId);
-        })->count();
-
-        // Recent Missions with count of members
-        $recentMisis = Misi::where('id_user', $userId)
-            ->withCount('misiAnggotas')
-            ->with('paket')
-            ->latest()
-            ->take(5)
-            ->get();
+        // ── 4. Penghitungan Persentase Stat Cards ────────────
+        $maxMisi = 3; // Asumsi slot maksimal developer (bisa diambil dari paket nanti)
+        $statAktifPercent = $maxMisi > 0 ? round(($statAktif / $maxMisi) * 100) : 0;
+        $statSelesaiPercent = $misiList->count() > 0 ? round(($statSelesai / $misiList->count()) * 100) : 0;
+        
+        $totalKapasitas = $misiList->whereIn('status', ['open', 'progress'])->sum('kapasitas') ?: 20;
+        $statTesterPercent = $totalKapasitas > 0 ? round(($statTester / $totalKapasitas) * 100) : 0;
 
         return [
-            'activeCount' => $activeCount,
-            'completedCount' => $completedCount,
-            'testersCount' => $testersCount,
-            'recentMisis' => $recentMisis,
-        ];
-    }
+            'statAktif'    => $statAktif,
+            'statAktifPercent' => $statAktifPercent,
+            'statAktifNote'    => "$statAktif dari $maxMisi slot aktif terpakai",
+            
+            'statSelesai'  => $statSelesai,
+            'statSelesaiPercent' => $statSelesaiPercent,
+            'statSelesaiNote'    => "$statSelesai dari " . $misiList->count() . " kampanye selesai",
+            
+            'statTester'   => $statTester,
+            'statTesterPercent' => $statTesterPercent,
+            'statTesterNote'    => "$statTester dari $totalKapasitas slot tester terisi",
 
-    protected string $view = 'filament.developer.pages.developer-dashboard';
-}
+            'aplikasiList' => $aplikasiList,
+            'kampanyeList' => $kampanyeList,
+        ];
+    }  
+}  

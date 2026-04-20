@@ -1,133 +1,279 @@
-<x-filament-panels::page>
-    <div class="space-y-8">
-        <!-- Welcome Header -->
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-                    Welcome back, {{ explode(' ', auth()->user()->name ?? 'Alex')[0] }}!
-                </h1>
-                <p class="mt-1 text-sm font-medium text-gray-500 dark:text-gray-400">
-                    Here's what's happening with your playtests today.
-                </p>
-            </div>
-            <button class="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-bold text-white transition-colors bg-[#4F46E5] rounded-lg hover:bg-indigo-700 shadow-sm border border-transparent">
-                <svg class="w-5 h-5 font-bold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/></svg>
-                Create New Test
-            </button>
-        </div>
+<x-filament-panels::page>  
+  
+@push('styles')  
+<style>  
+  .dev-stat-card{background:#fff;border:1px solid #f1f5f9;border-radius:16px;padding:24px;transition:transform .25s,box-shadow .25s;}  
+  .dev-stat-card:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.08);}  
+  .dev-panel{background:#fff;border:1px solid #f1f5f9;border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.05);}  
+  .dev-panel-header{padding:20px 24px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}  
+  .prog-track{width:100%;height:5px;background:#f1f5f9;border-radius:999px;overflow:hidden;}  
+  .prog-fill{height:100%;border-radius:999px;width:0;}  
+  .status-badge{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:3px 9px;border-radius:999px;}  
+  .status-progress{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;}  
+  .status-pending{background:#fffbeb;color:#b45309;border:1px solid #fde68a;}  
+  .status-selesai{background:#faf5ff;color:#7e22ce;border:1px solid #e9d5ff;}  
+  .app-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;}  
+  .icon-blue{background:#eff6ff;color:#2563eb;}  
+  .icon-amber{background:#fffbeb;color:#d97706;}  
+  .icon-purple{background:#faf5ff;color:#7e22ce;}  
+  .btn-detail{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;font-size:12px;font-weight:600;color:#64748b;border:1px solid #e2e8f0;border-radius:8px;background:transparent;cursor:pointer;transition:all .15s;}  
+  .btn-detail:hover{background:#eff6ff;border-color:#bfdbfe;color:#2563eb;}  
+  .day-cell{border-radius:5px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:2px;height:32px;}  
+  .day-done{background:#dbeafe;}.day-today{background:#2563eb;}.day-future{background:#f1f5f9;}  
+  .day-num{font-size:8px;font-weight:600;}  
+  .day-done .day-num{color:#1d4ed8;}.day-today .day-num{color:#fff;font-weight:800;}.day-future .day-num{color:#94a3b8;}  
+  .tbl-row{transition:background .15s;}.tbl-row:hover td{background:#f8fafc;}  
+  .modal-overlay{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:16px;}  
+  .modal-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.5);backdrop-filter:blur(4px);}  
+  .modal-box{position:relative;z-index:1;background:#fff;border-radius:20px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.18);}  
+  @keyframes modalIn{from{opacity:0;transform:scale(.94) translateY(-10px);}to{opacity:1;transform:scale(1) translateY(0);}}  
+  .modal-animate{animation:modalIn .26s cubic-bezier(.34,1.56,.64,1) forwards;}  
+  .form-input,.form-textarea{width:100%;padding:10px 14px;font-size:13.5px;color:#1e293b;background:#fff;border:1.5px solid #e2e8f0;border-radius:12px;transition:border-color .2s,box-shadow .2s;outline:none;font-family:inherit;}  
+  .form-input:focus,.form-textarea:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12);}  
+  .form-input.with-icon{padding-left:38px;}  
+  .form-textarea{resize:none;}  
+  .text-brand-gradient{background:linear-gradient(135deg,#1d4ed8,#2563eb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}  
+</style>  
+@endpush  
+  
+<div x-data="devDashboard()" x-init="initProgressBars()" class="space-y-7">  
+  
+  {{-- Welcome Row --}}  
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">  
+    <div>  
+      <h1 class="text-2xl font-black text-slate-800">Welcome back, <span class="text-brand-gradient">Developer!</span> 👋</h1>  
+      <p class="text-slate-500 text-sm mt-1.5">Here's what's happening with your playtests today.</p>  
+    </div>  
+    <a href="{{ url('developer/misis/create') }}"  
+      class="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 text-sm font-bold text-white rounded-xl"  
+      style="background:linear-gradient(135deg,#1d4ed8,#2563eb);box-shadow:0 4px 14px rgba(37,99,235,.3);">  
+      <x-heroicon-o-plus class="w-4 h-4"/> New Test Case  
+    </a>  
+  </div>  
+  
+  {{-- Stat Cards --}}  
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">  
+    <div class="dev-stat-card" style="border-top:4px solid #2563eb;">  
+      <div class="flex items-start justify-between mb-5">  
+        <p class="text-slate-400 font-bold uppercase tracking-widest" style="font-size:10.5px;">Active Testing</p>  
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#eff6ff;">  
+          <x-heroicon-o-play-circle class="w-5 h-5 text-blue-600"/>  
+        </div>  
+      </div>  
+      <p class="font-black text-slate-800" style="font-size:48px;line-height:1;">{{ $statAktif }}</p>  
+      <div class="mt-3 flex items-center gap-2">  
+        <span class="text-green-500 text-xs font-semibold"><x-heroicon-m-arrow-trending-up class="w-3 h-3 inline"/> +1</span>  
+        <span class="text-slate-400 text-xs">dari bulan lalu</span>  
+      </div>  
+      <div class="mt-4 prog-track"><div class="prog-fill bg-blue-500" data-target="{{ $statAktifPercent }}%"></div></div>  
+      <p class="text-slate-400 mt-1.5" style="font-size:11px;">{{ $statAktifNote }}</p>  
+    </div>  
+  
+    <div class="dev-stat-card" style="border-top:4px solid #22c55e;">  
+      <div class="flex items-start justify-between mb-5">  
+        <p class="text-slate-400 font-bold uppercase tracking-widest" style="font-size:10.5px;">Completed Tests</p>  
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#f0fdf4;">  
+          <x-heroicon-o-check-circle class="w-5 h-5 text-green-600"/>  
+        </div>  
+      </div>  
+      <p class="font-black text-slate-800" style="font-size:48px;line-height:1;">{{ $statSelesai }}</p>  
+      <div class="mt-3 flex items-center gap-2">  
+        <span class="text-green-500 text-xs font-semibold"><x-heroicon-m-check class="w-3 h-3 inline"/> Lulus</span>  
+        <span class="text-slate-400 text-xs">Google Play Console</span>  
+      </div>  
+      <div class="mt-4 prog-track"><div class="prog-fill bg-green-500" data-target="{{ $statSelesaiPercent }}%"></div></div>  
+      <p class="text-slate-400 mt-1.5" style="font-size:11px;">{{ $statSelesaiNote }}</p>  
+    </div>  
+  
+    <div class="dev-stat-card" style="border-top:4px solid #a855f7;">  
+      <div class="flex items-start justify-between mb-5">  
+        <p class="text-slate-400 font-bold uppercase tracking-widest" style="font-size:10.5px;">Total Tester Recruited</p>  
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#faf5ff;">  
+          <x-heroicon-o-user-group class="w-5 h-5 text-purple-600"/>  
+        </div>  
+      </div>  
+      <p class="font-black text-slate-800" style="font-size:48px;line-height:1;">{{ $statTester }}</p>  
+      <div class="mt-3 flex items-center gap-2">  
+        <span class="text-purple-500 text-xs font-semibold"><x-heroicon-m-users class="w-3 h-3 inline"/> Aktif</span>  
+        <span class="text-slate-400 text-xs">across all campaign</span>  
+      </div>  
+      <div class="mt-4 prog-track"><div class="prog-fill bg-purple-500" data-target="{{ $statTesterPercent }}%"></div></div>  
+      <p class="text-slate-400 mt-1.5" style="font-size:11px;">{{ $statTesterNote }}</p>  
+    </div>  
+  </div>  
+  
+  {{-- 14-Day Tracker --}}  
+  <div class="dev-panel">  
+    <div class="dev-panel-header">  
+      <div>  
+        <h2 class="text-slate-800 font-bold text-base">14-Day Progress Tracker</h2>  
+        <p class="text-slate-500 text-xs mt-0.5">Pantau keaktifan harian setiap sesi pengujian aktif</p>  
+      </div>  
+      <div class="flex items-center gap-4">  
+        <span class="flex items-center gap-1.5 text-xs text-slate-500">  
+          <span class="inline-block w-2.5 h-2.5 rounded-sm" style="background:#dbeafe;"></span>Aktif  
+        </span>  
+        <span class="flex items-center gap-1.5 text-xs text-slate-500">  
+          <span class="inline-block w-2.5 h-2.5 rounded-sm" style="background:#2563eb;"></span>Hari Ini  
+        </span>  
+        <span class="flex items-center gap-1.5 text-xs text-slate-500">  
+          <span class="inline-block w-2.5 h-2.5 rounded-sm" style="background:#f1f5f9;"></span>Mendatang  
+        </span>  
+      </div>  
+    </div>  
+    <div class="px-6 py-5 space-y-6">  
+      @foreach ($kampanyeList as $idx => $k)  
+        @if ($idx > 0)<hr style="border:none;border-top:1px solid #f1f5f9;">@endif  
+        <div>  
+          <div class="flex items-center justify-between mb-3">  
+            <div class="flex items-center gap-3">  
+              <div class="app-icon icon-{{ $k['warna'] }}">{{ $k['inisial'] }}</div>  
+              <div>  
+                <p class="text-slate-800 text-sm font-semibold">{{ $k['nama'] }}</p>  
+                <p class="text-slate-500" style="font-size:11px;">  
+                  {{ $k['versi'] }} &middot;  
+                  @if($k['status']==='progress') Hari ke-{{ $k['hariAktif'] }} dari {{ $k['totalHari'] }}  
+                  @else Menunggu konfirmasi tester @endif  
+                </p>  
+              </div>  
+            </div>  
+            <span class="status-badge status-{{ $k['status'] }}">  
+              @if($k['status']==='progress')<span class="inline-block w-1.5 h-1.5 bg-green-500 rounded-full"></span> IN PROGRESS  
+              @elseif($k['status']==='pending')<span class="inline-block w-1.5 h-1.5 bg-amber-500 rounded-full"></span> PENDING  
+              @else<x-heroicon-m-check class="w-2.5 h-2.5"/> COMPLETED @endif  
+            </span>  
+          </div>  
+          <div class="grid gap-1" style="grid-template-columns:repeat(14,1fr);">  
+            @for ($h = 1; $h <= 14; $h++)  
+              @php  
+                $cls = 'day-future';  
+                if ($k['status']==='progress') {  
+                  if ($h < $k['hariAktif']) $cls = 'day-done';  
+                  elseif ($h === $k['hariAktif']) $cls = 'day-today';  
+                } elseif ($k['status']==='selesai') { $cls = 'day-done'; }  
+              @endphp  
+              <div class="day-cell {{ $cls }}"><span class="day-num">{{ $h }}</span></div>  
+            @endfor  
+          </div>  
+        </div>  
+      @endforeach  
+    </div>  
+  </div>  
+  
+  {{-- Recent Applications Table --}}  
+  <div class="dev-panel">  
+    <div class="dev-panel-header">  
+      <div>  
+        <h2 class="text-slate-800 font-bold text-base">Recent Applications</h2>  
+        <p class="text-slate-500 text-xs mt-0.5">Daftar aplikasi yang sedang atau sudah dalam sesi pengujian</p>  
+      </div>  
+      <div class="flex items-center gap-2 flex-wrap">  
+        <div class="relative">  
+          <x-heroicon-o-calendar-days class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"/>  
+          <input type="date" x-model="filterTanggal" class="text-xs rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-200"  
+            style="padding:7px 12px 7px 30px;background:#f8fafc;border:1px solid #e2e8f0;color:#64748b;width:148px;"/>  
+        </div>  
+        <button class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-blue-600 rounded-xl hover:bg-blue-50 transition"  
+          style="border:1px solid #bfdbfe;">  
+          View All <x-heroicon-m-arrow-right class="w-3 h-3"/>  
+        </button>  
+      </div>  
+    </div>  
+    <div class="overflow-x-auto">  
+      <table class="w-full">  
+        <thead>  
+          <tr style="background:#f8fafc;border-bottom:1px solid #f1f5f9;">  
+            <th class="text-left px-6 py-3 text-slate-400 font-semibold uppercase tracking-wider" style="font-size:10.5px;">App Name</th>  
+            <th class="text-left px-6 py-3 text-slate-400 font-semibold uppercase tracking-wider" style="font-size:10.5px;">Platform</th>  
+            <th class="text-left px-6 py-3 text-slate-400 font-semibold uppercase tracking-wider" style="font-size:10.5px;">Status &amp; Progress</th>  
+            <th class="text-left px-6 py-3 text-slate-400 font-semibold uppercase tracking-wider" style="font-size:10.5px;">Date Started</th>  
+            <th class="text-left px-6 py-3 text-slate-400 font-semibold uppercase tracking-wider" style="font-size:10.5px;">Action</th>  
+          </tr>  
+        </thead>  
+        <tbody>  
+          @forelse ($aplikasiList as $a)  
+          <tr class="tbl-row" style="border-bottom:1px solid #f8fafc;">  
+            <td class="px-6 py-4">  
+              <div class="flex items-center gap-3">  
+                <div class="app-icon icon-{{ $a['warna'] }}">{{ $a['inisial'] }}</div>  
+                <div>  
+                  <p class="text-slate-800 font-semibold text-sm">{{ $a['nama'] }}</p>  
+                  <p class="text-slate-400" style="font-size:11px;">{{ $a['versi'] }}</p>  
+                </div>  
+              </div>  
+            </td>  
+            <td class="px-6 py-4">  
+              <div class="flex items-center gap-1.5">  
+                <x-heroicon-o-device-phone-mobile class="w-4 h-4 text-green-500"/>  
+                <span class="text-slate-600 text-xs">Android</span>  
+              </div>  
+            </td>  
+            <td class="px-6 py-4">  
+              <div style="min-width:180px;" class="space-y-2">  
+                <div class="flex items-center gap-2">  
+                  <span class="status-badge status-{{ $a['status'] }}">  
+                    @if($a['status']==='progress')<span class="inline-block w-1.5 h-1.5 bg-green-500 rounded-full"></span>  
+                    @elseif($a['status']==='pending')<span class="inline-block w-1.5 h-1.5 bg-amber-500 rounded-full"></span>  
+                    @else<x-heroicon-m-check class="w-2.5 h-2.5"/>@endif  
+                    {{ $a['label'] }}  
+                  </span>  
+                  <span class="text-slate-500 text-xs">{{ $a['tester'] }} Tester</span>  
+                </div>  
+                <div class="prog-track">  
+                  <div class="prog-fill @if($a['status']==='progress') bg-green-500 @elseif($a['status']==='pending') bg-amber-400 @else bg-purple-500 @endif"  
+                       data-target="{{ $a['persen'] }}%"></div>  
+                </div>  
+              </div>  
+            </td>  
+            <td class="px-6 py-4 text-slate-500" style="font-size:12px;white-space:nowrap;">{{ $a['tanggal'] }}</td>  
+            <td class="px-6 py-4">  
+              <button class="btn-detail"><x-heroicon-o-eye class="w-3.5 h-3.5"/> Details</button>  
+            </td>  
+          </tr>  
+          @empty  
+          <tr><td colspan="5" class="px-6 py-10 text-center text-slate-400 text-sm">  
+            <x-heroicon-o-inbox class="w-8 h-8 mx-auto mb-2 text-slate-200"/>  
+            Belum ada aplikasi.  
+          </td></tr>  
+          @endforelse  
+        </tbody>  
+      </table>  
+    </div>  
+    <div class="flex items-center justify-between px-6 py-4" style="border-top:1px solid #f1f5f9;">  
+      <p class="text-slate-400 text-xs">Menampilkan <strong class="text-slate-600">{{ count($aplikasiList) }}</strong> aplikasi</p>  
+      <div class="flex items-center gap-1.5">  
+        <button class="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400" style="border:1px solid #e2e8f0;" disabled>  
+          <x-heroicon-m-chevron-left class="w-3 h-3"/>  
+        </button>  
+        <button class="w-7 h-7 rounded-lg text-white text-xs font-bold flex items-center justify-center" style="background:#2563eb;">1</button>  
+        <button class="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400" style="border:1px solid #e2e8f0;" disabled>  
+          <x-heroicon-m-chevron-right class="w-3 h-3"/>  
+        </button>  
+      </div>  
+    </div>  
+  </div>  
+  
+</div>  
+  
+@push('scripts')  
+<script>  
+function devDashboard() {  
+  return {  
+    filterTanggal: '',  
+  
+    initProgressBars() {  
+      this.$nextTick(() => {  
+        document.querySelectorAll('.prog-fill').forEach(el => {  
+          const t = el.dataset.target || '0%';  
+          el.style.width = '0%';  
+          setTimeout(() => { el.style.transition = 'width 900ms ease'; el.style.width = t; }, 400);  
+        });  
+      });  
+    },  
 
-        <!-- Metrics Grid -->
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-3 text-center sm:text-left">
-            <!-- Active Testing -->
-            <div class="p-6 bg-white border border-gray-100 shadow-sm rounded-2xl dark:bg-gray-900 dark:border-gray-800">
-                <div class="flex items-center justify-center w-10 h-10 mb-4 mx-auto sm:mx-0 text-blue-600 bg-blue-50 rounded-xl dark:bg-blue-900/30 dark:text-blue-400">
-                    <svg class="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-                <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Active Testing</h3>
-                <p class="mt-1 text-3xl font-bold text-gray-900 dark:text-white">{{ $activeCount }}</p>
-            </div>
-
-            <!-- Completed Tests -->
-            <div class="p-6 bg-white border border-gray-100 shadow-sm rounded-2xl dark:bg-gray-900 dark:border-gray-800">
-                <div class="flex items-center justify-center w-10 h-10 mb-4 mx-auto sm:mx-0 text-emerald-500 bg-emerald-50 rounded-xl dark:bg-emerald-900/30 dark:text-emerald-400">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"/></svg>
-                </div>
-                <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Completed Tests</h3>
-                <p class="mt-1 text-3xl font-bold text-gray-900 dark:text-white">{{ $completedCount }}</p>
-            </div>
-
-            <!-- Total Testers -->
-            <div class="p-6 bg-white border border-gray-100 shadow-sm rounded-2xl dark:bg-gray-900 dark:border-gray-800">
-                <div class="flex items-center justify-center w-10 h-10 mb-4 mx-auto sm:mx-0 text-purple-600 bg-purple-50 rounded-xl dark:bg-purple-900/30 dark:text-purple-400">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-                </div>
-                <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400">Total Testers Recruited</h3>
-                <p class="mt-1 text-3xl font-bold text-gray-900 dark:text-white">{{ $testersCount }}</p>
-            </div>
-        </div>
-
-        <!-- Recent Applications Section -->
-        <div class="bg-white border border-gray-100 shadow-sm rounded-2xl overflow-hidden dark:bg-gray-900 dark:border-gray-800">
-            <div class="flex items-center justify-between px-6 py-5 border-b border-gray-50 dark:border-gray-800">
-                <h2 class="text-lg font-bold tracking-tight text-gray-900 dark:text-white">Recent Applications</h2>
-                <a href="#" class="text-sm font-bold text-[#4F46E5] hover:text-indigo-700 dark:text-indigo-400">View All</a>
-            </div>
-            
-            <div class="overflow-x-auto">
-                <table class="w-full text-left whitespace-nowrap">
-                    <thead>
-                        <tr class="text-[11px] font-bold tracking-widest text-gray-400 uppercase border-b border-gray-50 dark:border-gray-800">
-                            <th class="px-6 py-4">App Name</th>
-                            <th class="px-6 py-4 border-l border-gray-50 dark:border-gray-800">Platform</th>
-                            <th class="px-6 py-4 border-l border-gray-50 dark:border-gray-800">Status & Progress</th>
-                            <th class="px-6 py-4 border-l border-gray-50 dark:border-gray-800">Date Started</th>
-                            <th class="px-6 py-4 text-right border-l border-gray-50 dark:border-gray-800">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-50 dark:divide-gray-800 text-[13px]">
-                        @forelse($recentMisis as $misi)
-                        @php
-                            // Extract target testers from package description (e.g., "20 Testers")
-                            preg_match('/\d+/', $misi->paket->desc ?? '20', $matches);
-                            $target = $matches[0] ?? 20;
-                            $count = $misi->misi_anggotas_count ?? 0;
-                            $percent = ($target > 0) ? min(100, ($count / $target) * 100) : 0;
-                            
-                            $statusColor = match($misi->status) {
-                                'Completed' => 'emerald',
-                                'Pending' => 'amber',
-                                default => 'indigo',
-                            };
-                            
-                            $progressColor = match($misi->status) {
-                                'Completed' => 'bg-emerald-500',
-                                'Pending' => 'bg-amber-400',
-                                default => 'bg-[#4F46E5]',
-                            };
-                        @endphp
-                        <tr class="group hover:bg-gray-50 transition-colors dark:hover:bg-gray-800/50">
-                            <td class="px-6 py-4">
-                                <div class="flex items-center gap-4">
-                                    <div class="flex items-center justify-center w-11 h-11 text-lg font-bold text-white bg-indigo-500 rounded-lg shadow-sm">
-                                        {{ substr($misi->nama_aplikasi, 0, 1) }}
-                                    </div>
-                                    <div>
-                                        <div class="font-extrabold text-[#111827] dark:text-white">{{ $misi->nama_aplikasi }}</div>
-                                        <div class="text-[11px] font-bold text-gray-400 mt-0.5">v1.0.0</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 font-bold text-gray-500 dark:text-gray-400">Android</td>
-                            <td class="px-6 py-4">
-                                <div class="w-64">
-                                    <div class="flex items-center justify-between mb-2.5">
-                                        <span class="px-2.5 py-0.5 text-[10px] font-extrabold text-{{ $statusColor }}-600 bg-{{ $statusColor }}-50 rounded-full dark:bg-{{ $statusColor }}-900/40 dark:text-{{ $statusColor }}-300 uppercase tracking-widest leading-none flex items-center h-5">
-                                            {{ $misi->status }}
-                                        </span>
-                                        <span class="text-[11px] font-bold text-gray-400">{{ $count }}/{{ $target }} Testers</span>
-                                    </div>
-                                    <div class="w-full h-2 bg-gray-100 rounded-full dark:bg-gray-800">
-                                        <div class="h-2 {{ $progressColor }} rounded-full" style="width: {{ $percent }}%"></div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 font-bold text-gray-500 dark:text-gray-400">{{ $misi->created_at->format('M d, Y') }}</td>
-                            <td class="px-6 py-4 text-right">
-                                <button class="px-4 py-2 text-[13px] font-bold text-gray-700 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 transition-colors dark:bg-gray-900 dark:border-gray-700 dark:text-gray-300">
-                                    {{ $misi->status === 'Completed' ? 'Report' : 'Details' }}
-                                </button>
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="5" class="px-6 py-10 text-center text-gray-400 font-medium">
-                                No applications found. Start by creating a new test!
-                            </td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</x-filament-panels::page>
+  };  
+}  
+</script>  
+@endpush  
+  
+</x-filament-panels::page>  

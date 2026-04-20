@@ -17,7 +17,10 @@ class MisiResource extends Resource
 {
     protected static ?string $model = Misi::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-square-3-stack-3d';
+    protected static ?string $navigationLabel = 'My Apps';
+    protected static string | \UnitEnum | null $navigationGroup = 'MAIN';
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $recordTitleAttribute = 'nama_aplikasi';
 
