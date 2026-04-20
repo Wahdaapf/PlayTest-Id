@@ -41,16 +41,17 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Indigo,
             ])
             //Ini berfungsi untuk ketika masuk mode mobile dia navbarnya jadi ganti ke bawah
+            //Icon dari https://heroicons.com/
             ->plugins([
                 MobileBottomNav::make()
                     ->items([
-                        MobileBottomNavItem::make('Home')
+                        MobileBottomNavItem::make('Dashboard')
                             ->icon('heroicon-o-home')
                             ->activeIcon('heroicon-s-home')
                             ->url('/admin')
                             ->isActive(fn() => request()->is('admin')),
-                        MobileBottomNavItem::make('Inbox')
-                            ->icon('heroicon-o-inbox')
+                        MobileBottomNavItem::make('Apps')
+                            ->icon('heroicon-o-rocket-launch')
                             ->url('/admin/inbox')
                             ->badge(5, 'danger'),
                         MobileBottomNavItem::make('Profile')
