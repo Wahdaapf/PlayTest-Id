@@ -2,9 +2,9 @@
 
 namespace App\Filament\Admin\Pages;
 
-use Filament\Pages\Dashboard;
+use Filament\Pages\Page;
 
-class AdminDashboard extends Dashboard
+class AdminDashboard extends Page
 {
     protected static ?string $slug = 'dashboard';
 
