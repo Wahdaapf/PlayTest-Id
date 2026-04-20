@@ -35,9 +35,9 @@
 </div>
 
 {{-- Petunjuk transfer --}}
-<div class="rounded-lg bg-blue-100 dark:bg-blue-950/50 border-2 border-blue-200 dark:border-blue-800 p-3 mb-2">
+<div class="rounded-lg bg-red-100 dark:bg-red-950/50 border-2 border-red-200 dark:border-red-800 p-3 mb-2">
     <div class="flex gap-2">
-        <x-heroicon-o-information-circle class="w-5 h-5 text-blue-800 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+        <x-heroicon-o-information-circle class="w-5 h-5 text-red-800 dark:text-red-400 flex-shrink-0 mt-0.5" />
         <div class="text-xs space-y-2">
             <p class="font-black text-slate-950 dark:text-white uppercase tracking-wide">Cara pembayaran:</p>
             <ol class="list-decimal list-inside space-y-1 text-slate-900 dark:text-slate-100 font-black">

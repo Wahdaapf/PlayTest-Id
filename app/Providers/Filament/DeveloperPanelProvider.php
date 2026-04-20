@@ -1,176 +1,92 @@
-<?php  
-  
-namespace App\Providers\Filament;  
-  
-use App\Filament\Auth\Pages\Login;  
-use App\Filament\Auth\Pages\Register;  
-use App\Filament\Auth\Pages\RequestResetPassword;  
-use App\Filament\Auth\Pages\ResetPassword;  
-use App\Filament\Developer\Pages\DeveloperDashboard;  
-use Filament\Http\Middleware\Authenticate;  
-use Filament\Http\Middleware\AuthenticateSession;  
-use Filament\Http\Middleware\DisableBladeIconComponents;  
-use Filament\Http\Middleware\DispatchServingFilamentEvent;  
-use Filament\Navigation\NavigationGroup;
+<?php
+
+namespace App\Providers\Filament;
+
+use Filament\Http\Middleware\Authenticate;
+use Filament\Http\Middleware\AuthenticateSession;
+use Filament\Http\Middleware\DisableBladeIconComponents;
+use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use App\Filament\Developer\Pages\DeveloperDashboard;
+use Filament\Panel;
+use Filament\PanelProvider;
+use Filament\Support\Colors\Color;
+use Filament\Widgets\AccountWidget;
+use Filament\Widgets\FilamentInfoWidget;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Cookie\Middleware\EncryptCookies;
+use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
+use Illuminate\Routing\Middleware\SubstituteBindings;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Support\Facades\Blade;
 use Filament\Navigation\NavigationItem;
-use Filament\Panel;  
-use Filament\PanelProvider;  
-use Filament\Widgets\AccountWidget;  
-use Filament\Widgets\FilamentInfoWidget;  
-use Hammadzafar05\MobileBottomNav\MobileBottomNav;  
-use Hammadzafar05\MobileBottomNav\MobileBottomNavItem;  
-use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;  
-use Illuminate\Cookie\Middleware\EncryptCookies;  
-use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;  
-use Illuminate\Routing\Middleware\SubstituteBindings;  
-use Illuminate\Session\Middleware\StartSession;  
-use Illuminate\Support\Facades\Blade;  
-use Illuminate\View\Middleware\ShareErrorsFromSession;  
-  
-class DeveloperPanelProvider extends PanelProvider  
-{  
-    public function panel(Panel $panel): Panel  
-    {  
-        return $panel  
-            ->id('developer')  
-            ->path('developer')  
-            ->login(Login::class)  
-            ->registration(Register::class)  
-            ->passwordReset(RequestResetPassword::class, ResetPassword::class)  
-            ->brandLogo(fn () => view('filament.developer.logo'))  
-  
-            // ── Warna sesuai landing page (#2563eb) ──  
-            ->colors([  
-                'primary' => [  
-                    50  => '239 246 255',  
-                    100 => '219 234 254',  
-                    200 => '191 219 254',  
-                    300 => '147 197 253',  
-                    400 => '96 165 250',  
-                    500 => '59 130 246',  
-                    600 => '37 99 235',  
-                    700 => '29 78 216',  
-                    800 => '30 64 175',  
-                    900 => '30 58 138',  
-                    950 => '23 37 84',  
-                ],  
-            ])  
-            ->navigationGroups([
-                NavigationGroup::make('MAIN'),
-                NavigationGroup::make('SETTINGS'),
+use Hammadzafar05\MobileBottomNav\MobileBottomNav;
+use Hammadzafar05\MobileBottomNav\MobileBottomNavItem;
+use App\Filament\Auth\Pages\Login;
+use App\Filament\Auth\Pages\Register;
+use App\Filament\Auth\Pages\RequestResetPassword;
+use App\Filament\Auth\Pages\ResetPassword;
+
+class DeveloperPanelProvider extends PanelProvider
+{
+    public function panel(Panel $panel): Panel
+    {
+        return $panel
+            ->id('developer')
+            ->path('developer')
+            ->login(Login::class)
+            ->registration(Register::class)
+            ->passwordReset(RequestResetPassword::class, ResetPassword::class)
+            ->brandName('PlayTest ID')
+            ->colors([
+                'primary' => Color::Indigo,
             ])
-            ->navigationItems([
-                NavigationItem::make('New Test Case')
-                    ->icon('heroicon-o-document-plus')
-                    ->group('MAIN')
-                    ->url(fn (): string => \App\Filament\Developer\Resources\Misis\Pages\CreateMisi::getUrl())
-                    ->sort(3),
-                NavigationItem::make('Settings')
-                    ->icon('heroicon-o-cog-8-tooth')
-                    ->group('SETTINGS')
-                    ->url('#')
-                    ->sort(1),
-                NavigationItem::make('Support')
-                    ->icon('heroicon-o-lifebuoy')
-                    ->group('SETTINGS')
-                    ->url('#')
-                    ->sort(2),
+            //Ini berfungsi untuk ketika masuk mode mobile dia navbarnya jadi ganti ke bawah
+            //Icon dari https://heroicons.com/
+            ->plugins([
+                MobileBottomNav::make()
+                    ->items([
+                        MobileBottomNavItem::make('Dashboard')
+                            ->icon('heroicon-o-home')
+                            ->activeIcon('heroicon-s-home')
+                            ->url('/developer')
+                            ->isActive(fn() => request()->is('developer')),
+                        MobileBottomNavItem::make('Apps')
+                            ->icon('heroicon-o-rocket-launch')
+                            ->url('/developer/inbox')
+                            ->badge(5, 'danger'),
+                        MobileBottomNavItem::make('Profile')
+                            ->icon('heroicon-o-user')
+                            ->url('/developer/profile'),
+                    ]),
             ])
-            ->plugins([  
-                MobileBottomNav::make()  
-                    ->items([  
-                        MobileBottomNavItem::make('Home')  
-                            ->icon('heroicon-o-home')  
-                            ->activeIcon('heroicon-s-home')  
-                            ->url('/developer')  
-                            ->isActive(fn() => request()->is('developer')),  
-                        MobileBottomNavItem::make('Inbox')  
-                            ->icon('heroicon-o-inbox')  
-                            ->url('/developer/inbox')  
-                            ->badge(5, 'danger'),  
-                        MobileBottomNavItem::make('Profile')  
-                            ->icon('heroicon-o-user')  
-                            ->url('/developer/profile'),  
-                    ]),  
-            ])  
-  
-            ->renderHook(  
-                'panels::head.end',  
-                fn(): string => Blade::render("
-                    @vite('resources/css/app.css')
-                    <style>
-                        .fi-sidebar-group-label {
-                            font-weight: 800;
-                            letter-spacing: 0.1em;
-                            font-size: 0.75rem;
-                            color: #94a3b8;
-                        }
-                        .fi-sidebar-item {
-                            margin-bottom: 2px;
-                        }
-                        .fi-sidebar-item-active > a,
-                        .fi-sidebar-item-active > button {
-                            background-color: #eff6ff !important;
-                            color: #2563eb !important;
-                            border-radius: 9999px !important;
-                            position: relative;
-                            overflow: hidden;
-                            margin-left: -8px; /* to make the indicator flush with the edge if possible */
-                            padding-left: 16px; 
-                        }
-                        .fi-sidebar-item-active > a::before,
-                        .fi-sidebar-item-active > button::before {
-                            content: '';
-                            position: absolute;
-                            left: 0;
-                            top: 50%;
-                            transform: translateY(-50%);
-                            height: 60%;
-                            width: 3.5px;
-                            background-color: #2563eb;
-                            border-top-right-radius: 4px;
-                            border-bottom-right-radius: 4px;
-                        }
-                        .fi-sidebar-item-active > a .fi-sidebar-item-icon,
-                        .fi-sidebar-item-active > button .fi-sidebar-item-icon {
-                            color: #2563eb !important;
-                        }
-                    </style>
-                "),  
-            )  
-  
-            ->pages([  
-                DeveloperDashboard::class,  
-            ])  
-            ->discoverPages(  
-                in: app_path('Filament/Developer/Pages'),  
-                for: 'App\\Filament\\Developer\\Pages'  
-            )  
-            ->discoverResources(  
-                in: app_path('Filament/Developer/Resources'),  
-                for: 'App\\Filament\\Developer\\Resources'  
-            )  
-            ->discoverWidgets(  
-                in: app_path('Filament/Developer/Widgets'),  
-                for: 'App\\Filament\\Developer\\Widgets'  
-            )  
-            ->widgets([  
-                AccountWidget::class,  
-                FilamentInfoWidget::class,  
-            ])  
-            ->middleware([  
-                EncryptCookies::class,  
-                AddQueuedCookiesToResponse::class,  
-                StartSession::class,  
-                AuthenticateSession::class,  
-                ShareErrorsFromSession::class,  
-                PreventRequestForgery::class,  
-                SubstituteBindings::class,  
-                DisableBladeIconComponents::class,  
-                DispatchServingFilamentEvent::class,  
-            ])  
-            ->authMiddleware([  
-                Authenticate::class,  
-            ]);  
-    }  
-}  
+            ->renderHook(
+                'panels::head.end',
+                fn(): string => Blade::render("@vite('resources/css/app.css')"),
+            )
+            ->discoverResources(in: app_path('Filament/Developer/Resources'), for: 'App\Filament\Developer\Resources')
+            ->discoverPages(in: app_path('Filament/Developer/Pages'), for: 'App\Filament\Developer\Pages')
+            ->pages([
+                DeveloperDashboard::class,
+            ])
+            ->discoverWidgets(in: app_path('Filament/Developer/Widgets'), for: 'App\Filament\Developer\Widgets')
+            ->widgets([
+                AccountWidget::class,
+                FilamentInfoWidget::class,
+            ])
+            ->middleware([
+                EncryptCookies::class,
+                AddQueuedCookiesToResponse::class,
+                StartSession::class,
+                AuthenticateSession::class,
+                ShareErrorsFromSession::class,
+                PreventRequestForgery::class,
+                SubstituteBindings::class,
+                DisableBladeIconComponents::class,
+                DispatchServingFilamentEvent::class,
+            ])
+            ->authMiddleware([
+                Authenticate::class,
+            ]);
+    }
+}

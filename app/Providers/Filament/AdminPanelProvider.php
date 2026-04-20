@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace App\Providers\Filament;  
   
 use App\Filament\Auth\Pages\Login;
@@ -62,24 +62,24 @@ class AdminPanelProvider extends PanelProvider
                     NavigationGroup::make('Menu Utama')  
                         ->items([  
                             NavigationItem::make('Dashboard')  
-                                ->icon('heroicon-o-squares-2x2')  
-                                ->isActiveWhen(fn () => request()->routeIs('filament.admin.pages.admin-dashboard'))  
-                                ->url(fn () => AdminDashboard::getUrl()),  
+                                 ->icon('heroicon-o-squares-2x2')  
+                                 ->isActiveWhen(fn () => request()->routeIs('filament.admin.pages.admin-dashboard'))  
+                                 ->url(fn () => AdminDashboard::getUrl()),  
   
-                            NavigationItem::make('Pengguna')  
-                                ->icon('heroicon-o-users')  
-                                ->badge(fn () => \App\Models\User::count())  
-                                ->isActiveWhen(fn () => request()->routeIs('filament.admin.pages.manajemen-pengguna'))
-                                ->url(fn () => ManajemenPengguna::getUrl()),  
+                             NavigationItem::make('Pengguna')  
+                                 ->icon('heroicon-o-users')  
+                                 ->badge(fn () => \App\Models\User::count())  
+                                 ->isActiveWhen(fn () => request()->is('admin/manajemen-pengguna*'))
+                                 ->url(fn () => ManajemenPengguna::getUrl()),  
   
-                            NavigationItem::make('Kampanye')  
-                                ->icon('heroicon-o-paper-airplane')  
-                                ->badge(\App\Models\Paket::count())
-                                ->url(fn () => \App\Filament\Admin\Resources\Pakets\PaketResource::getUrl()),  
+                             NavigationItem::make('Kampanye')  
+                                 ->icon('heroicon-o-paper-airplane')  
+                                 ->badge(\App\Models\Paket::count())
+                                 ->url(fn () => \App\Filament\Admin\Resources\Pakets\PaketResource::getUrl()),  
   
-                            NavigationItem::make('Transaksi')  
-                                ->icon('heroicon-o-currency-dollar')  
-                                ->url(fn () => \App\Filament\Admin\Resources\Pembayarans\PembayaranResource::getUrl()),  
+                             NavigationItem::make('Transaksi')  
+                                 ->icon('heroicon-o-currency-dollar')  
+                                 ->url(fn () => \App\Filament\Admin\Resources\Pembayarans\PembayaranResource::getUrl()),  
                         ]),  
   
                     NavigationGroup::make('Sistem')  
@@ -98,7 +98,7 @@ class AdminPanelProvider extends PanelProvider
             // ── Pages & Widgets ───────────────────────────────  
             ->pages([  
                 AdminDashboard::class,  
-                 ManajemenPengguna::class,
+                ManajemenPengguna::class,
             ])  
             ->discoverPages(  
                 in: app_path('Filament/Admin/Pages'),  
@@ -227,4 +227,4 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,  
             ]);  
     }  
-}  
+}
