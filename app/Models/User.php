@@ -90,4 +90,16 @@ class User extends Authenticatable implements FilamentUser
     {
         $this->notify(new ResetPasswordNotification($token));
     }
+
+    protected static function booted(): void
+    {
+        static::created(function (User $user) {
+            if ($user->role === UserRole::tester) {
+                $user->userBalance()->create([
+                    'point' => 0,
+                    'badge' => 0,
+                ]);
+            }
+        });
+    }
 }

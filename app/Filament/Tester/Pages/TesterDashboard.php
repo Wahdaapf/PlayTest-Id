@@ -77,7 +77,23 @@ class TesterDashboard extends Page
         
         $aplikasiList = Misi::where('status', 'open')
             ->whereNotIn('id', $joinedMisiIds)
-            ->with(['misiAnggotas', 'paket'])
+            ->withCount('misiAnggotas')
+            ->where(function($q) {
+                // Sesuai permintaan: kapasitas belum > 20 (artinya maksimal 20)
+                // Dan juga belum penuh (jumlah anggota < kapasitas)
+                $q->where('kapasitas', '<=', 20)
+                  ->where(function($sq) {
+                      $sq->where(function($ssq) {
+                          $ssq->where('kapasitas', '>', 0)
+                              ->whereRaw('kapasitas > (select count(*) from misi_anggota where misi_anggota.id_misi = misi.id)');
+                      })
+                      ->orWhere(function($ssq) {
+                          $ssq->where('kapasitas', 0)
+                              ->whereRaw('20 > (select count(*) from misi_anggota where misi_anggota.id_misi = misi.id)');
+                      });
+                  });
+            })
+            ->with(['paket'])
             ->latest()
             ->take(4)
             ->get()
