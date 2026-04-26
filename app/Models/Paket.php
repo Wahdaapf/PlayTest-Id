@@ -17,6 +17,7 @@ class Paket extends Model
         'most_popular',
         'point',
         'aktif',
+        'trusted_badge',
     ];
 
     protected $casts = [
@@ -24,6 +25,7 @@ class Paket extends Model
         'fee'          => 'decimal:2',
         'most_popular' => 'boolean',
         'aktif'        => 'boolean',
+        'trusted_badge' => 'boolean',
     ];
 
     public function misis(): HasMany

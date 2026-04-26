@@ -218,7 +218,12 @@ body, .fi-main { font-family: 'Inter', sans-serif !important; }
                 <div class="w-12 h-12 rounded-2xl bg-gradient-to-br {{ $p['warnaGrad'] }} flex items-center justify-center text-white font-black text-lg mb-3 shadow-lg">  
                     {{ strtoupper(substr($p['nama'], 0, 1)) }}  
                 </div>  
-                <div class="mp-paket-nama mp-sora" style="color:{{ $p['warnaPrimary'] }}">{{ $p['nama'] }}</div>  
+                <div class="mp-paket-nama mp-sora flex items-center gap-1.5" style="color:{{ $p['warnaPrimary'] }}">
+                    {{ $p['nama'] }}
+                    @if($p['trusted_badge'])
+                        <x-heroicon-m-check-badge class="w-5 h-5 text-blue-500" />
+                    @endif
+                </div>  
                 <div class="mp-paket-desc">{{ $p['deskripsi'] }}</div>  
                 <div class="mp-harga-wrap">  
                     <div class="mp-harga-angka mp-mono" style="color:{{ $p['warnaPrimary'] }}">{{ $p['hargaF'] }}</div>  
@@ -486,6 +491,10 @@ body, .fi-main { font-family: 'Inter', sans-serif !important; }
                     <span class="mp-toggle-label">Paket Aktif</span>  
                     <button class="mp-toggle" :class="paketAktif ? 'on' : ''" @click="paketAktif = !paketAktif"></button>  
                 </div>  
+                <div class="mp-toggle-wrap">  
+                    <span class="mp-toggle-label">Trusted Badge</span>  
+                    <button class="mp-toggle" :class="trustedBadge ? 'on' : ''" @click="trustedBadge = !trustedBadge"></button>  
+                </div>  
                 <div class="text-xs text-slate-400 mt-1 mb-2">  
                     Jika dinonaktifkan, paket tidak akan muncul di halaman pilihan developer.  
                 </div>  
@@ -495,7 +504,7 @@ body, .fi-main { font-family: 'Inter', sans-serif !important; }
   
         <div class="mp-modal-footer">  
             <button class="mp-btn-cancel" @click="tutupModal()">Batal</button>  
-            <button class="mp-btn-save flex items-center justify-center gap-2" @click="$wire.savePaket(paket.db_id, paket.harga, paket.maxTester, paket.rawDesc, paketAktif); tutupModal()">
+            <button class="mp-btn-save flex items-center justify-center gap-2" @click="$wire.savePaket(paket.db_id, paket.harga, paket.maxTester, paket.rawDesc, paketAktif, trustedBadge); tutupModal()">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
                 Simpan Perubahan
             </button>  
@@ -512,7 +521,7 @@ const PAKET_DATA = @json($paketList);
 function manajemenPaket() {  
     return {  
         cariSub: '', filterSubPaket: '', filterSubStatus: '',  
-        modalTerbuka: false, paket: null, paketAktif: true,  
+        modalTerbuka: false, paket: null, paketAktif: true, trustedBadge: false,  
   
         init() {},  
   
@@ -538,7 +547,8 @@ function manajemenPaket() {
   
         bukaModal(idx) {  
             this.paket       = PAKET_DATA[idx];  
-            this.paketAktif  = this.paket.status === 'Aktif';  
+            this.paketAktif  = this.paket.is_aktif;  
+            this.trustedBadge = this.paket.trusted_badge;
             this.modalTerbuka = true;  
         },  
   

@@ -45,6 +45,10 @@ class PaketsTable
                     ->label('Active')
                     ->sortable(),
 
+                ToggleColumn::make('trusted_badge')
+                    ->label('Trusted Badge')
+                    ->sortable(),
+
                 TextColumn::make('desc')
                     ->label('Description')
                     ->html()

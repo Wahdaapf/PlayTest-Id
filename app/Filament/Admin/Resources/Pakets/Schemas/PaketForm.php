@@ -15,14 +15,14 @@ class PaketForm
     {
         return $schema
             ->components([
-                // Section 1 - Name
+                // Section 1 - Information
                 Section::make("Information")
                     ->description("Set information details for this package")
                     ->icon('heroicon-o-document-text')
-                    ->columnSpan(3)
+                    ->columnSpanFull()
                     ->schema([
                         TextInput::make("name")
-                            ->label("Name")
+                            ->label("Package Name")
                             ->required()
                             ->columnSpanFull(),
                         RichEditor::make("desc")
@@ -31,53 +31,59 @@ class PaketForm
                             ->columnSpanFull(),
                     ]),
 
-                // Section 3 - Pricing
-                Section::make("Pricing")
-                    ->description("Set the pricing details for this package")
+                // Section 2 - Pricing & Points
+                Section::make("Pricing & Rewards")
+                    ->description("Set the pricing and point rewards for this package")
                     ->icon('heroicon-o-currency-dollar')
-                    ->columnSpan(2)
+                    ->columnSpanFull()
                     ->schema([
                         Group::make([
                             TextInput::make("price")
+                                ->label("Price")
                                 ->required()
                                 ->numeric()
                                 ->prefix('Rp')
                                 ->maxValue(9999999999999.99)
                                 ->step(0.01),
                             TextInput::make("fee")
+                                ->label("Fee")
                                 ->required()
                                 ->numeric()
                                 ->prefix('Rp')
                                 ->maxValue(9999999999999.99)
                                 ->step(0.01),
-                        ])->columns(2),
-                    ]),
-
-                // Section 4 - Additional
-                Section::make("Additional")
-                    ->description("Set additional information for this package")
-                    ->icon('heroicon-o-cog')
-                    ->columnSpan(1)
-                    ->schema([
-                        Group::make([
                             TextInput::make("point")
+                                ->label("Point Reward")
+                                ->placeholder("0")
                                 ->required()
                                 ->numeric()
                                 ->integer()
                                 ->default(0)
                                 ->minValue(0),
+                        ])->columns(3),
+                    ]),
+
+                // Section 3 - Status & Badges
+                Section::make("Status & Badges")
+                    ->description("Manage the status and visibility of this package")
+                    ->icon('heroicon-o-cog')
+                    ->columnSpanFull()
+                    ->schema([
+                        Group::make([
+                            Toggle::make("aktif")
+                                ->label("Active Status")
+                                ->required()
+                                ->default(true),
                             Toggle::make("most_popular")
                                 ->label("Most Popular")
                                 ->required()
-                                ->inline(false)
                                 ->default(false),
-                            Toggle::make("aktif")
-                                ->label("Active")
+                            Toggle::make("trusted_badge")
+                                ->label("Trusted Badge")
                                 ->required()
-                                ->inline(false)
-                                ->default(true),
+                                ->default(false),
                         ])->columns(3),
                     ]),
-            ])->columns(3);
+            ]);
     }
 }

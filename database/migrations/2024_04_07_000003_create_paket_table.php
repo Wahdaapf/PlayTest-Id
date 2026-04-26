@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->boolean('most_popular')->default(false);
             $table->integer('point')->default(0);
             $table->boolean('aktif')->default(true);
+            $table->boolean('trusted_badge')->default(false);
             $table->timestamps();
         });
     }

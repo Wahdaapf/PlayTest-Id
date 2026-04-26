@@ -11,7 +11,7 @@ class ManajemenPaket extends Page
     protected static ?string $slug = 'manajemen-paket';
     protected string $view = 'filament.admin.pages.manajemen-paket';
 
-    public function savePaket($id, $harga, $point, $descText, $aktif)
+    public function savePaket($id, $harga, $point, $descText, $aktif, $trustedBadge)
     {
         $paket = \App\Models\Paket::find($id);
         if ($paket) {
@@ -21,6 +21,7 @@ class ManajemenPaket extends Page
                 $paket->point = $point;
             $paket->desc = $descText;
             $paket->aktif = (bool) $aktif;
+            $paket->trusted_badge = (bool) $trustedBadge;
             $paket->save();
         }
     }
@@ -75,6 +76,7 @@ class ManajemenPaket extends Page
                 'support' => $p->most_popular ? 'Email & Chat' : ($index == 2 ? 'Dedicated' : 'Email'),
                 'status' => $p->aktif ? 'Active' : 'Non Active',
                 'is_aktif' => $p->aktif,
+                'trusted_badge' => $p->trusted_badge,
                 'totalSubscriber' => $subscriberCount,
                 'pendapatanTotal' => 'Rp ' . number_format($pendapatan, 0, ',', '.'),
                 'fitur' => count($fitur) > 0 ? $fitur : ['Hingga ' . ($p->point ?: 10) . ' Tester', 'Laporan dasar'],
