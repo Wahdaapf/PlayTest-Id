@@ -8,6 +8,7 @@ use Filament\Actions\EditAction;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ToggleColumn;
 
 class PaketsTable
 {
@@ -40,12 +41,16 @@ class PaketsTable
                     ->label('Most Popular')
                     ->boolean(),
 
+                ToggleColumn::make('aktif')
+                    ->label('Active')
+                    ->sortable(),
+
                 TextColumn::make('desc')
                     ->label('Description')
                     ->html()
                     ->limit(50)
                     ->markdown(),
-                
+
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

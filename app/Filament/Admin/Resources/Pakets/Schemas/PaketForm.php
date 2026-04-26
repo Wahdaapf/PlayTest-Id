@@ -71,7 +71,12 @@ class PaketForm
                                 ->required()
                                 ->inline(false)
                                 ->default(false),
-                        ])->columns(2),
+                            Toggle::make("aktif")
+                                ->label("Active")
+                                ->required()
+                                ->inline(false)
+                                ->default(true),
+                        ])->columns(3),
                     ]),
             ])->columns(3);
     }

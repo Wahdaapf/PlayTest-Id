@@ -16,12 +16,14 @@ class Paket extends Model
         'desc',
         'most_popular',
         'point',
+        'aktif',
     ];
 
     protected $casts = [
         'price'        => 'decimal:2',
         'fee'          => 'decimal:2',
         'most_popular' => 'boolean',
+        'aktif'        => 'boolean',
     ];
 
     public function misis(): HasMany

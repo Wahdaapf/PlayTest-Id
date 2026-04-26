@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     public function up(): void
     {
         Schema::create('paket', function (Blueprint $table) {
@@ -16,6 +15,7 @@ return new class extends Migration
             $table->text('desc');
             $table->boolean('most_popular')->default(false);
             $table->integer('point')->default(0);
+            $table->boolean('aktif')->default(true);
             $table->timestamps();
         });
     }

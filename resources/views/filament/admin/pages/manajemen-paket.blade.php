@@ -123,15 +123,16 @@ body, .fi-main { font-family: 'Inter', sans-serif !important; }
         <h1 class="mp-sora text-xl font-bold text-slate-900">Manajemen Paket</h1>  
         <p class="text-sm text-slate-500 mt-0.5">Kelola paket harga dan fitur yang tersedia untuk developer</p>  
     </div>  
-    <button class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-white transition"  
-            style="background:#0f172a"  
-            onmouseover="this.style.background='#1e293b'"  
-            onmouseout="this.style.background='#0f172a'">  
+    <a href="{{ \App\Filament\Admin\Resources\Pakets\PaketResource::getUrl('create') }}"
+       class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-white transition"  
+       style="background:#0f172a"  
+       onmouseover="this.style.background='#1e293b'"  
+       onmouseout="this.style.background='#0f172a'">  
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">  
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>  
         </svg>  
         Tambah Paket  
-    </button>  
+    </a>  
 </div>  
   
 {{-- STAT CARDS --}}  
@@ -494,7 +495,7 @@ body, .fi-main { font-family: 'Inter', sans-serif !important; }
   
         <div class="mp-modal-footer">  
             <button class="mp-btn-cancel" @click="tutupModal()">Batal</button>  
-            <button class="mp-btn-save flex items-center justify-center gap-2" @click="$wire.savePaket(paket.db_id, paket.harga, paket.maxTester, paket.rawDesc); tutupModal()">
+            <button class="mp-btn-save flex items-center justify-center gap-2" @click="$wire.savePaket(paket.db_id, paket.harga, paket.maxTester, paket.rawDesc, paketAktif); tutupModal()">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
                 Simpan Perubahan
             </button>  

@@ -1,5 +1,5 @@
 @php
-    $pakets = \App\Models\Paket::all();
+    $pakets = \App\Models\Paket::where('aktif', true)->get();
 @endphp
 
 <div x-data="{ 
