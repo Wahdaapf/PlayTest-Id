@@ -5,6 +5,7 @@ namespace App\Filament\Tester\Pages;
 use App\Models\Misi;
 use App\Models\MisiAnggota;
 use App\Models\UserBalance;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;  
 use Illuminate\Support\Facades\Auth;
 
@@ -15,6 +16,45 @@ class TesterDashboard extends Page
     protected static ?string $title           = 'Tester Dashboard';  
     protected static ?int    $navigationSort  = 1;  
     protected string  $view            = 'filament.tester.pages.tester-dashboard';  
+  
+    public function applyMisi($misiId)
+    {
+        $misi = Misi::with('paket')->find($misiId);
+        if (!$misi) return;
+
+        // Cek apakah sudah bergabung
+        if (MisiAnggota::where('id_user', Auth::id())->where('id_misi', $misiId)->exists()) {
+            Notification::make()
+                ->title('Peringatan')
+                ->warning()
+                ->body('Anda sudah bergabung dengan misi ini.')
+                ->send();
+            return;
+        }
+
+        // Tentukan status berdasarkan trusted_badge paket
+        $status = ($misi->paket && $misi->paket->trusted_badge) ? 'pending' : 'accepted';
+
+        MisiAnggota::create([
+            'id_misi' => $misiId,
+            'id_user' => Auth::id(),
+            'status'  => $status,
+        ]);
+
+        // Increment kapasitas (jumlah tester saat ini)
+        $misi->increment('kapasitas');
+
+        // Jika kapasitas mencapai 20, tutup misi
+        if ($misi->kapasitas >= 20) {
+            $misi->update(['status' => 'closed']);
+        }
+
+        Notification::make()
+            ->title('Berhasil!')
+            ->success()
+            ->body($status === 'pending' ? 'Permintaan bergabung sedang ditinjau.' : 'Anda telah berhasil bergabung dengan misi ini.')
+            ->send();
+    }
   
     public function getViewData(): array  
     {  
@@ -68,6 +108,7 @@ class TesterDashboard extends Page
                     'gradientBar' => $gradients[$gId]['bar'],
                     'reward'   => $m->point,
                     'status'   => 'Aktif',
+                    'rawStatus' => $ma->status,
                     'aksi'     => $hari > 10 ? 'laporkan' : 'submit',
                 ];
             })->toArray();
@@ -114,6 +155,7 @@ class TesterDashboard extends Page
                 ];
 
                 return [
+                    'id'        => $m->id,
                     'inisial'   => strtoupper(substr($m->nama_aplikasi, 0, 2)),
                     'gradient'  => $gradients[$m->id % count($gradients)],
                     'nama'      => $m->nama_aplikasi,
@@ -122,9 +164,10 @@ class TesterDashboard extends Page
                     'tipeColor' => $cat['color'],
                     'deskripsi' => $m->instruksi ? substr($m->instruksi, 0, 60) . '...' : 'Uji aplikasi ' . $m->nama_aplikasi . ' dan berikan feedback terbaik.',
                     'durasi'    => '14 hari',
-                    'testerCur' => $m->misiAnggotas->count(),
+                    'testerCur' => $m->misi_anggotas_count,
                     'testerMax' => $m->kapasitas ?: 20,
                     'reward'    => $m->point,
+                    'isTrusted' => $m->paket->trusted_badge ?? false,
                 ];
             })->toArray();
 
@@ -133,6 +176,7 @@ class TesterDashboard extends Page
             'namaTester'    => $user->name,  
             'inisialTester' => strtoupper(substr($user->name, 0, 2)),  
             'tierTester'    => $balance->badge ?? 'Novice Tester',  
+            'userBadgeCount' => $balance->badge ?? 0,  
   
             // ── Poin & Statistik ───────────────────────────────  
             'totalPoin'    => $totalPoin,  

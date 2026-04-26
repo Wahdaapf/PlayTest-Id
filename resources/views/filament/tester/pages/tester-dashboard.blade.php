@@ -184,6 +184,12 @@
     transition: all 0.15s ease; border: none; white-space: nowrap;  
 }  
 .tsr-btn-apply:hover { background: #1d4ed8; box-shadow: 0 6px 16px rgba(37,99,235,0.35); }  
+.tsr-btn-apply:disabled {  
+    background: #94a3b8 !important;  
+    box-shadow: none !important;  
+    cursor: not-allowed !important;  
+    opacity: 0.7;  
+}  
   
 .tsr-btn-submit {  
     display: inline-flex; align-items: center; gap: 6px;  
@@ -367,12 +373,21 @@
                         </div>  
   
                         @if($misi['aksi'] === 'submit')  
-                        <button class="tsr-btn-submit">  
-                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">  
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>  
-                            </svg>  
-                            Submit Task  
-                        </button>  
+                            @if($misi['rawStatus'] === 'starting')
+                                <button class="tsr-btn-submit">  
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">  
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>  
+                                    </svg>  
+                                    Submit Task  
+                                </button>  
+                            @else
+                                <button class="tsr-btn-submit" disabled style="opacity: 0.6; cursor: not-allowed; background: #f1f5f9; color: #94a3b8;">  
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">  
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>  
+                                    </svg>  
+                                    Pending  
+                                </button>
+                            @endif
                         @else  
                         <button class="tsr-btn-laporkan">  
                             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">  
@@ -447,7 +462,23 @@
                             </svg>  
                             <span class="text-xs font-bold font-mono-num" style="color:#16a34a;">+{{ $app['reward'] }} pts</span>  
                         </div>  
-                        <button class="tsr-btn-apply !px-3 font-bold">Apply</button>  
+                        @php
+                            $isRestricted = $app['isTrusted'] && ($userBadgeCount <= 5);
+                        @endphp
+                        <button 
+                            @if(!$isRestricted) 
+                                wire:click="applyMisi('{{ $app['id'] }}')" 
+                            @endif
+                            @disabled($isRestricted)
+                            wire:loading.attr="disabled"
+                            class="tsr-btn-apply !px-3 font-bold"
+                            @if($isRestricted) title="Misi ini membutuhkan minimal 6 badge" @endif
+                        >
+                            <span wire:loading.remove wire:target="applyMisi('{{ $app['id'] }}')">
+                                {{ $isRestricted ? 'Locked' : 'Apply' }}
+                            </span>
+                            <span wire:loading wire:target="applyMisi('{{ $app['id'] }}')">...</span>
+                        </button>  
                     </div>  
                 </div>  
                 @endforeach  
