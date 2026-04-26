@@ -16,7 +16,7 @@ class ManajemenKampanye extends Page
     {
         $misi = \App\Models\Misi::find($id);
         if ($misi) {
-            $misi->update(['status' => 'In Progress']);
+            $misi->update(['status' => 'open']);
         }
     }
 
@@ -24,7 +24,7 @@ class ManajemenKampanye extends Page
     {
         $misi = \App\Models\Misi::find($id);
         if ($misi) {
-            $misi->update(['status' => 'Rejected']);
+            $misi->update(['status' => 'rejected']);
         }
     }
 
@@ -45,10 +45,10 @@ class ManajemenKampanye extends Page
             ->get();
 
         $statusMap = [
-            'In Progress' => 'Aktif',
-            'Pending'     => 'Ditinjau',
-            'Completed'   => 'Selesai',
-            'Rejected'    => 'Ditolak',
+            'open'      => 'Aktif',
+            'Pending'   => 'Ditinjau',
+            'Completed' => 'Selesai',
+            'rejected'  => 'Ditolak',
         ];
 
         $colors = [
@@ -61,10 +61,10 @@ class ManajemenKampanye extends Page
 
         return [  
             'statTotal'    => \App\Models\Misi::count(),  
-            'statAktif'    => \App\Models\Misi::where('status', 'In Progress')->count(),  
+            'statAktif'    => \App\Models\Misi::where('status', 'open')->count(),  
             'statSelesai'  => \App\Models\Misi::where('status', 'Completed')->count(),  
             'statDitinjau' => \App\Models\Misi::where('status', 'Pending')->count(),  
-            'statDitolak'  => \App\Models\Misi::where('status', 'Rejected')->count(),  
+            'statDitolak'  => \App\Models\Misi::where('status', 'rejected')->count(),  
             'kampanyeList' => $misis->map(function($misi, $idx) use ($statusMap, $colors) {
                 $statusUI = $statusMap[$misi->status] ?? $misi->status;
                 $grad = $colors[$idx % count($colors)];
