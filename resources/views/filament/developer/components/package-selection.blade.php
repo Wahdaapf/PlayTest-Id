@@ -94,7 +94,7 @@
 
                 {{-- Deskripsi --}}
                 <p class="mt-1.5 text-sm text-slate-500 leading-relaxed line-clamp-2">
-                    {{ $paket->desc ?? 'Ideal untuk testing aplikasi standar dengan hasil maksimal.' }}
+                    {{ $paket->short_desc ?? strip_tags($paket->desc) ?? 'Ideal untuk testing aplikasi standar dengan hasil maksimal.' }}
                 </p>
 
                 {{-- Harga --}}

@@ -161,6 +161,34 @@
       border-radius: 999px;
       box-shadow: 0 2px 10px rgba(37,99,235,0.35);
     }
+
+    /* ── Dynamic Package Rich Text Lists ── */
+    .package-desc-wrapper ul {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 2rem;
+      font-size: 0.875rem;
+      color: #475569;
+    }
+    .package-desc-wrapper li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .package-desc-wrapper li::before {
+      content: "\f058";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      color: #22c55e;
+      margin-top: 2px;
+    }
+    .package-desc-wrapper.is-pro li::before {
+      color: #3b82f6;
+    }
+    .package-desc-wrapper p {
+      margin-bottom: 1rem;
+    }
   </style>
 </head>
 
@@ -192,11 +220,11 @@
 
       <!-- Desktop CTA -->
       <div class="hidden md:flex items-center gap-3">
-        <a href="#" class="px-4 py-2 text-sm font-semibold text-brand-600 border-2 border-brand-600 rounded-xl hover:bg-brand-50 transition duration-200">
-          Masuk
+        <a href="{{ route('filament.developer.auth.login') }}" class="px-4 py-2 text-sm font-semibold text-brand-600 border-2 border-brand-600 rounded-xl hover:bg-brand-50 transition duration-200">
+          Masuk Dev
         </a>
-        <a href="#" class="px-4 py-2 text-sm font-semibold text-white bg-brand-600 rounded-xl shadow-md hover:bg-brand-700 transition duration-200">
-          Daftar
+        <a href="{{ route('filament.tester.auth.login') }}" class="px-4 py-2 text-sm font-semibold text-white bg-brand-600 rounded-xl shadow-md hover:bg-brand-700 transition duration-200">
+          Masuk Tester
         </a>
       </div>
 
@@ -215,8 +243,8 @@
         <li><a href="#manfaat"    class="block px-3 py-2 rounded-lg hover:bg-brand-50 hover:text-brand-600 transition">Manfaat</a></li>
         <li><a href="#harga"      class="block px-3 py-2 rounded-lg hover:bg-brand-50 hover:text-brand-600 transition">Harga</a></li>
         <li class="border-t border-slate-100 mt-2 pt-3 flex gap-2">
-          <a href="#" class="flex-1 text-center px-4 py-2 font-semibold text-brand-600 border-2 border-brand-600 rounded-xl hover:bg-brand-50 transition">Masuk</a>
-          <a href="#" class="flex-1 text-center px-4 py-2 font-semibold text-white bg-brand-600 rounded-xl shadow hover:bg-brand-700 transition">Daftar</a>
+          <a href="{{ route('filament.developer.auth.login') }}" class="flex-1 text-center px-4 py-2 font-semibold text-brand-600 border-2 border-brand-600 rounded-xl hover:bg-brand-50 transition">Masuk Dev</a>
+          <a href="{{ route('filament.tester.auth.login') }}" class="flex-1 text-center px-4 py-2 font-semibold text-white bg-brand-600 rounded-xl shadow hover:bg-brand-700 transition">Masuk Tester</a>
         </li>
       </ul>
     </div>
@@ -258,11 +286,11 @@
 
       <!-- Dual CTA -->
       <div class="flex flex-col sm:flex-row gap-3 pt-2">
-        <a href="#harga" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-brand-700 font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:bg-brand-50 transition duration-300 text-sm">
+        <a href="{{ route('filament.developer.auth.login') }}" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-brand-700 font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:bg-brand-50 transition duration-300 text-sm">
           <i class="fa-solid fa-rocket"></i>
           Saya Butuh Tester
         </a>
-        <a href="#manfaat" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white/10 border border-white/40 text-white font-semibold rounded-2xl hover:bg-white/20 transition duration-300 text-sm backdrop-blur-sm">
+        <a href="{{ route('filament.tester.auth.login') }}" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white/10 border border-white/40 text-white font-semibold rounded-2xl hover:bg-white/20 transition duration-300 text-sm backdrop-blur-sm">
           <i class="fa-solid fa-hand-pointer"></i>
           Saya Ingin Jadi Tester
         </a>
@@ -533,90 +561,85 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
 
-      <!-- ── Card 1: Starter ── -->
-      <div class="pricing-card reveal bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
+      @foreach($pakets as $paket)
+        @if(!$paket->most_popular)
+          <!-- ── Card: Regular ── -->
+          <div class="pricing-card reveal bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
 
-        <div class="mb-6">
-          <div class="inline-flex items-center gap-2 bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
-            <i class="fa-solid fa-seedling text-green-500"></i> Paket Starter
-          </div>
-          <p class="text-slate-500 text-sm leading-relaxed">Solusi dasar untuk memenuhi syarat Google Play Closed Testing.</p>
-        </div>
-
-        <!-- Price -->
-        <div class="mb-6 pb-6 border-b border-slate-100">
-          <div class="flex items-baseline gap-1">
-            <span class="text-slate-400 text-sm font-medium">Rp</span>
-            <span class="text-5xl font-black text-slate-800">300</span>
-            <span class="text-slate-400 text-lg font-medium">.000</span>
-          </div>
-          <p class="text-slate-400 text-xs mt-1">Pembayaran sekali · akses 14 hari penuh</p>
-        </div>
-
-        <!-- Features -->
-        <ul class="check-list text-sm text-slate-600 mb-8 space-y-0">
-          <li><i class="fa-solid fa-circle-check text-green-500"></i><span>Akses 20 Tester Aktif &amp; Terverifikasi</span></li>
-          <li><i class="fa-solid fa-circle-check text-green-500"></i><span>Pengujian 14 Hari Penuh Berturut-turut</span></li>
-          <li><i class="fa-solid fa-circle-check text-green-500"></i><span>Laporan Pengujian Standar</span></li>
-          <li><i class="fa-solid fa-circle-check text-green-500"></i><span>Dukungan Komunitas PlayTest ID</span></li>
-        </ul>
-
-        <a href="#" class="block w-full text-center py-3.5 rounded-xl font-bold text-brand-700 border-2 border-brand-600 hover:bg-brand-600 hover:text-white transition duration-300 text-sm">
-          Pilih Starter
-        </a>
-      </div>
-
-      <!-- ── Card 2: Pro (Best Value) ── -->
-      <div class="pricing-card reveal relative" style="transition-delay: 0.15s;">
-
-        <!-- Popular badge floating above card -->
-        <div class="flex justify-center mb-3">
-          <span class="badge-popular">
-            <i class="fa-solid fa-fire mr-1"></i> Paling Populer
-          </span>
-        </div>
-
-        <div class="bg-white rounded-2xl p-8 shadow-2xl border-2 border-brand-600 relative overflow-hidden">
-
-          <!-- Corner ribbon glow -->
-          <div class="absolute -top-10 -right-10 w-36 h-36 bg-brand-500/10 rounded-full blur-2xl"></div>
-
-          <div class="mb-6 relative">
-            <div class="inline-flex items-center gap-2 bg-brand-600 text-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
-              <i class="fa-solid fa-gem"></i> Paket Pro
+            <div class="mb-6">
+              <div class="inline-flex items-center gap-2 bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
+                {!! $paket->trusted_badge ? '<i class="fa-solid fa-gem text-brand-500"></i>' : '<i class="fa-solid fa-seedling text-green-500"></i>' !!} Paket {{ $paket->name }}
+              </div>
+              <p class="text-slate-500 text-sm leading-relaxed">{{ $paket->short_desc ?? 'Solusi dasar untuk aplikasi Anda.' }}</p>
             </div>
-            <p class="text-slate-500 text-sm leading-relaxed">Solusi premium untuk optimasi menyeluruh sebelum aplikasi Anda rilis ke publik.</p>
-          </div>
 
-          <!-- Price -->
-          <div class="mb-6 pb-6 border-b border-slate-100 relative">
-            <div class="flex items-baseline gap-1">
-              <span class="text-brand-400 text-sm font-medium">Rp</span>
-              <span class="text-5xl font-black text-brand-700">500</span>
-              <span class="text-brand-400 text-lg font-medium">.000</span>
+            <!-- Price -->
+            <div class="mb-6 pb-6 border-b border-slate-100">
+              <div class="flex items-baseline gap-1">
+                <span class="text-slate-400 text-sm font-medium">Rp</span>
+                <span class="text-5xl font-black text-slate-800">{{ number_format($paket->price, 0, ',', '.') }}</span>
+              </div>
+              <p class="text-slate-400 text-xs mt-1">Pembayaran sekali</p>
             </div>
-            <p class="text-slate-400 text-xs mt-1">Pembayaran sekali · akses prioritas penuh</p>
+
+            <!-- Features -->
+            <div class="package-desc-wrapper text-sm text-slate-600 mb-8">
+              {!! $paket->desc !!}
+            </div>
+
+            <a href="{{ route('filament.developer.auth.login') }}" class="block w-full text-center py-3.5 rounded-xl font-bold text-brand-700 border-2 border-brand-600 hover:bg-brand-600 hover:text-white transition duration-300 text-sm">
+              Pilih {{ $paket->name }}
+            </a>
           </div>
+        @else
+          <!-- ── Card: Pro (Best Value) ── -->
+          <div class="pricing-card reveal relative" style="transition-delay: 0.15s;">
 
-          <!-- Features -->
-          <ul class="check-list text-sm text-slate-600 mb-8 relative space-y-0">
-            <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>Semua Fitur Paket Starter</span></li>
-            <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>Laporan Bug &amp; UX Mendalam per Tester</span></li>
-            <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>Prioritas Antrean (Mulai Lebih Cepat)</span></li>
-            <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>Review Komprehensif dari Setiap Tester</span></li>
-            <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>Dukungan Prioritas via Chat Langsung</span></li>
-          </ul>
+            <!-- Popular badge floating above card -->
+            <div class="flex justify-center mb-3">
+              <span class="badge-popular">
+                <i class="fa-solid fa-fire mr-1"></i> Paling Populer
+              </span>
+            </div>
 
-          <a href="#" class="relative block w-full text-center py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-brand-600 to-brand-500 shadow-lg shadow-brand-200 hover:shadow-brand-300 hover:from-brand-700 hover:to-brand-600 transition duration-300 text-sm">
-            <i class="fa-solid fa-bolt mr-1"></i> Pilih Pro – Mulai Sekarang
-          </a>
+            <div class="bg-white rounded-2xl p-8 shadow-2xl border-2 border-brand-600 relative overflow-hidden">
 
-          <p class="text-center text-xs text-slate-400 mt-3">
-            <i class="fa-solid fa-lock text-xs mr-1"></i>Pembayaran aman · Garansi 7 hari
-          </p>
+              <!-- Corner ribbon glow -->
+              <div class="absolute -top-10 -right-10 w-36 h-36 bg-brand-500/10 rounded-full blur-2xl"></div>
 
-        </div>
-      </div>
+              <div class="mb-6 relative">
+                <div class="inline-flex items-center gap-2 bg-brand-600 text-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
+                  {!! $paket->trusted_badge ? '<i class="fa-solid fa-gem"></i>' : '<i class="fa-solid fa-star"></i>' !!} Paket {{ $paket->name }}
+                </div>
+                <p class="text-slate-500 text-sm leading-relaxed">{{ $paket->short_desc ?? 'Solusi premium untuk aplikasi Anda rilis ke publik.' }}</p>
+              </div>
+
+              <!-- Price -->
+              <div class="mb-6 pb-6 border-b border-slate-100 relative">
+                <div class="flex items-baseline gap-1">
+                  <span class="text-brand-400 text-sm font-medium">Rp</span>
+                  <span class="text-5xl font-black text-brand-700">{{ number_format($paket->price, 0, ',', '.') }}</span>
+                </div>
+                <p class="text-slate-400 text-xs mt-1">Pembayaran sekali</p>
+              </div>
+
+              <!-- Features -->
+              <div class="package-desc-wrapper is-pro text-sm text-slate-600 mb-8 relative">
+                {!! $paket->desc !!}
+              </div>
+
+              <a href="{{ route('filament.developer.auth.login') }}" class="relative block w-full text-center py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-brand-600 to-brand-500 shadow-lg shadow-brand-200 hover:shadow-brand-300 hover:from-brand-700 hover:to-brand-600 transition duration-300 text-sm">
+                <i class="fa-solid fa-bolt mr-1"></i> Pilih {{ $paket->name }} – Mulai Sekarang
+              </a>
+
+              <p class="text-center text-xs text-slate-400 mt-3 relative">
+                <i class="fa-solid fa-lock text-xs mr-1"></i>Pembayaran aman
+              </p>
+
+            </div>
+          </div>
+        @endif
+      @endforeach
 
     </div>
 
@@ -716,10 +739,10 @@
     </p>
 
     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="#harga" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-brand-700 font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition duration-300">
+      <a href="{{ route('filament.developer.auth.login') }}" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-brand-700 font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition duration-300">
         <i class="fa-solid fa-rocket"></i> Mulai Sebagai Developer
       </a>
-      <a href="#manfaat" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 border border-white/30 text-white font-semibold rounded-2xl hover:bg-white/20 transition duration-300 backdrop-blur-sm">
+      <a href="{{ route('filament.tester.auth.login') }}" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 border border-white/30 text-white font-semibold rounded-2xl hover:bg-white/20 transition duration-300 backdrop-blur-sm">
         <i class="fa-solid fa-hand-pointer"></i> Daftar Sebagai Tester
       </a>
     </div>

@@ -196,98 +196,12 @@ body, .fi-main { font-family: 'Inter', sans-serif !important; }
   
 </div>  
   
-{{-- 3 PAKET CARDS --}}  
-<div>  
-    <div class="mp-sora font-bold text-slate-900 text-base mb-4">Daftar Paket</div>  
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">  
-  
-        @foreach($paketList as $idx => $p)  
-        @php  
-            $isPopular = $p['badge'] === 'Terpopuler';  
-            $isPremium = $p['badge'] === 'Premium';  
-            $cardClass = $isPopular ? 'mp-popular' : ($isPremium ? 'mp-premium' : '');  
-        @endphp  
-  
-        <div class="mp-paket-card {{ $cardClass }}">  
-            <div class="mp-paket-header" style="background:{{ $p['warnaBg'] }};border-bottom:1px solid {{ $p['warnaBorder'] }}">  
-                @if($p['badge'])  
-                <span class="mp-badge mp-badge-{{ $isPopular ? 'popular' : 'premium' }}">  
-                    {{ $isPopular ? '🔥' : '⭐' }} {{ $p['badge'] }}  
-                </span>  
-                @endif  
-                <div class="w-12 h-12 rounded-2xl bg-gradient-to-br {{ $p['warnaGrad'] }} flex items-center justify-center text-white font-black text-lg mb-3 shadow-lg">  
-                    {{ strtoupper(substr($p['nama'], 0, 1)) }}  
-                </div>  
-                <div class="mp-paket-nama mp-sora flex items-center gap-1.5" style="color:{{ $p['warnaPrimary'] }}">
-                    {{ $p['nama'] }}
-                    @if($p['trusted_badge'])
-                        <x-heroicon-m-check-badge class="w-5 h-5 text-blue-500" />
-                    @endif
-                </div>  
-                <div class="mp-paket-desc">{{ $p['deskripsi'] }}</div>  
-                <div class="mp-harga-wrap">  
-                    <div class="mp-harga-angka mp-mono" style="color:{{ $p['warnaPrimary'] }}">{{ $p['hargaF'] }}</div>  
-                    <div class="mp-harga-sub">per kampanye · 14 hari</div>  
-                </div>  
-            </div>  
-  
-            <div class="mp-paket-body">  
-                <div class="mp-meta-grid mt-4">  
-                    <div class="mp-meta-item">  
-                        <div class="mp-meta-label">Max Tester</div>  
-                        <div class="mp-meta-val">{{ $p['maxTester'] }} orang</div>  
-                    </div>  
-                    <div class="mp-meta-item">  
-                        <div class="mp-meta-label">Durasi</div>  
-                        <div class="mp-meta-val">{{ $p['durasiHari'] }} hari</div>  
-                    </div>  
-                    <div class="mp-meta-item">  
-                        <div class="mp-meta-label">Revisi</div>  
-                        <div class="mp-meta-val">{{ $p['maxRevisi'] == 99 ? 'Unlimited' : $p['maxRevisi'].'x' }}</div>  
-                    </div>  
-                    <div class="mp-meta-item">  
-                        <div class="mp-meta-label">Support</div>  
-                        <div class="mp-meta-val" style="font-size:.7rem">{{ $p['support'] }}</div>  
-                    </div>  
-                </div>  
-  
-                <div class="mp-stats-row">  
-                    <span class="mp-stats-row-label">Subscriber</span>  
-                    <span class="mp-stats-row-val">{{ $p['totalSubscriber'] }} developer</span>  
-                </div>  
-                <div class="mp-stats-row">  
-                    <span class="mp-stats-row-label">Pendapatan</span>  
-                    <span class="mp-stats-row-val mp-mono" style="font-size:.75rem">{{ $p['pendapatanTotal'] }}</span>  
-                </div>  
-  
-                <hr class="mp-divider mt-2">  
-  
-                <ul class="mp-fitur-list">  
-                    @foreach($p['fitur'] as $f)  
-                    <li><span class="mp-check">✓</span>{{ $f }}</li>  
-                    @endforeach  
-                    @foreach($p['bukan'] as $b)  
-                    <li class="mp-bukan"><span class="mp-cross">✗</span>{{ $b }}</li>  
-                    @endforeach  
-                </ul>  
-  
-                <button  
-                    class="mp-btn-edit flex items-center justify-center gap-2"  
-                    style="color:{{ $p['warnaPrimary'] }}"  
-                    onmouseover="this.style.background='{{ $p['warnaPrimary'] }}'"  
-                    onmouseout="this.style.background='transparent'"  
-                    @click="bukaModal({{ $idx }})"  
-                >  
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg> 
-                    Edit Paket {{ $p['nama'] }}  
-                </button>  
-            </div>  
-        </div>  
-        @endforeach  
-  
-    </div>  
-</div>  
-  
+{{-- DATATABLE FILAMENT UNTUK PAKET --}}
+<div class="mb-8">
+    <div class="mp-sora font-bold text-slate-900 text-base mb-4">Daftar Paket</div>
+    {{ $this->table }}
+</div>
+
 {{-- SUBSCRIBER TABLE --}}  
 <div>  
     <div class="mp-section-title mp-sora">  
@@ -371,157 +285,13 @@ body, .fi-main { font-family: 'Inter', sans-serif !important; }
     </div>  
 </div>  
   
-{{-- MODAL EDIT PAKET --}}  
-<div  
-    class="mp-modal-bg"  
-    x-show="modalTerbuka"  
-    x-cloak  
-    style="display:none"  
-    x-transition:enter="transition ease-out duration-250"  
-    x-transition:enter-start="opacity-0"  
-    x-transition:enter-end="opacity-100"  
-    x-transition:leave="transition ease-in duration-150"  
-    x-transition:leave-start="opacity-100"  
-    x-transition:leave-end="opacity-0"  
-    @click.self="tutupModal()"  
-    @keydown.escape.window="tutupModal()"  
->  
-    <div  
-        class="mp-modal-panel"  
-        x-show="modalTerbuka"  
-        x-transition:enter="transition ease-out duration-250"  
-        x-transition:enter-start="opacity-0 translate-x-8"  
-        x-transition:enter-end="opacity-100 translate-x-0"  
-        x-transition:leave="transition ease-in duration-150"  
-        x-transition:leave-start="opacity-100 translate-x-0"  
-        x-transition:leave-end="opacity-0 translate-x-8"  
-    >  
-        <div class="mp-modal-header">  
-            <div class="flex items-center justify-between">  
-                <div>  
-                    <div class="mp-sora font-bold text-slate-900 text-base">Edit Paket</div>  
-                    <div class="text-xs text-slate-400 mt-0.5" x-text="paket ? 'ID: ' + paket.id : ''"></div>  
-                </div>  
-                <button @click="tutupModal()" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:bg-slate-200 transition">  
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">  
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>  
-                    </svg>  
-                </button>  
-            </div>  
-        </div>  
-  
-        <template x-if="paket">  
-            <div class="mp-modal-body">  
-  
-                <div class="mp-preview-box mb-4">  
-                    <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white font-black text-lg mx-auto mb-2"  
-                         :style="'background:' + paket.warnaPrimary"  
-                         x-text="paket.nama.charAt(0)"></div>  
-                    <div class="font-bold text-slate-900 mp-sora" x-text="paket.nama"></div>  
-                    <div class="mp-mono font-bold mt-1" :style="'color:' + paket.warnaPrimary" x-text="paket.hargaF"></div>  
-                </div>  
-  
-                <div class="mp-modal-section">Informasi Dasar</div>  
-  
-                <div class="mp-form-group">  
-                    <label class="mp-form-label">Nama Paket</label>  
-                    <input type="text" class="mp-form-input" :value="paket.nama" readonly>  
-                    <div class="mp-form-note">Nama paket tidak dapat diubah</div>  
-                </div>  
-                <div class="mp-form-group">  
-                    <label class="mp-form-label">Fitur (pisahkan dengan baris baru/Enter)</label>  
-                    <textarea class="mp-form-textarea" x-model="paket.rawDesc"></textarea>  
-                </div>  
-                <div class="mp-form-group">  
-                    <label class="mp-form-label">Badge Label</label>  
-                    <input type="text" class="mp-form-input" x-model="paket.badge" placeholder="Kosongkan jika tidak ada">  
-                </div>  
-  
-                <div class="mp-modal-section">Harga &amp; Ketentuan</div>  
-                <div class="mp-form-row">  
-                    <div class="mp-form-group">  
-                        <label class="mp-form-label">Harga (Rp)</label>  
-                        <input type="number" class="mp-form-input" x-model="paket.harga">  
-                    </div>  
-                    <div class="mp-form-group">  
-                        <label class="mp-form-label">Durasi (hari)</label>  
-                        <input type="number" class="mp-form-input" :value="paket.durasiHari" readonly>  
-                    </div>  
-                </div>  
-                <div class="mp-form-row">  
-                    <div class="mp-form-group">  
-                        <label class="mp-form-label">Maks. Tester</label>  
-                        <input type="number" class="mp-form-input" x-model="paket.maxTester">  
-                    </div>  
-                    <div class="mp-form-group">  
-                        <label class="mp-form-label">Maks. Revisi</label>  
-                        <input type="number" class="mp-form-input" :value="paket.maxRevisi === 99 ? 0 : paket.maxRevisi" readonly>  
-                        <div class="mp-form-note">Hanya bisa diubah oleh Super Admin</div>  
-                    </div>  
-                </div>  
-  
-                <div class="mp-modal-section">Fitur &amp; Layanan</div>  
-                <div class="mp-form-group">  
-                    <label class="mp-form-label">Tipe Laporan</label>  
-                    <select class="mp-form-select">  
-                        <option :selected="paket.laporan === 'Dasar'">Dasar</option>  
-                        <option :selected="paket.laporan === 'Detail + Analitik'">Detail + Analitik</option>  
-                        <option :selected="paket.laporan === 'Lengkap + Export'">Lengkap + Export</option>  
-                    </select>  
-                </div>  
-                <div class="mp-form-group">  
-                    <label class="mp-form-label">Prioritas Review</label>  
-                    <select class="mp-form-select">  
-                        <option :selected="paket.prioritasReview === 'Normal'">Normal</option>  
-                        <option :selected="paket.prioritasReview === 'Prioritas'">Prioritas</option>  
-                        <option :selected="paket.prioritasReview === 'Sangat Prioritas'">Sangat Prioritas</option>  
-                    </select>  
-                </div>  
-                <div class="mp-form-group">  
-                    <label class="mp-form-label">Tipe Support</label>  
-                    <select class="mp-form-select">  
-                        <option :selected="paket.support === 'Email'">Email</option>  
-                        <option :selected="paket.support === 'Email & Chat'">Email & Chat</option>  
-                        <option :selected="paket.support === 'Dedicated Manager'">Dedicated Manager</option>  
-                    </select>  
-                </div>  
-  
-                <div class="mp-modal-section">Status Paket</div>  
-                <div class="mp-toggle-wrap">  
-                    <span class="mp-toggle-label">Paket Aktif</span>  
-                    <button class="mp-toggle" :class="paketAktif ? 'on' : ''" @click="paketAktif = !paketAktif"></button>  
-                </div>  
-                <div class="mp-toggle-wrap">  
-                    <span class="mp-toggle-label">Trusted Badge</span>  
-                    <button class="mp-toggle" :class="trustedBadge ? 'on' : ''" @click="trustedBadge = !trustedBadge"></button>  
-                </div>  
-                <div class="text-xs text-slate-400 mt-1 mb-2">  
-                    Jika dinonaktifkan, paket tidak akan muncul di halaman pilihan developer.  
-                </div>  
-  
-            </div>  
-        </template>  
-  
-        <div class="mp-modal-footer">  
-            <button class="mp-btn-cancel" @click="tutupModal()">Batal</button>  
-            <button class="mp-btn-save flex items-center justify-center gap-2" @click="$wire.savePaket(paket.db_id, paket.harga, paket.maxTester, paket.rawDesc, paketAktif, trustedBadge); tutupModal()">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
-                Simpan Perubahan
-            </button>  
-        </div>  
-    </div>  
-</div>  
-  
 </div>  
   
 @push('scripts')  
 <script>  
-const PAKET_DATA = @json($paketList);  
-  
 function manajemenPaket() {  
     return {  
         cariSub: '', filterSubPaket: '', filterSubStatus: '',  
-        modalTerbuka: false, paket: null, paketAktif: true, trustedBadge: false,  
   
         init() {},  
   
@@ -544,21 +314,9 @@ function manajemenPaket() {
         },  
   
         resetSubFilter() { this.cariSub = ''; this.filterSubPaket = ''; this.filterSubStatus = ''; },  
-  
-        bukaModal(idx) {  
-            this.paket       = PAKET_DATA[idx];  
-            this.paketAktif  = this.paket.is_aktif;  
-            this.trustedBadge = this.paket.trusted_badge;
-            this.modalTerbuka = true;  
-        },  
-  
-        tutupModal() {  
-            this.modalTerbuka = false;  
-            setTimeout(() => { this.paket = null; }, 200);  
-        },  
     };  
 }  
-</script>  
+</script>
 @endpush  
   
 </x-filament-panels::page>  

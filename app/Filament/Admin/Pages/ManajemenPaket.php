@@ -4,87 +4,123 @@ namespace App\Filament\Admin\Pages;
 
 use Filament\Pages\Page;
 
-class ManajemenPaket extends Page
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Actions\EditAction;
+use Filament\Actions\DeleteAction;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\RichEditor;
+use App\Models\Paket;
+use App\Models\Pembayaran;
+
+class ManajemenPaket extends Page implements HasTable, HasForms
 {
+    use InteractsWithTable;
+    use InteractsWithForms;
+
     protected static ?string $navigationLabel = 'Manajemen Paket';
     protected static ?string $title = 'Manajemen Paket';
     protected static ?string $slug = 'manajemen-paket';
     protected string $view = 'filament.admin.pages.manajemen-paket';
 
-    public function savePaket($id, $harga, $point, $descText, $aktif, $trustedBadge)
+    public function table(Table $table): Table
     {
-        $paket = \App\Models\Paket::find($id);
-        if ($paket) {
-            if ($harga)
-                $paket->price = $harga;
-            if ($point)
-                $paket->point = $point;
-            $paket->desc = $descText;
-            $paket->aktif = (bool) $aktif;
-            $paket->trusted_badge = (bool) $trustedBadge;
-            $paket->save();
-        }
+        return $table
+            ->query(Paket::query())
+            ->columns([
+                TextColumn::make('name')
+                    ->label('Nama Paket')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('short_desc')
+                    ->label('Subtitle')
+                    ->limit(30)
+                    ->searchable(),
+                TextColumn::make('price')
+                    ->label('Harga')
+                    ->money('IDR')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('fee')
+                    ->label('Fee')
+                    ->money('IDR')
+                    ->sortable(),
+                TextColumn::make('point')
+                    ->label('Poin Reward')
+                    ->numeric()
+                    ->sortable(),
+                IconColumn::make('most_popular')
+                    ->label('Terpopuler')
+                    ->boolean(),
+                ToggleColumn::make('aktif')
+                    ->label('Aktif'),
+                ToggleColumn::make('trusted_badge')
+                    ->label('Trusted Badge'),
+            ])
+            ->actions([
+                EditAction::make()
+                    ->form([
+                        TextInput::make('name')
+                            ->label('Nama Paket')
+                            ->required(),
+                        TextInput::make('short_desc')
+                            ->label('Subtitle Dasar')
+                            ->placeholder('Solusi dasar untuk memenuhi syarat...'),
+                        TextInput::make('price')
+                            ->label('Harga (Rp)')
+                            ->numeric()
+                            ->required(),
+                        TextInput::make('fee')
+                            ->label('Fee (Rp)')
+                            ->numeric()
+                            ->required(),
+                        TextInput::make('point')
+                            ->label('Poin Reward')
+                            ->numeric()
+                            ->required(),
+                        RichEditor::make('desc')
+                            ->label('Fitur & Deskripsi')
+                            ->required(),
+                        Toggle::make('aktif')
+                            ->label('Aktif')
+                            ->default(true),
+                        Toggle::make('most_popular')
+                            ->label('Terpopuler')
+                            ->default(false),
+                        Toggle::make('trusted_badge')
+                            ->label('Trusted Badge')
+                            ->default(false),
+                    ]),
+                DeleteAction::make(),
+            ]);
     }
 
     protected function getViewData(): array
     {
-        $pakets = \App\Models\Paket::withCount([
+        $pakets = Paket::withCount([
             'pembayarans' => function ($q) {
                 $q->where('status', 'success');
             }
         ])->get();
 
-        $paketList = [];
         $totalPendapatan = 0;
         $totalAktif = 0;
 
-        foreach ($pakets as $index => $p) {
-            $warnaData = [
-                ['primary' => '#64748b', 'grad' => 'from-slate-500 to-slate-400', 'bg' => '#f8fafc', 'border' => '#e2e8f0'],
-                ['primary' => '#2563eb', 'grad' => 'from-blue-600 to-blue-400', 'bg' => '#eff6ff', 'border' => '#bfdbfe'],
-                ['primary' => '#7c3aed', 'grad' => 'from-violet-600 to-purple-400', 'bg' => '#fdf4ff', 'border' => '#e9d5ff'],
-            ];
-            $w = $warnaData[$index % 3];
-
+        foreach ($pakets as $p) {
             $subscriberCount = $p->pembayarans_count;
             $pendapatan = $p->price * $subscriberCount;
             $totalPendapatan += $pendapatan;
-            $totalAktif++;
-
-            $fitur = explode("\n", $p->desc);
-            $fitur = array_filter(array_map('trim', $fitur));
-
-            $paketList[] = [
-                'db_id' => $p->id,
-                'id' => 'PKT-' . str_pad($p->id, 3, '0', STR_PAD_LEFT),
-                'nama' => $p->name,
-                'slug' => strtolower(str_replace(' ', '-', $p->name)),
-                'harga' => (float) $p->price,
-                'hargaF' => 'Rp ' . number_format($p->price, 0, ',', '.'),
-                'deskripsi' => 'Paket ' . $p->name . ' untuk pengujian aplikasi.',
-                'rawDesc' => $p->desc,
-                'badge' => $p->most_popular ? 'Terpopuler' : ($index == 2 ? 'Premium' : ''),
-                'warnaPrimary' => $w['primary'],
-                'warnaGrad' => $w['grad'],
-                'warnaBg' => $w['bg'],
-                'warnaBorder' => $w['border'],
-                'maxTester' => $p->point ?: 10,
-                'durasiHari' => 14,
-                'maxRevisi' => $p->most_popular ? 3 : ($index == 2 ? 99 : 1),
-                'laporan' => $p->most_popular ? 'Detail + Analitik' : ($index == 2 ? 'Lengkap + Export' : 'Dasar'),
-                'prioritasReview' => $p->most_popular ? 'Prioritas' : ($index == 2 ? 'Sangat Prioritas' : 'Normal'),
-                'support' => $p->most_popular ? 'Email & Chat' : ($index == 2 ? 'Dedicated' : 'Email'),
-                'status' => $p->aktif ? 'Active' : 'Non Active',
-                'is_aktif' => $p->aktif,
-                'trusted_badge' => $p->trusted_badge,
-                'totalSubscriber' => $subscriberCount,
-                'pendapatanTotal' => 'Rp ' . number_format($pendapatan, 0, ',', '.'),
-                'fitur' => count($fitur) > 0 ? $fitur : ['Hingga ' . ($p->point ?: 10) . ' Tester', 'Laporan dasar'],
-                'bukan' => []
-            ];
+            if ($p->aktif) $totalAktif++;
         }
 
-        $subs = \App\Models\Pembayaran::with(['user', 'paket', 'misi'])->latest()->get();
+        $subs = Pembayaran::with(['user', 'paket', 'misi'])->latest()->get();
         $subscriberList = [];
         $totalSubs = 0;
 
@@ -95,7 +131,6 @@ class ManajemenPaket extends Page
             $nama = $s->user->name ?? 'User Unknown';
             $inisial = strtoupper(substr($nama, 0, 2));
 
-            // Generate consistent color based on name
             $colors = [
                 'from-blue-500 to-cyan-400',
                 'from-emerald-500 to-teal-400',
@@ -128,10 +163,9 @@ class ManajemenPaket extends Page
 
         return [
             'statTotalPaket' => count($pakets),
-            'statPaketAktif' => $pakets->where('aktif', true)->count(),
+            'statPaketAktif' => $totalAktif,
             'statTotalSubscriber' => $totalSubs,
             'statPendapatan' => 'Rp ' . number_format($totalPendapatan, 0, ',', '.'),
-            'paketList' => $paketList,
             'subscriberList' => $subscriberList,
         ];
     }

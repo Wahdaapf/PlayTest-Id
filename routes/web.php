@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Models\Paket;
+
 Route::get('/', function () {
-    return view('welcome');
+    $pakets = Paket::where('aktif', true)->orderBy('price', 'asc')->get();
+    return view('welcome', compact('pakets'));
 });
 

@@ -11,6 +11,7 @@ class Paket extends Model
 
     protected $fillable = [
         'name',
+        'short_desc',
         'price',
         'fee',
         'desc',
