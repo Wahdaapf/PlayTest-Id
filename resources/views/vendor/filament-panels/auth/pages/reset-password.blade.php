@@ -372,12 +372,22 @@
         color: #6b7280;
         margin-top: 1.5rem;
         font-weight: 500;
-        text-decoration: none;
-        transition: color 0.2s ease;
+        text-decoration: none !important;
+        transition: color 0.2s ease !important;
+    }
+
+    /* All links inside form */
+    .rp-form-wrapper .fi-link,
+    .rp-form-wrapper .fi-link span,
+    .rp-form-wrapper .fi-link a,
+    .rp-form-wrapper a:not(.fi-btn) {
+        color: #4F46E5 !important;
+        font-weight: 600 !important;
+        text-decoration: none !important;
     }
 
     .rp-back-link:hover {
-        color: #4F46E5;
+        color: #4F46E5 !important;
     }
 
     .rp-back-link .material-symbols-outlined {
