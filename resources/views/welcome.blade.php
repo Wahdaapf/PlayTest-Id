@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PlayTest ID – Closed Testing Partner untuk Developer & Tester Indonesia</title>
+  <title>PlayTest ID – Closed Testing Partner for Indonesian Developers & Testers</title>
 
   <!-- ─── Google Fonts: Inter ─── -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -24,10 +25,12 @@
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          },
           colors: {
             brand: {
-              50:  '#eff6ff',
+              50: '#eff6ff',
               100: '#dbeafe',
               200: '#bfdbfe',
               400: '#60a5fa',
@@ -39,13 +42,36 @@
             }
           },
           keyframes: {
-            fadeUp: { '0%': { opacity: '0', transform: 'translateY(24px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
-            floatY: { '0%,100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-10px)' } },
-            pulseDot: { '0%,100%': { opacity: '1' }, '50%': { opacity: '0.4' } },
+            fadeUp: {
+              '0%': {
+                opacity: '0',
+                transform: 'translateY(24px)'
+              },
+              '100%': {
+                opacity: '1',
+                transform: 'translateY(0)'
+              }
+            },
+            floatY: {
+              '0%,100%': {
+                transform: 'translateY(0px)'
+              },
+              '50%': {
+                transform: 'translateY(-10px)'
+              }
+            },
+            pulseDot: {
+              '0%,100%': {
+                opacity: '1'
+              },
+              '50%': {
+                opacity: '0.4'
+              }
+            },
           },
           animation: {
-            fadeUp:   'fadeUp 0.7s ease forwards',
-            floatY:   'floatY 4s ease-in-out infinite',
+            fadeUp: 'fadeUp 0.7s ease forwards',
+            floatY: 'floatY 4s ease-in-out infinite',
             pulseDot: 'pulseDot 1.5s ease-in-out infinite',
           }
         }
@@ -56,44 +82,62 @@
   <!-- ─── Custom CSS ─── -->
   <style>
     /* Base font */
-    * { font-family: 'Inter', sans-serif; }
+    * {
+      font-family: 'Inter', sans-serif;
+    }
 
     /* Smooth scroll */
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+    }
 
     /* ── Navbar scroll shadow ── */
     #navbar.scrolled {
-      box-shadow: 0 4px 24px 0 rgba(37,99,235,0.08);
-      background: rgba(255,255,255,0.97);
+      box-shadow: 0 4px 24px 0 rgba(37, 99, 235, 0.08);
+      background: rgba(255, 255, 255, 0.97);
     }
 
     /* ── Hamburger animated icon ── */
     .ham-line {
       display: block;
-      width: 24px; height: 2px;
+      width: 24px;
+      height: 2px;
       background: #1e40af;
       border-radius: 2px;
       transition: all 0.3s ease;
       transform-origin: center;
     }
-    #hamburger.open .ham-line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-    #hamburger.open .ham-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    #hamburger.open .ham-line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    #hamburger.open .ham-line:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    #hamburger.open .ham-line:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    #hamburger.open .ham-line:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
 
     /* ── Mobile menu slide ── */
     #mobile-menu {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1);
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    #mobile-menu.open { max-height: 360px; }
+
+    #mobile-menu.open {
+      max-height: 360px;
+    }
 
     /* ── Glassmorphism card ── */
     .glass-card {
-      background: rgba(255,255,255,0.18);
+      background: rgba(255, 255, 255, 0.18);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.35);
+      border: 1px solid rgba(255, 255, 255, 0.35);
     }
 
     /* ── Gradient hero background ── */
@@ -102,40 +146,73 @@
     }
 
     /* ── Tab underline indicator ── */
-    .tab-btn { position: relative; transition: color 0.2s; }
+    .tab-btn {
+      position: relative;
+      transition: color 0.2s;
+    }
+
     .tab-btn::after {
       content: '';
-      position: absolute; bottom: -2px; left: 0; right: 0;
-      height: 3px; border-radius: 2px;
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      border-radius: 2px;
       background: #2563eb;
       transform: scaleX(0);
       transition: transform 0.3s ease;
     }
-    .tab-btn.active { color: #1d4ed8; font-weight: 700; }
-    .tab-btn.active::after { transform: scaleX(1); }
+
+    .tab-btn.active {
+      color: #1d4ed8;
+      font-weight: 700;
+    }
+
+    .tab-btn.active::after {
+      transform: scaleX(1);
+    }
 
     /* ── Tab content ── */
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
 
     /* ── Benefit icon bubble ── */
     .icon-bubble {
-      width: 56px; height: 56px;
-      display: flex; align-items: center; justify-content: center;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       border-radius: 16px;
       flex-shrink: 0;
     }
 
     /* ── Pricing card hover lift ── */
-    .pricing-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .pricing-card:hover { transform: translateY(-6px); }
+    .pricing-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-6px);
+    }
 
     /* ── Progress bar animation ── */
     .progress-fill {
       animation: fillBar 2s ease-in-out forwards;
       width: 0;
     }
-    @keyframes fillBar { to { width: var(--fill); } }
+
+    @keyframes fillBar {
+      to {
+        width: var(--fill);
+      }
+    }
 
     /* ── CTA section gradient ── */
     .cta-bg {
@@ -143,12 +220,29 @@
     }
 
     /* ── Scroll-reveal helper ── */
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     /* ── Checkmark list ── */
-    .check-list li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
-    .check-list li i { margin-top: 3px; flex-shrink: 0; }
+    .check-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .check-list li i {
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
 
     /* ── Badge ── */
     .badge-popular {
@@ -159,7 +253,7 @@
       letter-spacing: 0.07em;
       padding: 4px 14px;
       border-radius: 999px;
-      box-shadow: 0 2px 10px rgba(37,99,235,0.35);
+      box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
     }
 
     /* ── Dynamic Package Rich Text Lists ── */
@@ -194,12 +288,12 @@
 
 <body class="bg-slate-50 text-slate-800 antialiased">
 
-<!-- ════════════════════════════════════════════
-     1. NAVBAR – Sticky, responsive dengan hamburger menu (jQuery)
+  <!-- ════════════════════════════════════════════
+     1. NAVBAR – Sticky, responsive with hamburger menu (jQuery)
      ════════════════════════════════════════════ -->
-<header id="navbar" class="fixed top-0 inset-x-0 z-50 bg-white/95 border-b border-slate-100 transition-all duration-300">
-  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16">
+  <header id="navbar" class="fixed top-0 inset-x-0 z-50 bg-white/95 border-b border-slate-100 transition-all duration-300">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
 
       <!-- Logo -->
       <a href="#" class="flex items-center gap-2 select-none">
@@ -642,89 +736,78 @@
       @endforeach
 
     </div>
-
-    <!-- Comparison note -->
-    <div class="mt-10 text-center reveal">
-      <p class="text-slate-400 text-sm">
-        <i class="fa-solid fa-circle-info text-brand-400 mr-1"></i>
-        Semua paket sudah mencakup akses dashboard monitoring real-time 14 hari.
-        <a href="#" class="text-brand-600 font-semibold hover:underline ml-1">Lihat perbandingan lengkap →</a>
-      </p>
-    </div>
-
-  </div>
-</section>
+  </section>
 
 
-<!-- ════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════
      6. TESTIMONIAL (bonus) – Social proof
      ════════════════════════════════════════════ -->
-<section class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
-  <div class="max-w-6xl mx-auto">
+  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-6xl mx-auto">
 
-    <div class="text-center mb-10 reveal">
-      <span class="text-brand-600 font-semibold text-sm uppercase tracking-widest">Testimoni</span>
-      <h2 class="text-2xl sm:text-3xl font-black text-slate-800 mt-2">Dipercaya Developer &amp; Tester Indonesia</h2>
+      <div class="text-center mb-10 reveal">
+        <span class="text-brand-600 font-semibold text-sm uppercase tracking-widest">Testimonials</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-800 mt-2">Trusted by Indonesian Developers &amp; Testers</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <div class="reveal bg-slate-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300">
+          <div class="flex gap-1 text-yellow-400 mb-3 text-sm">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <p class="text-slate-600 text-sm leading-relaxed mb-4">"I had tried other platforms and failed. With PlayTest ID, my app passed in 14 days and is now live on the Play Store!"</p>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 bg-brand-200 rounded-full flex items-center justify-center font-bold text-brand-700 text-sm">RD</div>
+            <div>
+              <p class="font-semibold text-slate-800 text-sm">Rizky D.</p>
+              <p class="text-slate-400 text-xs">Developer – Jakarta</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal bg-slate-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300" style="transition-delay:0.1s;">
+          <div class="flex gap-1 text-yellow-400 mb-3 text-sm">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <p class="text-slate-600 text-sm leading-relaxed mb-4">"As a tester, I gained real QA experience and was able to add it to my CV. The PlayTest ID community is incredibly supportive!"</p>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 bg-green-200 rounded-full flex items-center justify-center font-bold text-green-700 text-sm">AN</div>
+            <div>
+              <p class="font-semibold text-slate-800 text-sm">Ari N.</p>
+              <p class="text-slate-400 text-xs">Tester – Surabaya</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal bg-slate-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300" style="transition-delay:0.2s;">
+          <div class="flex gap-1 text-yellow-400 mb-3 text-sm">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <p class="text-slate-600 text-sm leading-relaxed mb-4">"The monitoring dashboard is incredibly helpful. I can track the 14-day progress in real-time. The Pro package is absolutely worth it!"</p>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 bg-purple-200 rounded-full flex items-center justify-center font-bold text-purple-700 text-sm">FH</div>
+            <div>
+              <p class="font-semibold text-slate-800 text-sm">Fajar H.</p>
+              <p class="text-slate-400 text-xs">Developer – Bandung</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-      <div class="reveal bg-slate-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300">
-        <div class="flex gap-1 text-yellow-400 mb-3 text-sm">
-          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-        </div>
-        <p class="text-slate-600 text-sm leading-relaxed mb-4">"Saya sudah mencoba platform lain dan gagal. Dengan PlayTest ID, dalam 14 hari aplikasi saya langsung lulus dan sekarang sudah ada di Play Store!"</p>
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 bg-brand-200 rounded-full flex items-center justify-center font-bold text-brand-700 text-sm">RD</div>
-          <div>
-            <p class="font-semibold text-slate-800 text-sm">Rizky D.</p>
-            <p class="text-slate-400 text-xs">Developer – Jakarta</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="reveal bg-slate-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300" style="transition-delay:0.1s;">
-        <div class="flex gap-1 text-yellow-400 mb-3 text-sm">
-          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-        </div>
-        <p class="text-slate-600 text-sm leading-relaxed mb-4">"Sebagai tester, saya dapat pengalaman QA nyata dan bisa menambahkan ini ke CV saya. Komunitas PlayTest ID juga sangat supportif!"</p>
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 bg-green-200 rounded-full flex items-center justify-center font-bold text-green-700 text-sm">AN</div>
-          <div>
-            <p class="font-semibold text-slate-800 text-sm">Ari N.</p>
-            <p class="text-slate-400 text-xs">Tester – Surabaya</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="reveal bg-slate-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300" style="transition-delay:0.2s;">
-        <div class="flex gap-1 text-yellow-400 mb-3 text-sm">
-          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-        </div>
-        <p class="text-slate-600 text-sm leading-relaxed mb-4">"Dashboard monitoring-nya sangat membantu. Saya bisa pantau progres 14 hari secara real-time. Paket Pro worth it banget!"</p>
-        <div class="flex items-center gap-3">
-          <div class="w-9 h-9 bg-purple-200 rounded-full flex items-center justify-center font-bold text-purple-700 text-sm">FH</div>
-          <div>
-            <p class="font-semibold text-slate-800 text-sm">Fajar H.</p>
-            <p class="text-slate-400 text-xs">Developer – Bandung</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
+  </section>
 
 
-<!-- ════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════
      7. CTA BANNER – Bottom call to action
      ════════════════════════════════════════════ -->
-<section class="py-20 px-4 sm:px-6 lg:px-8 cta-bg relative overflow-hidden">
+  <section class="py-20 px-4 sm:px-6 lg:px-8 cta-bg relative overflow-hidden">
 
-  <div class="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
-  <div class="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
 
-  <div class="max-w-3xl mx-auto text-center relative reveal">
+    <div class="max-w-3xl mx-auto text-center relative reveal">
 
     <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white text-xs font-semibold px-4 py-2 rounded-full mb-6">
       <i class="fa-solid fa-rocket"></i> Mulai perjalanan Anda hari ini
@@ -752,185 +835,317 @@
       <div class="flex items-center gap-2 text-blue-200 text-xs font-medium">
         <i class="fa-solid fa-shield-halved text-green-400"></i> Pembayaran Aman
       </div>
-      <div class="flex items-center gap-2 text-blue-200 text-xs font-medium">
-        <i class="fa-solid fa-rotate-left text-yellow-400"></i> Garansi 7 Hari
+
+      <h2 class="text-3xl sm:text-4xl font-black text-white leading-tight mb-4">
+        Ready to Launch Your App on the Play Store?
+      </h2>
+
+      <p class="text-blue-100 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
+        Or do you want to start helping other developers while building your QA experience? Join <strong class="text-white">PlayTest ID</strong> now and become part of Indonesia's best testing ecosystem.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button onclick="window.location.href='{{ route('filament.developer.auth.register') }}'" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-brand-700 font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition duration-300">
+          <i class="fa-solid fa-rocket"></i> Start as a Developer
+        </button>
+        <button onclick="window.location.href='{{ route('filament.tester.auth.register') }}'" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 border border-white/30 text-white font-semibold rounded-2xl hover:bg-white/20 transition duration-300 backdrop-blur-sm">
+          <i class="fa-solid fa-hand-pointer"></i> Register as a Tester
+        </button>
       </div>
-      <div class="flex items-center gap-2 text-blue-200 text-xs font-medium">
-        <i class="fa-solid fa-headset text-blue-300"></i> Dukungan 24/7
+
+      <!-- Trust indicators -->
+      <div class="flex justify-center gap-8 mt-10 flex-wrap">
+        <div class="flex items-center gap-2 text-blue-200 text-xs font-medium">
+          <i class="fa-solid fa-shield-halved text-green-400"></i> Secure Payment
+        </div>
+        <div class="flex items-center gap-2 text-blue-200 text-xs font-medium">
+          <i class="fa-solid fa-rotate-left text-yellow-400"></i> 7-Day Guarantee
+        </div>
+        <div class="flex items-center gap-2 text-blue-200 text-xs font-medium">
+          <i class="fa-solid fa-headset text-blue-300"></i> 24/7 Support
+        </div>
       </div>
+
     </div>
-
-  </div>
-</section>
+  </section>
 
 
-<!-- ════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════
      8. FOOTER
      ════════════════════════════════════════════ -->
-<footer class="bg-slate-900 text-slate-400 py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-7xl mx-auto">
+  <footer class="bg-slate-900 text-slate-400 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-10 border-b border-slate-800">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-10 border-b border-slate-800">
 
-      <!-- Brand -->
-      <div class="md:col-span-2">
-        <div class="flex items-center gap-2 mb-4">
-          <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center shadow">
-            <i class="fa-solid fa-gamepad text-white text-sm"></i>
+        <!-- Brand -->
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center shadow">
+              <i class="fa-solid fa-gamepad text-white text-sm"></i>
+            </div>
+            <span class="text-white text-xl font-black">Play<span class="text-brand-400">Test</span> <span class="text-slate-400 font-semibold text-base">ID</span></span>
           </div>
-          <span class="text-white text-xl font-black">Play<span class="text-brand-400">Test</span> <span class="text-slate-400 font-semibold text-base">ID</span></span>
+          <p class="text-sm leading-relaxed max-w-xs">A collaboration platform for Indonesian Developers and Testers based on Project Based Learning to fulfill Google Play Closed Testing requirements.</p>
+          <div class="flex gap-3 mt-5">
+            <a href="#" class="w-9 h-9 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-brand-600 transition duration-200" aria-label="Instagram">
+              <i class="fa-brands fa-instagram text-sm"></i>
+            </a>
+            <a href="#" class="w-9 h-9 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-brand-600 transition duration-200" aria-label="Twitter/X">
+              <i class="fa-brands fa-x-twitter text-sm"></i>
+            </a>
+            <a href="#" class="w-9 h-9 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-brand-600 transition duration-200" aria-label="LinkedIn">
+              <i class="fa-brands fa-linkedin-in text-sm"></i>
+            </a>
+            <a href="#" class="w-9 h-9 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-brand-600 transition duration-200" aria-label="Telegram">
+              <i class="fa-brands fa-telegram text-sm"></i>
+            </a>
+          </div>
         </div>
-        <p class="text-sm leading-relaxed max-w-xs">Platform kolaborasi Developer dan Tester Indonesia berbasis Project Based Learning untuk memenuhi syarat Closed Testing Google Play.</p>
-        <div class="flex gap-3 mt-5">
-          <a href="#" class="w-9 h-9 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-brand-600 transition duration-200" aria-label="Instagram">
-            <i class="fa-brands fa-instagram text-sm"></i>
-          </a>
-          <a href="#" class="w-9 h-9 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-brand-600 transition duration-200" aria-label="Twitter/X">
-            <i class="fa-brands fa-x-twitter text-sm"></i>
-          </a>
-          <a href="#" class="w-9 h-9 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-brand-600 transition duration-200" aria-label="LinkedIn">
-            <i class="fa-brands fa-linkedin-in text-sm"></i>
-          </a>
-          <a href="#" class="w-9 h-9 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-brand-600 transition duration-200" aria-label="Telegram">
-            <i class="fa-brands fa-telegram text-sm"></i>
-          </a>
+
+        <!-- Platform links -->
+        <div>
+          <h5 class="text-white font-bold text-sm mb-4">Platform</h5>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="#how-it-works" class="hover:text-white transition">How It Works</a></li>
+            <li><a href="#benefits" class="hover:text-white transition">Benefits</a></li>
+            <li><a href="#pricing" class="hover:text-white transition">Pricing</a></li>
+            <li><a href="#" class="hover:text-white transition">Dashboard</a></li>
+            <li><a href="#" class="hover:text-white transition">Blog</a></li>
+          </ul>
         </div>
+
+        <!-- Legal links -->
+        <div>
+          <h5 class="text-white font-bold text-sm mb-4">Legal &amp; Support</h5>
+          <ul class="space-y-2.5 text-sm">
+            <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-white transition">Terms &amp; Conditions</a></li>
+            <li><a href="#" class="hover:text-white transition">FAQ</a></li>
+            <li><a href="#" class="hover:text-white transition">Contact Us</a></li>
+          </ul>
+        </div>
+
       </div>
 
-      <!-- Platform links -->
-      <div>
-        <h5 class="text-white font-bold text-sm mb-4">Platform</h5>
-        <ul class="space-y-2.5 text-sm">
-          <li><a href="#cara-kerja" class="hover:text-white transition">Cara Kerja</a></li>
-          <li><a href="#manfaat"    class="hover:text-white transition">Manfaat</a></li>
-          <li><a href="#harga"      class="hover:text-white transition">Harga</a></li>
-          <li><a href="#"           class="hover:text-white transition">Dashboard</a></li>
-          <li><a href="#"           class="hover:text-white transition">Blog</a></li>
-        </ul>
-      </div>
-
-      <!-- Legal links -->
-      <div>
-        <h5 class="text-white font-bold text-sm mb-4">Legal &amp; Bantuan</h5>
-        <ul class="space-y-2.5 text-sm">
-          <li><a href="#" class="hover:text-white transition">Kebijakan Privasi</a></li>
-          <li><a href="#" class="hover:text-white transition">Syarat &amp; Ketentuan</a></li>
-          <li><a href="#" class="hover:text-white transition">FAQ</a></li>
-          <li><a href="#" class="hover:text-white transition">Hubungi Kami</a></li>
-        </ul>
+      <!-- Bottom bar -->
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+        <p>© 2026 <span class="text-slate-400 font-semibold">PlayTest ID</span>. All rights reserved.</p>
+        <p>Made with <i class="fa-solid fa-heart text-red-500 mx-1"></i> for Indonesian Developers &amp; Testers.</p>
       </div>
 
     </div>
+  </footer>
 
-    <!-- Bottom bar -->
-    <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
-      <p>© 2025 <span class="text-slate-400 font-semibold">PlayTest ID</span>. Hak cipta dilindungi undang-undang.</p>
-      <p>Dibuat dengan <i class="fa-solid fa-heart text-red-500 mx-1"></i> untuk Developer &amp; Tester Indonesia.</p>
+
+  <!-- ════════════════════════════════════════════
+     9. AUTH MODAL (Login/Register Selection)
+     ════════════════════════════════════════════ -->
+  <div id="authModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onclick="closeAuthModal()"></div>
+
+    <!-- Modal Content -->
+    <div class="bg-white rounded-3xl w-full max-w-md relative z-10 shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300" id="authModalContent">
+      <button onclick="closeAuthModal()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-800 transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="p-8">
+        <div class="text-center mb-8">
+          <div class="w-12 h-12 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <i id="authModalIcon" class="fa-solid fa-user-lock text-brand-600 text-xl"></i>
+          </div>
+          <h3 id="authModalTitle" class="text-2xl font-black text-slate-800">Choose Account</h3>
+          <p id="authModalDesc" class="text-slate-500 text-sm mt-2">Please select your role to continue.</p>
+        </div>
+        <div class="space-y-4">
+          <!-- Developer -->
+          <a id="btnAuthDeveloper" href="#" class="group flex items-center p-4 border-2 border-slate-100 rounded-2xl hover:border-brand-500 hover:bg-brand-50 transition duration-300">
+            <div class="w-12 h-12 bg-slate-100 group-hover:bg-brand-100 rounded-xl flex items-center justify-center transition duration-300">
+              <i class="fa-solid fa-code text-slate-500 group-hover:text-brand-600"></i>
+            </div>
+            <div class="ml-4 flex-1">
+              <h4 class="font-bold text-slate-800 group-hover:text-brand-700 transition">Developer</h4>
+              <p class="text-xs text-slate-500 mt-0.5">App owner who needs testers</p>
+            </div>
+            <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-brand-500 transition"></i>
+          </a>
+          <!-- Tester -->
+          <a id="btnAuthTester" href="#" class="group flex items-center p-4 border-2 border-slate-100 rounded-2xl hover:border-green-500 hover:bg-green-50 transition duration-300">
+            <div class="w-12 h-12 bg-slate-100 group-hover:bg-green-100 rounded-xl flex items-center justify-center transition duration-300">
+              <i class="fa-solid fa-mobile-screen-button text-slate-500 group-hover:text-green-600"></i>
+            </div>
+            <div class="ml-4 flex-1">
+              <h4 class="font-bold text-slate-800 group-hover:text-green-700 transition">Tester</h4>
+              <p class="text-xs text-slate-500 mt-0.5">App tester for Google Play</p>
+            </div>
+            <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-green-500 transition"></i>
+          </a>
+        </div>
+      </div>
     </div>
-
   </div>
-</footer>
+
+  <script>
+    const authRoutes = {
+      login: {
+        developer: "{{ route('filament.developer.auth.login') }}",
+        tester: "{{ route('filament.tester.auth.login') }}"
+      },
+      register: {
+        developer: "{{ route('filament.developer.auth.register') }}",
+        tester: "{{ route('filament.tester.auth.register') }}"
+      }
+    };
+
+    function openAuthModal(type) {
+      const modal = document.getElementById('authModal');
+      const content = document.getElementById('authModalContent');
+      const title = document.getElementById('authModalTitle');
+      const desc = document.getElementById('authModalDesc');
+      const icon = document.getElementById('authModalIcon');
+      const btnDev = document.getElementById('btnAuthDeveloper');
+      const btnTester = document.getElementById('btnAuthTester');
+
+      // Close mobile menu if open
+      document.getElementById('hamburger').classList.remove('open');
+      document.getElementById('mobile-menu').classList.remove('open');
+
+      if (type === 'login') {
+        title.innerText = 'Login As';
+        desc.innerText = 'Choose an account to access your dashboard.';
+        icon.className = 'fa-solid fa-right-to-bracket text-brand-600 text-xl';
+        btnDev.href = authRoutes.login.developer;
+        btnTester.href = authRoutes.login.tester;
+      } else {
+        title.innerText = 'Register As';
+        desc.innerText = 'Choose the role that matches your purpose.';
+        icon.className = 'fa-solid fa-user-plus text-brand-600 text-xl';
+        btnDev.href = authRoutes.register.developer;
+        btnTester.href = authRoutes.register.tester;
+      }
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      setTimeout(() => {
+        content.classList.remove('scale-95', 'opacity-0');
+        content.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    function closeAuthModal() {
+      const modal = document.getElementById('authModal');
+      const content = document.getElementById('authModalContent');
+      content.classList.remove('scale-100', 'opacity-100');
+      content.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }, 300);
+    }
+  </script>
 
 
-<!-- ════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════
      SCRIPTS – jQuery 3.7.1 Interactions
      ════════════════════════════════════════════ -->
-<script>
-$(function () {
+  <script>
+    $(function() {
 
-  /* ── 1. NAVBAR: Sticky scroll shadow ── */
-  $(window).on('scroll', function () {
-    if ($(this).scrollTop() > 10) {
-      $('#navbar').addClass('scrolled');
-    } else {
-      $('#navbar').removeClass('scrolled');
-    }
-  });
-
-  /* ── 2. HAMBURGER MENU: Toggle mobile menu ── */
-  $('#hamburger').on('click', function () {
-    $(this).toggleClass('open');
-    $('#mobile-menu').toggleClass('open');
-  });
-
-  /* Close mobile menu when a link is clicked */
-  $('#mobile-menu a').on('click', function () {
-    $('#hamburger').removeClass('open');
-    $('#mobile-menu').removeClass('open');
-  });
-
-  /* ── 3. SMOOTH SCROLLING: All anchor links ── */
-  $('a[href^="#"]').on('click', function (e) {
-    var target = $(this.getAttribute('href'));
-    if (target.length) {
-      e.preventDefault();
-      $('html, body').stop().animate({
-        scrollTop: target.offset().top - 64  // 64px navbar offset
-      }, 600, 'swing');
-    }
-  });
-
-  /* ── 4. TAB SWITCHING: Developer / Tester ── */
-  $('.tab-btn').on('click', function () {
-    var tabId = $(this).data('tab');
-
-    // Update button styles
-    $('.tab-btn').removeClass('active bg-white shadow-sm text-slate-800').addClass('text-slate-500');
-    $(this).addClass('active bg-white shadow-sm text-slate-800').removeClass('text-slate-500');
-
-    // Switch tab content with fade
-    $('.tab-content').removeClass('active').hide();
-    $('#tab-' + tabId).addClass('active').hide().fadeIn(300);
-  });
-
-  /* ── 5. SCROLL REVEAL: Animate elements on scroll ── */
-  function revealOnScroll() {
-    var scrollTop = $(window).scrollTop();
-    var windowHeight = $(window).height();
-
-    $('.reveal').each(function () {
-      var elemTop = $(this).offset().top;
-      if (elemTop < scrollTop + windowHeight - 60) {
-        $(this).addClass('visible');
-      }
-    });
-  }
-
-  $(window).on('scroll', revealOnScroll);
-  revealOnScroll(); // run once on load
-
-  /* ── 6. PROGRESS BAR: Animate on first scroll into view ── */
-  var progressAnimated = false;
-  $(window).on('scroll', function () {
-    if (progressAnimated) return;
-    var bar = $('.progress-fill');
-    if (bar.length) {
-      var barTop = bar.offset().top;
-      if (barTop < $(window).scrollTop() + $(window).height() - 40) {
-        progressAnimated = true;
-        bar.css('width', bar.css('--fill') || '64%');
-      }
-    }
-  });
-
-  /* ── 7. NAVBAR LINK ACTIVE STATE on scroll ── */
-  var sections = ['cara-kerja', 'manfaat', 'harga'];
-  $(window).on('scroll', function () {
-    var scrollPos = $(this).scrollTop() + 80;
-    sections.forEach(function (id) {
-      var section = $('#' + id);
-      if (section.length) {
-        if (scrollPos >= section.offset().top && scrollPos < section.offset().top + section.outerHeight()) {
-          $('nav a[href="#' + id + '"]').addClass('text-brand-600 font-semibold');
+      /* ── 1. NAVBAR: Sticky scroll shadow ── */
+      $(window).on('scroll', function() {
+        if ($(this).scrollTop() > 10) {
+          $('#navbar').addClass('scrolled');
         } else {
-          $('nav a[href="#' + id + '"]').removeClass('text-brand-600 font-semibold');
+          $('#navbar').removeClass('scrolled');
         }
-      }
-    });
-  });
+      });
 
-});
-</script>
+      /* ── 2. HAMBURGER MENU: Toggle mobile menu ── */
+      $('#hamburger').on('click', function() {
+        $(this).toggleClass('open');
+        $('#mobile-menu').toggleClass('open');
+      });
+
+      /* Close mobile menu when a link is clicked */
+      $('#mobile-menu a').on('click', function() {
+        $('#hamburger').removeClass('open');
+        $('#mobile-menu').removeClass('open');
+      });
+
+      /* ── 3. SMOOTH SCROLLING: All anchor links ── */
+      $('a[href^="#"]').on('click', function(e) {
+        var target = $(this.getAttribute('href'));
+        if (target.length) {
+          e.preventDefault();
+          $('html, body').stop().animate({
+            scrollTop: target.offset().top - 64 // 64px navbar offset
+          }, 600, 'swing');
+        }
+      });
+
+      /* ── 4. TAB SWITCHING: Developer / Tester ── */
+      $('.tab-btn').on('click', function() {
+        var tabId = $(this).data('tab');
+
+        // Update button styles
+        $('.tab-btn').removeClass('active bg-white shadow-sm text-slate-800').addClass('text-slate-500');
+        $(this).addClass('active bg-white shadow-sm text-slate-800').removeClass('text-slate-500');
+
+        // Switch tab content with fade
+        $('.tab-content').removeClass('active').hide();
+        $('#tab-' + tabId).addClass('active').hide().fadeIn(300);
+      });
+
+      /* ── 5. SCROLL REVEAL: Animate elements on scroll ── */
+      function revealOnScroll() {
+        var scrollTop = $(window).scrollTop();
+        var windowHeight = $(window).height();
+
+        $('.reveal').each(function() {
+          var elemTop = $(this).offset().top;
+          if (elemTop < scrollTop + windowHeight - 60) {
+            $(this).addClass('visible');
+          }
+        });
+      }
+
+      $(window).on('scroll', revealOnScroll);
+      revealOnScroll(); // run once on load
+
+      /* ── 6. PROGRESS BAR: Animate on first scroll into view ── */
+      var progressAnimated = false;
+      $(window).on('scroll', function() {
+        if (progressAnimated) return;
+        var bar = $('.progress-fill');
+        if (bar.length) {
+          var barTop = bar.offset().top;
+          if (barTop < $(window).scrollTop() + $(window).height() - 40) {
+            progressAnimated = true;
+            bar.css('width', bar.css('--fill') || '64%');
+          }
+        }
+      });
+
+      /* ── 7. NAVBAR LINK ACTIVE STATE on scroll ── */
+      var sections = ['how-it-works', 'benefits', 'pricing'];
+      $(window).on('scroll', function() {
+        var scrollPos = $(this).scrollTop() + 80;
+        sections.forEach(function(id) {
+          var section = $('#' + id);
+          if (section.length) {
+            if (scrollPos >= section.offset().top && scrollPos < section.offset().top + section.outerHeight()) {
+              $('nav a[href="#' + id + '"]').addClass('text-brand-600 font-semibold');
+            } else {
+              $('nav a[href="#' + id + '"]').removeClass('text-brand-600 font-semibold');
+            }
+          }
+        });
+      });
+
+    });
+  </script>
 
 </body>
+
 </html>

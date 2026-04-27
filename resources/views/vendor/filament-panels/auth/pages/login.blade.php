@@ -410,13 +410,11 @@
         accent-color: #4F46E5 !important;
     }
 
-    /* Forgot password hint link */
-    .login-form-wrapper .fi-fo-field-wrp-hint {
-        font-size: 0.8125rem !important;
-    }
-
-    .login-form-wrapper .fi-fo-field-wrp-hint a,
-    .login-form-wrapper .fi-fo-field-wrp-hint .fi-link {
+    /* Forgot password hint link & all links inside form */
+    .login-form-wrapper .fi-link,
+    .login-form-wrapper .fi-link span,
+    .login-form-wrapper .fi-link a,
+    .login-form-wrapper a:not(.fi-btn) {
         color: #4F46E5 !important;
         font-weight: 600 !important;
         text-decoration: none !important;
@@ -474,14 +472,14 @@
     }
 
     .login-register-link a {
-        color: #4F46E5;
-        font-weight: 700;
-        text-decoration: none;
-        transition: color 0.2s ease;
+        color: #4F46E5 !important;
+        font-weight: 700 !important;
+        text-decoration: none !important;
+        transition: color 0.2s ease !important;
     }
 
     .login-register-link a:hover {
-        color: rgba(79, 70, 229, 0.8);
+        color: rgba(79, 70, 229, 0.8) !important;
     }
 
     /* ================================================================
