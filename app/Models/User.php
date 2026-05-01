@@ -86,6 +86,11 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasOne(UserBalance::class, 'id_user');
     }
 
+    public function withdraws(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Withdraw::class, 'id_user');
+    }
+
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));

@@ -7,6 +7,7 @@ use App\Filament\Auth\Pages\Register;
 use App\Filament\Auth\Pages\RequestResetPassword;
 use App\Filament\Auth\Pages\ResetPassword;
 use App\Filament\Tester\Pages\TesterDashboard;
+use App\Filament\Tester\Pages\Dompet;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -51,7 +52,8 @@ class TesterPanelProvider extends PanelProvider
                             ->url('#'),
                         MobileBottomNavItem::make('Dompet')
                             ->icon('heroicon-o-credit-card')
-                            ->url('#'),
+                            ->url(fn() => Dompet::getUrl())
+                            ->isActive(fn() => request()->routeIs('filament.tester.pages.dompet')),
                         MobileBottomNavItem::make('Profil')
                             ->icon('heroicon-o-user-circle')
                             ->url('#'),
@@ -92,7 +94,8 @@ class TesterPanelProvider extends PanelProvider
 
                             NavigationItem::make('Dompet')
                                 ->icon('heroicon-o-credit-card')
-                                ->url('#'),
+                                ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.dompet'))
+                                ->url(fn() => Dompet::getUrl()),
 
                             NavigationItem::make('Profil')
                                 ->icon('heroicon-o-user-circle')
@@ -111,6 +114,7 @@ class TesterPanelProvider extends PanelProvider
             // ── Pages ─────────────────────────────────────────  
             ->pages([
                 TesterDashboard::class,
+                Dompet::class,
             ])
             ->discoverPages(
                 in: app_path('Filament/Tester/Pages'),
