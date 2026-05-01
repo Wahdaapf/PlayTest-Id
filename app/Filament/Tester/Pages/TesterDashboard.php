@@ -44,8 +44,9 @@ class TesterDashboard extends Page
         // Increment kapasitas (jumlah tester saat ini)
         $misi->increment('kapasitas');
 
-        // Jika kapasitas mencapai 20, tutup misi
-        if ($misi->kapasitas >= 20) {
+        // Jika kapasitas mencapai batas maksimal, tutup misi
+        $maxCapacity = config('missions.max_capacity', 20);
+        if ($misi->kapasitas >= $maxCapacity) {
             $misi->update(['status' => 'closed']);
         }
 
@@ -122,7 +123,8 @@ class TesterDashboard extends Page
             ->where(function($q) {
                 // Sesuai permintaan: kapasitas belum > 20 (artinya maksimal 20)
                 // Dan juga belum penuh (jumlah anggota < kapasitas)
-                $q->where('kapasitas', '<=', 20)
+                $maxCapacity = config('missions.max_capacity', 20);
+                $q->where('kapasitas', '<=', $maxCapacity)
                   ->where(function($sq) {
                       $sq->where(function($ssq) {
                           $ssq->where('kapasitas', '>', 0)
@@ -130,7 +132,7 @@ class TesterDashboard extends Page
                       })
                       ->orWhere(function($ssq) {
                           $ssq->where('kapasitas', 0)
-                              ->whereRaw('20 > (select count(*) from misi_anggota where misi_anggota.id_misi = misi.id)');
+                              ->whereRaw(config('missions.max_capacity', 20) . ' > (select count(*) from misi_anggota where misi_anggota.id_misi = misi.id)');
                       });
                   });
             })
@@ -165,7 +167,7 @@ class TesterDashboard extends Page
                     'deskripsi' => $m->instruksi ? substr($m->instruksi, 0, 60) . '...' : 'Uji aplikasi ' . $m->nama_aplikasi . ' dan berikan feedback terbaik.',
                     'durasi'    => '14 hari',
                     'testerCur' => $m->misi_anggotas_count,
-                    'testerMax' => $m->kapasitas ?: 20,
+                    'testerMax' => $m->kapasitas ?: config('missions.max_capacity', 20),
                     'reward'    => $m->point,
                     'isTrusted' => $m->paket->trusted_badge ?? false,
                 ];

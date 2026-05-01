@@ -41,7 +41,7 @@ class MisiDetail extends Page
         }
 
         // Check if mission is already full
-        if ($this->misi->kapasitas >= 20) {
+        if ($this->misi->kapasitas >= config('missions.max_capacity', 20)) {
             Notification::make()
                 ->title('Mission is Full')
                 ->danger()
@@ -53,7 +53,7 @@ class MisiDetail extends Page
         $this->misi->increment('kapasitas');
 
         // Check if it should be closed
-        if ($this->misi->kapasitas >= 20) {
+        if ($this->misi->kapasitas >= config('missions.max_capacity', 20)) {
             $this->misi->update(['status' => 'closed']);
         }
 

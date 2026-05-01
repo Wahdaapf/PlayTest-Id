@@ -29,6 +29,7 @@ class MisisTable
 
                 TextColumn::make('kapasitas')
                     ->label('Kapasitas')
+                    ->formatStateUsing(fn ($state) => $state . '/' . config('missions.max_capacity', 20))
                     ->suffix(' tester')
                     ->sortable(),
 
