@@ -51,6 +51,7 @@ class MisiResource extends Resource
             'index' => ListMisis::route('/'),
             'create' => CreateMisi::route('/create'),
             'edit' => EditMisi::route('/{record}/edit'),
+            'kelola-tester' => Pages\KelolaTester::route('/{record}/kelola-tester'),
         ];
     }
 }

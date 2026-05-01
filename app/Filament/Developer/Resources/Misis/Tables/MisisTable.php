@@ -21,7 +21,7 @@ class MisisTable
                     ->sortable()
                     ->weight('semibold'),
 
-                TextColumn::make('paket.nama')     // sesuaikan dengan field nama di model Paket
+                TextColumn::make('paket.name')
                     ->label('Paket')
                     ->badge()
                     ->color('primary')
@@ -57,6 +57,17 @@ class MisisTable
             ])
             ->filters([])
             ->recordActions([
+                \Filament\Actions\Action::make('kelola_tester')
+                    ->label('Kelola Tester')
+                    ->icon('heroicon-o-users')
+                    ->color('info')
+                    ->button()
+                    ->visible(fn (\App\Models\Misi $record): bool => 
+                        $record->paket && 
+                        $record->paket->trusted_badge && 
+                        in_array($record->status, ['open', 'closed'])
+                    )
+                    ->url(fn (\App\Models\Misi $record): string => \App\Filament\Developer\Resources\Misis\MisiResource::getUrl('kelola-tester', ['record' => $record])),
                 EditAction::make(),
             ])
             ->toolbarActions([

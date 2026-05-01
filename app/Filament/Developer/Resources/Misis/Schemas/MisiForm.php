@@ -87,6 +87,7 @@ class MisiForm
                     Step::make('Pilih Package')
                         ->icon('heroicon-o-squares-2x2')
                         ->description('Pilih paket yang sesuai kebutuhanmu')
+                        ->hiddenOn('edit')
                         ->schema([
                             Section::make()
                                 ->schema([
@@ -111,6 +112,7 @@ class MisiForm
                     Step::make('Pembayaran')
                         ->icon('heroicon-o-banknotes')
                         ->description('Upload bukti pembayaran untuk mengaktifkan misi')
+                        ->hiddenOn('edit')
                         ->schema([
                             Grid::make(3)
                                 ->schema([
