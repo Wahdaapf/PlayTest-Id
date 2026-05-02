@@ -402,11 +402,18 @@
         .wlt-history-row {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 1rem 1.25rem;
+            gap: 0.75rem; /* Gap diperkecil untuk mobile */
+            padding: 1rem 0.75rem; /* Padding diperkecil untuk mobile */
             border-bottom: 1px solid #f1f5f9;
             border-left: 3px solid transparent;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @media (min-width: 640px) {
+            .wlt-history-row {
+                gap: 1rem;
+                padding: 1rem 1.25rem;
+            }
         }
 
         .wlt-history-row:hover {
@@ -790,33 +797,33 @@
                     <template x-for="r in filteredHistory" :key="r.id">
                         <div class="wlt-history-row cursor-pointer group" @click="$wire.showInvoice(r.id)">
 
-                            <div class="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110"
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center flex-shrink-0 transition-transform group-hover:scale-110"
                                 :style="r.status === 'success' ? 'background:#dcfce7;' : (r.status === 'pending' ? 'background:#fefce8;' : 'background:#fee2e2;')">
-                                <span class="material-symbols-outlined" style="font-size: 1.5rem;"
+                                <span class="material-symbols-outlined" style="font-size: 1.3rem;"
                                     :style="r.status === 'success' ? 'color:#16a34a;' : (r.status === 'pending' ? 'color:#d97706;' : 'color:#dc2626;')"
                                     x-text="r.status === 'success' ? 'check_circle' : (r.status === 'pending' ? 'schedule' : 'cancel')">
                                 </span>
                             </div>
 
-                            <div class="flex-1 min-w-0 ml-2">
-                                <div class="flex items-center gap-3 mb-1">
-                                    <p class="text-base font-bold font-heading truncate" style="color:#0f172a;" x-text="r.rupiahF"></p>
+                            <div class="flex-1 min-w-0 ml-1 sm:ml-2">
+                                <div class="flex flex-wrap items-center gap-1.5 sm:gap-3 mb-1 sm:mb-1.5">
+                                    <p class="text-sm sm:text-base font-bold font-heading" style="color:#0f172a;" x-text="r.rupiahF"></p>
                                     <span :class="'wlt-badge wlt-badge-' + r.status">
                                         <span :class="'wlt-dot wlt-dot-' + r.status"></span>
                                         <span x-text="r.status.charAt(0).toUpperCase() + r.status.slice(1)"></span>
                                     </span>
                                 </div>
-                                <p class="text-sm font-medium" style="color:#64748b;">
+                                <p class="text-xs sm:text-sm font-medium leading-tight" style="color:#64748b;">
                                     <span class="uppercase font-bold text-slate-700" x-text="r.metode"></span> • <span x-text="r.nomorAkun"></span>
                                 </p>
                             </div>
 
-                            <div class="text-right flex-shrink-0 flex items-center gap-3">
+                            <div class="text-right flex-shrink-0 flex items-center gap-2 sm:gap-3">
                                 <div>
-                                    <p class="text-sm font-bold font-mono-num mb-1" style="color:#ef4444;" x-text="'-' + Number(r.point).toLocaleString('id-ID') + ' pts'"></p>
-                                    <p class="text-xs font-medium" style="color:#94a3b8;" x-text="r.tanggal"></p>
+                                    <p class="text-xs sm:text-sm font-bold font-mono-num mb-0.5 sm:mb-1" style="color:#ef4444;" x-text="'-' + Number(r.point).toLocaleString('id-ID') + ' pts'"></p>
+                                    <p class="text-[10px] sm:text-xs font-medium" style="color:#94a3b8;" x-text="r.tanggal"></p>
                                 </div>
-                                <span class="material-symbols-outlined transition-transform group-hover:translate-x-1" style="color:#0ea5e9; font-size:1.2rem;">arrow_forward</span>
+                                <span class="material-symbols-outlined transition-transform group-hover:translate-x-1 hidden sm:block" style="color:#0ea5e9; font-size:1.2rem;">arrow_forward</span>
                             </div>
 
                         </div>

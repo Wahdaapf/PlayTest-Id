@@ -124,7 +124,8 @@
         overflow: hidden;
         animation: fpFadeInDown 0.6s ease-out;
         border-bottom: 1px solid #e5e7eb;
-        display: none; /* Hidden on mobile — shown only ≥1024px */
+        display: none;
+        /* Hidden on mobile — shown only ≥1024px */
     }
 
     .fp-hero-bg-img {
@@ -528,23 +529,49 @@
        ================================================================ */
 
     @keyframes fpFadeInDown {
-        from { opacity: 0; transform: translateY(-15px); }
-        to   { opacity: 1; transform: translateY(0); }
+        from {
+            opacity: 0;
+            transform: translateY(-15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     @keyframes fpSlideUp {
-        from { opacity: 0; transform: translateY(32px); }
-        to   { opacity: 1; transform: translateY(0); }
+        from {
+            opacity: 0;
+            transform: translateY(32px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     @keyframes fpFadeIn {
-        from { opacity: 0; }
-        to   { opacity: 1; }
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
     }
 
     @keyframes fpBounceIn {
-        from { opacity: 0; transform: scale(0.6); }
-        to   { opacity: 1; transform: scale(1); }
+        from {
+            opacity: 0;
+            transform: scale(0.6);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
     }
 
     /* ================================================================
@@ -796,7 +823,7 @@
                         Recover Your Account.
                     </h2>
                     <p class="fp-hero-desc">
-                        No worries — it happens. 
+                        No worries — it happens.
                     </p>
                 </div>
 
@@ -919,7 +946,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 <style>
     @media (min-width: 1024px) {
-        .fp-mobile-header { display: none !important; }
+        .fp-mobile-header {
+            display: none !important;
+        }
     }
 </style>
 <script>
@@ -930,11 +959,11 @@
      * Filament dispatches `password-reset-link-sent` from the built-in action.
      * Adjust the event name if you customise the action.
      */
-    document.addEventListener('DOMContentLoaded', function () {
-        const formState    = document.getElementById('fp-form-state');
+    document.addEventListener('DOMContentLoaded', function() {
+        const formState = document.getElementById('fp-form-state');
         const successState = document.getElementById('fp-success-state');
-        const sentEmail    = document.getElementById('fp-sent-email');
-        const resendBtn    = document.getElementById('fp-resend-btn');
+        const sentEmail = document.getElementById('fp-sent-email');
+        const resendBtn = document.getElementById('fp-resend-btn');
 
         /**
          * Swap to success state.
@@ -942,25 +971,25 @@
          */
         function showSuccess(email) {
             if (sentEmail && email) sentEmail.textContent = email;
-            if (formState)    formState.style.display    = 'none';
+            if (formState) formState.style.display = 'none';
             if (successState) successState.style.display = 'block';
         }
 
         /* ---- Wire up to Livewire v3 events ---- */
         if (typeof window.Livewire !== 'undefined') {
             Livewire.on('password-reset-link-sent', (data) => {
-                const email = data?.email
-                    ?? document.querySelector('.fp-form-wrapper input[type="email"]')?.value
-                    ?? '';
+                const email = data?.email ??
+                    document.querySelector('.fp-form-wrapper input[type="email"]')?.value ??
+                    '';
                 showSuccess(email);
             });
         }
 
         /* ---- Resend: click sends user back to form state ---- */
         if (resendBtn) {
-            resendBtn.addEventListener('click', function (e) {
+            resendBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                if (formState)    formState.style.display    = 'block';
+                if (formState) formState.style.display = 'block';
                 if (successState) successState.style.display = 'none';
             });
         }
