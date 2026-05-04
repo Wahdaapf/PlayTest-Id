@@ -10,6 +10,7 @@ use App\Filament\Admin\Pages\ManajemenPengguna;
 use App\Filament\Admin\Pages\ManajemenKampanye;
 use App\Filament\Admin\Pages\TransaksiKeuangan;
 use App\Filament\Admin\Pages\ManajemenPaket;  
+use App\Filament\Admin\Pages\ProfileAdmin;
 use Filament\Http\Middleware\Authenticate;  
 use Filament\Http\Middleware\AuthenticateSession;  
 use Filament\Http\Middleware\DisableBladeIconComponents;  
@@ -92,8 +93,13 @@ class AdminPanelProvider extends PanelProvider
     ->isActiveWhen(fn () => request()->routeIs('filament.admin.pages.manajemen-paket')),  
                         ]),  
   
-                    NavigationGroup::make('Sistem')  
+                    NavigationGroup::make('Sistem')
                         ->items([  
+                            NavigationItem::make('Profil Saya')
+                                ->icon('heroicon-o-user-circle')
+                                ->isActiveWhen(fn () => request()->routeIs('filament.admin.pages.profile-admin'))
+                                ->url(fn () => ProfileAdmin::getUrl()),
+
                             NavigationItem::make('Pengaturan')  
                                 ->icon('heroicon-o-cog-6-tooth')  
                                 ->url('#'),  
@@ -111,7 +117,8 @@ class AdminPanelProvider extends PanelProvider
                 ManajemenPengguna::class,
                 ManajemenKampanye::class,
                 TransaksiKeuangan::class,
-                ManajemenPaket::class,  
+                ManajemenPaket::class,
+                ProfileAdmin::class,
             ])  
             ->discoverPages(  
                 in: app_path('Filament/Admin/Pages'),  

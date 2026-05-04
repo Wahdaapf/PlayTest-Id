@@ -7,6 +7,7 @@ use App\Filament\Auth\Pages\Register;
 use App\Filament\Auth\Pages\RequestResetPassword;
 use App\Filament\Auth\Pages\ResetPassword;
 use App\Filament\Tester\Pages\TesterDashboard;
+use App\Filament\Tester\Pages\ProfileTester;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -54,7 +55,9 @@ class TesterPanelProvider extends PanelProvider
                             ->url('#'),
                         MobileBottomNavItem::make('Profil')
                             ->icon('heroicon-o-user-circle')
-                            ->url('#'),
+                            ->activeIcon('heroicon-s-user-circle')
+                            ->url(fn() => ProfileTester::getUrl())
+                            ->isActive(fn() => request()->routeIs('filament.tester.pages.profile-tester')),
                     ]),
             ])
 
@@ -96,7 +99,8 @@ class TesterPanelProvider extends PanelProvider
 
                             NavigationItem::make('Profil')
                                 ->icon('heroicon-o-user-circle')
-                                ->url('#'),
+                                ->url(fn() => ProfileTester::getUrl())
+                                ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.profile-tester')),
                         ]),
 
                     NavigationGroup::make('Lainnya')
@@ -111,6 +115,7 @@ class TesterPanelProvider extends PanelProvider
             // ── Pages ─────────────────────────────────────────  
             ->pages([
                 TesterDashboard::class,
+                ProfileTester::class,
             ])
             ->discoverPages(
                 in: app_path('Filament/Tester/Pages'),

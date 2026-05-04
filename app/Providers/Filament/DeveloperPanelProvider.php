@@ -7,6 +7,7 @@ use App\Filament\Auth\Pages\Register;
 use App\Filament\Auth\Pages\RequestResetPassword;
 use App\Filament\Auth\Pages\ResetPassword;
 use App\Filament\Developer\Pages\DeveloperDashboard;
+use App\Filament\Developer\Pages\ProfileDeveloper;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -65,16 +66,22 @@ class DeveloperPanelProvider extends PanelProvider
                     ->group('MAIN')
                     ->url(fn(): string => \App\Filament\Developer\Resources\Misis\Pages\CreateMisi::getUrl())
                     ->sort(3),
+                NavigationItem::make('Profil Saya')
+                    ->icon('heroicon-o-user-circle')
+                    ->group('SETTINGS')
+                    ->url(fn(): string => ProfileDeveloper::getUrl())
+                    ->isActiveWhen(fn() => request()->routeIs('filament.developer.pages.profile-developer'))
+                    ->sort(1),
                 NavigationItem::make('Settings')
                     ->icon('heroicon-o-cog-8-tooth')
                     ->group('SETTINGS')
                     ->url('#')
-                    ->sort(1),
+                    ->sort(2),
                 NavigationItem::make('Support')
                     ->icon('heroicon-o-lifebuoy')
                     ->group('SETTINGS')
                     ->url('#')
-                    ->sort(2),
+                    ->sort(3),
             ])
             ->plugins([
                 MobileBottomNav::make()
@@ -90,7 +97,9 @@ class DeveloperPanelProvider extends PanelProvider
                             ->badge(5, 'danger'),
                         MobileBottomNavItem::make('Profile')
                             ->icon('heroicon-o-user')
-                            ->url('/developer/profile'),
+                            ->activeIcon('heroicon-s-user')
+                            ->url(fn() => ProfileDeveloper::getUrl())
+                            ->isActive(fn() => request()->routeIs('filament.developer.pages.profile-developer')),
                     ]),
             ])
 
