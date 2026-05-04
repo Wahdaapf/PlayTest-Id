@@ -12,10 +12,6 @@ class ListMisis extends ListRecords
 
     protected function getHeaderActions(): array
     {
-        return [
-            CreateAction::make()
-                ->label('Buat Misi Baru')
-                ->icon('heroicon-o-plus'),
-        ];
+        return [];
     }
 }

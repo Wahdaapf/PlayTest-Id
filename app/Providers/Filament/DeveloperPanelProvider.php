@@ -65,7 +65,7 @@ class DeveloperPanelProvider extends PanelProvider
                 NavigationItem::make('New Test Case')
                     ->icon('heroicon-o-document-plus')
                     ->group('MAIN')
-                    ->url(fn(): string => \App\Filament\Developer\Resources\Misis\Pages\CreateMisi::getUrl())
+                    ->url(fn(): string => \App\Filament\Developer\Resources\Misis\MisiResource::getUrl('create'))
                     ->isActiveWhen(fn() => request()->routeIs('filament.developer.resources.misis.create'))
                     ->sort(3),
                 NavigationItem::make('Pantau Progress')

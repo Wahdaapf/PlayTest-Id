@@ -9,6 +9,7 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateMisi extends CreateRecord
 {
     protected static string $resource = MisiResource::class;
+    protected static ?string $activeNavigationItem = 'New Test Case';
 
     public function getTitle(): string
     {
