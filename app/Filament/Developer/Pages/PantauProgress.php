@@ -23,33 +23,36 @@ class PantauProgress extends Page
     protected function getViewData(): array
     {
         $userId = Auth::id();
-        
-        // Ambil semua misi (sementara agar cocok dengan tabel Manajemen Kampanye yang belum difilter per-user)
-        $misiList = Misi::all();
-        $misiIds = $misiList->pluck('id');
 
-        $query = MisiAnggota::whereIn('id_misi', $misiIds)
-            ->with(['misi', 'user'])
-            ->latest();
-
-        if ($this->selectedMisiId) {
-            $query->where('id_misi', $this->selectedMisiId);
+        if (!$this->selectedMisiId) {
+            $misiList = Misi::where('id_user', $userId)->where('status', 'running')->latest()->get();
+            return [
+                'isDetail' => false,
+                'misiList' => $misiList,
+            ];
         }
 
-        $misiAnggotas = $query->get();
+        $misi = Misi::where('id_user', $userId)->find($this->selectedMisiId);
+        
+        if (!$misi) {
+            $this->selectedMisiId = null;
+            return $this->getViewData();
+        }
 
-        $misiSubs = MisiSub::whereIn('id_misi', $misiIds)->get()->groupBy(function($item) {
-            return $item->id_misi . '-' . $item->id_user;
-        });
+        $misiAnggotas = MisiAnggota::where('id_misi', $misi->id)
+            ->with(['user'])
+            ->latest()
+            ->get();
+
+        $misiSubs = MisiSub::where('id_misi', $misi->id)->get()->groupBy('id_user');
 
         $kampanyeList = [];
 
         foreach ($misiAnggotas as $ma) {
-            $m = $ma->misi;
             $u = $ma->user;
-            if (!$m || !$u) continue;
+            if (!$u) continue;
 
-            $subs = $misiSubs->get($m->id . '-' . $u->id, collect());
+            $subs = $misiSubs->get($u->id, collect());
             
             $days = [];
             for ($h = 1; $h <= 14; $h++) {
@@ -71,18 +74,18 @@ class PantauProgress extends Page
             }
 
             if ($hariAktif === 1) {
-                $diff = $m->created_at->diffInDays(now());
+                $diff = $misi->created_at->diffInDays(now());
                 $hariAktif = min($diff + 1, 14);
             }
 
             $colors = ['blue', 'amber', 'purple', 'green'];
-            $warna = $colors[$m->id % count($colors)];
+            $warna = $colors[$misi->id % count($colors)];
 
             $kampanyeList[] = [
                 'id' => $ma->id,
-                'misi_nama' => $m->nama_aplikasi,
+                'misi_nama' => $misi->nama_aplikasi,
                 'tester_nama' => $u->name,
-                'inisial' => strtoupper(substr($m->nama_aplikasi, 0, 1) . substr($u->name, 0, 1)),
+                'inisial' => strtoupper(substr($misi->nama_aplikasi, 0, 1) . substr($u->name, 0, 1)),
                 'warna' => $warna,
                 'status' => $ma->status,
                 'hariAktif' => $hariAktif,
@@ -91,8 +94,9 @@ class PantauProgress extends Page
         }
 
         return [
+            'isDetail' => true,
+            'misiDetail' => $misi,
             'kampanyeList' => $kampanyeList,
-            'misiDropdown' => $misiList->pluck('nama_aplikasi', 'id')->toArray(),
         ];
     }
 }

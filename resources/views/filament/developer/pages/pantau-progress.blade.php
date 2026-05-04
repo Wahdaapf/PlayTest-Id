@@ -21,21 +21,54 @@
 @endpush
 
 <div class="space-y-7">
-  {{-- 14-Day Tracker --}}  
+@if(!$isDetail)
+  {{-- List of Missions View --}}
+  <div>
+    <h2 class="text-slate-800 font-bold text-lg mb-1">Pilih Kampanye</h2>
+    <p class="text-slate-500 text-sm mb-6">Pilih aplikasi yang sedang "running" untuk memantau progress testernya.</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @forelse($misiList as $m)
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between transition-all hover:shadow-md hover:border-blue-300">
+          <div>
+            <div class="flex justify-between items-start mb-4">
+              <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xl">
+                 {{ strtoupper(substr($m->nama_aplikasi, 0, 1)) }}
+              </div>
+              <span class="bg-green-100 text-green-700 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 bg-green-500 rounded-full inline-block"></span> RUNNING
+              </span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800 mb-1">{{ $m->nama_aplikasi }}</h3>
+            <p class="text-slate-500 text-sm mb-6 line-clamp-2">{{ $m->deskripsi ?? 'Tidak ada deskripsi.' }}</p>
+          </div>
+          <button wire:click="$set('selectedMisiId', {{ $m->id }})" class="w-full bg-slate-50 hover:bg-slate-100 text-blue-600 font-semibold text-sm py-2.5 rounded-xl border border-slate-200 transition-colors flex items-center justify-center gap-2">
+            Lihat Progress <x-heroicon-m-arrow-right class="w-4 h-4"/>
+          </button>
+        </div>
+      @empty
+        <div class="col-span-full bg-white border border-slate-200 rounded-2xl p-10 text-center shadow-sm">
+           <x-heroicon-o-rocket-launch class="w-12 h-12 mx-auto text-slate-300 mb-3"/>
+           <h3 class="text-slate-700 font-bold mb-1">Belum Ada Kampanye Berjalan</h3>
+           <p class="text-slate-500 text-sm">Anda belum memiliki aplikasi dengan status 'running'.</p>
+        </div>
+      @endforelse
+    </div>
+  </div>
+@else
+  {{-- Detail Progress View --}}
   <div class="dev-panel">  
     <div class="dev-panel-header flex-col sm:flex-row items-start sm:items-center">  
       <div class="mb-4 sm:mb-0 w-full sm:w-auto">  
-        <h2 class="text-slate-800 font-bold text-base">Progress Tester</h2>  
-        <p class="text-slate-500 text-xs mt-0.5">Pantau laporan harian dari masing-masing tester di kampanye Anda</p>  
+        <div class="flex items-center gap-3 mb-1">
+          <button wire:click="$set('selectedMisiId', null)" class="text-slate-400 hover:text-slate-600 transition-colors bg-slate-100 hover:bg-slate-200 p-1.5 rounded-lg">
+             <x-heroicon-m-arrow-left class="w-4 h-4"/>
+          </button>
+          <h2 class="text-slate-800 font-bold text-base">Progress Tester: {{ $misiDetail->nama_aplikasi }}</h2>  
+        </div>
+        <p class="text-slate-500 text-xs mt-0.5 ml-9">Pantau laporan harian dari masing-masing tester di kampanye ini</p>  
       </div>  
       <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto">  
-        <select wire:model.live="selectedMisiId" class="bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl focus:ring-blue-500 focus:border-blue-500 py-2 px-3 shadow-sm transition-all outline-none" style="min-width:180px;">
-            <option value="">-- Semua Aplikasi --</option>
-            @foreach($misiDropdown as $id => $nama)
-                <option value="{{ $id }}">{{ $nama }}</option>
-            @endforeach
-        </select>
-        
         <div class="flex items-center gap-3">  
           <span class="flex items-center gap-1.5 text-xs text-slate-500 whitespace-nowrap">  
             <span class="inline-block w-2.5 h-2.5 rounded-sm" style="background:#dbeafe;"></span>Sudah Dilaporkan  
@@ -96,5 +129,6 @@
       @endforelse  
     </div>  
   </div>  
+@endif
 </div>
 </x-filament-panels::page>
