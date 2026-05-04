@@ -45,6 +45,13 @@ class MisiResource extends Resource
         ];
     }
 
+    public static function getNavigationItemActiveRoutePattern(): string | array
+    {
+        return request()->routeIs(static::getRouteBaseName() . '.create')
+            ? 'dummy-route-never-matches'
+            : static::getRouteBaseName() . '.*';
+    }
+
     public static function getPages(): array
     {
         return [

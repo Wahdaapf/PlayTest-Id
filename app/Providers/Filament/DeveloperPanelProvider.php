@@ -8,6 +8,7 @@ use App\Filament\Auth\Pages\RequestResetPassword;
 use App\Filament\Auth\Pages\ResetPassword;
 use App\Filament\Developer\Pages\DeveloperDashboard;
 use App\Filament\Developer\Pages\ProfileDeveloper;
+use App\Filament\Developer\Pages\PantauProgress;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -65,7 +66,14 @@ class DeveloperPanelProvider extends PanelProvider
                     ->icon('heroicon-o-document-plus')
                     ->group('MAIN')
                     ->url(fn(): string => \App\Filament\Developer\Resources\Misis\Pages\CreateMisi::getUrl())
+                    ->isActiveWhen(fn() => request()->routeIs('filament.developer.resources.misis.create'))
                     ->sort(3),
+                NavigationItem::make('Pantau Progress')
+                    ->icon('heroicon-o-chart-bar')
+                    ->group('MAIN')
+                    ->url(fn(): string => PantauProgress::getUrl())
+                    ->isActiveWhen(fn() => request()->routeIs('filament.developer.pages.pantau-progress'))
+                    ->sort(2),
                 NavigationItem::make('Profil Saya')
                     ->icon('heroicon-o-user-circle')
                     ->group('SETTINGS')
@@ -150,6 +158,7 @@ class DeveloperPanelProvider extends PanelProvider
 
             ->pages([
                 DeveloperDashboard::class,
+                PantauProgress::class,
             ])
             ->discoverPages(
                 in: app_path('Filament/Developer/Pages'),
