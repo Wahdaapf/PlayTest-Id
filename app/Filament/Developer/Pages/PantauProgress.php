@@ -19,6 +19,84 @@ class PantauProgress extends Page
     protected string $view = 'filament.developer.pages.pantau-progress';
 
     public ?int $selectedMisiId = null;
+    public ?array $selectedSubData = null;
+
+    public function openValidationModal($subId, $testerNama, $hariKe)
+    {
+        $sub = MisiSub::find($subId);
+        if ($sub) {
+            $this->selectedSubData = [
+                'id' => $sub->id,
+                // Gunakan relative path agar tidak terkendala APP_URL di .env saat artisan serve
+                'image' => '/storage/' . $sub->image,
+                'tester_nama' => $testerNama,
+                'hari_ke' => $hariKe,
+                'status' => $sub->status,
+                'desc' => $sub->desc,
+            ];
+        }
+    }
+
+    public function closeValidationModal()
+    {
+        $this->selectedSubData = null;
+    }
+
+    public function acceptSubmission()
+    {
+        if ($this->selectedSubData) {
+            $sub = MisiSub::find($this->selectedSubData['id']);
+            if ($sub) {
+                $sub->update(['status' => 'done']);
+            }
+            $this->closeValidationModal();
+        }
+    }
+
+    public function rejectSubmission()
+    {
+        if ($this->selectedSubData) {
+            $sub = MisiSub::find($this->selectedSubData['id']);
+            if ($sub) {
+                $sub->update(['status' => 'rejected']);
+            }
+            $this->closeValidationModal();
+        }
+    }
+
+    public function acceptDirect($subId)
+    {
+        $sub = MisiSub::find($subId);
+        if ($sub) {
+            $sub->update(['status' => 'done']);
+        }
+    }
+
+    public function rejectDirect($subId)
+    {
+        $sub = MisiSub::find($subId);
+        if ($sub) {
+            $sub->update(['status' => 'rejected']);
+        }
+    }
+
+    public function acceptAllPending()
+    {
+        if ($this->selectedMisiId) {
+            MisiSub::where('id_misi', $this->selectedMisiId)
+                ->where('status', 'pending')
+                ->update(['status' => 'done']);
+        }
+    }
+
+    public function rejectAllPending()
+    {
+        if ($this->selectedMisiId) {
+            MisiSub::where('id_misi', $this->selectedMisiId)
+                ->where('status', 'pending')
+                ->update(['status' => 'rejected']);
+        }
+    }
 
     protected function getViewData(): array
     {
@@ -44,7 +122,7 @@ class PantauProgress extends Page
             ->latest()
             ->get();
 
-        $misiSubs = MisiSub::where('id_misi', $misi->id)->get()->groupBy('id_user');
+        $semuaSubs = MisiSub::where('id_misi', $misi->id)->where('status', '!=', 'notdone')->latest()->get();
 
         $kampanyeList = [];
 
@@ -52,15 +130,18 @@ class PantauProgress extends Page
             $u = $ma->user;
             if (!$u) continue;
 
-            $subs = $misiSubs->get($u->id, collect());
+            $subs = $semuaSubs->where('id_user', $u->id);
             
             $days = [];
             for ($h = 1; $h <= 14; $h++) {
                 $sub = $subs->firstWhere('hari_ke', $h);
                 if ($sub) {
-                    $days[$h] = $sub->status;
+                    $days[$h] = [
+                        'status' => $sub->status,
+                        'sub_id' => $sub->id,
+                    ];
                 } else {
-                    $days[$h] = 'notdone';
+                    $days[$h] = ['status' => 'notdone'];
                 }
             }
 
@@ -75,7 +156,7 @@ class PantauProgress extends Page
 
             if ($hariAktif === 1) {
                 $diff = $misi->created_at->diffInDays(now());
-                $hariAktif = min($diff + 1, 14);
+                $hariAktif = min((int) $diff + 1, 14);
             }
 
             $colors = ['blue', 'amber', 'purple', 'green'];
@@ -93,10 +174,27 @@ class PantauProgress extends Page
             ];
         }
 
+        // Ambil semua submission yang butuh validasi (pending)
+        $pendingSubmissions = MisiSub::where('id_misi', $misi->id)
+            ->where('status', 'pending')
+            ->with('user')
+            ->latest()
+            ->get()
+            ->map(function ($sub) {
+                return [
+                    'id' => $sub->id,
+                    'tester_nama' => $sub->user->name ?? 'Unknown',
+                    'hari_ke' => $sub->hari_ke,
+                    'image' => '/storage/' . $sub->image,
+                    'waktu' => $sub->created_at ? $sub->created_at->diffForHumans() : '',
+                ];
+            })->toArray();
+
         return [
             'isDetail' => true,
             'misiDetail' => $misi,
             'kampanyeList' => $kampanyeList,
+            'pendingSubmissions' => $pendingSubmissions,
         ];
     }
 }

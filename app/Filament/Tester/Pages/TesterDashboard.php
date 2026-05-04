@@ -14,6 +14,7 @@ class TesterDashboard extends Page
     protected static string | \BackedEnum | null $navigationIcon  = 'heroicon-o-home';  
     protected static ?string $navigationLabel = 'Home';  
     protected static ?string $title           = 'Tester Dashboard';  
+    protected static string | \UnitEnum | null $navigationGroup = 'Menu';
     protected static ?int    $navigationSort  = 1;  
     protected string  $view            = 'filament.tester.pages.tester-dashboard';  
   

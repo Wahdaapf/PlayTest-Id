@@ -9,12 +9,13 @@ use App\Filament\Auth\Pages\ResetPassword;
 use App\Filament\Tester\Pages\TesterDashboard;
 use App\Filament\Tester\Pages\ProfileTester;
 use App\Filament\Tester\Pages\Dompet;
+use App\Filament\Tester\Pages\MisiSaya;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Navigation\NavigationBuilder;
 use Filament\Navigation\NavigationGroup;
+use Filament\Navigation\NavigationBuilder;
 use Filament\Navigation\NavigationItem;
 use Hammadzafar05\MobileBottomNav\MobileBottomNav;
 use Hammadzafar05\MobileBottomNav\MobileBottomNavItem;
@@ -93,7 +94,8 @@ class TesterPanelProvider extends PanelProvider
                             NavigationItem::make('Misi Saya')
                                 ->icon('heroicon-o-clipboard-document-check')
                                 ->badge(3)
-                                ->url('#'),
+                                ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.misi-saya'))
+                                ->url(fn() => MisiSaya::getUrl()),
 
                             NavigationItem::make('Dompet')
                                 ->icon('heroicon-o-credit-card')

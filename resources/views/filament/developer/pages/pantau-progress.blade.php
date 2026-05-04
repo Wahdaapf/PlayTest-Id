@@ -14,13 +14,15 @@
   .icon-purple{background:#faf5ff;color:#7e22ce;}  
   .icon-green{background:#f0fdf4;color:#16a34a;}  
   .day-cell{border-radius:5px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:2px;height:32px;}  
-  .day-done{background:#dbeafe;}.day-today{background:#2563eb;}.day-future{background:#f1f5f9;}  
+  .day-done{background:#dbeafe;}.day-today{background:#2563eb;}.day-future{background:#f1f5f9;}.day-missed{background:#fee2e2;}  
+  .day-pending{background:#fef08a;} .day-rejected{background:#fecaca;}
   .day-num{font-size:8px;font-weight:600;}  
-  .day-done .day-num{color:#1d4ed8;}.day-today .day-num{color:#fff;font-weight:800;}.day-future .day-num{color:#94a3b8;}  
+  .day-done .day-num{color:#1d4ed8;}.day-today .day-num{color:#fff;font-weight:800;}.day-future .day-num{color:#94a3b8;}.day-missed .day-num{color:#ef4444;font-weight:800;}  
+  .day-pending .day-num{color:#854d0e;} .day-rejected .day-num{color:#991b1b;}
 </style>
 @endpush
 
-<div class="space-y-7">
+<div class="space-y-7 relative">
 @if(!$isDetail)
   {{-- List of Missions View --}}
   <div>
@@ -57,6 +59,46 @@
   </div>
 @else
   {{-- Detail Progress View --}}
+
+  {{-- BAGIAN TUGAS PERLU VALIDASI --}}
+  @if(count($pendingSubmissions) > 0)
+  <div class="mb-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3">
+        <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+          <x-heroicon-o-bell-alert class="w-6 h-6 text-amber-500"/>
+          Butuh Validasi ({{ count($pendingSubmissions) }})
+        </h3>
+        <div class="flex items-center gap-2">
+            <button wire:click="rejectAllPending" class="text-sm font-semibold px-4 py-2 bg-red-50 text-red-600 border border-red-200 rounded-xl hover:bg-red-100 transition-colors">Tolak Semua</button>
+            <button wire:click="acceptAllPending" class="text-sm font-semibold px-4 py-2 bg-blue-600 text-white rounded-xl shadow-sm hover:bg-blue-700 transition-colors">ACC Semua</button>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      @foreach($pendingSubmissions as $p)
+        <div class="bg-white border border-amber-200 rounded-2xl overflow-hidden shadow-sm flex flex-col hover:shadow-md transition-shadow">
+          <div class="p-4 bg-amber-50/50 border-b border-amber-100 flex justify-between items-center">
+             <div>
+               <p class="font-bold text-slate-800 text-sm">{{ $p['tester_nama'] }}</p>
+               <p class="text-xs text-slate-500 font-medium">Hari ke-{{ $p['hari_ke'] }} &bull; {{ $p['waktu'] }}</p>
+             </div>
+             <span class="bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-1 rounded-md">NEW</span>
+          </div>
+          <div class="p-0 flex justify-center bg-slate-100 border-b border-slate-100 overflow-hidden relative group" style="height: 140px;" wire:click="openValidationModal({{ $p['id'] }}, '{{ addslashes($p['tester_nama']) }}', {{ $p['hari_ke'] }})">
+             <img src="{{ $p['image'] }}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer" alt="Bukti"/>
+             <div class="absolute inset-0 bg-slate-900/0 group-hover:bg-slate-900/20 transition-colors cursor-pointer flex items-center justify-center">
+               <x-heroicon-m-arrows-pointing-out class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+             </div>
+          </div>
+          <div class="p-4 flex gap-3">
+             <button wire:click="rejectDirect({{ $p['id'] }})" class="flex-1 py-2 text-sm font-bold text-red-600 bg-red-50 border border-red-200 rounded-xl hover:bg-red-100 hover:border-red-300 transition-colors shadow-sm">Tolak</button>
+             <button wire:click="acceptDirect({{ $p['id'] }})" class="flex-1 py-2 text-sm font-bold text-white bg-blue-600 border border-transparent rounded-xl hover:bg-blue-700 transition-colors shadow-sm">ACC</button>
+          </div>
+        </div>
+      @endforeach
+    </div>
+  </div>
+  @endif
+
   <div class="dev-panel">  
     <div class="dev-panel-header flex-col sm:flex-row items-start sm:items-center">  
       <div class="mb-4 sm:mb-0 w-full sm:w-auto">  
@@ -66,18 +108,24 @@
           </button>
           <h2 class="text-slate-800 font-bold text-base">Progress Tester: {{ $misiDetail->nama_aplikasi }}</h2>  
         </div>
-        <p class="text-slate-500 text-xs mt-0.5 ml-9">Pantau laporan harian dari masing-masing tester di kampanye ini</p>  
+        <p class="text-slate-500 text-xs mt-0.5 ml-9">Klik kotak berwarna pada baris tester untuk meninjau screenshot.</p>  
       </div>  
       <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 w-full sm:w-auto">  
-        <div class="flex items-center gap-3">  
+        <div class="flex flex-wrap items-center gap-3">  
           <span class="flex items-center gap-1.5 text-xs text-slate-500 whitespace-nowrap">  
-            <span class="inline-block w-2.5 h-2.5 rounded-sm" style="background:#dbeafe;"></span>Sudah Dilaporkan  
+            <span class="inline-block w-2.5 h-2.5 rounded-sm" style="background:#fef08a;"></span>Perlu ACC  
+          </span>  
+          <span class="flex items-center gap-1.5 text-xs text-slate-500 whitespace-nowrap">  
+            <span class="inline-block w-2.5 h-2.5 rounded-sm" style="background:#dbeafe;"></span>Di-ACC  
+          </span>  
+          <span class="flex items-center gap-1.5 text-xs text-slate-500 whitespace-nowrap">  
+            <span class="inline-block w-2.5 h-2.5 rounded-sm" style="background:#fecaca;"></span>Ditolak  
           </span>  
           <span class="flex items-center gap-1.5 text-xs text-slate-500 whitespace-nowrap">  
             <span class="inline-block w-2.5 h-2.5 rounded-sm" style="background:#2563eb;"></span>Hari Ini  
           </span>  
           <span class="flex items-center gap-1.5 text-xs text-slate-500 whitespace-nowrap">  
-            <span class="inline-block w-2.5 h-2.5 rounded-sm" style="background:#f1f5f9;"></span>Belum/Mendatang  
+            <span class="inline-block w-2.5 h-2.5 rounded-sm" style="background:#fee2e2;"></span>Terlewat  
           </span>  
         </div>
       </div>  
@@ -108,16 +156,31 @@
             @for ($h = 1; $h <= 14; $h++)  
               @php  
                 $cls = 'day-future';  
-                $statusDay = $k['days'][$h] ?? 'notdone';
+                $dayData = $k['days'][$h] ?? ['status' => 'notdone'];
+                $statusDay = $dayData['status'];
+                $subId = $dayData['sub_id'] ?? null;
+                $testerNama = addslashes($k['tester_nama']);
+
                 if ($statusDay !== 'notdone') {
-                    $cls = 'day-done';
+                    if ($statusDay === 'pending') {
+                        $cls = 'day-pending cursor-pointer hover:ring-2 hover:ring-amber-300 transition-all';
+                    } elseif ($statusDay === 'rejected') {
+                        $cls = 'day-rejected cursor-pointer hover:ring-2 hover:ring-red-300 transition-all';
+                    } else {
+                        $cls = 'day-done cursor-pointer hover:ring-2 hover:ring-blue-300 transition-all';
+                    }
                 } else {
                     if ($h == $k['hariAktif']) {
                         $cls = 'day-today';
+                    } elseif ($h < $k['hariAktif']) {
+                        $cls = 'day-missed';
                     }
                 }
               @endphp  
-              <div class="day-cell {{ $cls }}"><span class="day-num">{{ $h }}</span></div>  
+              <div class="day-cell {{ $cls }}" 
+                   @if($subId) wire:click="openValidationModal({{ $subId }}, '{{ $testerNama }}', {{ $h }})" @endif>
+                  <span class="day-num">{{ $h }}</span>
+              </div>  
             @endfor  
           </div>  
         </div>  
@@ -129,6 +192,50 @@
       @endforelse  
     </div>  
   </div>  
+
+  {{-- Modal Validasi Screenshot --}}
+  @if($selectedSubData)
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 backdrop-blur-sm" style="background: rgba(15,23,42,0.6);">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden flex flex-col transform transition-all">
+      {{-- Modal Header --}}
+      <div class="p-5 border-b border-slate-100 flex justify-between items-center bg-white">
+        <div>
+          <h3 class="text-lg font-bold text-slate-800">Validasi Screenshot</h3>
+          <p class="text-sm text-slate-500 font-medium mt-0.5">{{ $selectedSubData['tester_nama'] }} &bull; Hari ke-{{ $selectedSubData['hari_ke'] }}</p>
+        </div>
+        <button wire:click="closeValidationModal" class="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition-colors">
+          <x-heroicon-m-x-mark class="w-6 h-6"/>
+        </button>
+      </div>
+
+      {{-- Modal Body --}}
+      <div class="p-5 bg-slate-50 overflow-y-auto max-h-[60vh] flex flex-col items-center">
+        @if($selectedSubData['status'] === 'done')
+          <div class="mb-3 w-full bg-green-50 border border-green-200 text-green-700 px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2">
+            <x-heroicon-m-check-circle class="w-5 h-5"/> Telah di-ACC
+          </div>
+        @elseif($selectedSubData['status'] === 'rejected')
+          <div class="mb-3 w-full bg-red-50 border border-red-200 text-red-700 px-4 py-2.5 rounded-xl text-sm font-semibold flex items-center gap-2">
+            <x-heroicon-m-x-circle class="w-5 h-5"/> Telah Ditolak
+          </div>
+        @endif
+
+        <img src="{{ $selectedSubData['image'] }}" alt="Screenshot Hari ke-{{ $selectedSubData['hari_ke'] }}" class="max-w-full rounded-xl border border-slate-200 shadow-sm" />
+      </div>
+
+      {{-- Modal Footer --}}
+      <div class="p-5 border-t border-slate-100 bg-white flex gap-3">
+        <button wire:click="rejectSubmission" class="flex-1 py-3 rounded-xl border border-red-200 bg-red-50 text-red-600 font-bold hover:bg-red-100 hover:border-red-300 transition-colors">
+          Tolak
+        </button>
+        <button wire:click="acceptSubmission" class="flex-1 py-3 rounded-xl border border-transparent bg-blue-600 text-white font-bold shadow-sm hover:bg-blue-700 hover:shadow transition-all">
+          ACC (Setuju)
+        </button>
+      </div>
+    </div>
+  </div>
+  @endif
+
 @endif
 </div>
 </x-filament-panels::page>
