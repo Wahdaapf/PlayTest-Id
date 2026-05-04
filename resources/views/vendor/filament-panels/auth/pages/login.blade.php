@@ -910,7 +910,6 @@
     </div>
 </x-filament-panels::page.simple>
 
-{{-- Load Material Symbols for the science icon --}}
 @push('scripts')
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
 <style>

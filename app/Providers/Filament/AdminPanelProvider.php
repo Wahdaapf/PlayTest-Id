@@ -9,8 +9,9 @@ use App\Filament\Admin\Pages\AdminDashboard;
 use App\Filament\Admin\Pages\ManajemenPengguna;
 use App\Filament\Admin\Pages\ManajemenKampanye;
 use App\Filament\Admin\Pages\TransaksiKeuangan;
-use App\Filament\Admin\Pages\ManajemenPaket;  
+use App\Filament\Admin\Pages\ManajemenPaket;
 use App\Filament\Admin\Pages\ProfileAdmin;
+use App\Filament\Admin\Pages\ManajemenWithdraw;
 use Filament\Http\Middleware\Authenticate;  
 use Filament\Http\Middleware\AuthenticateSession;  
 use Filament\Http\Middleware\DisableBladeIconComponents;  
@@ -81,17 +82,27 @@ class AdminPanelProvider extends PanelProvider
                                  ->badge(fn () => \App\Models\Misi::count())
                                  ->isActiveWhen(fn () => request()->is('admin/manajemen-kampanye*'))
                                  ->url(fn () => ManajemenKampanye::getUrl()),  
-  
-                             NavigationItem::make('Transaksi & Keuangan')  
-                                 ->icon('heroicon-o-currency-dollar')  
-                                 ->badge(14)
-                                 ->isActiveWhen(fn () => request()->is('admin/transaksi-keuangan*'))
-                                 ->url(fn () => TransaksiKeuangan::getUrl()),  
-                                 NavigationItem::make('Manajemen Paket')  
-    ->icon('heroicon-o-squares-2x2')  
-    ->url(fn () => ManajemenPaket::getUrl())  
-    ->isActiveWhen(fn () => request()->routeIs('filament.admin.pages.manajemen-paket')),  
+
+                             NavigationItem::make('Manajemen Paket')  
+                                 ->icon('heroicon-o-squares-2x2')  
+                                 ->url(fn () => ManajemenPaket::getUrl())  
+                                 ->isActiveWhen(fn () => request()->routeIs('filament.admin.pages.manajemen-paket')),
                         ]),  
+
+                    NavigationGroup::make('Transaksi & Keuangan')
+                        ->items([
+                            NavigationItem::make('Pembayaran Developer')
+                                ->icon('heroicon-o-credit-card')
+                                ->badge(fn () => \App\Models\Pembayaran::where('status', 'pending')->count() ?: null)
+                                ->isActiveWhen(fn () => request()->is('admin/transaksi-keuangan*'))
+                                ->url(fn () => TransaksiKeuangan::getUrl()),
+
+                            NavigationItem::make('Penarikan Tester')
+                                ->icon('heroicon-o-banknotes')
+                                ->badge(fn () => \App\Models\Withdraw::where('status', 'pending')->count() ?: null)
+                                ->isActiveWhen(fn () => request()->is('admin/manajemen-withdraw*'))
+                                ->url(fn () => ManajemenWithdraw::getUrl()),
+                        ]),
   
                     NavigationGroup::make('Sistem')
                         ->items([  
@@ -119,6 +130,7 @@ class AdminPanelProvider extends PanelProvider
                 TransaksiKeuangan::class,
                 ManajemenPaket::class,
                 ProfileAdmin::class,
+                ManajemenWithdraw::class,
             ])  
             ->discoverPages(  
                 in: app_path('Filament/Admin/Pages'),  

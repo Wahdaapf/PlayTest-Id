@@ -80,7 +80,7 @@ class ManajemenKampanye extends Page
                     'developer' => $misi->user->name ?? 'Unknown',  
                     'status'    => $statusUI,  
                     'tester'    => $misi->misi_anggotas_count,  
-                    'maxTester' => $misi->kapasitas ?? 20,  
+                    'maxTester' => $misi->kapasitas ?? config('missions.max_capacity', 20),  
                     'hariKe'    => ($statusUI === 'Selesai') ? 14 : (($statusUI === 'Ditinjau') ? 0 : $hariKe),  
                     'maxHari'   => 14,  
                     'mulai'     => $misi->created_at ? $misi->created_at->format('d M Y') : '-',  

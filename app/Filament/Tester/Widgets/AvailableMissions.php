@@ -17,7 +17,7 @@ class AvailableMissions extends BaseWidget
 {
     protected static ?string $heading = 'Available Apps to Test';
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     public function table(Table $table): Table
     {
@@ -34,10 +34,10 @@ class AvailableMissions extends BaseWidget
                 TextColumn::make('nama_aplikasi')
                     ->label('Application Name')
                     ->searchable()
-                    ->description(fn (Misi $record): string => 'Reward: ' . $record->point . ' pts'),
+                    ->description(fn(Misi $record): string => 'Reward: ' . $record->point . ' pts'),
                 TextColumn::make('kapasitas')
                     ->label('Kapasitas')
-                    ->formatStateUsing(fn ($state) => $state . '/20'),
+                    ->formatStateUsing(fn($state) => $state . '/' . config('missions.max_capacity', 20)),
                 TextColumn::make('instruksi')
                     ->label('Instructions')
                     ->limit(50),
@@ -47,7 +47,7 @@ class AvailableMissions extends BaseWidget
                     ->label('Ambil Misi')
                     ->icon('heroicon-o-plus-circle')
                     ->color('primary')
-                    ->url(fn (Misi $record): string => MisiDetail::getUrl(['misi_id' => $record->id])),
+                    ->url(fn(Misi $record): string => MisiDetail::getUrl(['misi_id' => $record->id])),
             ])
             ->recordAction('view');
     }

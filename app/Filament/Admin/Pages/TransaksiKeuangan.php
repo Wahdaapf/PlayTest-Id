@@ -6,13 +6,37 @@ use Filament\Pages\Page;
 
 class TransaksiKeuangan extends Page
 {
-    protected static ?string $navigationLabel = 'Transaksi & Keuangan';
-    protected static ?string $title = 'Transaksi & Keuangan';
+    protected static ?string $navigationLabel = 'Pembayaran Developer';
+    protected static ?string $title = 'Transaksi Developer';
     protected static ?string $slug = 'transaksi-keuangan';
     protected string $view = 'filament.admin.pages.transaksi-keuangan';
 
-    public function approvePembayaran($id)
+    public ?int $pendingApproveId = null;
+    public ?int $pendingRejectId = null;
+
+    public function confirmApprove(int $id): void
     {
+        $this->pendingApproveId = $id;
+        $this->pendingRejectId = null;
+    }
+
+    public function confirmReject(int $id): void
+    {
+        $this->pendingRejectId = $id;
+        $this->pendingApproveId = null;
+    }
+
+    public function cancelAction(): void
+    {
+        $this->pendingApproveId = null;
+        $this->pendingRejectId = null;
+    }
+
+    public function approvePembayaran()
+    {
+        $id = $this->pendingApproveId;
+        if (!$id) return;
+
         $pembayaran = \App\Models\Pembayaran::find($id);
         if ($pembayaran) {
             $pembayaran->update([
@@ -24,10 +48,15 @@ class TransaksiKeuangan extends Page
                 $pembayaran->misi->update(['status' => 'open']);
             }
         }
+        $this->cancelAction();
+        $this->dispatch('data-updated');
     }
 
-    public function rejectPembayaran($id)
+    public function rejectPembayaran()
     {
+        $id = $this->pendingRejectId;
+        if (!$id) return;
+
         $pembayaran = \App\Models\Pembayaran::find($id);
         if ($pembayaran) {
             $pembayaran->update([
@@ -39,6 +68,8 @@ class TransaksiKeuangan extends Page
                 $pembayaran->misi->update(['status' => 'rejected']);
             }
         }
+        $this->cancelAction();
+        $this->dispatch('data-updated');
     }
 
     protected function getViewData(): array

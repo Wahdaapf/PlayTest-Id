@@ -276,10 +276,11 @@
                         </svg>  
                         Riwayat  
                     </button>  
-                    <button class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold"  
-                            style="background:#ffffff;color:#0ea5e9;box-shadow:0 2px 8px rgba(0,0,0,0.1);">  
-                        Tukar Poin  
-                    </button>  
+                    <a href="{{ \App\Filament\Tester\Pages\Dompet::getUrl() }}"
+                       class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold"
+                            style="background:#ffffff;color:#0ea5e9;box-shadow:0 2px 8px rgba(0,0,0,0.1);text-decoration:none;">
+                        Tukar Poin
+                    </a>  
                 </div>  
             </div>  
   

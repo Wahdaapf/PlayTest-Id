@@ -21,7 +21,7 @@ class MisisTable
                     ->sortable()
                     ->weight('semibold'),
 
-                TextColumn::make('paket.nama')     // sesuaikan dengan field nama di model Paket
+                TextColumn::make('paket.name')
                     ->label('Paket')
                     ->badge()
                     ->color('primary')
@@ -29,6 +29,7 @@ class MisisTable
 
                 TextColumn::make('kapasitas')
                     ->label('Kapasitas')
+                    ->formatStateUsing(fn ($state) => $state . '/' . config('missions.max_capacity', 20))
                     ->suffix(' tester')
                     ->sortable(),
 
@@ -56,6 +57,80 @@ class MisisTable
             ])
             ->filters([])
             ->recordActions([
+                \Filament\Actions\Action::make('mulai_misi')
+                    ->label('Mulai Misi')
+                    ->icon('heroicon-o-play')
+                    ->color('success')
+                    ->button()
+                    ->requiresConfirmation()
+                    ->modalHeading('Mulai Misi')
+                    ->modalDescription('Apakah Anda yakin ingin memulai misi ini? Sistem akan membuatkan sub-misi secara otomatis untuk para tester.')
+                    ->form([
+                        \Filament\Forms\Components\TextInput::make('link_aplikasi')
+                            ->label('Link Aplikasi / Test')
+                            ->placeholder('https://...')
+                            ->url()
+                            ->required()
+                            ->maxLength(255),
+                    ])
+                    ->visible(fn (\App\Models\Misi $record): bool => $record->status === 'closed')
+                    ->action(function (\App\Models\Misi $record, array $data) {
+                        // 1. Jika paket trusted badge = true, ubah semua tester pending/reviewing menjadi accepted
+                        if ($record->paket && $record->paket->trusted_badge) {
+                            \App\Models\MisiAnggota::where('id_misi', $record->id)
+                                ->whereIn('status', ['pending', 'reviewing'])
+                                ->update(['status' => 'accepted']);
+                        }
+
+                        // 2. Ambil semua tester yang sudah accepted
+                        $acceptedTesters = \App\Models\MisiAnggota::where('id_misi', $record->id)
+                            ->where('status', 'accepted')
+                            ->get();
+
+                        // 3. Buat 14 sub misi untuk setiap tester yang accepted
+                        $now = \Carbon\Carbon::now();
+                        $subMisis = [];
+                        foreach ($acceptedTesters as $tester) {
+                            for ($i = 1; $i <= 14; $i++) {
+                                $subMisis[] = [
+                                    'id_misi' => $record->id,
+                                    'id_user' => $tester->id_user,
+                                    'hari_ke' => $i,
+                                    'status'  => 'notdone',
+                                    'created_at' => $now->copy()->addDays($i - 1),
+                                    'updated_at' => $now->copy()->addDays($i - 1),
+                                ];
+                            }
+                        }
+
+                        if (!empty($subMisis)) {
+                            \App\Models\MisiSub::insert($subMisis);
+                        }
+
+                        // 4. Ubah status misi menjadi running & simpan link
+                        $record->update([
+                            'status' => 'running',
+                            'link_aplikasi' => $data['link_aplikasi'],
+                        ]);
+
+                        \Filament\Notifications\Notification::make()
+                            ->title('Misi Berhasil Dimulai')
+                            ->body('Status misi telah diubah menjadi running dan sub-misi tester telah dibuat.')
+                            ->success()
+                            ->send();
+                    }),
+
+                \Filament\Actions\Action::make('kelola_tester')
+                    ->label('Kelola Tester')
+                    ->icon('heroicon-o-users')
+                    ->color('info')
+                    ->button()
+                    ->visible(fn (\App\Models\Misi $record): bool => 
+                        $record->paket && 
+                        $record->paket->trusted_badge && 
+                        in_array($record->status, ['open', 'closed'])
+                    )
+                    ->url(fn (\App\Models\Misi $record): string => \App\Filament\Developer\Resources\Misis\MisiResource::getUrl('kelola-tester', ['record' => $record])),
                 EditAction::make(),
             ])
             ->toolbarActions([

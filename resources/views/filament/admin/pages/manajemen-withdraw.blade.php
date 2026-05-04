@@ -11,11 +11,11 @@
             font-family: 'Inter', sans-serif !important;
         }
 
-        .tk-sora {
+        .mw-sora {
             font-family: 'Sora', sans-serif !important;
         }
 
-        .tk-mono {
+        .mw-mono {
             font-family: 'JetBrains Mono', monospace !important;
         }
 
@@ -62,7 +62,7 @@
         }
 
         /* ══ STAT CARDS ══ */
-        .tk-stat {
+        .mw-stat {
             background: #fff;
             border-radius: 14px;
             padding: 18px 20px;
@@ -72,12 +72,12 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .tk-stat:hover {
+        .mw-stat:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, .1);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
         }
 
-        .tk-stat::after {
+        .mw-stat::after {
             content: '';
             position: absolute;
             top: 0;
@@ -91,11 +91,11 @@
             pointer-events: none;
         }
 
-        .tk-stat:hover::after {
+        .mw-stat:hover::after {
             left: 125%;
         }
 
-        .tk-stat-accent {
+        .mw-stat-accent {
             position: absolute;
             top: 0;
             left: 0;
@@ -103,7 +103,7 @@
             height: 3px;
         }
 
-        .tk-stat-icon {
+        .mw-stat-icon {
             width: 40px;
             height: 40px;
             border-radius: 10px;
@@ -115,11 +115,11 @@
             transition: transform 0.3s ease;
         }
 
-        .tk-stat:hover .tk-stat-icon {
-            transform: scale(1.1) rotate(-5deg);
+        .mw-stat:hover .mw-stat-icon {
+            transform: scale(1.1) rotate(5deg);
         }
 
-        .tk-stat-label {
+        .mw-stat-label {
             font-size: .72rem;
             color: #64748b;
             font-weight: 500;
@@ -127,98 +127,91 @@
             letter-spacing: .06em;
         }
 
-        .tk-stat-value {
+        .mw-stat-value {
             font-size: 1.4rem;
             font-weight: 800;
             color: #0f172a;
             line-height: 1.1;
         }
 
-        .tk-stat-sub {
+        .mw-stat-sub {
             font-size: .72rem;
             color: #94a3b8;
             margin-top: 2px;
         }
 
-        .tk-growth {
-            font-size: .7rem;
-            font-weight: 600;
-            padding: 2px 7px;
-            border-radius: 20px;
-        }
-
         /* Stat Colors */
-        .tk-grad-blue {
-            background: linear-gradient(90deg, #2563eb, #60a5fa);
-        }
-
-        .tk-grad-emerald {
-            background: linear-gradient(90deg, #10b981, #34d399);
-        }
-
-        .tk-grad-green {
+        .mw-grad-green {
             background: linear-gradient(90deg, #22c55e, #86efac);
         }
 
-        .tk-grad-orange {
+        .mw-grad-emerald {
+            background: linear-gradient(90deg, #10b981, #34d399);
+        }
+
+        .mw-grad-orange {
             background: linear-gradient(90deg, #f59e0b, #fcd34d);
         }
 
-        .tk-bg-blue {
-            background: #eff6ff;
-            color: #2563eb;
+        .mw-grad-red {
+            background: linear-gradient(90deg, #ef4444, #fca5a5);
         }
 
-        .tk-bg-emerald {
-            background: #d1fae5;
-            color: #10b981;
-        }
-
-        .tk-bg-green {
+        .mw-bg-green {
             background: #dcfce7;
             color: #16a34a;
         }
 
-        .tk-bg-orange {
+        .mw-bg-emerald {
+            background: #d1fae5;
+            color: #10b981;
+        }
+
+        .mw-bg-orange {
             background: #fef9c3;
             color: #f59e0b;
         }
 
+        .mw-bg-red {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
         /* ══ CHART ══ */
-        .tk-chart-bar-wrap {
+        .mw-chart-bar-wrap {
             display: flex;
             flex-direction: column;
             align-items: center;
             flex: 1;
-            gap: 4px;
+            gap: 4px
         }
 
-        .tk-chart-bar-outer {
+        .mw-chart-bar-outer {
             width: 100%;
             height: 120px;
             display: flex;
             align-items: flex-end;
-            justify-content: center;
+            justify-content: center
         }
 
-        .tk-chart-bar {
+        .mw-chart-bar {
             width: 80%;
             border-radius: 6px 6px 0 0;
-            background: linear-gradient(to top, #1d4ed8, #60a5fa);
+            background: linear-gradient(to top, #16a34a, #86efac);
             height: 0;
             transition: height 1.2s cubic-bezier(.4, 0, .2, 1), opacity 0.2s, box-shadow 0.2s;
             position: relative;
-            cursor: pointer;
+            cursor: pointer
         }
 
-        .tk-chart-bar:hover {
+        .mw-chart-bar:hover {
             opacity: 1;
-            box-shadow: 0 0 12px rgba(37, 99, 235, 0.6);
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.6);
             transform: scaleY(1.02);
             transform-origin: bottom;
         }
 
-        .tk-chart-bar-tooltip {
+        .mw-chart-bar-tooltip {
             position: absolute;
             top: -32px;
             left: 50%;
@@ -231,30 +224,30 @@
             white-space: nowrap;
             opacity: 0;
             pointer-events: none;
-            transition: all .2s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all .2s cubic-bezier(0.16, 1, 0.3, 1)
         }
 
-        .tk-chart-bar:hover .tk-chart-bar-tooltip {
+        .mw-chart-bar:hover .mw-chart-bar-tooltip {
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
 
-        .tk-chart-label {
+        .mw-chart-label {
             font-size: .7rem;
             color: #94a3b8;
-            font-weight: 500;
+            font-weight: 500
         }
 
-        .tk-chart-active .tk-chart-bar {
-            background: linear-gradient(to top, #f59e0b, #fcd34d) !important;
+        .mw-chart-active .mw-chart-bar {
+            background: linear-gradient(to top, #f59e0b, #fcd34d) !important
         }
 
-        .tk-chart-active .tk-chart-bar:hover {
+        .mw-chart-active .mw-chart-bar:hover {
             box-shadow: 0 0 12px rgba(245, 158, 11, 0.6) !important;
         }
 
         /* ══ FILTER & SEARCH BAR ══ */
-        .tk-filter-bar {
+        .mw-filter-bar {
             background: #fff;
             border: 1px solid #e2e8f0;
             border-radius: 12px;
@@ -267,17 +260,17 @@
             transition: box-shadow 0.3s;
         }
 
-        .tk-filter-bar:hover {
+        .mw-filter-bar:hover {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
         }
 
-        .tk-search-wrap {
+        .mw-search-wrap {
             position: relative;
             flex: 2;
             min-width: 320px;
         }
 
-        .tk-search-icon {
+        .mw-search-icon {
             position: absolute;
             left: 14px;
             top: 50%;
@@ -287,17 +280,17 @@
             transition: color 0.2s;
         }
 
-        .tk-search-wrap:focus-within .tk-search-icon {
+        .mw-search-wrap:focus-within .mw-search-icon {
             color: #2563eb;
         }
 
-        .tk-search-input {
+        .mw-search-input {
             width: 100%;
             padding-left: 42px !important;
         }
 
-        .tk-input,
-        .tk-select {
+        .mw-input,
+        .mw-select {
             border: 1px solid #e2e8f0;
             border-radius: 8px;
             padding: 8px 14px;
@@ -309,14 +302,14 @@
             font-family: 'Inter', sans-serif;
         }
 
-        .tk-input:focus,
-        .tk-select:focus {
+        .mw-input:focus,
+        .mw-select:focus {
             border-color: #2563eb;
             background: #fff;
             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
-        .tk-btn {
+        .mw-btn {
             padding: 8px 16px;
             border-radius: 8px;
             font-size: .85rem;
@@ -331,82 +324,82 @@
             justify-content: center;
         }
 
-        .tk-btn:active {
+        .mw-btn:active {
             transform: scale(0.95);
         }
 
-        .tk-btn-primary {
-            background: linear-gradient(135deg, #10b981, #059669);
+        .mw-btn-primary {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
             color: #fff;
         }
 
-        .tk-btn-primary:hover {
-            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+        .mw-btn-primary:hover {
+            box-shadow: 0 6px 16px rgba(34, 197, 94, 0.35);
             transform: translateY(-1px);
         }
 
-        .tk-btn-danger {
+        .mw-btn-danger {
             background: linear-gradient(135deg, #ef4444, #dc2626);
             color: #fff;
         }
 
-        .tk-btn-danger:hover {
+        .mw-btn-danger:hover {
             box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
             transform: translateY(-1px);
         }
 
-        .tk-btn-secondary {
+        .mw-btn-secondary {
             background: #f1f5f9;
             color: #64748b;
             border: 1px solid #e2e8f0;
         }
 
-        .tk-btn-secondary:hover {
+        .mw-btn-secondary:hover {
             background: #e2e8f0;
             color: #1e293b;
         }
 
-        .tk-btn-ghost {
+        .mw-btn-ghost {
             background: #f1f5f9;
             color: #475569;
             border: 1px solid #e2e8f0;
         }
 
-        .tk-btn-ghost:hover {
+        .mw-btn-ghost:hover {
             background: #e2e8f0;
             color: #1e293b;
         }
 
-        .tk-btn-ghost-danger {
+        .mw-btn-ghost-danger {
             color: #b91c1c;
             border: 1px solid #fecaca;
             background: #fef2f2;
         }
 
-        .tk-btn-ghost-danger:hover {
+        .mw-btn-ghost-danger:hover {
             background: #fee2e2;
         }
 
-        .tk-btn-export {
-            background: #0f172a;
-            color: #fff;
-            border: 1px solid #0f172a;
+        .mw-btn-export {
+            background: #f0fdf4;
+            color: #10b981;
+            border: 1px solid #10b981;
         }
 
-        .tk-btn-export:hover {
-            background: #1e293b;
+        .mw-btn-export:hover {
+            background: #dcfce7;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
         }
 
-        .tk-btn:disabled {
+        .mw-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none !important;
             box-shadow: none !important;
         }
 
-        .tk-btn-icon {
+        .mw-btn-icon {
             background: #f1f5f9;
             border: none;
             cursor: pointer;
@@ -420,18 +413,18 @@
             color: #64748b;
         }
 
-        .tk-btn-icon:hover {
+        .mw-btn-icon:hover {
             background: #e2e8f0;
             color: #0f172a;
             transform: scale(1.05);
         }
 
-        .tk-btn-icon:active {
+        .mw-btn-icon:active {
             transform: scale(0.95);
         }
 
         /* ══ TABLE ══ */
-        .tk-table-wrap {
+        .mw-table-wrap {
             background: #fff;
             border: 1px solid #e2e8f0;
             border-radius: 14px;
@@ -439,17 +432,17 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
         }
 
-        .tk-table {
+        .mw-table {
             width: 100%;
             border-collapse: collapse;
         }
 
-        .tk-table thead tr {
+        .mw-table thead tr {
             background: #f8fafc;
             border-bottom: 1px solid #e2e8f0;
         }
 
-        .tk-table th {
+        .mw-table th {
             padding: 12px 16px;
             font-size: .75rem;
             font-weight: 600;
@@ -460,35 +453,35 @@
             white-space: nowrap;
         }
 
-        .tk-table td {
+        .mw-table td {
             padding: 14px 16px;
             border-bottom: 1px solid #f1f5f9;
             vertical-align: middle;
             transition: background 0.2s;
         }
 
-        .tk-table tbody tr {
+        .mw-table tbody tr {
             transition: all .2s;
         }
 
-        .tk-table tbody tr td:first-child {
+        .mw-table tbody tr td:first-child {
             border-left: 3px solid transparent;
             transition: border-color 0.2s;
         }
 
-        .tk-table tbody tr:hover {
+        .mw-table tbody tr:hover {
             background: #f8fafc;
         }
 
-        .tk-table tbody tr:hover td:first-child {
-            border-left-color: #2563eb;
+        .mw-table tbody tr:hover td:first-child {
+            border-left-color: #22c55e;
         }
 
-        .tk-table tbody tr:last-child td {
+        .mw-table tbody tr:last-child td {
             border-bottom: none;
         }
 
-        .tk-avatar {
+        .mw-avatar {
             width: 36px;
             height: 36px;
             border-radius: 9px;
@@ -503,66 +496,57 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .tk-table tbody tr:hover .tk-avatar {
-            transform: scale(1.05) rotate(5deg);
+        .mw-table tbody tr:hover .mw-avatar {
+            transform: scale(1.05) rotate(-5deg);
         }
 
         /* Table Text Utilities */
-        .tk-td-id {
+        .mw-td-id {
             font-size: .75rem;
             color: #334155;
             font-weight: 600;
         }
 
-        .tk-td-subid {
-            font-size: .67rem;
-            color: #94a3b8;
-        }
-
-        .tk-td-name {
+        .mw-td-name {
             font-size: .85rem;
             color: #1e293b;
             font-weight: 600;
         }
 
-        .tk-td-campaign {
+        .mw-td-point {
             font-size: .85rem;
-            color: #334155;
-            font-weight: 500;
-            max-width: 180px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            color: #ef4444;
+            font-weight: 700;
         }
 
-        .tk-td-nom {
+        .mw-td-nom {
             font-size: .88rem;
             color: #0f172a;
             font-weight: 700;
         }
 
-        .tk-td-metode {
+        .mw-td-metode {
             font-size: .82rem;
             color: #475569;
         }
 
-        .tk-td-bank {
-            font-size: .72rem;
-            color: #94a3b8;
+        .mw-td-akun {
+            font-size: .8rem;
+            color: #475569;
         }
 
-        .tk-td-date {
+        .mw-td-date {
             font-size: .82rem;
             color: #334155;
         }
 
-        .tk-td-time {
+        .mw-td-time {
             font-size: .72rem;
             color: #94a3b8;
         }
 
         /* ══ BADGES & ACTIONS ══ */
-        .tk-badge {
+        .mw-badge {
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -573,50 +557,41 @@
             white-space: nowrap;
         }
 
-        .tk-badge-berhasil {
-            background: #dcfce7;
-            color: #15803d;
-        }
-
-        .tk-badge-pending {
+        .mw-badge-pending {
             background: #fef9c3;
             color: #a16207;
         }
 
-        .tk-badge-refund {
-            background: #dbeafe;
-            color: #1d4ed8;
+        .mw-badge-success {
+            background: #dcfce7;
+            color: #15803d;
         }
 
-        .tk-badge-gagal {
+        .mw-badge-rejected {
             background: #fee2e2;
             color: #b91c1c;
         }
 
-        .tk-dot {
+        .mw-dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
         }
 
-        .tk-dot-berhasil {
+        .mw-dot-pending {
+            background: #eab308;
+            animation: pulse 2s infinite;
+        }
+
+        .mw-dot-success {
             background: #22c55e;
         }
 
-        .tk-dot-pending {
-            background: #eab308;
-            animation: pulse-tk 2s infinite;
-        }
-
-        .tk-dot-refund {
-            background: #3b82f6;
-        }
-
-        .tk-dot-gagal {
+        .mw-dot-rejected {
             background: #ef4444;
         }
 
-        @keyframes pulse-tk {
+        @keyframes pulse {
             0% {
                 box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.4);
             }
@@ -630,30 +605,7 @@
             }
         }
 
-        .tk-paket {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: .72rem;
-            font-weight: 600;
-        }
-
-        .tk-paket-starter {
-            background: #f1f5f9;
-            color: #475569;
-        }
-
-        .tk-paket-pro {
-            background: #eff6ff;
-            color: #1d4ed8;
-        }
-
-        .tk-paket-business {
-            background: #fdf4ff;
-            color: #7e22ce;
-        }
-
-        .tk-action {
+        .mw-action {
             padding: 6px 14px;
             border-radius: 8px;
             font-size: .78rem;
@@ -666,23 +618,23 @@
             gap: 4px;
         }
 
-        .tk-action-detail {
+        .mw-action-detail {
             background: #eff6ff;
             color: #2563eb;
         }
 
-        .tk-action-detail:hover {
+        .mw-action-detail:hover {
             background: #dbeafe;
             transform: translateY(-1px);
             box-shadow: 0 2px 6px rgba(37, 99, 235, 0.15);
         }
 
-        .tk-action-detail:active {
+        .mw-action-detail:active {
             transform: scale(0.95);
         }
 
         /* ══ PAGINATION ══ */
-        .tk-pagi {
+        .mw-pagi {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -694,7 +646,7 @@
             border-radius: 0 0 14px 14px;
         }
 
-        .tk-pagi-btn {
+        .mw-pagi-btn {
             width: 32px;
             height: 32px;
             border-radius: 8px;
@@ -709,32 +661,86 @@
             transition: all .15s;
         }
 
-        .tk-pagi-btn:hover {
+        .mw-pagi-btn:hover {
             background: #eff6ff;
             border-color: #2563eb;
             color: #2563eb;
             transform: translateY(-1px);
         }
 
-        .tk-pagi-btn:active {
+        .mw-pagi-btn:active {
             transform: scale(0.9);
         }
 
-        .tk-pagi-btn.active {
+        .mw-pagi-btn.active {
             background: #2563eb;
             border-color: #2563eb;
             color: #fff;
             box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
         }
 
+        /* ══ UPLOAD AREA ══ */
+        .mw-upload-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: .88rem;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 10px;
+        }
+
+        .mw-upload-preview {
+            margin-bottom: 12px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+
+        .mw-upload-preview img {
+            width: 100%;
+            display: block;
+            max-height: 300px;
+            object-fit: contain;
+        }
+
+        .mw-upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all .2s;
+            position: relative;
+        }
+
+        .mw-upload-area:hover {
+            border-color: #2563eb;
+            background: #eff6ff;
+        }
+
+        .mw-upload-area.has-file {
+            border-color: #22c55e;
+            background: #f0fdf4;
+        }
+
+        .mw-upload-input {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+        }
+
         /* ══ EMPTY STATE ══ */
-        .tk-empty {
+        .mw-empty {
             text-align: center;
             padding: 60px 20px;
             color: #94a3b8;
         }
 
-        .tk-empty-icon {
+        .mw-empty-icon {
             width: 60px;
             height: 60px;
             margin: 0 auto 16px;
@@ -746,12 +752,12 @@
             transition: transform 0.3s;
         }
 
-        .tk-empty:hover .tk-empty-icon {
-            transform: scale(1.1) rotate(-5deg);
+        .mw-empty:hover .mw-empty-icon {
+            transform: scale(1.1) rotate(5deg);
         }
 
         /* ══ MODAL & SLIDE OUT ══ */
-        .tk-modal-overlay {
+        .mw-modal-overlay {
             position: fixed;
             inset: 0;
             z-index: 9999;
@@ -763,7 +769,7 @@
             padding: 1rem;
         }
 
-        .tk-modal-box {
+        .mw-modal-box {
             background: #fff;
             border-radius: 20px;
             max-width: 480px;
@@ -772,7 +778,7 @@
             overflow: hidden;
         }
 
-        .tk-modal-header {
+        .mw-modal-header {
             padding: 20px 24px;
             display: flex;
             justify-content: space-between;
@@ -780,7 +786,7 @@
             border-bottom: 1px solid #f1f5f9;
         }
 
-        .tk-modal-title {
+        .mw-modal-title {
             font-size: 1.1rem;
             font-weight: 700;
             color: #0f172a;
@@ -789,27 +795,27 @@
             gap: 10px;
         }
 
-        .tk-modal-title-icon {
+        .mw-modal-title-icon {
             font-size: 1.3rem;
             padding: 6px;
             border-radius: 8px;
         }
 
-        .tk-modal-title-icon.success {
+        .mw-modal-title-icon.success {
             color: #10b981;
             background: #ecfdf5;
         }
 
-        .tk-modal-title-icon.danger {
+        .mw-modal-title-icon.danger {
             color: #ef4444;
             background: #fef2f2;
         }
 
-        .tk-modal-body {
+        .mw-modal-body {
             padding: 24px;
         }
 
-        .tk-modal-footer {
+        .mw-modal-footer {
             padding: 18px 24px;
             border-top: 1px solid #f1f5f9;
             display: flex;
@@ -818,7 +824,7 @@
             background: #f8fafc;
         }
 
-        .tk-alert {
+        .mw-alert {
             border-radius: 12px;
             padding: 16px;
             margin-bottom: 20px;
@@ -827,58 +833,58 @@
             gap: 12px;
         }
 
-        .tk-alert-success {
+        .mw-alert-success {
             background: #f0fdf4;
             border: 1px solid #bbf7d0;
         }
 
-        .tk-alert-danger {
+        .mw-alert-danger {
             background: #fef2f2;
             border: 1px solid #fecaca;
         }
 
-        .tk-alert-icon {
+        .mw-alert-icon {
             font-size: 1.4rem;
             margin-top: 2px;
         }
 
-        .tk-alert-icon.success {
+        .mw-alert-icon.success {
             color: #10b981;
         }
 
-        .tk-alert-icon.danger {
+        .mw-alert-icon.danger {
             color: #ef4444;
         }
 
-        .tk-alert-title {
+        .mw-alert-title {
             font-size: .9rem;
             font-weight: 600;
             margin-bottom: 4px;
         }
 
-        .tk-alert-title.success {
+        .mw-alert-title.success {
             color: #065f46;
         }
 
-        .tk-alert-title.danger {
+        .mw-alert-title.danger {
             color: #991b1b;
         }
 
-        .tk-alert-text {
+        .mw-alert-text {
             font-size: .85rem;
             line-height: 1.5;
             opacity: .9;
         }
 
-        .tk-alert-text.success {
+        .mw-alert-text.success {
             color: #064e3b;
         }
 
-        .tk-alert-text.danger {
+        .mw-alert-text.danger {
             color: #7f1d1d;
         }
 
-        .tk-detail-bg {
+        .mw-detail-bg {
             position: fixed;
             inset: 0;
             background: rgba(15, 23, 42, .55);
@@ -889,7 +895,7 @@
             justify-content: flex-end;
         }
 
-        .tk-detail-panel {
+        .mw-detail-panel {
             width: 420px;
             max-width: 95vw;
             height: 100vh;
@@ -898,7 +904,7 @@
             box-shadow: -15px 0 50px rgba(0, 0, 0, .2);
         }
 
-        .tk-detail-header {
+        .mw-detail-header {
             padding: 22px 24px 18px;
             border-bottom: 1px solid #e2e8f0;
             background: rgba(248, 250, 252, 0.9);
@@ -908,11 +914,11 @@
             z-index: 10;
         }
 
-        .tk-detail-body {
+        .mw-detail-body {
             padding: 22px 24px;
         }
 
-        .tk-detail-row {
+        .mw-detail-row {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
@@ -922,7 +928,7 @@
             transition: background 0.2s;
         }
 
-        .tk-detail-row:hover {
+        .mw-detail-row:hover {
             background: #f8fafc;
             padding-left: 8px;
             padding-right: 8px;
@@ -932,24 +938,24 @@
             border-bottom-color: transparent;
         }
 
-        .tk-detail-row:last-child {
+        .mw-detail-row:last-child {
             border-bottom: none;
         }
 
-        .tk-detail-label {
+        .mw-detail-label {
             color: #64748b;
             font-weight: 500;
             flex-shrink: 0;
             margin-right: 16px;
         }
 
-        .tk-detail-val {
+        .mw-detail-val {
             color: #0f172a;
             font-weight: 600;
             text-align: right;
         }
 
-        .tk-detail-section {
+        .mw-detail-section {
             font-size: .75rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -958,7 +964,7 @@
             margin: 18px 0 8px;
         }
 
-        .tk-detail-footer {
+        .mw-detail-footer {
             padding: 16px 24px;
             border-top: 1px solid #e2e8f0;
             display: flex;
@@ -969,27 +975,27 @@
             z-index: 10;
         }
 
-        .tk-summary-box {
-            background: linear-gradient(135deg, #1e3a5f, #0f172a);
+        .mw-summary-box {
+            background: linear-gradient(135deg, #14532d, #0f172a);
             border-radius: 12px;
             padding: 20px;
             color: #fff;
             margin-bottom: 10px;
-            box-shadow: 0 10px 25px -5px rgba(30, 58, 95, 0.3);
+            box-shadow: 0 10px 25px -5px rgba(20, 83, 45, 0.3);
         }
     </style>
     @endpush
 
-    <div class="space-y-5" x-data="transaksiKeuangan()" x-init="initChart()">
+    <div class="space-y-5" x-data="withdrawAdmin()" x-init="initChart()">
 
         {{-- ══ HEADER ══ --}}
         <div class="flex items-center justify-between animate-fade-in-up">
             <div>
-                <h1 class="tk-sora text-xl font-bold text-slate-900">Manajemen Pembayaran Developer</h1>
-                <p class="text-sm text-slate-500 mt-0.5">Rekap seluruh transaksi pembayaran paket kampanye</p>
+                <h1 class="mw-sora text-xl font-bold text-slate-900">Manajemen Penarikan Tester</h1>
+                <p class="text-sm text-slate-500 mt-0.5">Kelola permintaan pencairan poin dari tester</p>
             </div>
-            <button class="tk-btn tk-btn-export">
-                <span class="material-symbols-outlined text-[1.1rem]">download</span>
+            <button wire:click="exportCsv" class="mw-btn mw-btn-export">
+                <span class="material-symbols-outlined">download</span>
                 Export CSV
             </button>
         </div>
@@ -997,63 +1003,57 @@
         {{-- ══ STAT CARDS ══ --}}
         <!-- Ubah xl:grid-cols-5 menjadi xl:grid-cols-6 -->
         <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 animate-fade-in-up delay-100">
-
-            <div class="tk-stat xl:col-span-2">
-                <div class="tk-stat-accent tk-grad-blue"></div>
+            <div class="mw-stat xl:col-span-2">
+                <div class="mw-stat-accent mw-grad-green"></div>
                 <div class="flex items-start gap-3 mt-1">
-                    <div class="tk-stat-icon tk-bg-blue">
-                        <span class="material-symbols-outlined">account_balance_wallet</span>
+                    <div class="mw-stat-icon mw-bg-green">
+                        <span class="material-symbols-outlined">payments</span>
                     </div>
                     <div class="flex-1 min-w-0">
-                        <div class="tk-stat-label">Total Pendapatan</div>
-                        <div class="tk-stat-value tk-mono">{{ $statTotalPendapatan }}</div>
-                        <div class="flex items-center gap-2 mt-1">
-                            <span class="tk-growth bg-green-100 text-green-700">{{ $growthPendapatan }}</span>
-                            <span class="tk-stat-sub">vs bulan lalu</span>
-                        </div>
+                        <div class="mw-stat-label">Total Dicairkan</div>
+                        <div class="mw-stat-value mw-mono">{{ $totalRupiahSuccess }}</div>
                     </div>
                 </div>
             </div>
 
             <!-- Tambahkan xl:col-span-2 di sini -->
-            <div class="tk-stat xl:col-span-2">
-                <div class="tk-stat-accent tk-grad-emerald"></div>
+            <div class="mw-stat xl:col-span-2">
+                <div class="mw-stat-accent mw-grad-emerald"></div>
                 <div class="flex items-start gap-3 mt-1">
-                    <div class="tk-stat-icon tk-bg-emerald">
+                    <div class="mw-stat-icon mw-bg-emerald">
                         <span class="material-symbols-outlined">calendar_month</span>
                     </div>
                     <div>
-                        <div class="tk-stat-label">Bulan Ini</div>
-                        <div class="tk-stat-value tk-mono text-[1.1rem]">{{ $statBulanIni }}</div>
-                        <span class="tk-growth bg-green-100 text-green-700 inline-block mt-1">{{ $growthBulanIni }}</span>
+                        <div class="mw-stat-label">Bulan Ini</div>
+                        <div class="mw-stat-value mw-mono text-[1.1rem]">{{ $rupiahBulanIni }}</div>
                     </div>
                 </div>
             </div>
 
-            <div class="tk-stat">
-                <div class="tk-stat-accent tk-grad-green"></div>
+            <div class="mw-stat">
+                <div class="mw-stat-accent mw-grad-orange"></div>
                 <div class="flex items-start gap-3 mt-1">
-                    <div class="tk-stat-icon tk-bg-green">
-                        <span class="material-symbols-outlined">check_circle</span>
-                    </div>
-                    <div>
-                        <div class="tk-stat-label">Berhasil</div>
-                        <div class="tk-stat-value">{{ $statBerhasil }}</div>
-                        <div class="tk-stat-sub">transaksi</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tk-stat">
-                <div class="tk-stat-accent tk-grad-orange"></div>
-                <div class="flex items-start gap-3 mt-1">
-                    <div class="tk-stat-icon tk-bg-orange">
+                    <div class="mw-stat-icon mw-bg-orange">
                         <span class="material-symbols-outlined">schedule</span>
                     </div>
                     <div>
-                        <div class="tk-stat-label">Pending</div>
-                        <div class="tk-stat-value text-[#d97706]">{{ $statPending }}</div>
-                        <div class="tk-stat-sub">menunggu konfirmasi</div>
+                        <div class="mw-stat-label">Pending</div>
+                        <div class="mw-stat-value text-[#d97706]">{{ $totalPending }}</div>
+                        <div class="mw-stat-sub">menunggu review</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mw-stat">
+                <div class="mw-stat-accent mw-grad-red"></div>
+                <div class="flex items-start gap-3 mt-1">
+                    <div class="mw-stat-icon mw-bg-red">
+                        <span class="material-symbols-outlined">cancel</span>
+                    </div>
+                    <div>
+                        <div class="mw-stat-label">Ditolak</div>
+                        <div class="mw-stat-value text-[#dc2626]">{{ $totalRejected }}</div>
+                        <div class="mw-stat-sub">transaksi</div>
                     </div>
                 </div>
             </div>
@@ -1061,15 +1061,14 @@
 
         {{-- ══ CHART + RINGKASAN ══ --}}
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 animate-fade-in-up delay-200">
-
             <div class="xl:col-span-2 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between mb-6">
                     <div>
-                        <div class="tk-sora font-bold text-slate-900 text-base">Pendapatan 6 Bulan Terakhir</div>
-                        <div class="text-xs text-slate-400 mt-0.5">Berdasarkan transaksi yang berhasil dikonfirmasi</div>
+                        <div class="mw-sora font-bold text-slate-900 text-base">Pencairan 6 Bulan Terakhir</div>
+                        <div class="text-xs text-slate-400 mt-0.5">Total withdraw yang berhasil dicairkan</div>
                     </div>
                     <div class="flex items-center gap-2 text-xs text-slate-500">
-                        <span class="inline-block w-3 h-3 rounded-sm tk-grad-blue"></span> Pendapatan
+                        <span class="inline-block w-3 h-3 rounded-sm mw-grad-green"></span> Pencairan
                     </div>
                 </div>
                 <div class="flex items-end gap-3 h-[140px]">
@@ -1081,14 +1080,14 @@
                     $valF = 'Rp ' . number_format($val, 0, ',', '.');
                     $isLast = $i === count($chartBulan) - 1;
                     @endphp
-                    <div class="tk-chart-bar-wrap">
-                        <div class="tk-chart-bar-outer">
-                            <div class="tk-chart-bar {{ $isLast ? 'tk-chart-active' : '' }}" data-target="{{ $pct }}">
-                                <div class="tk-chart-bar-tooltip">{{ $valF }}</div>
+                    <div class="mw-chart-bar-wrap">
+                        <div class="mw-chart-bar-outer">
+                            <div class="mw-chart-bar {{ $isLast ? 'mw-chart-active' : '' }}" data-target="{{ $pct }}">
+                                <div class="mw-chart-bar-tooltip">{{ $valF }}</div>
                             </div>
                         </div>
-                        <div class="tk-chart-label">{{ $bulan }}</div>
-                        <div class="tk-mono text-slate-500 text-[0.62rem]">{{ number_format($val/1000000,1) }}jt</div>
+                        <div class="mw-chart-label">{{ $bulan }}</div>
+                        <div class="mw-mono text-slate-500 text-[0.62rem]">{{ number_format($val/1000000,1) }}jt</div>
                     </div>
                     @endforeach
                 </div>
@@ -1096,17 +1095,15 @@
 
             <div class="flex flex-col gap-4">
                 <div class="bg-white border border-slate-200 rounded-2xl p-5 flex-1 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="tk-sora font-bold text-slate-800 text-sm mb-4">Ringkasan Status</div>
+                    <div class="mw-sora font-bold text-slate-800 text-sm mb-4">Ringkasan Status</div>
                     <div class="space-y-4">
-                        @php $total = $statBerhasil + $statPending + $statRefund; @endphp
+                        @php $total = $totalSuccess + $totalPending + $totalRejected; @endphp
                         @if($total > 0)
-                        @php
-                        $ringkasan = [
-                        ['label'=>'Berhasil','val'=>$statBerhasil,'pct'=>round($statBerhasil/$total*100),'color'=>'#22c55e'],
-                        ['label'=>'Pending', 'val'=>$statPending, 'pct'=>round($statPending/$total*100), 'color'=>'#f59e0b'],
-                        ['label'=>'Refund', 'val'=>$statRefund, 'pct'=>round($statRefund/$total*100), 'color'=>'#3b82f6'],
-                        ];
-                        @endphp
+                        @php $ringkasan = [
+                        ['label'=>'Berhasil','val'=>$totalSuccess,'pct'=>round($totalSuccess/$total*100),'color'=>'#22c55e'],
+                        ['label'=>'Pending','val'=>$totalPending,'pct'=>round($totalPending/$total*100),'color'=>'#f59e0b'],
+                        ['label'=>'Ditolak','val'=>$totalRejected,'pct'=>round($totalRejected/$total*100),'color'=>'#ef4444'],
+                        ]; @endphp
                         @foreach($ringkasan as $r)
                         <div class="group">
                             <div class="flex justify-between items-center mb-1.5 transition-transform group-hover:translate-x-1">
@@ -1120,26 +1117,19 @@
                         @endforeach
                         @else
                         <div class="text-center py-6">
-                            <p class="text-sm text-slate-400">Belum ada data transaksi</p>
+                            <p class="text-sm text-slate-400">Belum ada data</p>
                         </div>
                         @endif
                     </div>
                 </div>
 
                 <div class="bg-white border border-slate-200 rounded-2xl p-5 flex-1 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="tk-sora font-bold text-slate-800 text-sm mb-4">Metode Pembayaran</div>
+                    <div class="mw-sora font-bold text-slate-800 text-sm mb-4">Metode Populer</div>
                     <div class="space-y-3">
-                        @php
-                        $metodes = [
-                        ['label'=>'Transfer Bank', 'pct'=>48,'icon'=>'account_balance'],
-                        ['label'=>'QRIS', 'pct'=>33,'icon'=>'qr_code_scanner'],
-                        ['label'=>'Virtual Account','pct'=>19,'icon'=>'payment'],
-                        ];
-                        @endphp
-                        @foreach($metodes as $m)
+                        @forelse($metodeBreakdown as $m)
                         <div class="flex items-center gap-3 group">
-                            <div class="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center border border-slate-100 transition-transform group-hover:scale-110 group-hover:bg-blue-50 group-hover:text-blue-600">
-                                <span class="material-symbols-outlined text-[1.2rem] text-slate-500 group-hover:text-blue-600 transition-colors">{{ $m['icon'] }}</span>
+                            <div class="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center border border-slate-100 transition-transform group-hover:scale-110 group-hover:bg-green-50 group-hover:text-green-600">
+                                <span class="material-symbols-outlined text-[1.2rem] text-slate-500 group-hover:text-green-600 transition-colors">account_balance_wallet</span>
                             </div>
                             <div class="flex-1">
                                 <div class="flex justify-between text-xs mb-1.5 transition-transform group-hover:translate-x-1">
@@ -1147,43 +1137,46 @@
                                     <span class="text-slate-800 font-bold">{{ $m['pct'] }}%</span>
                                 </div>
                                 <div class="w-full rounded-full h-1.5 bg-slate-100 overflow-hidden">
-                                    <div class="h-1.5 rounded-full bg-blue-600 transition-all duration-1000 ease-out" style="width:{{ $m['pct'] }}%;"></div>
+                                    <div class="h-1.5 rounded-full bg-green-500 transition-all duration-1000 ease-out" style="width:{{ $m['pct'] }}%;"></div>
                                 </div>
                             </div>
                         </div>
-                        @endforeach
+                        @empty
+                        <div class="text-center py-4">
+                            <p class="text-sm text-slate-400">Belum ada data</p>
+                        </div>
+                        @endforelse
                     </div>
                 </div>
             </div>
         </div>
 
         {{-- ══ FILTER BAR ══ --}}
-        <div class="tk-filter-bar animate-fade-in-up delay-300">
+        <div class="mw-filter-bar animate-fade-in-up delay-300">
             <div class="flex flex-wrap gap-3 items-center flex-1">
-                <div class="tk-search-wrap">
-                    <span class="material-symbols-outlined tk-search-icon">search</span>
-                    <input type="text" placeholder="Cari nama, ID transaksi, kampanye…" class="tk-input tk-search-input" x-model="cariTeks">
+                <div class="mw-search-wrap">
+                    <span class="material-symbols-outlined mw-search-icon">search</span>
+                    <input type="text" placeholder="Cari nama tester, ID…" class="mw-input mw-search-input" x-model="cariTeks">
                 </div>
-                <select class="tk-select" x-model="filterStatus">
+                <select class="mw-select" x-model="filterStatus">
                     <option value="">Semua Status</option>
-                    <option value="Berhasil">Berhasil</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Refund">Refund</option>
-                    <option value="Gagal">Gagal</option>
+                    <option value="pending">Pending</option>
+                    <option value="success">Berhasil</option>
+                    <option value="rejected">Ditolak</option>
                 </select>
-                <select class="tk-select" x-model="filterPaket">
-                    <option value="">Semua Paket</option>
-                    <option value="Starter">Starter</option>
-                    <option value="Pro">Pro</option>
-                    <option value="Business">Business</option>
-                </select>
-                <select class="tk-select" x-model="filterMetode">
+                <select class="mw-select" x-model="filterMetode">
                     <option value="">Semua Metode</option>
-                    <option value="Transfer Bank">Transfer Bank</option>
-                    <option value="QRIS">QRIS</option>
-                    <option value="Virtual Account">Virtual Account</option>
+                    <option value="GoPay">GoPay</option>
+                    <option value="DANA">DANA</option>
+                    <option value="ShopeePay">ShopeePay</option>
+                    <option value="OVO">OVO</option>
+                    <option value="BCA">BCA</option>
+                    <option value="Mandiri">Mandiri</option>
+                    <option value="BNI">BNI</option>
+                    <option value="BRI">BRI</option>
+                    <option value="BSI">BSI</option>
                 </select>
-                <select class="tk-select max-w-[120px]" x-model="perPage">
+                <select class="mw-select max-w-[120px]" x-model="perPage">
                     <option value="5">5 Data</option>
                     <option value="10">10 Data</option>
                     <option value="20">20 Data</option>
@@ -1191,72 +1184,65 @@
                     <option value="100">100 Data</option>
                     <option value="1000">Semua</option>
                 </select>
-                <button class="tk-btn tk-btn-ghost" @click="resetFilter()">Reset</button>
+                <button class="mw-btn mw-btn-ghost" @click="resetFilter()">Reset</button>
             </div>
         </div>
 
-        {{-- ══ TABEL ══ --}}
-        <div class="tk-table-wrap animate-fade-in-up delay-400">
-            <table class="tk-table">
+        {{-- ══ TABLE ══ --}}
+        <div class="mw-table-wrap animate-fade-in-up delay-400">
+            <table class="mw-table">
                 <thead>
                     <tr>
                         <th>ID Transaksi</th>
-                        <th>Developer</th>
-                        <th>Kampanye</th>
-                        <th>Paket</th>
-                        <th>Jumlah</th>
+                        <th>Tester</th>
+                        <th>Point</th>
+                        <th>Nominal</th>
                         <th>Metode</th>
+                        <th>No. Akun</th>
                         <th>Status</th>
                         <th>Tanggal</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($transaksiList as $idx => $t)
-                    @php
-                    $statusLower = strtolower($t['status']);
-                    $paketLower = strtolower($t['paket']);
-                    $jumlahF = 'Rp ' . number_format($t['jumlah'], 0, ',', '.');
-                    @endphp
-                    <tr data-status="{{ $t['status'] }}" data-paket="{{ $t['paket'] }}" data-metode="{{ $t['metode'] }}" data-nama="{{ strtolower($t['namaUser']) }}" data-id="{{ strtolower($t['id']) }}" data-kampanye="{{ strtolower($t['kampanye']) }}" data-item="{{ json_encode($t) }}"
+                    @foreach($withdrawList as $idx => $w)
+                    <tr data-status="{{ $w['status'] }}" data-metode="{{ $w['metode'] }}" data-nama="{{ strtolower($w['namaUser']) }}" data-id="{{ strtolower($w['withdrawId']) }}" data-item="{{ json_encode($w) }}"
                         x-show="tampilRow($el)"
                         x-transition.opacity.duration.300ms>
                         <td>
-                            <div class="tk-mono tk-td-id">{{ $t['id'] }}</div>
-                            <div class="tk-td-subid">{{ $t['invoice'] }}</div>
+                            <div class="mw-mono mw-td-id">{{ $w['withdrawId'] }}</div>
                         </td>
                         <td>
                             <div class="flex items-center gap-3">
-                                <div class="tk-avatar bg-gradient-to-br {{ $t['avatarColor'] }}">{{ $t['inisial'] }}</div>
-                                <div class="tk-td-name">{{ $t['namaUser'] }}</div>
+                                <div class="mw-avatar bg-gradient-to-br {{ $w['avatarColor'] }}">{{ $w['inisial'] }}</div>
+                                <div class="mw-td-name">{{ $w['namaUser'] }}</div>
                             </div>
                         </td>
                         <td>
-                            <div class="tk-td-campaign">{{ $t['kampanye'] }}</div>
-                        </td>
-                        <td><span class="tk-paket tk-paket-{{ $paketLower }}">{{ $t['paket'] }}</span></td>
-                        <td>
-                            <div class="tk-mono tk-td-nom">{{ $jumlahF }}</div>
+                            <div class="mw-mono mw-td-point">-{{ number_format($w['point']) }} pts</div>
                         </td>
                         <td>
-                            <div class="tk-td-metode">{{ $t['metode'] }}</div>
-                            @if($t['bank'] !== '-')
-                            <div class="tk-td-bank">{{ $t['bank'] }}</div>
-                            @endif
+                            <div class="mw-mono mw-td-nom">{{ $w['rupiahF'] }}</div>
                         </td>
                         <td>
-                            <span class="tk-badge tk-badge-{{ $statusLower }}">
-                                <span class="tk-dot tk-dot-{{ $statusLower }}"></span>
-                                {{ $t['status'] }}
+                            <div class="mw-td-metode">{{ $w['metode'] }}</div>
+                        </td>
+                        <td>
+                            <div class="mw-mono mw-td-akun">{{ $w['nomorAkun'] }}</div>
+                        </td>
+                        <td>
+                            <span class="mw-badge mw-badge-{{ $w['status'] }}">
+                                <span class="mw-dot mw-dot-{{ $w['status'] }}"></span>
+                                {{ ucfirst($w['status']) }}
                             </span>
                         </td>
                         <td>
-                            <div class="tk-td-date">{{ $t['tanggal'] }}</div>
-                            <div class="tk-mono tk-td-time">{{ $t['waktu'] }}</div>
+                            <div class="mw-td-date">{{ $w['tanggal'] }}</div>
+                            <div class="mw-mono mw-td-time">{{ $w['waktu'] }}</div>
                         </td>
                         <td>
                             <div class="flex items-center gap-2">
-                                <button class="tk-action tk-action-detail" @click="bukaModal($el.closest('tr'))">Detail</button>
+                                <button class="mw-action mw-action-detail" @click="bukaDetail($el.closest('tr'))">Detail</button>
                             </div>
                         </td>
                     </tr>
@@ -1264,11 +1250,11 @@
 
                     <tr x-show="totalItems === 0" x-cloak x-transition.opacity>
                         <td colspan="9">
-                            <div class="tk-empty">
-                                <div class="tk-empty-icon">
+                            <div class="mw-empty">
+                                <div class="mw-empty-icon">
                                     <span class="material-symbols-outlined text-[1.8rem]">inbox</span>
                                 </div>
-                                <div class="font-semibold text-slate-500">Tidak ada transaksi ditemukan</div>
+                                <div class="font-semibold text-slate-500">Tidak ada penarikan ditemukan</div>
                                 <div class="text-sm text-slate-400 mt-1">Coba ubah filter atau kata kunci pencarian</div>
                             </div>
                         </td>
@@ -1276,14 +1262,14 @@
                 </tbody>
             </table>
 
-            <div class="tk-pagi" x-show="totalItems > 0" x-cloak>
-                <span>Menampilkan <strong class="text-slate-700" x-text="visibleIds.length"></strong> dari <strong class="text-slate-700" x-text="totalItems"></strong> transaksi</span>
+            <div class="mw-pagi" x-show="totalItems > 0" x-cloak>
+                <span>Menampilkan <strong class="text-slate-700" x-text="visibleIds.length"></strong> dari <strong class="text-slate-700" x-text="totalItems"></strong> penarikan</span>
                 <div class="flex items-center gap-1.5" x-show="totalPages > 1">
-                    <button class="tk-pagi-btn" @click="currentPage > 1 ? currentPage-- : null; updatePagi()">‹</button>
+                    <button class="mw-pagi-btn" @click="currentPage > 1 ? currentPage-- : null; updatePagi()">‹</button>
                     <template x-for="p in totalPages" :key="p">
-                        <button class="tk-pagi-btn" :class="currentPage === p ? 'active' : ''" @click="currentPage = p; updatePagi()" x-text="p"></button>
+                        <button class="mw-pagi-btn" :class="currentPage === p ? 'active' : ''" @click="currentPage = p; updatePagi()" x-text="p"></button>
                     </template>
-                    <button class="tk-pagi-btn" @click="currentPage < totalPages ? currentPage++ : null; updatePagi()">›</button>
+                    <button class="mw-pagi-btn" @click="currentPage < totalPages ? currentPage++ : null; updatePagi()">›</button>
                 </div>
             </div>
         </div>
@@ -1291,35 +1277,71 @@
         {{-- ══ APPROVE CONFIRMATION MODAL ══ --}}
         @if($pendingApproveId)
         <template x-teleport="body">
-            <div class="tk-modal-overlay" x-data="{ open: true }" x-show="open" x-cloak
+            <div class="mw-modal-overlay" x-data="{ open: true }" x-show="open" x-cloak
                 x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
                 @click.self="open = false; $wire.cancelAction()">
-                <div class="tk-modal-box"
+                <div class="mw-modal-box"
                     x-transition:enter="transition ease-out duration-300"
                     x-transition:enter-start="opacity-0 scale-90 translate-y-8" x-transition:enter-end="opacity-100 scale-100 translate-y-0">
-                    <div class="tk-modal-header">
-                        <h3 class="tk-sora tk-modal-title">
-                            <span class="material-symbols-outlined tk-modal-title-icon success">verified</span>
+                    <div class="mw-modal-header">
+                        <h3 class="mw-sora mw-modal-title">
+                            <span class="material-symbols-outlined mw-modal-title-icon success">verified</span>
                             Konfirmasi Persetujuan
                         </h3>
-                        <button @click="open = false; $wire.cancelAction()" class="tk-btn-icon">
+                        <button @click="open = false; $wire.cancelAction()" class="mw-btn-icon">
                             <span class="material-symbols-outlined">close</span>
                         </button>
                     </div>
-                    <div class="tk-modal-body">
-                        <div class="tk-alert tk-alert-success">
-                            <span class="material-symbols-outlined tk-alert-icon success">info</span>
+                    <div class="mw-modal-body">
+                        <div class="mw-alert mw-alert-success">
+                            <span class="material-symbols-outlined mw-alert-icon success">info</span>
                             <div>
-                                <p class="tk-alert-title success">Apakah Anda yakin?</p>
-                                <p class="tk-alert-text success">Anda akan mengkonfirmasi pembayaran developer ini. Aksi ini akan membuka kunci paket fitur pada sistem mereka dan tidak dapat dibatalkan.</p>
+                                <p class="mw-alert-title success">Apakah Anda yakin?</p>
+                                <p class="mw-alert-text success">Anda akan menyetujui withdrawal <strong>#{{ $pendingApproveId }}</strong>. Aksi ini tidak dapat dibatalkan. Pastikan Anda sudah mentransfer dana ke tester.</p>
+                            </div>
+                        </div>
+
+                        <div class="mb-2">
+                            <label class="mw-upload-label">
+                                <span class="material-symbols-outlined text-[1.1rem]">upload_file</span>
+                                Upload Bukti Transfer <span class="text-red-500">*</span>
+                            </label>
+
+                            @if($previewUrl)
+                            <div class="mw-upload-preview animate-fade-in-up">
+                                <img src="{{ $previewUrl }}" alt="Preview Bukti Transfer">
+                            </div>
+                            @endif
+
+                            <div class="mw-upload-area {{ $previewUrl ? 'has-file' : '' }}">
+                                <input type="file" wire:model="buktiTransfer" accept="image/*" class="mw-upload-input">
+                                <div wire:loading.remove wire:target="buktiTransfer">
+                                    @if($previewUrl)
+                                    <div>
+                                        <span class="material-symbols-outlined text-[1.5rem] text-green-600">check_circle</span>
+                                        <p class="text-[.85rem] text-green-700 mt-1 font-semibold">File berhasil dipilih</p>
+                                        <p class="text-[.75rem] text-slate-500 mt-1">Klik atau seret untuk mengganti</p>
+                                    </div>
+                                    @else
+                                    <div>
+                                        <span class="material-symbols-outlined text-[2rem] text-slate-400 group-hover:text-blue-500 transition-colors">cloud_upload</span>
+                                        <p class="text-[.85rem] text-slate-500 mt-2 font-medium">Klik atau seret gambar bukti transfer</p>
+                                        <p class="text-[.75rem] text-slate-400 mt-1">JPG, PNG, max 2MB</p>
+                                    </div>
+                                    @endif
+                                </div>
+                                <div wire:loading wire:target="buktiTransfer">
+                                    <span class="material-symbols-outlined text-[2rem] text-blue-600 animate-spin">progress_activity</span>
+                                    <p class="text-[.85rem] text-blue-600 mt-2 font-medium">Mengupload...</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="tk-modal-footer">
-                        <button class="tk-btn tk-btn-secondary" @click="open = false; $wire.cancelAction()">Batal</button>
-                        <button class="tk-btn tk-btn-primary" wire:click="approvePembayaran" wire:loading.attr="disabled" wire:target="approvePembayaran">
-                            <span wire:loading.remove wire:target="approvePembayaran">Ya, Konfirmasi</span>
-                            <span wire:loading wire:target="approvePembayaran">Memproses...</span>
+                    <div class="mw-modal-footer">
+                        <button class="mw-btn mw-btn-secondary" @click="open = false; $wire.cancelAction()">Batal</button>
+                        <button class="mw-btn mw-btn-primary" wire:click="approveWithdraw" wire:loading.attr="disabled" wire:target="approveWithdraw">
+                            <span wire:loading.remove wire:target="approveWithdraw">Ya, Setujui</span>
+                            <span wire:loading wire:target="approveWithdraw">Memproses...</span>
                         </button>
                     </div>
                 </div>
@@ -1330,35 +1352,40 @@
         {{-- ══ REJECT CONFIRMATION MODAL ══ --}}
         @if($pendingRejectId)
         <template x-teleport="body">
-            <div class="tk-modal-overlay" x-data="{ open: true }" x-show="open" x-cloak
+            <div class="mw-modal-overlay" x-data="{ open: true }" x-show="open" x-cloak
                 x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
                 @click.self="open = false; $wire.cancelAction()">
-                <div class="tk-modal-box"
+                <div class="mw-modal-box"
                     x-transition:enter="transition ease-out duration-300"
                     x-transition:enter-start="opacity-0 scale-90 translate-y-8" x-transition:enter-end="opacity-100 scale-100 translate-y-0">
-                    <div class="tk-modal-header">
-                        <h3 class="tk-sora tk-modal-title">
-                            <span class="material-symbols-outlined tk-modal-title-icon danger">warning</span>
+                    <div class="mw-modal-header">
+                        <h3 class="mw-sora mw-modal-title">
+                            <span class="material-symbols-outlined mw-modal-title-icon danger">warning</span>
                             Konfirmasi Penolakan
                         </h3>
-                        <button @click="open = false; $wire.cancelAction()" class="tk-btn-icon">
+                        <button @click="open = false; $wire.cancelAction()" class="mw-btn-icon">
                             <span class="material-symbols-outlined">close</span>
                         </button>
                     </div>
-                    <div class="tk-modal-body">
-                        <div class="tk-alert tk-alert-danger">
-                            <span class="material-symbols-outlined tk-alert-icon danger">info</span>
+                    <div class="mw-modal-body">
+                        <div class="mw-alert mw-alert-danger">
+                            <span class="material-symbols-outlined mw-alert-icon danger">info</span>
                             <div>
-                                <p class="tk-alert-title danger">Apakah Anda yakin?</p>
-                                <p class="tk-alert-text danger">Anda akan menolak pembayaran ini. Transaksi akan dibatalkan secara permanen di sistem.</p>
+                                <p class="mw-alert-title danger">Apakah Anda yakin?</p>
+                                <p class="mw-alert-text danger">Anda akan menolak withdrawal <strong>#{{ $pendingRejectId }}</strong>. Point akan dikembalikan ke saldo tester.</p>
                             </div>
                         </div>
+
+                        <div>
+                            <label class="block text-[.85rem] font-semibold text-slate-700 mb-2">Catatan (opsional)</label>
+                            <textarea wire:model="rejectCatatan" rows="3" class="mw-input w-full resize-none" placeholder="Alasan penolakan..."></textarea>
+                        </div>
                     </div>
-                    <div class="tk-modal-footer">
-                        <button class="tk-btn tk-btn-secondary" @click="open = false; $wire.cancelAction()">Batal</button>
-                        <button class="tk-btn tk-btn-danger" wire:click="rejectPembayaran" wire:loading.attr="disabled" wire:target="rejectPembayaran">
-                            <span wire:loading.remove wire:target="rejectPembayaran">Ya, Tolak</span>
-                            <span wire:loading wire:target="rejectPembayaran">Memproses...</span>
+                    <div class="mw-modal-footer">
+                        <button class="mw-btn mw-btn-secondary" @click="open = false; $wire.cancelAction()">Batal</button>
+                        <button class="mw-btn mw-btn-danger" wire:click="rejectWithdraw" wire:loading.attr="disabled" wire:target="rejectWithdraw">
+                            <span wire:loading.remove wire:target="rejectWithdraw">Ya, Tolak</span>
+                            <span wire:loading wire:target="rejectWithdraw">Memproses...</span>
                         </button>
                     </div>
                 </div>
@@ -1366,108 +1393,108 @@
         </template>
         @endif
 
-        {{-- ══ MODAL DETAIL ══ --}}
-        <div class="tk-detail-bg" x-show="modalTerbuka" x-cloak style="display:none"
+        {{-- ══ DETAIL SLIDE-OUT MODAL ══ --}}
+        <div class="mw-detail-bg" x-show="modalTerbuka" x-cloak style="display:none"
             x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
             x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-            @click.self="tutupModal()" @keydown.escape.window="tutupModal()">
-            <div class="tk-detail-panel" x-show="modalTerbuka"
+            @click.self="tutupDetail()" @keydown.escape.window="tutupDetail()">
+            <div class="mw-detail-panel" x-show="modalTerbuka"
                 x-transition:enter="transition cubic-bezier(0.16, 1, 0.3, 1) duration-400" x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
                 x-transition:leave="transition cubic-bezier(0.4, 0, 0.2, 1) duration-300" x-transition:leave-start="translate-x-0" x-transition:leave-end="translate-x-full">
-                <div class="tk-detail-header">
+                <div class="mw-detail-header">
                     <div class="flex items-center justify-between">
                         <div>
-                            <div class="tk-sora font-bold text-slate-900 text-base">Detail Transaksi</div>
-                            <div class="text-xs text-slate-400 mt-0.5" x-text="transaksi ? transaksi.id : ''"></div>
+                            <div class="mw-sora font-bold text-slate-900 text-base">Detail Withdraw</div>
+                            <div class="text-xs text-slate-400 mt-0.5" x-text="detail ? detail.withdrawId : ''"></div>
                         </div>
-                        <button @click="tutupModal()" class="tk-btn-icon">
+                        <button @click="tutupDetail()" class="mw-btn-icon">
                             <span class="material-symbols-outlined text-[1.2rem]">close</span>
                         </button>
                     </div>
                 </div>
-
-                <template x-if="transaksi">
-                    <div class="tk-detail-body">
-                        <div class="tk-summary-box">
+                <template x-if="detail">
+                    <div class="mw-detail-body">
+                        <div class="mw-summary-box">
                             <div class="flex items-center gap-3 mb-4">
-                                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-[1rem] font-bold text-white bg-white/15" x-text="transaksi.inisial"></div>
+                                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-[1rem] font-bold text-white bg-white/15" x-text="detail.inisial"></div>
                                 <div>
-                                    <div class="font-bold text-white text-[1rem]" x-text="transaksi.namaUser"></div>
-                                    <div class="text-blue-300 text-xs mt-0.5" x-text="transaksi.kampanye"></div>
+                                    <div class="font-bold text-white text-[1rem]" x-text="detail.namaUser"></div>
+                                    <div class="text-emerald-300 text-xs mt-0.5" x-text="detail.metode + ' · ' + detail.nomorAkun"></div>
                                 </div>
                             </div>
-                            <div class="tk-mono text-white font-bold text-3xl" x-text="'Rp ' + transaksi.jumlah.toLocaleString('id-ID')"></div>
+                            <div class="mw-mono text-white font-bold text-3xl" x-text="detail.rupiahF"></div>
                             <div class="flex items-center gap-2 mt-3">
-                                <template x-if="transaksi.status === 'Berhasil'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500 text-white shadow-sm shadow-green-500/50">✓ Berhasil</span></template>
-                                <template x-if="transaksi.status === 'Pending'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-500 text-white shadow-sm shadow-amber-500/50">⏳ Pending</span></template>
-                                <template x-if="transaksi.status === 'Refund'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-500 text-white shadow-sm shadow-blue-500/50">↩ Refund</span></template>
-                                <template x-if="transaksi.status === 'Gagal'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-red-500 text-white shadow-sm shadow-red-500/50">✗ Gagal</span></template>
-                                <span class="text-blue-300 text-[.75rem]" x-text="transaksi.tanggal + ' · ' + transaksi.waktu"></span>
+                                <template x-if="detail.status === 'success'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500 text-white shadow-sm shadow-green-500/50">✓ Berhasil</span></template>
+                                <template x-if="detail.status === 'pending'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-500 text-white shadow-sm shadow-amber-500/50">⏳ Pending</span></template>
+                                <template x-if="detail.status === 'rejected'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-red-500 text-white shadow-sm shadow-red-500/50">✗ Ditolak</span></template>
+                                <span class="text-emerald-300 text-[.75rem]" x-text="detail.tanggal + ' · ' + detail.waktu"></span>
                             </div>
                         </div>
 
-                        <div class="tk-detail-section">Informasi Transaksi</div>
+                        <div class="mw-detail-section">Informasi Withdraw</div>
                         <div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">ID Transaksi</span><span class="tk-detail-val tk-mono text-xs" x-text="transaksi.id"></span></div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">No. Invoice</span><span class="tk-detail-val tk-mono text-xs" x-text="transaksi.invoice"></span></div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Tanggal</span><span class="tk-detail-val" x-text="transaksi.tanggal + ' · ' + transaksi.waktu"></span></div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Metode</span><span class="tk-detail-val" x-text="transaksi.metode + (transaksi.bank !== '-' ? ' · ' + transaksi.bank : '')"></span></div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Status</span><span class="tk-detail-val" x-text="transaksi.status"></span></div>
+                            <div class="mw-detail-row"><span class="mw-detail-label">ID Withdraw</span><span class="mw-detail-val mw-mono text-xs" x-text="detail.withdrawId"></span></div>
+                            <div class="mw-detail-row"><span class="mw-detail-label">Tanggal</span><span class="mw-detail-val" x-text="detail.tanggal + ' · ' + detail.waktu"></span></div>
+                            <div class="mw-detail-row"><span class="mw-detail-label">Status</span><span class="mw-detail-val" x-text="detail.status === 'success' ? 'Berhasil' : (detail.status === 'pending' ? 'Pending' : 'Ditolak')"></span></div>
+                            <div class="mw-detail-row"><span class="mw-detail-label">Diproses oleh</span><span class="mw-detail-val" x-text="detail.adminNama"></span></div>
                         </div>
 
-                        <div class="tk-detail-section">Paket &amp; Kampanye</div>
+                        <div class="mw-detail-section">Rincian Pencairan</div>
                         <div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Developer</span><span class="tk-detail-val" x-text="transaksi.namaUser"></span></div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Kampanye</span><span class="tk-detail-val max-w-[200px] text-right" x-text="transaksi.kampanye"></span></div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Paket</span><span class="tk-detail-val" x-text="transaksi.paket"></span></div>
-                        </div>
-
-                        <div class="tk-detail-section">Rincian Pembayaran</div>
-                        <div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Harga Paket</span><span class="tk-detail-val tk-mono text-xs" x-text="'Rp ' + transaksi.jumlah.toLocaleString('id-ID')"></span></div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Biaya Layanan</span><span class="tk-detail-val tk-mono text-xs">Rp 0</span></div>
-                            <div class="tk-detail-row bg-slate-50 -mx-1 px-1 py-3 rounded-lg mt-2">
-                                <span class="tk-detail-label font-bold text-slate-800">Total Dibayar</span>
-                                <span class="tk-detail-val tk-mono font-bold text-blue-700 text-[.95rem]" x-text="'Rp ' + transaksi.jumlah.toLocaleString('id-ID')"></span>
+                            <div class="mw-detail-row"><span class="mw-detail-label">Point Ditukar</span><span class="mw-detail-val mw-mono text-xs text-red-500" x-text="'-' + detail.point.toLocaleString('id-ID') + ' pts'"></span></div>
+                            <div class="mw-detail-row"><span class="mw-detail-label">Metode</span><span class="mw-detail-val" x-text="detail.metode"></span></div>
+                            <div class="mw-detail-row"><span class="mw-detail-label">No. Akun</span><span class="mw-detail-val mw-mono text-xs" x-text="detail.nomorAkun"></span></div>
+                            <div class="mw-detail-row bg-slate-50 -mx-1 px-1 py-3 rounded-lg mt-2">
+                                <span class="mw-detail-label font-bold text-slate-800">Total Dicairkan</span>
+                                <span class="mw-detail-val mw-mono font-bold text-emerald-700 text-[.95rem]" x-text="detail.rupiahF"></span>
                             </div>
                         </div>
 
+                        <template x-if="detail.catatan">
+                            <div>
+                                <div class="mw-detail-section">Catatan Admin</div>
+                                <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 text-[.85rem] text-slate-700 leading-relaxed" x-text="detail.catatan"></div>
+                            </div>
+                        </template>
+
+                        <template x-if="detail.image">
+                            <div>
+                                <div class="mw-detail-section">Bukti Transfer</div>
+                                <div class="mw-upload-preview">
+                                    <img :src="detail.image" alt="Bukti Transfer" class="transition-transform duration-300 hover:scale-105">
+                                </div>
+                            </div>
+                        </template>
+
+                        <template x-if="detail.updatedAt && detail.updatedAt !== '-'">
+                            <div class="mt-4 text-[.75rem] text-slate-400 text-center">
+                                Terakhir diperbarui: <span x-text="detail.updatedAt"></span>
+                            </div>
+                        </template>
                     </div>
                 </template>
-
-                <div class="tk-detail-footer">
-                    <template x-if="transaksi && transaksi.status === 'Pending'">
+                <div class="mw-detail-footer">
+                    <template x-if="detail && detail.status === 'pending'">
                         <div class="flex gap-2 w-full">
-                            <button class="tk-btn flex-1 tk-btn-primary" @click="$wire.confirmApprove(transaksi.db_id); tutupModal()">✓ Konfirmasi</button>
-                            <button class="tk-btn flex-1 tk-btn-ghost-danger" @click="$wire.confirmReject(transaksi.db_id); tutupModal()">✗ Tolak</button>
+                            <button class="mw-btn flex-1 mw-btn-primary" @click="$wire.confirmApprove(detail.id); tutupDetail()">✓ Setujui</button>
+                            <button class="mw-btn flex-1 mw-btn-ghost-danger" @click="$wire.confirmReject(detail.id); tutupDetail()">✗ Tolak</button>
                         </div>
                     </template>
-                    <template x-if="transaksi && transaksi.status === 'Berhasil'">
-                        <div class="flex gap-2 w-full">
-                            <button class="tk-btn flex-1 tk-btn-ghost">📄 Unduh Invoice</button>
-                            <button class="tk-btn flex-1 bg-amber-50 text-amber-600 border border-amber-200 hover:bg-amber-100 transition-colors">↩ Proses Refund</button>
-                        </div>
-                    </template>
-                    <template x-if="transaksi && transaksi.status === 'Refund'">
-                        <button class="tk-btn w-full tk-btn-ghost">📄 Lihat Bukti Refund</button>
-                    </template>
-                    <template x-if="transaksi && transaksi.status === 'Gagal'">
-                        <button class="tk-btn w-full tk-btn-ghost">🔄 Cek Status Payment</button>
+                    <template x-if="detail && detail.status === 'success' && detail.image">
+                        <a :href="detail.image" target="_blank" class="mw-btn mw-btn-ghost w-full block text-center">📄 Lihat Bukti Transfer</a>
                     </template>
                 </div>
-
             </div>
         </div>
 
-    </div>{{-- end x-data --}}
+    </div>
 
     @push('scripts')
     <script>
-        function transaksiKeuangan() {
+        function withdrawAdmin() {
             return {
                 cariTeks: '',
                 filterStatus: '',
-                filterPaket: '',
                 filterMetode: '',
                 perPage: 10,
                 currentPage: 1,
@@ -1475,25 +1502,24 @@
                 totalPages: 1,
                 visibleIds: [],
                 modalTerbuka: false,
-                transaksi: null,
+                detail: null,
 
                 init() {
                     this.updatePagi();
                     this.$watch('cariTeks', () => this.resetPagi());
                     this.$watch('filterStatus', () => this.resetPagi());
-                    this.$watch('filterPaket', () => this.resetPagi());
                     this.$watch('filterMetode', () => this.resetPagi());
                     this.$watch('perPage', () => this.resetPagi());
                 },
 
                 initChart() {
                     this.$nextTick(() => {
-                        document.querySelectorAll('.tk-chart-bar').forEach(bar => {
+                        document.querySelectorAll('.mw-chart-bar').forEach(bar => {
                             const target = parseInt(bar.dataset.target || 0);
                             bar.style.height = '0px';
                             setTimeout(() => {
                                 bar.style.height = target + 'px';
-                            }, 400); // Sedikit ditunda  
+                            }, 400); // Sedikit menunda agar tidak bersamaan dengan fade in
                         });
                     });
                 },
@@ -1518,17 +1544,14 @@
 
                 cocokFilter(el) {
                     const status = el.dataset.status || '';
-                    const paket = el.dataset.paket || '';
                     const metode = el.dataset.metode || '';
                     const nama = el.dataset.nama || '';
                     const id = el.dataset.id || '';
-                    const kampanye = el.dataset.kampanye || '';
                     const q = this.cariTeks.toLowerCase().trim();
 
                     if (this.filterStatus && status !== this.filterStatus) return false;
-                    if (this.filterPaket && paket !== this.filterPaket) return false;
                     if (this.filterMetode && metode !== this.filterMetode) return false;
-                    if (q && !nama.includes(q) && !id.includes(q) && !kampanye.includes(q)) return false;
+                    if (q && !nama.includes(q) && !id.includes(q)) return false;
 
                     return true;
                 },
@@ -1537,22 +1560,21 @@
                     return this.visibleIds.includes(el.dataset.id);
                 },
 
-                bukaModal(el) {
-                    this.transaksi = JSON.parse(el.dataset.item);
+                bukaDetail(el) {
+                    this.detail = JSON.parse(el.dataset.item);
                     this.modalTerbuka = true;
                 },
 
-                tutupModal() {
+                tutupDetail() {
                     this.modalTerbuka = false;
                     setTimeout(() => {
-                        this.transaksi = null;
+                        this.detail = null;
                     }, 300);
                 },
 
                 resetFilter() {
                     this.cariTeks = '';
                     this.filterStatus = '';
-                    this.filterPaket = '';
                     this.filterMetode = '';
                     this.perPage = 10;
                 }

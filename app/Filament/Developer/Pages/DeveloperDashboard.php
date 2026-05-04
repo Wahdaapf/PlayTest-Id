@@ -40,7 +40,7 @@ class DeveloperDashboard extends Page
         
         $aplikasiList = $misiList->sortByDesc('created_at')->take(5)->map(function ($m, $index) use ($warnaSiklus) {
             $testerCount = $m->misiAnggotas()->count();
-            $maxTester = $m->kapasitas ?: 20;
+            $maxTester = $m->kapasitas ?: config('missions.max_capacity', 20);
             $persen = $maxTester > 0 ? round(($testerCount / $maxTester) * 100) : 0;
             
             // Mapping status internal ke label UI
@@ -91,7 +91,7 @@ class DeveloperDashboard extends Page
         $statAktifPercent = $maxMisi > 0 ? round(($statAktif / $maxMisi) * 100) : 0;
         $statSelesaiPercent = $misiList->count() > 0 ? round(($statSelesai / $misiList->count()) * 100) : 0;
         
-        $totalKapasitas = $misiList->whereIn('status', ['open', 'progress'])->sum('kapasitas') ?: 20;
+        $totalKapasitas = $misiList->whereIn('status', ['open', 'progress'])->sum('kapasitas') ?: config('missions.max_capacity', 20);
         $statTesterPercent = $totalKapasitas > 0 ? round(($statTester / $totalKapasitas) * 100) : 0;
 
         return [

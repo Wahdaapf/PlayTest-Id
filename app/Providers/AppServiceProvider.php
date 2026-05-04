@@ -17,6 +17,13 @@ class AppServiceProvider extends ServiceProvider
             \Filament\Auth\Notifications\ResetPassword::class,
             \App\Notifications\ResetPasswordNotification::class,
         );
+
+        // Replace Filament's default email-verification notification with our custom one
+        // so the branded verification email template is used.
+        $this->app->bind(
+            \Filament\Auth\Notifications\VerifyEmail::class,
+            \App\Notifications\VerifyEmailNotification::class,
+        );
     }
 
     /**
