@@ -16,7 +16,7 @@ class ProfileDeveloper extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-user-circle';
+    protected static bool $shouldRegisterNavigation = false;
     protected static ?string $navigationLabel = 'Profil Saya';
     protected static ?string $title           = 'Profil Developer';
     protected static ?int    $navigationSort  = 99;
