@@ -4,10 +4,12 @@ namespace App\Filament\Tester\Pages;
   
 use App\Models\Misi;
 use App\Models\MisiAnggota;
+use App\Models\MisiSub;
 use App\Models\UserBalance;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;  
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class TesterDashboard extends Page  
 {  
@@ -61,6 +63,10 @@ class TesterDashboard extends Page
     public function getViewData(): array  
     {  
         $user = Auth::user();
+        
+        // ── 0. Cek Absensi Misi Kemarin (H-1) ──────────────────
+        $this->checkMissedSubmissions($user->id);
+
         $balance = UserBalance::where('id_user', $user->id)->first();
         
         // ── 1. Statistik Dasar ──────────────────────────────────
@@ -182,5 +188,62 @@ class TesterDashboard extends Page
             'misiAktifList' => $misiAktifList,  
             'aplikasiList'  => $aplikasiList,  
         ];  
-    }  
-}  
+    }
+
+    /**
+     * Mengecek apakah tester melewatkan submit misi kemarin.
+     * Jika tidak ada submission (notdone), status di misi_anggota diubah jadi failed.
+     */
+    protected function checkMissedSubmissions($userId)
+    {
+        $yesterday = Carbon::yesterday()->toDateString();
+        $today     = Carbon::today()->toDateString();
+
+        // Ambil misi yang sedang diikuti user (status accepted)
+        $activeMissions = MisiAnggota::where('id_user', $userId)
+            ->where('status', 'accepted')
+            ->with('misi')
+            ->get();
+
+        foreach ($activeMissions as $ma) {
+            $misi = $ma->misi;
+            if (!$misi) continue;
+
+            // Hanya cek jika user sudah join sebelum hari ini
+            $joinDate = $ma->created_at->toDateString();
+            if ($joinDate >= $today) {
+                continue;
+            }
+
+            // Hitung hari_ke saat user ini bergabung
+            $diffJoin = Carbon::parse($misi->created_at)->startOfDay()->diffInDays(Carbon::parse($ma->created_at)->startOfDay());
+            $hariJoin = (int) $diffJoin + 1;
+
+            // Hitung hari_ke untuk kemarin (H-1)
+            $diffYesterday = Carbon::parse($misi->created_at)->startOfDay()->diffInDays(Carbon::yesterday()->startOfDay());
+            $hariYesterday = (int) $diffYesterday + 1;
+
+            // Jika hari kemarin masuk dalam rentang 14 hari kampanye DAN sudah masuk masa aktif user
+            if ($hariYesterday >= $hariJoin && $hariYesterday <= 14) {
+                // Cek apakah ada submission untuk hari tersebut
+                $sub = MisiSub::where('id_user', $userId)
+                    ->where('id_misi', $ma->id_misi)
+                    ->where('hari_ke', $hariYesterday)
+                    ->first();
+
+                // Jika tidak ada atau statusnya masih 'notdone', maka status user di misi tersebut diubah jadi failed
+                if (!$sub || $sub->status === 'notdone') {
+                    $ma->update(['status' => 'failed']);
+                    
+                    // Kurangi kapasitas misi karena 1 tester gagal/keluar
+                    $misi->decrement('kapasitas');
+                    
+                    // Jika misi sebelumnya closed karena penuh, buka kembali
+                    if ($misi->status === 'closed') {
+                        $misi->update(['status' => 'open']);
+                    }
+                }
+            }
+        }
+    }
+}
