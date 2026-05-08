@@ -27,19 +27,20 @@
                             </div>
                             <p class="mt-1 text-sm font-medium text-sky-100">misi sedang berjalan</p>
                         </div>
+                        @php $stats = $this->getStats(); @endphp
                         <div class="flex gap-4 sm:gap-8 border-t border-white/20 sm:border-none pt-4 sm:pt-0 mt-2 sm:mt-0">
                             <div class="text-center">
-                                <p class="text-2xl font-bold font-mono">0</p>
+                                <p class="text-2xl font-bold font-mono">{{ $stats['selesai'] }}</p>
                                 <p class="text-xs text-sky-100">Selesai</p>
                             </div>
                             <div class="hidden w-px bg-white/20 sm:block"></div>
                             <div class="text-center">
-                                <p class="text-2xl font-bold font-mono">3</p>
+                                <p class="text-2xl font-bold font-mono">{{ $stats['aktif'] }}</p>
                                 <p class="text-xs text-sky-100">Aktif</p>
                             </div>
                             <div class="hidden w-px bg-white/20 sm:block"></div>
                             <div class="text-center">
-                                <p class="text-2xl font-bold font-mono">+60</p>
+                                <p class="text-2xl font-bold font-mono">{{ $stats['pending'] >= 0 ? '+' : '' }}{{ $stats['pending'] }}</p>
                                 <p class="text-xs text-sky-100">Pts Pending</p>
                             </div>
                         </div>
@@ -289,22 +290,24 @@
                             
                             <label for="screenshot-upload" class="block cursor-pointer group">
                                 <div
-                                    class="rounded-2xl border-2 border-dashed p-10 text-center transition-all duration-200
+                                    class="rounded-2xl border-2 border-dashed {{ $screenshot ? 'p-4' : 'p-10' }} text-center transition-all duration-200
                                         {{ $screenshot
                                             ? 'border-emerald-300 bg-emerald-50'
                                             : 'border-slate-300 bg-slate-50 group-hover:border-blue-400 group-hover:bg-blue-50/50' }}">
 
                                     @if ($screenshot)
-                                        {{-- State: sudah ada file --}}
-                                        <div class="flex flex-col items-center gap-3">
-                                            <div class="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 shadow-inner">
-                                                <svg class="h-8 w-8 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                                </svg>
+                                        {{-- State: sudah ada file (Preview) --}}
+                                        <div class="flex flex-col items-center gap-4">
+                                            <div class="relative group/preview w-full max-w-[240px] mx-auto">
+                                                <img src="{{ $screenshot->temporaryUrl() }}" 
+                                                     class="mx-auto max-h-48 rounded-xl shadow-lg border-4 border-white object-cover transition-transform group-hover/preview:scale-[1.02]">
+                                                <div class="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover/preview:opacity-100 transition-opacity rounded-xl">
+                                                     <span class="bg-white/90 text-slate-800 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm">Ganti Gambar</span>
+                                                </div>
                                             </div>
                                             <div>
-                                                <p class="text-base font-bold text-emerald-600">Screenshot terpilih!</p>
-                                                <p class="text-sm text-emerald-500/80 mt-1">Klik kotak ini untuk mengganti file</p>
+                                                <p class="text-base font-bold text-emerald-600">Screenshot siap dikirim!</p>
+                                                <p class="text-sm text-emerald-500/80 mt-1">Klik area ini untuk mengganti file</p>
                                             </div>
                                         </div>
                                     @else

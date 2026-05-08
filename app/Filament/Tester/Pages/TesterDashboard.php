@@ -88,12 +88,16 @@ class TesterDashboard extends Page
             ->latest()
             ->take(3)
             ->get()
-            ->map(function ($ma) {
+            ->map(function ($ma) use ($user) {
                 $m = $ma->misi;
                 
-                // Hitung hari (asumsi 14 hari kampanye)
-                $diff = $m->created_at->diffInDays(now());
-                $hari = min($diff + 1, 14);
+                // Hitung hari secara dinamis berdasarkan jadwal di misi_sub
+                $currentSub = MisiSub::where('id_misi', $m->id)
+                    ->where('id_user', $user->id)
+                    ->whereDate('created_at', now()->toDateString())
+                    ->first();
+                
+                $hari = $currentSub ? $currentSub->hari_ke : 1;
                 $persen = round(($hari / 14) * 100);
 
                 // Warna & Gradasi berdasarkan ID agar variatif tapi tetap konsisten
@@ -215,17 +219,22 @@ class TesterDashboard extends Page
                 continue;
             }
 
-            // Hitung hari_ke saat user ini bergabung
-            $diffJoin = Carbon::parse($misi->created_at)->startOfDay()->diffInDays(Carbon::parse($ma->created_at)->startOfDay());
-            $hariJoin = (int) $diffJoin + 1;
+            // Ambil hari_ke hari ini dari jadwal misi_sub
+            $currentSub = MisiSub::where('id_user', $userId)
+                ->where('id_misi', $ma->id_misi)
+                ->whereDate('created_at', $today)
+                ->first();
 
-            // Hitung hari_ke untuk kemarin (H-1)
-            $diffYesterday = Carbon::parse($misi->created_at)->startOfDay()->diffInDays(Carbon::yesterday()->startOfDay());
-            $hariYesterday = (int) $diffYesterday + 1;
+            if (!$currentSub) {
+                continue;
+            }
 
-            // Jika hari kemarin masuk dalam rentang 14 hari kampanye DAN sudah masuk masa aktif user
-            if ($hariYesterday >= $hariJoin && $hariYesterday <= 14) {
-                // Cek apakah ada submission untuk hari tersebut
+            $hariToday = $currentSub->hari_ke;
+            $hariYesterday = $hariToday - 1;
+
+            // Jika hari ini adalah Hari ke-2 atau lebih, cek hari sebelumnya
+            if ($hariYesterday >= 1 && $hariYesterday <= 14) {
+                // Cek apakah ada submission untuk hari tersebut (hari kemarin)
                 $sub = MisiSub::where('id_user', $userId)
                     ->where('id_misi', $ma->id_misi)
                     ->where('hari_ke', $hariYesterday)

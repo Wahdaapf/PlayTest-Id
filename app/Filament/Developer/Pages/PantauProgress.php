@@ -49,6 +49,7 @@ class PantauProgress extends Page
             $sub = MisiSub::find($this->selectedSubData['id']);
             if ($sub) {
                 $sub->update(['status' => 'done']);
+                $this->checkAndFinishMission($sub->id_misi, $sub->id_user);
             }
             $this->closeValidationModal();
         }
@@ -70,6 +71,7 @@ class PantauProgress extends Page
         $sub = MisiSub::find($subId);
         if ($sub) {
             $sub->update(['status' => 'done']);
+            $this->checkAndFinishMission($sub->id_misi, $sub->id_user);
         }
     }
 
@@ -84,9 +86,14 @@ class PantauProgress extends Page
     public function acceptAllPending()
     {
         if ($this->selectedMisiId) {
-            MisiSub::where('id_misi', $this->selectedMisiId)
+            $subs = MisiSub::where('id_misi', $this->selectedMisiId)
                 ->where('status', 'pending')
-                ->update(['status' => 'done']);
+                ->get();
+
+            foreach ($subs as $sub) {
+                $sub->update(['status' => 'done']);
+                $this->checkAndFinishMission($sub->id_misi, $sub->id_user);
+            }
         }
     }
 
@@ -160,8 +167,11 @@ class PantauProgress extends Page
             }
 
             if ($hariAktif === 1) {
-                $diff = $misi->created_at->diffInDays(now());
-                $hariAktif = min((int) $diff + 1, 14);
+                $currentSub = MisiSub::where('id_misi', $misi->id)
+                    ->where('id_user', $ma->id_user)
+                    ->whereDate('created_at', now()->toDateString())
+                    ->first();
+                $hariAktif = $currentSub ? $currentSub->hari_ke : 1;
             }
 
             $colors = ['blue', 'amber', 'purple', 'green'];
@@ -223,16 +233,21 @@ class PantauProgress extends Page
                 continue;
             }
 
-            // Hitung hari_ke saat user ini bergabung
-            $diffJoin = Carbon::parse($misi->created_at)->startOfDay()->diffInDays(Carbon::parse($ma->created_at)->startOfDay());
-            $hariJoin = (int) $diffJoin + 1;
+            // Ambil hari_ke hari ini dari jadwal misi_sub
+            $currentSub = MisiSub::where('id_user', $ma->id_user)
+                ->where('id_misi', $misi->id)
+                ->whereDate('created_at', $today)
+                ->first();
 
-            // Hitung hari_ke untuk kemarin (H-1)
-            $diffYesterday = Carbon::parse($misi->created_at)->startOfDay()->diffInDays(Carbon::yesterday()->startOfDay());
-            $hariYesterday = (int) $diffYesterday + 1;
+            if (!$currentSub) {
+                continue;
+            }
 
-            // Jika hari kemarin masuk dalam masa aktif tester dan dalam rentang 14 hari kampanye
-            if ($hariYesterday >= $hariJoin && $hariYesterday <= 14) {
+            $hariToday = $currentSub->hari_ke;
+            $hariYesterday = $hariToday - 1;
+
+            // Jika hari kemarin masuk dalam rentang 14 hari kampanye
+            if ($hariYesterday >= 1 && $hariYesterday <= 14) {
                 // Cek apakah ada submission untuk hari tersebut
                 $sub = MisiSub::where('id_user', $ma->id_user)
                     ->where('id_misi', $misi->id)
@@ -252,6 +267,45 @@ class PantauProgress extends Page
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Cek apakah tester sudah menyelesaikan seluruh 14 hari tugas.
+     * Jika ya, cairkan poin dan ubah status menjadi selesai.
+     */
+    protected function checkAndFinishMission($misiId, $userId)
+    {
+        $ma = MisiAnggota::where('id_misi', $misiId)
+            ->where('id_user', $userId)
+            ->first();
+
+        // Hanya proses jika status masih aktif (accepted/progress)
+        if (!$ma || !in_array($ma->status, ['accepted', 'progress'])) {
+            return;
+        }
+
+        // Hitung jumlah tugas yang sudah 'done'
+        $doneCount = MisiSub::where('id_misi', $misiId)
+            ->where('id_user', $userId)
+            ->where('status', 'done')
+            ->count();
+
+        if ($doneCount >= 14) {
+            // 1. Update status anggota menjadi selesai
+            $ma->update(['status' => 'selesai']);
+
+            // 2. Cairkan poin ke balance user
+            $misi = Misi::find($misiId);
+            if ($misi && $misi->point > 0) {
+                $balance = \App\Models\UserBalance::firstOrCreate(
+                    ['id_user' => $userId],
+                    ['point' => 0]
+                );
+                $balance->increment('point', $misi->point);
+            }
+
+            // 3. (Opsional) Kirim notifikasi ke tester bisa ditambahkan di sini
         }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Filament\Tester\Pages;
 use App\Models\Misi;
 use App\Models\MisiAnggota;
 use App\Models\MisiSub;
+use Carbon\Carbon;
 use Filament\Pages\Page;
 use Livewire\WithFileUploads;
 use Filament\Notifications\Notification;
@@ -52,6 +53,10 @@ class MisiSaya extends Page
     public function getMissionsData(): array
     {
         $userId = Auth::id();
+        
+        // ── 0. Cek Absensi Misi Kemarin (H-1) ──────────────────
+        $this->checkMissedSubmissions($userId);
+
         $misiAnggotas = MisiAnggota::where('id_user', $userId)
             ->whereIn('status', ['accepted', 'progress'])
             ->with('misi')
@@ -62,8 +67,8 @@ class MisiSaya extends Page
             $m = $ma->misi;
             if (!$m) continue;
 
-            $diff = $m->created_at->diffInDays(now());
-            $hari = min((int) $diff + 1, 14);
+                        $currentSub = MisiSub::where("id_misi", $m->id)->where("id_user", $userId)->whereDate("created_at", now()->toDateString())->first();
+            $hari = $currentSub ? $currentSub->hari_ke : 1;
             $persen = round(($hari / 14) * 100);
 
             $colors = ['#10b981', '#8b5cf6', '#3b82f6', '#f59e0b'];
@@ -146,16 +151,23 @@ class MisiSaya extends Page
             return;
         }
 
-        $diff = $misi->created_at->diffInDays(now());
-        $hari = min($diff + 1, 14);
-
-        // Cek apakah sudah submit hari ini
-        $existingSub = MisiSub::where('id_misi', $this->selectedMissionId)
+        // Cari record jadwal untuk hari ini
+        $currentSub = MisiSub::where('id_misi', $this->selectedMissionId)
             ->where('id_user', Auth::id())
-            ->where('hari_ke', $hari)
+            ->whereDate('created_at', now()->toDateString())
             ->first();
-            
-        if ($existingSub) {
+
+        if (!$currentSub) {
+            Notification::make()
+                ->title('Error')
+                ->body('Jadwal misi tidak ditemukan untuk hari ini.')
+                ->danger()
+                ->send();
+            return;
+        }
+
+        // Cek apakah sudah submit (status selain 'notdone' dan 'rejected' dianggap sudah submit)
+        if (in_array($currentSub->status, ['pending', 'done'])) {
             Notification::make()
                 ->title('Gagal')
                 ->body('Anda sudah mensubmit tugas untuk hari ini.')
@@ -167,11 +179,8 @@ class MisiSaya extends Page
         // Simpan file
         $path = $this->screenshot->store('task-screenshots', 'public');
 
-        // Buat record
-        MisiSub::create([
-            'id_misi' => $this->selectedMissionId,
-            'id_user' => Auth::id(),
-            'hari_ke' => $hari,
+        // Update record yang sudah ada
+        $currentSub->update([
             'image'   => $path,
             'desc'    => 'Daily Task Submission',
             'status'  => 'pending',
@@ -193,5 +202,71 @@ class MisiSaya extends Page
         }
 
         return $this->getMissionsData()[$this->selectedMissionId] ?? null;
+    }
+    public function getStats(): array
+    {
+        $userId = Auth::id();
+        
+        $misiSelesai = MisiAnggota::where('id_user', $userId)->where('status', 'selesai')->count();
+        $misiAktif   = MisiAnggota::where('id_user', $userId)->whereIn('status', ['accepted', 'progress'])->count();
+        
+        $poinPending = MisiAnggota::where('id_user', $userId)
+            ->whereIn('status', ['accepted', 'progress', 'submitted'])
+            ->with('misi')
+            ->get()
+            ->sum(fn($ma) => $ma->misi->point ?? 0);
+
+        return [
+            'selesai' => $misiSelesai,
+            'aktif'   => $misiAktif,
+            'pending' => $poinPending,
+        ];
+    }
+
+    protected function checkMissedSubmissions($userId)
+    {
+        $yesterday = Carbon::yesterday()->toDateString();
+        $today     = Carbon::today()->toDateString();
+
+        $activeMissions = MisiAnggota::where('id_user', $userId)
+            ->where('status', 'accepted')
+            ->with('misi')
+            ->get();
+
+        foreach ($activeMissions as $ma) {
+            $misi = $ma->misi;
+            if (!$misi) continue;
+
+            $joinDate = $ma->created_at->toDateString();
+            if ($joinDate >= $today) continue;
+
+            // Ambil hari_ke hari ini dari jadwal misi_sub
+            $currentSub = MisiSub::where('id_user', $userId)
+                ->where('id_misi', $ma->id_misi)
+                ->whereDate('created_at', $today)
+                ->first();
+
+            if (!$currentSub) {
+                continue;
+            }
+
+            $hariToday = $currentSub->hari_ke;
+            $hariYesterday = $hariToday - 1;
+
+            if ($hariYesterday >= 1 && $hariYesterday <= 14) {
+                $sub = MisiSub::where('id_user', $userId)
+                    ->where('id_misi', $ma->id_misi)
+                    ->where('hari_ke', $hariYesterday)
+                    ->first();
+
+                if (!$sub || $sub->status === 'notdone') {
+                    $ma->update(['status' => 'failed']);
+                    $misi->decrement('kapasitas');
+                    if ($misi->status === 'closed') {
+                        $misi->update(['status' => 'open']);
+                    }
+                }
+            }
+        }
     }
 }
