@@ -205,11 +205,38 @@ class PantauProgress extends Page
                 ];
             })->toArray();
 
+        // Hitung hari_ke untuk hari ini
+        $currentSubToday = MisiSub::where('id_misi', $misi->id)
+            ->whereDate('created_at', now()->toDateString())
+            ->first();
+
+        if ($currentSubToday) {
+            $hariToday = $currentSubToday->hari_ke;
+        } else {
+            // Jika hari ini tidak ada di jadwal, kita cek apakah sudah melewati jadwal hari ke-14
+            $lastSub = MisiSub::where('id_misi', $misi->id)->where('hari_ke', 14)->first();
+            if ($lastSub && now()->isAfter($lastSub->created_at)) {
+                $hariToday = 15; // Menandakan sudah lewat masa 14 hari
+            } else {
+                $hariToday = 1;
+            }
+        }
+
+        // Cek apakah sudah ada minimal 1 tester yang menyelesaikan seluruh 14 hari (status done)
+        $hasOneCompletedUser = MisiSub::where('id_misi', $misi->id)
+            ->where('status', 'done')
+            ->select('id_user')
+            ->groupBy('id_user')
+            ->havingRaw('COUNT(*) >= 14')
+            ->exists();
+
         return [
             'isDetail' => true,
             'misiDetail' => $misi,
             'kampanyeList' => $kampanyeList,
             'pendingSubmissions' => $pendingSubmissions,
+            'hariToday' => $hariToday,
+            'hasOneCompletedUser' => $hasOneCompletedUser,
         ];
     }
 
@@ -307,5 +334,53 @@ class PantauProgress extends Page
 
             // 3. (Opsional) Kirim notifikasi ke tester bisa ditambahkan di sini
         }
+    }
+
+    public function finishMission()
+    {
+        if (!$this->selectedMisiId) return;
+
+        $misi = Misi::find($this->selectedMisiId);
+        if (!$misi) return;
+
+        // 1. Ambil semua tester yang masih aktif (accepted/progress)
+        $testers = MisiAnggota::where('id_misi', $misi->id)
+            ->whereIn('status', ['accepted', 'progress'])
+            ->get();
+
+        foreach ($testers as $ma) {
+            // 2. Jadikan semua sisa pending menjadi done (jika ada)
+            MisiSub::where('id_misi', $misi->id)
+                ->where('id_user', $ma->id_user)
+                ->where('status', 'pending')
+                ->update(['status' => 'done']);
+
+            // 3. Update status anggota menjadi selesai
+            $ma->update(['status' => 'selesai']);
+
+            // 4. Cairkan poin & Tambah badge
+            if ($misi->point > 0) {
+                // Pastikan record balance ada, jika belum ada buat baru
+                \App\Models\UserBalance::updateOrInsert(
+                    ['id_user' => $ma->id_user],
+                    ['updated_at' => now()]
+                );
+                
+                // Tambah point & badge secara direct ke database
+                \DB::table('user_balance')->where('id_user', $ma->id_user)->increment('point', $misi->point);
+                \DB::table('user_balance')->where('id_user', $ma->id_user)->increment('badge', 1);
+            }
+        }
+
+        // 5. Update status misi menjadi selesai
+        $misi->update(['status' => 'selesai']);
+
+        $this->selectedMisiId = null;
+
+        \Filament\Notifications\Notification::make()
+            ->title('Misi Berhasil Diselesaikan!')
+            ->success()
+            ->body('Seluruh tester aktif telah menerima poin dan badge.')
+            ->send();
     }
 }

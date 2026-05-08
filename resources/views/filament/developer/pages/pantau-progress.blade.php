@@ -128,6 +128,15 @@
             <span class="inline-block w-2.5 h-2.5 rounded-sm" style="background:#fee2e2;"></span>Terlewat  
           </span>  
         </div>
+
+        {{-- Button Selesaikan Misi (Muncul di Hari 14 keatas ATAU jika sudah ada yang selesai 14 hari) --}}
+        @if($hariToday >= 14 || $hasOneCompletedUser)
+          <button type="button"
+                  onclick="confirmFinishMission()"
+                  class="bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-md transition-all flex items-center gap-2">
+            <x-heroicon-m-flag class="w-4 h-4"/> Selesaikan Misi
+          </button>
+        @endif
       </div>  
     </div>  
     <div class="px-6 py-5 space-y-6">  
@@ -238,4 +247,36 @@
 
 @endif
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmFinishMission() {
+        Swal.fire({
+            title: 'Selesaikan Misi Sekarang?',
+            html: `
+                <div class="text-left text-sm space-y-2 px-2">
+                    <p class="font-bold text-slate-700">Aturan yang akan dijalankan:</p>
+                    <ul class="list-disc ml-5 space-y-1.5 text-slate-600">
+                        <li>Semua tester <b>Aktif/Progress</b> otomatis menjadi <b>Selesai</b>.</li>
+                        <li>Tugas yang masih <b>Pending</b> otomatis di-<b>ACC (Done)</b>.</li>
+                        <li><b>Point Reward</b> & <b>Badge +1</b> langsung dikirim ke tester.</li>
+                        <li>Status Kampanye ini akan resmi ditutup (<b>Selesai</b>).</li>
+                    </ul>
+                </div>
+            `,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#7e22ce',
+            cancelButtonColor: '#64748b',
+            confirmButtonText: 'Ya, Selesaikan!',
+            cancelButtonText: 'Batal',
+            padding: '2em',
+            borderRadius: '1.5rem',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                @this.finishMission();
+            }
+        })
+    }
+</script>
 </x-filament-panels::page>
