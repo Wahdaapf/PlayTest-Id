@@ -39,8 +39,6 @@ class DeveloperPanelProvider extends PanelProvider
             ->login(Login::class)
             ->registration(Register::class)
             ->passwordReset(RequestResetPassword::class, ResetPassword::class)
-            ->brandLogo(fn() => view('filament.developer.logo'))
-
             // ── Warna sesuai landing page (#2563eb) ──  
             ->colors([
                 'primary' => [
@@ -113,47 +111,7 @@ class DeveloperPanelProvider extends PanelProvider
 
             ->renderHook(
                 'panels::head.end',
-                fn(): string => Blade::render("
-                    @vite('resources/css/app.css')
-                    <style>
-                        .fi-sidebar-group-label {
-                            font-weight: 800;
-                            letter-spacing: 0.1em;
-                            font-size: 0.75rem;
-                            color: #94a3b8;
-                        }
-                        .fi-sidebar-item {
-                            margin-bottom: 2px;
-                        }
-                        .fi-sidebar-item-active > a,
-                        .fi-sidebar-item-active > button {
-                            background-color: #eff6ff !important;
-                            color: #2563eb !important;
-                            border-radius: 9999px !important;
-                            position: relative;
-                            overflow: hidden;
-                            margin-left: -8px; /* to make the indicator flush with the edge if possible */
-                            padding-left: 16px; 
-                        }
-                        .fi-sidebar-item-active > a::before,
-                        .fi-sidebar-item-active > button::before {
-                            content: '';
-                            position: absolute;
-                            left: 0;
-                            top: 50%;
-                            transform: translateY(-50%);
-                            height: 60%;
-                            width: 3.5px;
-                            background-color: #2563eb;
-                            border-top-right-radius: 4px;
-                            border-bottom-right-radius: 4px;
-                        }
-                        .fi-sidebar-item-active > a .fi-sidebar-item-icon,
-                        .fi-sidebar-item-active > button .fi-sidebar-item-icon {
-                            color: #2563eb !important;
-                        }
-                    </style>
-                "),
+                fn(): string => Blade::render("@vite(['resources/css/app.css', 'resources/css/filament-sidebar.css', 'resources/css/filament-topbar.css'])"),
             )
 
             ->pages([

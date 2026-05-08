@@ -423,6 +423,12 @@
             transform: scale(0.95);
         }
 
+        /* ══ SORT HEADER BUTTON ══ */
+        .mw-sort-btn { display: inline-flex; align-items: center; gap: 3px; background: none; border: none; cursor: pointer; font-size: .75rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: .07em; padding: 0; transition: color 0.2s; font-family: 'Inter', sans-serif; white-space: nowrap; }
+        .mw-sort-btn:hover  { color: #2563eb; }
+        .mw-sort-btn.active { color: #2563eb; }
+        .mw-sort-icon { font-size: .95rem !important; line-height: 1; }
+
         /* ══ TABLE ══ */
         .mw-table-wrap {
             background: #fff;
@@ -1193,20 +1199,68 @@
             <table class="mw-table">
                 <thead>
                     <tr>
-                        <th>ID Transaksi</th>
-                        <th>Tester</th>
-                        <th>Point</th>
-                        <th>Nominal</th>
-                        <th>Metode</th>
-                        <th>No. Akun</th>
-                        <th>Status</th>
-                        <th>Tanggal</th>
-                        <th>Aksi</th>
+                        <th>
+                            <button class="mw-sort-btn" :class="sortCol==='id'?'active':''" @click="setSort('id')">
+                                ID Transaksi
+                                <span class="material-symbols-outlined mw-sort-icon"
+                                      x-text="sortCol!=='id' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                            </button>
+                        </th>
+                        <th>
+                            <button class="mw-sort-btn" :class="sortCol==='tester'?'active':''" @click="setSort('tester')">
+                                Tester
+                                <span class="material-symbols-outlined mw-sort-icon"
+                                      x-text="sortCol!=='tester' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                            </button>
+                        </th>
+                        <th>
+                            <button class="mw-sort-btn" :class="sortCol==='point'?'active':''" @click="setSort('point')">
+                                Point
+                                <span class="material-symbols-outlined mw-sort-icon"
+                                      x-text="sortCol!=='point' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                            </button>
+                        </th>
+                        <th>
+                            <button class="mw-sort-btn" :class="sortCol==='nominal'?'active':''" @click="setSort('nominal')">
+                                Nominal
+                                <span class="material-symbols-outlined mw-sort-icon"
+                                      x-text="sortCol!=='nominal' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                            </button>
+                        </th>
+                        <th>
+                            <button class="mw-sort-btn" :class="sortCol==='metode'?'active':''" @click="setSort('metode')">
+                                Metode
+                                <span class="material-symbols-outlined mw-sort-icon"
+                                      x-text="sortCol!=='metode' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                            </button>
+                        </th>
+                        <th>
+                            <button class="mw-sort-btn" :class="sortCol==='akun'?'active':''" @click="setSort('akun')">
+                                No. Akun
+                                <span class="material-symbols-outlined mw-sort-icon"
+                                      x-text="sortCol!=='akun' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                            </button>
+                        </th>
+                        <th>
+                            <button class="mw-sort-btn" :class="sortCol==='status'?'active':''" @click="setSort('status')">
+                                Status
+                                <span class="material-symbols-outlined mw-sort-icon"
+                                      x-text="sortCol!=='status' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                            </button>
+                        </th>
+                        <th>
+                            <button class="mw-sort-btn" :class="sortCol==='tanggal'?'active':''" @click="setSort('tanggal')">
+                                Tanggal
+                                <span class="material-symbols-outlined mw-sort-icon"
+                                      x-text="sortCol!=='tanggal' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                            </button>
+                        </th>
+                        <th><span class="mw-sort-btn" style="cursor:default;pointer-events:none">Aksi</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($withdrawList as $idx => $w)
-                    <tr data-status="{{ $w['status'] }}" data-metode="{{ $w['metode'] }}" data-nama="{{ strtolower($w['namaUser']) }}" data-id="{{ strtolower($w['withdrawId']) }}" data-item="{{ json_encode($w) }}"
+                    <tr data-status="{{ $w['status'] }}" data-metode="{{ $w['metode'] }}" data-nama="{{ strtolower($w['namaUser']) }}" data-id="{{ strtolower($w['withdrawId']) }}" data-point="{{ $w['point'] ?? 0 }}" data-akun="{{ strtolower($w['nomorAkun'] ?? '') }}" data-tanggal="{{ strtotime($w['tanggal'] . ' ' . $w['waktu']) }}" data-item="{{ json_encode($w) }}"
                         x-show="tampilRow($el)"
                         x-transition.opacity.duration.300ms>
                         <td>
@@ -1501,6 +1555,8 @@
                 totalItems: 0,
                 totalPages: 1,
                 visibleIds: [],
+                sortCol: 'tanggal',
+                sortDir: 'desc',
                 modalTerbuka: false,
                 detail: null,
 
@@ -1510,6 +1566,8 @@
                     this.$watch('filterStatus', () => this.resetPagi());
                     this.$watch('filterMetode', () => this.resetPagi());
                     this.$watch('perPage', () => this.resetPagi());
+                    this.$watch('sortCol', () => this.resetPagi());
+                    this.$watch('sortDir', () => this.resetPagi());
                 },
 
                 initChart() {
@@ -1529,12 +1587,39 @@
                     this.$nextTick(() => this.updatePagi());
                 },
 
+                setSort(col) {
+                    if (this.sortCol === col) { this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc'; }
+                    else { this.sortCol = col; this.sortDir = 'asc'; }
+                },
+
                 updatePagi() {
-                    const rows = Array.from(document.querySelectorAll('tbody tr[data-status]'));
+                    const tbody = document.querySelector('.mw-table tbody');
+                    if (!tbody) return;
+                    const rows = Array.from(tbody.querySelectorAll('tr[data-status]'));
+
+                    rows.sort((a, b) => {
+                        let va, vb;
+                        if (this.sortCol === 'id') { va = (a.dataset.id || ''); vb = (b.dataset.id || ''); }
+                        else if (this.sortCol === 'tester') { va = (a.dataset.nama || ''); vb = (b.dataset.nama || ''); }
+                        else if (this.sortCol === 'point') { va = +(a.dataset.point || 0); vb = +(b.dataset.point || 0); }
+                        else if (this.sortCol === 'nominal') { va = +(a.dataset.point || 0); vb = +(b.dataset.point || 0); }
+                        else if (this.sortCol === 'metode') { va = (a.dataset.metode || '').toLowerCase(); vb = (b.dataset.metode || '').toLowerCase(); }
+                        else if (this.sortCol === 'akun') { va = (a.dataset.akun || '').toLowerCase(); vb = (b.dataset.akun || '').toLowerCase(); }
+                        else if (this.sortCol === 'status') { va = (a.dataset.status || '').toLowerCase(); vb = (b.dataset.status || '').toLowerCase(); }
+                        else if (this.sortCol === 'tanggal') { va = +(a.dataset.tanggal || 0); vb = +(b.dataset.tanggal || 0); }
+                        else return 0;
+                        return va < vb ? (this.sortDir==='asc'?-1:1) : (va > vb ? (this.sortDir==='asc'?1:-1) : 0);
+                    });
+                    
+                    rows.forEach(r => tbody.appendChild(r));
+                    const emptyRow = tbody.querySelector('tr[x-show="totalItems === 0"]');
+                    if (emptyRow) tbody.appendChild(emptyRow);
+
                     const matching = rows.filter(r => this.cocokFilter(r));
                     this.totalItems = matching.length;
                     this.totalPages = Math.ceil(this.totalItems / this.perPage) || 1;
-                    if (this.currentPage > this.totalPages) this.currentPage = this.totalPages;
+                    if (this.currentPage > this.totalPages && this.totalPages > 0) this.currentPage = this.totalPages;
+                    else if (this.currentPage < 1 && this.totalPages > 0) this.currentPage = 1;
 
                     const start = (this.currentPage - 1) * parseInt(this.perPage);
                     const end = start + parseInt(this.perPage);
@@ -1577,6 +1662,8 @@
                     this.filterStatus = '';
                     this.filterMetode = '';
                     this.perPage = 10;
+                    this.sortCol = 'tanggal';
+                    this.sortDir = 'desc';
                 }
             };
         }

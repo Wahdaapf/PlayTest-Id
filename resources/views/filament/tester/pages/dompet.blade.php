@@ -63,80 +63,9 @@
             animation: float 5s ease-in-out infinite 2s;
         }
 
-        /* ══ SIDEBAR OVERRIDES ══ */
-        .fi-sidebar {
-            background-color: #ffffff !important;
-            border-right: 1px solid #e2e8f0 !important;
-        }
+        /* ══ SIDEBAR OVERRIDES — now centralized in filament-sidebar.css ══ */
 
-        .fi-sidebar-nav {
-            background-color: #ffffff !important;
-        }
-
-        .fi-sidebar-header {
-            background-color: #ffffff !important;
-            border-bottom: 1px solid #f1f5f9 !important;
-        }
-
-        .fi-sidebar-group-label {
-            color: #94a3b8 !important;
-            font-size: 0.65rem !important;
-            font-weight: 600 !important;
-            letter-spacing: 0.08em !important;
-            text-transform: uppercase !important;
-        }
-
-        .fi-sidebar-item-button {
-            color: #64748b !important;
-            border-radius: 0.75rem !important;
-            border-left: 3px solid transparent !important;
-            transition: all 0.15s ease !important;
-        }
-
-        .fi-sidebar-item-button:hover {
-            background-color: #f1f5f9 !important;
-            color: #1e293b !important;
-        }
-
-        .fi-sidebar-item-icon {
-            color: #64748b !important;
-        }
-
-        .fi-sidebar-item-button:hover .fi-sidebar-item-icon {
-            color: #1e293b !important;
-        }
-
-        .fi-sidebar-item-button.fi-active,
-        .fi-sidebar-item-button[aria-current="page"] {
-            background-color: #eff6ff !important;
-            color: #2563eb !important;
-            border-left: 3px solid #2563eb !important;
-            font-weight: 600 !important;
-        }
-
-        .fi-sidebar-item-button.fi-active .fi-sidebar-item-icon,
-        .fi-sidebar-item-button[aria-current="page"] .fi-sidebar-item-icon {
-            color: #2563eb !important;
-        }
-
-        /* ══ TOPBAR & PAGE ══ */
-        .fi-topbar {
-            background-color: #ffffff !important;
-            border-bottom: 1px solid #f1f5f9 !important;
-            box-shadow: none !important;
-        }
-
-        .fi-page-header-heading {
-            display: none !important;
-        }
-
-        .fi-main {
-            background-color: #f8fafc !important;
-        }
-
-        .fi-page {
-            padding: 0 !important;
-        }
+        /* ══ TOPBAR & PAGE — now centralized in filament-sidebar.css ══ */
 
         [x-cloak] {
             display: none !important;

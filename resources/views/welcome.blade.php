@@ -255,34 +255,6 @@
       border-radius: 999px;
       box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
     }
-
-    /* ── Dynamic Package Rich Text Lists ── */
-    .package-desc-wrapper ul {
-      list-style: none;
-      padding-left: 0;
-      margin-bottom: 2rem;
-      font-size: 0.875rem;
-      color: #475569;
-    }
-    .package-desc-wrapper li {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    .package-desc-wrapper li::before {
-      content: "\f058";
-      font-family: "Font Awesome 6 Free";
-      font-weight: 900;
-      color: #22c55e;
-      margin-top: 2px;
-    }
-    .package-desc-wrapper.is-pro li::before {
-      color: #3b82f6;
-    }
-    .package-desc-wrapper p {
-      margin-bottom: 1rem;
-    }
   </style>
 </head>
 
@@ -295,445 +267,461 @@
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
 
-      <!-- Logo -->
-      <a href="#" class="flex items-center gap-2 select-none">
-        <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center shadow-md">
-          <i class="fa-solid fa-gamepad text-white text-sm"></i>
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2 select-none">
+          <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center shadow-md">
+            <i class="fa-solid fa-gamepad text-white text-sm"></i>
+          </div>
+          <span class="text-xl font-800 font-black text-slate-800">
+            Play<span class="text-brand-600">Test</span> <span class="text-slate-500 font-semibold">ID</span>
+          </span>
+        </a>
+
+        <!-- Desktop Menu -->
+        <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+          <li><a href="#how-it-works" class="hover:text-brand-600 transition duration-200">How It Works</a></li>
+          <li><a href="#benefits" class="hover:text-brand-600 transition duration-200">Benefits</a></li>
+          <li><a href="#pricing" class="hover:text-brand-600 transition duration-200">Pricing</a></li>
+        </ul>
+
+        <!-- Desktop CTA -->
+        <div class="hidden md:flex items-center gap-3">
+          <button onclick="openAuthModal('login')" class="px-4 py-2 text-sm font-semibold text-brand-600 border-2 border-brand-600 rounded-xl hover:bg-brand-50 transition duration-200">
+            Login
+          </button>
+          <button onclick="openAuthModal('register')" class="px-4 py-2 text-sm font-semibold text-white bg-brand-600 rounded-xl shadow-md hover:bg-brand-700 transition duration-200">
+            Register
+          </button>
         </div>
-        <span class="text-xl font-800 font-black text-slate-800">
-          Play<span class="text-brand-600">Test</span> <span class="text-slate-500 font-semibold">ID</span>
-        </span>
-      </a>
 
-      <!-- Desktop Menu -->
-      <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-        <li><a href="#cara-kerja"  class="hover:text-brand-600 transition duration-200">Cara Kerja</a></li>
-        <li><a href="#manfaat"     class="hover:text-brand-600 transition duration-200">Manfaat</a></li>
-        <li><a href="#harga"       class="hover:text-brand-600 transition duration-200">Harga</a></li>
-      </ul>
-
-      <!-- Desktop CTA -->
-      <div class="hidden md:flex items-center gap-3">
-        <a href="{{ route('filament.developer.auth.login') }}" class="px-4 py-2 text-sm font-semibold text-brand-600 border-2 border-brand-600 rounded-xl hover:bg-brand-50 transition duration-200">
-          Masuk Dev
-        </a>
-        <a href="{{ route('filament.tester.auth.login') }}" class="px-4 py-2 text-sm font-semibold text-white bg-brand-600 rounded-xl shadow-md hover:bg-brand-700 transition duration-200">
-          Masuk Tester
-        </a>
+        <!-- Hamburger (Mobile) -->
+        <button id="hamburger" aria-label="Toggle menu" class="md:hidden flex flex-col gap-[6px] p-2 rounded-lg hover:bg-brand-50 transition">
+          <span class="ham-line"></span>
+          <span class="ham-line"></span>
+          <span class="ham-line"></span>
+        </button>
       </div>
 
-      <!-- Hamburger (Mobile) -->
-      <button id="hamburger" aria-label="Toggle menu" class="md:hidden flex flex-col gap-[6px] p-2 rounded-lg hover:bg-brand-50 transition">
-        <span class="ham-line"></span>
-        <span class="ham-line"></span>
-        <span class="ham-line"></span>
-      </button>
-    </div>
-
-    <!-- Mobile Menu (collapsible, jQuery controlled) -->
-    <div id="mobile-menu" class="md:hidden border-t border-slate-100">
-      <ul class="flex flex-col py-4 gap-1 text-sm font-medium text-slate-700">
-        <li><a href="#cara-kerja" class="block px-3 py-2 rounded-lg hover:bg-brand-50 hover:text-brand-600 transition">Cara Kerja</a></li>
-        <li><a href="#manfaat"    class="block px-3 py-2 rounded-lg hover:bg-brand-50 hover:text-brand-600 transition">Manfaat</a></li>
-        <li><a href="#harga"      class="block px-3 py-2 rounded-lg hover:bg-brand-50 hover:text-brand-600 transition">Harga</a></li>
-        <li class="border-t border-slate-100 mt-2 pt-3 flex gap-2">
-          <a href="{{ route('filament.developer.auth.login') }}" class="flex-1 text-center px-4 py-2 font-semibold text-brand-600 border-2 border-brand-600 rounded-xl hover:bg-brand-50 transition">Masuk Dev</a>
-          <a href="{{ route('filament.tester.auth.login') }}" class="flex-1 text-center px-4 py-2 font-semibold text-white bg-brand-600 rounded-xl shadow hover:bg-brand-700 transition">Masuk Tester</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-</header>
+      <!-- Mobile Menu (collapsible, jQuery controlled) -->
+      <div id="mobile-menu" class="md:hidden border-t border-slate-100">
+        <ul class="flex flex-col py-4 gap-1 text-sm font-medium text-slate-700">
+          <li><a href="#how-it-works" class="block px-3 py-2 rounded-lg hover:bg-brand-50 hover:text-brand-600 transition">How It Works</a></li>
+          <li><a href="#benefits" class="block px-3 py-2 rounded-lg hover:bg-brand-50 hover:text-brand-600 transition">Benefits</a></li>
+          <li><a href="#pricing" class="block px-3 py-2 rounded-lg hover:bg-brand-50 hover:text-brand-600 transition">Pricing</a></li>
+          <li class="border-t border-slate-100 mt-2 pt-3 flex gap-2">
+            <button onclick="openAuthModal('login')" class="flex-1 text-center px-4 py-2 font-semibold text-brand-600 border-2 border-brand-600 rounded-xl hover:bg-brand-50 transition">Login</button>
+            <button onclick="openAuthModal('register')" class="flex-1 text-center px-4 py-2 font-semibold text-white bg-brand-600 rounded-xl shadow hover:bg-brand-700 transition">Register</button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
 
 
-<!-- ════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════
      2. HERO SECTION – Split layout (copy + visual card)
      ════════════════════════════════════════════ -->
-<section id="hero" class="hero-bg min-h-screen pt-28 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden relative">
+  <section id="hero" class="hero-bg min-h-screen pt-28 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden relative">
 
-  <!-- Background decoration blobs -->
-  <div class="absolute top-20 right-0 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
-  <div class="absolute bottom-10 left-0 w-72 h-72 bg-brand-400/15 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- Background decoration blobs -->
+    <div class="absolute top-20 right-0 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-10 left-0 w-72 h-72 bg-brand-400/15 rounded-full blur-3xl pointer-events-none"></div>
 
-  <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-    <!-- ── Left: Copywriting ── -->
-    <div class="text-white space-y-6" style="animation: fadeUp 0.8s ease forwards;">
+      <!-- ── Left: Copywriting ── -->
+      <div class="text-white space-y-6" style="animation: fadeUp 0.8s ease forwards;">
 
-      <!-- Badge -->
-      <div class="inline-flex items-center gap-2 bg-white/10 border border-white/25 text-white text-xs font-semibold px-4 py-2 rounded-full">
-        <span class="w-2 h-2 bg-green-400 rounded-full animate-pulseDot"></span>
-        Platform #1 Closed Testing Indonesia
-      </div>
-
-      <!-- Headline -->
-      <h1 class="text-4xl sm:text-5xl lg:text-5xl font-black leading-tight tracking-tight">
-        Lulus 14 Hari<br />
-        <span class="text-brand-200">Closed Testing</span><br />
-        Google Play Tanpa Ribet
-      </h1>
-
-      <!-- Sub-headline -->
-      <p class="text-lg text-blue-100 leading-relaxed max-w-lg">
-        PlayTest ID adalah platform kolaborasi antara <strong class="text-white">Developer</strong> yang butuh tester aktif dan <strong class="text-white">Tester</strong> yang ingin berkontribusi sambil belajar — berbasis konsep <em>Project Based Learning</em>.
-      </p>
-
-      <!-- Dual CTA -->
-      <div class="flex flex-col sm:flex-row gap-3 pt-2">
-        <a href="{{ route('filament.developer.auth.login') }}" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-brand-700 font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:bg-brand-50 transition duration-300 text-sm">
-          <i class="fa-solid fa-rocket"></i>
-          Saya Butuh Tester
-        </a>
-        <a href="{{ route('filament.tester.auth.login') }}" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white/10 border border-white/40 text-white font-semibold rounded-2xl hover:bg-white/20 transition duration-300 text-sm backdrop-blur-sm">
-          <i class="fa-solid fa-hand-pointer"></i>
-          Saya Ingin Jadi Tester
-        </a>
-      </div>
-
-      <!-- Social proof counters -->
-      <div class="flex gap-8 pt-4 border-t border-white/20">
-        <div>
-          <p class="text-3xl font-black">1.200+</p>
-          <p class="text-blue-200 text-xs font-medium mt-0.5">Tester Aktif</p>
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 bg-white/10 border border-white/25 text-white text-xs font-semibold px-4 py-2 rounded-full">
+          <span class="w-2 h-2 bg-green-400 rounded-full animate-pulseDot"></span>
+          Indonesia's #1 Closed Testing Platform
         </div>
-        <div class="w-px bg-white/20"></div>
-        <div>
-          <p class="text-3xl font-black">340+</p>
-          <p class="text-blue-200 text-xs font-medium mt-0.5">Aplikasi Lulus Testing</p>
-        </div>
-        <div class="w-px bg-white/20"></div>
-        <div>
-          <p class="text-3xl font-black">98%</p>
-          <p class="text-blue-200 text-xs font-medium mt-0.5">Tingkat Keberhasilan</p>
-        </div>
-      </div>
-    </div>
 
-    <!-- ── Right: Glassmorphism Dashboard Card ── -->
-    <div class="flex justify-center lg:justify-end animate-floatY">
-      <div class="glass-card rounded-3xl p-6 w-full max-w-sm shadow-2xl text-white">
+        <!-- Headline -->
+        <h1 class="text-4xl sm:text-5xl lg:text-5xl font-black leading-tight tracking-tight">
+          Pass the 14-Day<br />
+          <span class="text-brand-200">Closed Testing</span><br />
+          on Google Play Hassle-Free
+        </h1>
 
-        <!-- Card header -->
-        <div class="flex items-center justify-between mb-5">
+        <!-- Sub-headline -->
+        <p class="text-lg text-blue-100 leading-relaxed max-w-lg">
+          PlayTest ID is a collaboration platform between <strong class="text-white">Developers</strong> who need active testers and <strong class="text-white">Testers</strong> who want to contribute while learning — built on the concept of <em>Project Based Learning</em>.
+        </p>
+
+        <!-- Dual CTA -->
+        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+          <button onclick="window.location.href='{{ route('filament.developer.auth.login') }}'" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-brand-700 font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:bg-brand-50 transition duration-300 text-sm">
+            <i class="fa-solid fa-rocket"></i>
+            I Need Testers
+          </button>
+          <button onclick="window.location.href='{{ route('filament.tester.auth.login') }}'" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white/10 border border-white/40 text-white font-semibold rounded-2xl hover:bg-white/20 transition duration-300 text-sm backdrop-blur-sm">
+            <i class="fa-solid fa-hand-pointer"></i>
+            I Want to Be a Tester
+          </button>
+        </div>
+
+        <!-- Social proof counters -->
+        <div class="flex gap-8 pt-4 border-t border-white/20">
           <div>
-            <p class="text-xs text-blue-200 font-medium uppercase tracking-widest">Campaign Aktif</p>
-            <p class="text-lg font-bold mt-0.5">MyApp – Closed Testing</p>
+            <p class="text-3xl font-black">1,200+</p>
+            <p class="text-blue-200 text-xs font-medium mt-0.5">Active Testers</p>
           </div>
-          <div class="w-10 h-10 bg-green-400/20 rounded-xl flex items-center justify-center">
-            <i class="fa-solid fa-circle-check text-green-400 text-lg"></i>
+          <div class="w-px bg-white/20"></div>
+          <div>
+            <p class="text-3xl font-black">340+</p>
+            <p class="text-blue-200 text-xs font-medium mt-0.5">Apps Passed Testing</p>
+          </div>
+          <div class="w-px bg-white/20"></div>
+          <div>
+            <p class="text-3xl font-black">98%</p>
+            <p class="text-blue-200 text-xs font-medium mt-0.5">Success Rate</p>
           </div>
         </div>
+      </div>
 
-        <!-- 14 Days Progress -->
-        <div class="bg-white/10 rounded-2xl p-4 mb-4">
-          <div class="flex justify-between text-xs font-semibold mb-2">
-            <span class="text-blue-100">14 Days Progress</span>
-            <span class="text-white">Hari 9 / 14</span>
-          </div>
-          <div class="w-full h-3 bg-white/20 rounded-full overflow-hidden">
-            <div class="h-3 bg-gradient-to-r from-green-400 to-emerald-300 rounded-full progress-fill" style="--fill: 64%;"></div>
-          </div>
-          <p class="text-xs text-blue-200 mt-2">64% selesai · estimasi lulus <strong class="text-white">5 hari lagi</strong></p>
-        </div>
+      <!-- ── Right: Glassmorphism Dashboard Card ── -->
+      <div class="flex justify-center lg:justify-end animate-floatY">
+        <div class="glass-card rounded-3xl p-6 w-full max-w-sm shadow-2xl text-white">
 
-        <!-- Tester count -->
-        <div class="bg-white/10 rounded-2xl p-4 mb-4">
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs text-blue-100 font-semibold uppercase tracking-widest">Tester Aktif</span>
-            <span class="text-green-400 font-black text-xl">20 / 20</span>
-          </div>
-          <!-- Avatar row -->
-          <div class="flex items-center">
-            <div class="flex -space-x-2">
-              <div class="w-7 h-7 rounded-full bg-pink-400    border-2 border-white/30 flex items-center justify-center text-xs font-bold">A</div>
-              <div class="w-7 h-7 rounded-full bg-yellow-400  border-2 border-white/30 flex items-center justify-center text-xs font-bold">B</div>
-              <div class="w-7 h-7 rounded-full bg-green-400   border-2 border-white/30 flex items-center justify-center text-xs font-bold">C</div>
-              <div class="w-7 h-7 rounded-full bg-purple-400  border-2 border-white/30 flex items-center justify-center text-xs font-bold">D</div>
-              <div class="w-7 h-7 rounded-full bg-blue-300    border-2 border-white/30 flex items-center justify-center text-xs font-bold">+16</div>
+          <!-- Card header -->
+          <div class="flex items-center justify-between mb-5">
+            <div>
+              <p class="text-xs text-blue-200 font-medium uppercase tracking-widest">Active Campaign</p>
+              <p class="text-lg font-bold mt-0.5">MyApp – Closed Testing</p>
             </div>
-            <span class="ml-3 text-xs text-blue-200">Semua tester memenuhi syarat Google</span>
+            <div class="w-10 h-10 bg-green-400/20 rounded-xl flex items-center justify-center">
+              <i class="fa-solid fa-circle-check text-green-400 text-lg"></i>
+            </div>
           </div>
-        </div>
 
-        <!-- Daily chart mini -->
-        <div class="bg-white/10 rounded-2xl p-4">
-          <p class="text-xs text-blue-100 font-semibold uppercase tracking-widest mb-3">Aktivitas Harian</p>
-          <div class="flex items-end gap-1.5 h-14">
-            <!-- 14 bar mini chart – all active -->
-            <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:60%;" title="Hari 1"></div>
-            <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:80%;" title="Hari 2"></div>
-            <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:55%;" title="Hari 3"></div>
-            <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:90%;" title="Hari 4"></div>
-            <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:70%;" title="Hari 5"></div>
-            <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:85%;" title="Hari 6"></div>
-            <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:65%;" title="Hari 7"></div>
-            <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:75%;" title="Hari 8"></div>
-            <div class="flex-1 bg-white/50   rounded-t-sm" style="height:100%;" title="Hari 9 – Hari ini"></div>
-            <div class="flex-1 bg-white/20   rounded-t-sm" style="height:30%;" title="Hari 10 – Mendatang"></div>
-            <div class="flex-1 bg-white/20   rounded-t-sm" style="height:20%;"></div>
-            <div class="flex-1 bg-white/20   rounded-t-sm" style="height:20%;"></div>
-            <div class="flex-1 bg-white/20   rounded-t-sm" style="height:20%;"></div>
-            <div class="flex-1 bg-white/20   rounded-t-sm" style="height:20%;"></div>
+          <!-- 14 Days Progress -->
+          <div class="bg-white/10 rounded-2xl p-4 mb-4">
+            <div class="flex justify-between text-xs font-semibold mb-2">
+              <span class="text-blue-100">14 Days Progress</span>
+              <span class="text-white">Day 9 / 14</span>
+            </div>
+            <div class="w-full h-3 bg-white/20 rounded-full overflow-hidden">
+              <div class="h-3 bg-gradient-to-r from-green-400 to-emerald-300 rounded-full progress-fill" style="--fill: 64%;"></div>
+            </div>
+            <p class="text-xs text-blue-200 mt-2">64% complete · estimated to pass in <strong class="text-white">5 more days</strong></p>
           </div>
-          <div class="flex justify-between text-xs text-blue-300 mt-2 font-medium">
-            <span>Hari 1</span><span>Hari 9 ← Anda di sini</span><span>Hari 14</span>
-          </div>
-        </div>
 
+          <!-- Tester count -->
+          <div class="bg-white/10 rounded-2xl p-4 mb-4">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs text-blue-100 font-semibold uppercase tracking-widest">Active Testers</span>
+              <span class="text-green-400 font-black text-xl">20 / 20</span>
+            </div>
+            <!-- Avatar row -->
+            <div class="flex items-center">
+              <div class="flex -space-x-2">
+                <div class="w-7 h-7 rounded-full bg-pink-400    border-2 border-white/30 flex items-center justify-center text-xs font-bold">A</div>
+                <div class="w-7 h-7 rounded-full bg-yellow-400  border-2 border-white/30 flex items-center justify-center text-xs font-bold">B</div>
+                <div class="w-7 h-7 rounded-full bg-green-400   border-2 border-white/30 flex items-center justify-center text-xs font-bold">C</div>
+                <div class="w-7 h-7 rounded-full bg-purple-400  border-2 border-white/30 flex items-center justify-center text-xs font-bold">D</div>
+                <div class="w-7 h-7 rounded-full bg-blue-300    border-2 border-white/30 flex items-center justify-center text-xs font-bold">+16</div>
+              </div>
+              <span class="ml-3 text-xs text-blue-200">All testers meet Google's requirements</span>
+            </div>
+          </div>
+
+          <!-- Daily chart mini -->
+          <div class="bg-white/10 rounded-2xl p-4">
+            <p class="text-xs text-blue-100 font-semibold uppercase tracking-widest mb-3">Daily Activity</p>
+            <div class="flex items-end gap-1.5 h-14">
+              <!-- 14 bar mini chart – all active -->
+              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:60%;" title="Day 1"></div>
+              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:80%;" title="Day 2"></div>
+              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:55%;" title="Day 3"></div>
+              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:90%;" title="Day 4"></div>
+              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:70%;" title="Day 5"></div>
+              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:85%;" title="Day 6"></div>
+              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:65%;" title="Day 7"></div>
+              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:75%;" title="Day 8"></div>
+              <div class="flex-1 bg-white/50   rounded-t-sm" style="height:100%;" title="Day 9 – Today"></div>
+              <div class="flex-1 bg-white/20   rounded-t-sm" style="height:30%;" title="Day 10 – Upcoming"></div>
+              <div class="flex-1 bg-white/20   rounded-t-sm" style="height:20%;"></div>
+              <div class="flex-1 bg-white/20   rounded-t-sm" style="height:20%;"></div>
+              <div class="flex-1 bg-white/20   rounded-t-sm" style="height:20%;"></div>
+              <div class="flex-1 bg-white/20   rounded-t-sm" style="height:20%;"></div>
+            </div>
+            <div class="flex justify-between text-xs text-blue-300 mt-2 font-medium">
+              <span>Day 1</span><span>Day 9 ← You are here</span><span>Day 14</span>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Wave divider -->
-  <div class="absolute bottom-0 left-0 right-0 overflow-hidden leading-none">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" class="w-full h-14 fill-slate-50">
-      <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"/>
-    </svg>
-  </div>
-</section>
+    <!-- Wave divider -->
+    <div class="absolute bottom-0 left-0 right-0 overflow-hidden leading-none">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" class="w-full h-14 fill-slate-50">
+        <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" />
+      </svg>
+    </div>
+  </section>
 
 
-<!-- ════════════════════════════════════════════
-     3. CARA KERJA – How it works (steps)
+  <!-- ════════════════════════════════════════════
+     3. HOW IT WORKS – Steps
      ════════════════════════════════════════════ -->
-<section id="cara-kerja" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50">
-  <div class="max-w-7xl mx-auto">
+  <section id="how-it-works" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50">
+    <div class="max-w-7xl mx-auto">
 
-    <div class="text-center mb-14 reveal">
-      <span class="text-brand-600 font-semibold text-sm uppercase tracking-widest">Cara Kerja</span>
-      <h2 class="text-3xl sm:text-4xl font-black text-slate-800 mt-2">Tiga Langkah Mudah</h2>
-      <p class="text-slate-500 mt-3 max-w-xl mx-auto">Proses yang sederhana, transparan, dan sepenuhnya dipantau untuk memastikan aplikasi Anda berhasil lulus closed testing.</p>
+      <div class="text-center mb-14 reveal">
+        <span class="text-brand-600 font-semibold text-sm uppercase tracking-widest">How It Works</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-slate-800 mt-2">Three Simple Steps</h2>
+        <p class="text-slate-500 mt-3 max-w-xl mx-auto">A simple, transparent, and fully monitored process to ensure your app successfully passes closed testing.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Step 1 -->
+        <div class="reveal bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-300 relative text-center">
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-brand-600 text-white rounded-full flex items-center justify-center font-black text-sm shadow-lg">1</div>
+          <div class="w-16 h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <i class="fa-solid fa-upload text-brand-600 text-2xl"></i>
+          </div>
+          <h3 class="font-bold text-lg text-slate-800 mb-2">Register &amp; Upload Your App</h3>
+          <p class="text-slate-500 text-sm leading-relaxed">Developers sign up, choose a package, and submit their Google Play app link for closed testing.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="reveal bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-300 relative text-center" style="transition-delay: 0.15s;">
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-brand-600 text-white rounded-full flex items-center justify-center font-black text-sm shadow-lg">2</div>
+          <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <i class="fa-solid fa-users text-green-600 text-2xl"></i>
+          </div>
+          <h3 class="font-bold text-lg text-slate-800 mb-2">20 Testers Join</h3>
+          <p class="text-slate-500 text-sm leading-relaxed">Our platform automatically connects 20 verified active testers to your app's testing session.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="reveal bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-300 relative text-center" style="transition-delay: 0.3s;">
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-brand-600 text-white rounded-full flex items-center justify-center font-black text-sm shadow-lg">3</div>
+          <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <i class="fa-solid fa-trophy text-purple-600 text-2xl"></i>
+          </div>
+          <h3 class="font-bold text-lg text-slate-800 mb-2">Pass &amp; Release to Play Store</h3>
+          <p class="text-slate-500 text-sm leading-relaxed">After 14 consecutive days with 20 active testers, your app is ready to launch on Google Play Store.</p>
+        </div>
+
+      </div>
     </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-      <!-- Step 1 -->
-      <div class="reveal bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-300 relative text-center">
-        <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-brand-600 text-white rounded-full flex items-center justify-center font-black text-sm shadow-lg">1</div>
-        <div class="w-16 h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
-          <i class="fa-solid fa-upload text-brand-600 text-2xl"></i>
-        </div>
-        <h3 class="font-bold text-lg text-slate-800 mb-2">Daftar &amp; Upload Aplikasi</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Developer mendaftar, memilih paket, dan mengunggah link aplikasi Google Play untuk uji tertutup.</p>
-      </div>
-
-      <!-- Step 2 -->
-      <div class="reveal bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-300 relative text-center" style="transition-delay: 0.15s;">
-        <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-brand-600 text-white rounded-full flex items-center justify-center font-black text-sm shadow-lg">2</div>
-        <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
-          <i class="fa-solid fa-users text-green-600 text-2xl"></i>
-        </div>
-        <h3 class="font-bold text-lg text-slate-800 mb-2">20 Tester Bergabung</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Platform kami secara otomatis menghubungkan 20 tester aktif yang terverifikasi ke sesi pengujian aplikasi Anda.</p>
-      </div>
-
-      <!-- Step 3 -->
-      <div class="reveal bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-300 relative text-center" style="transition-delay: 0.3s;">
-        <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-brand-600 text-white rounded-full flex items-center justify-center font-black text-sm shadow-lg">3</div>
-        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
-          <i class="fa-solid fa-trophy text-purple-600 text-2xl"></i>
-        </div>
-        <h3 class="font-bold text-lg text-slate-800 mb-2">Lulus &amp; Rilis ke Play Store</h3>
-        <p class="text-slate-500 text-sm leading-relaxed">Setelah 14 hari berturut-turut dengan 20 tester aktif, aplikasi Anda siap rilis ke Google Play Store.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
+  </section>
 
 
-<!-- ════════════════════════════════════════════
+  <!-- ════════════════════════════════════════════
      4. DUAL INFO SECTION – Tabbed layout (jQuery)
      ════════════════════════════════════════════ -->
-<section id="manfaat" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-  <div class="max-w-5xl mx-auto">
+  <section id="benefits" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <div class="max-w-5xl mx-auto">
 
-    <div class="text-center mb-10 reveal">
-      <span class="text-brand-600 font-semibold text-sm uppercase tracking-widest">Manfaat</span>
-      <h2 class="text-3xl sm:text-4xl font-black text-slate-800 mt-2">Platform untuk Semua Pihak</h2>
-      <p class="text-slate-500 mt-3 max-w-xl mx-auto">Pilih perspektif Anda dan temukan bagaimana PlayTest ID memberi nilai nyata.</p>
-    </div>
-
-    <!-- ── Tab Switcher ── -->
-    <div class="flex justify-center mb-10 reveal">
-      <div class="inline-flex bg-slate-100 p-1.5 rounded-2xl gap-1">
-        <button class="tab-btn active px-6 py-2.5 rounded-xl text-sm font-semibold transition duration-200 hover:bg-white focus:outline-none" data-tab="developer">
-          <i class="fa-solid fa-code mr-2 text-brand-500"></i>Untuk Developer
-        </button>
-        <button class="tab-btn px-6 py-2.5 rounded-xl text-sm font-semibold text-slate-500 transition duration-200 hover:bg-white focus:outline-none" data-tab="tester">
-          <i class="fa-solid fa-mobile-screen-button mr-2 text-slate-400"></i>Untuk Tester
-        </button>
+      <div class="text-center mb-10 reveal">
+        <span class="text-brand-600 font-semibold text-sm uppercase tracking-widest">Benefits</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-slate-800 mt-2">A Platform for Everyone</h2>
+        <p class="text-slate-500 mt-3 max-w-xl mx-auto">Choose your perspective and discover how PlayTest ID delivers real value.</p>
       </div>
-    </div>
 
-    <!-- ── Tab Contents ── -->
-    <div id="tab-developer" class="tab-content active reveal">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-        <!-- Benefit 1 -->
-        <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
-          <div class="icon-bubble bg-brand-100 mb-4">
-            <i class="fa-solid fa-magnifying-glass text-brand-600 text-xl"></i>
-          </div>
-          <h4 class="font-bold text-slate-800 mb-2">Mudah Cari Tester</h4>
-          <p class="text-slate-500 text-sm leading-relaxed">Tidak perlu repot mencari secara manual. Sistem kami langsung menghubungkan Anda dengan 20 tester aktif yang sudah terverifikasi.</p>
+      <!-- ── Tab Switcher ── -->
+      <div class="flex justify-center mb-10 reveal">
+        <div class="inline-flex bg-slate-100 p-1.5 rounded-2xl gap-1">
+          <button class="tab-btn active px-6 py-2.5 rounded-xl text-sm font-semibold transition duration-200 hover:bg-white focus:outline-none" data-tab="developer">
+            <i class="fa-solid fa-code mr-2 text-brand-500"></i>For Developers
+          </button>
+          <button class="tab-btn px-6 py-2.5 rounded-xl text-sm font-semibold text-slate-500 transition duration-200 hover:bg-white focus:outline-none" data-tab="tester">
+            <i class="fa-solid fa-mobile-screen-button mr-2 text-slate-400"></i>For Testers
+          </button>
         </div>
-
-        <!-- Benefit 2 -->
-        <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
-          <div class="icon-bubble bg-green-100 mb-4">
-            <i class="fa-solid fa-calendar-check text-green-600 text-xl"></i>
-          </div>
-          <h4 class="font-bold text-slate-800 mb-2">Validasi Otomatis 14 Hari</h4>
-          <p class="text-slate-500 text-sm leading-relaxed">Dashboard real-time memantau keaktifan setiap tester selama 14 hari berturut-turut sesuai persyaratan Google Play Console.</p>
-        </div>
-
-        <!-- Benefit 3 -->
-        <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
-          <div class="icon-bubble bg-red-100 mb-4">
-            <i class="fa-solid fa-shield-halved text-red-500 text-xl"></i>
-          </div>
-          <h4 class="font-bold text-slate-800 mb-2">Terhindar dari Penolakan Google</h4>
-          <p class="text-slate-500 text-sm leading-relaxed">Proses terstruktur kami memastikan semua syarat teknis Google terpenuhi sehingga aplikasi Anda tidak ditolak saat mengajukan rilis.</p>
-        </div>
-
       </div>
-    </div>
 
-    <div id="tab-tester" class="tab-content reveal">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- ── Tab Contents ── -->
+      <div id="tab-developer" class="tab-content active reveal">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-        <!-- Benefit 1 -->
-        <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
-          <div class="icon-bubble bg-yellow-100 mb-4">
-            <i class="fa-solid fa-star text-yellow-500 text-xl"></i>
+          <!-- Benefit 1 -->
+          <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
+            <div class="icon-bubble bg-brand-100 mb-4">
+              <i class="fa-solid fa-magnifying-glass text-brand-600 text-xl"></i>
+            </div>
+            <h4 class="font-bold text-slate-800 mb-2">Find Testers Easily</h4>
+            <p class="text-slate-500 text-sm leading-relaxed">No need to search manually. Our system instantly connects you with 20 verified active testers.</p>
           </div>
-          <h4 class="font-bold text-slate-800 mb-2">Akses Aplikasi Baru</h4>
-          <p class="text-slate-500 text-sm leading-relaxed">Jadilah yang pertama mencoba aplikasi-aplikasi inovatif karya developer Indonesia sebelum resmi dirilis ke publik.</p>
-        </div>
 
-        <!-- Benefit 2 -->
-        <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
-          <div class="icon-bubble bg-purple-100 mb-4">
-            <i class="fa-solid fa-graduation-cap text-purple-600 text-xl"></i>
+          <!-- Benefit 2 -->
+          <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
+            <div class="icon-bubble bg-green-100 mb-4">
+              <i class="fa-solid fa-calendar-check text-green-600 text-xl"></i>
+            </div>
+            <h4 class="font-bold text-slate-800 mb-2">Automatic 14-Day Validation</h4>
+            <p class="text-slate-500 text-sm leading-relaxed">A real-time dashboard monitors each tester's activity for 14 consecutive days as required by Google Play Console.</p>
           </div>
-          <h4 class="font-bold text-slate-800 mb-2">Pengalaman Project Based Learning</h4>
-          <p class="text-slate-500 text-sm leading-relaxed">Tingkatkan kemampuan QA dan software testing Anda melalui proyek nyata — pengalaman yang bisa langsung dicantumkan di portofolio.</p>
-        </div>
 
-        <!-- Benefit 3 -->
-        <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
-          <div class="icon-bubble bg-brand-100 mb-4">
-            <i class="fa-solid fa-people-group text-brand-600 text-xl"></i>
+          <!-- Benefit 3 -->
+          <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
+            <div class="icon-bubble bg-red-100 mb-4">
+              <i class="fa-solid fa-shield-halved text-red-500 text-xl"></i>
+            </div>
+            <h4 class="font-bold text-slate-800 mb-2">Avoid Google Rejection</h4>
+            <p class="text-slate-500 text-sm leading-relaxed">Our structured process ensures all of Google's technical requirements are met so your app won't be rejected at launch.</p>
           </div>
-          <h4 class="font-bold text-slate-800 mb-2">Komunitas Aktif</h4>
-          <p class="text-slate-500 text-sm leading-relaxed">Bergabung dengan ribuan tester dan developer di komunitas PlayTest ID — saling berbagi ilmu, diskusi, dan peluang kolaborasi.</p>
-        </div>
 
+        </div>
       </div>
+
+      <div id="tab-tester" class="tab-content reveal">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <!-- Benefit 1 -->
+          <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
+            <div class="icon-bubble bg-yellow-100 mb-4">
+              <i class="fa-solid fa-star text-yellow-500 text-xl"></i>
+            </div>
+            <h4 class="font-bold text-slate-800 mb-2">Early App Access</h4>
+            <p class="text-slate-500 text-sm leading-relaxed">Be among the first to try innovative apps by Indonesian developers before they officially launch to the public.</p>
+          </div>
+
+          <!-- Benefit 2 -->
+          <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
+            <div class="icon-bubble bg-purple-100 mb-4">
+              <i class="fa-solid fa-graduation-cap text-purple-600 text-xl"></i>
+            </div>
+            <h4 class="font-bold text-slate-800 mb-2">Project Based Learning Experience</h4>
+            <p class="text-slate-500 text-sm leading-relaxed">Enhance your QA and software testing skills through real projects — experience you can add directly to your portfolio.</p>
+          </div>
+
+          <!-- Benefit 3 -->
+          <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
+            <div class="icon-bubble bg-brand-100 mb-4">
+              <i class="fa-solid fa-people-group text-brand-600 text-xl"></i>
+            </div>
+            <h4 class="font-bold text-slate-800 mb-2">Active Community</h4>
+            <p class="text-slate-500 text-sm leading-relaxed">Join thousands of testers and developers in the PlayTest ID community — share knowledge, discuss, and find collaboration opportunities.</p>
+          </div>
+
+        </div>
+      </div>
+
     </div>
-
-  </div>
-</section>
+  </section>
 
 
-<!-- ════════════════════════════════════════════
-     5. PRICING TABLE – Dua card berdampingan
+  <!-- ════════════════════════════════════════════
+     5. PRICING TABLE – Two cards side by side
      ════════════════════════════════════════════ -->
-<section id="harga" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50 relative overflow-hidden">
+  <section id="pricing" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50 relative overflow-hidden">
 
-  <!-- Decoration -->
-  <div class="absolute inset-0 bg-gradient-to-br from-brand-50/60 via-slate-50 to-slate-50 pointer-events-none"></div>
+    <!-- Decoration -->
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-50/60 via-slate-50 to-slate-50 pointer-events-none"></div>
 
-  <div class="max-w-5xl mx-auto relative">
+    <div class="max-w-5xl mx-auto relative">
 
-    <div class="text-center mb-14 reveal">
-      <span class="text-brand-600 font-semibold text-sm uppercase tracking-widest">Harga</span>
-      <h2 class="text-3xl sm:text-4xl font-black text-slate-800 mt-2">Pilih Paket Pengujian Anda</h2>
-      <p class="text-slate-500 mt-3 max-w-xl mx-auto">Investasi sekali bayar untuk memastikan aplikasi Anda berhasil lulus closed testing dan siap rilis ke jutaan pengguna.</p>
-    </div>
+      <div class="text-center mb-14 reveal">
+        <span class="text-brand-600 font-semibold text-sm uppercase tracking-widest">Pricing</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-slate-800 mt-2">Choose Your Testing Package</h2>
+        <p class="text-slate-500 mt-3 max-w-xl mx-auto">A one-time investment to ensure your app successfully passes closed testing and is ready to launch to millions of users.</p>
+      </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
 
-      @foreach($pakets as $paket)
-        @if(!$paket->most_popular)
-          <!-- ── Card: Regular ── -->
-          <div class="pricing-card reveal bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
+        <!-- ── Card 1: Starter ── -->
+        <div class="pricing-card reveal bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
 
-            <div class="mb-6">
-              <div class="inline-flex items-center gap-2 bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
-                {!! $paket->trusted_badge ? '<i class="fa-solid fa-gem text-brand-500"></i>' : '<i class="fa-solid fa-seedling text-green-500"></i>' !!} Paket {{ $paket->name }}
+          <div class="mb-6">
+            <div class="inline-flex items-center gap-2 bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
+              <i class="fa-solid fa-seedling text-green-500"></i> Starter Package
+            </div>
+            <p class="text-slate-500 text-sm leading-relaxed">A basic solution to meet Google Play Closed Testing requirements.</p>
+          </div>
+
+          <!-- Price -->
+          <div class="mb-6 pb-6 border-b border-slate-100">
+            <div class="flex items-baseline gap-1">
+              <span class="text-slate-400 text-sm font-medium">Rp</span>
+              <span class="text-5xl font-black text-slate-800">300</span>
+              <span class="text-slate-400 text-lg font-medium">.000</span>
+            </div>
+            <p class="text-slate-400 text-xs mt-1">One-time payment · full 14-day access</p>
+          </div>
+
+          <!-- Features -->
+          <ul class="check-list text-sm text-slate-600 mb-8 space-y-0">
+            <li><i class="fa-solid fa-circle-check text-green-500"></i><span>Access to 20 Active &amp; Verified Testers</span></li>
+            <li><i class="fa-solid fa-circle-check text-green-500"></i><span>14 Consecutive Days of Full Testing</span></li>
+            <li><i class="fa-solid fa-circle-check text-green-500"></i><span>Standard Testing Report</span></li>
+            <li><i class="fa-solid fa-circle-check text-green-500"></i><span>PlayTest ID Community Support</span></li>
+          </ul>
+
+          <a href="#" class="block w-full text-center py-3.5 rounded-xl font-bold text-brand-700 border-2 border-brand-600 hover:bg-brand-600 hover:text-white transition duration-300 text-sm">
+            Choose Starter
+          </a>
+        </div>
+
+        <!-- ── Card 2: Pro (Best Value) ── -->
+        <div class="pricing-card reveal relative" style="transition-delay: 0.15s;">
+
+          <!-- Popular badge floating above card -->
+          <div class="flex justify-center mb-3">
+            <span class="badge-popular">
+              <i class="fa-solid fa-fire mr-1"></i> Most Popular
+            </span>
+          </div>
+
+          <div class="bg-white rounded-2xl p-8 shadow-2xl border-2 border-brand-600 relative overflow-hidden">
+
+            <!-- Corner ribbon glow -->
+            <div class="absolute -top-10 -right-10 w-36 h-36 bg-brand-500/10 rounded-full blur-2xl"></div>
+
+            <div class="mb-6 relative">
+              <div class="inline-flex items-center gap-2 bg-brand-600 text-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
+                <i class="fa-solid fa-gem"></i> Pro Package
               </div>
-              <p class="text-slate-500 text-sm leading-relaxed">{{ $paket->short_desc ?? 'Solusi dasar untuk aplikasi Anda.' }}</p>
+              <p class="text-slate-500 text-sm leading-relaxed">A premium solution for complete optimization before your app goes public.</p>
             </div>
 
             <!-- Price -->
-            <div class="mb-6 pb-6 border-b border-slate-100">
+            <div class="mb-6 pb-6 border-b border-slate-100 relative">
               <div class="flex items-baseline gap-1">
-                <span class="text-slate-400 text-sm font-medium">Rp</span>
-                <span class="text-5xl font-black text-slate-800">{{ number_format($paket->price, 0, ',', '.') }}</span>
+                <span class="text-brand-400 text-sm font-medium">Rp</span>
+                <span class="text-5xl font-black text-brand-700">500</span>
+                <span class="text-brand-400 text-lg font-medium">.000</span>
               </div>
-              <p class="text-slate-400 text-xs mt-1">Pembayaran sekali</p>
+              <p class="text-slate-400 text-xs mt-1">One-time payment · full priority access</p>
             </div>
 
             <!-- Features -->
-            <div class="package-desc-wrapper text-sm text-slate-600 mb-8">
-              {!! $paket->desc !!}
-            </div>
+            <ul class="check-list text-sm text-slate-600 mb-8 relative space-y-0">
+              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>All Starter Package Features</span></li>
+              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>In-Depth Bug &amp; UX Report per Tester</span></li>
+              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>Priority Queue (Start Faster)</span></li>
+              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>Comprehensive Review from Each Tester</span></li>
+              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>Priority Support via Live Chat</span></li>
+            </ul>
 
-            <a href="{{ route('filament.developer.auth.login') }}" class="block w-full text-center py-3.5 rounded-xl font-bold text-brand-700 border-2 border-brand-600 hover:bg-brand-600 hover:text-white transition duration-300 text-sm">
-              Pilih {{ $paket->name }}
+            <a href="#" class="relative block w-full text-center py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-brand-600 to-brand-500 shadow-lg shadow-brand-200 hover:shadow-brand-300 hover:from-brand-700 hover:to-brand-600 transition duration-300 text-sm">
+              <i class="fa-solid fa-bolt mr-1"></i> Choose Pro – Start Now
             </a>
+
+            <p class="text-center text-xs text-slate-400 mt-3">
+              <i class="fa-solid fa-lock text-xs mr-1"></i>Secure payment · 7-day guarantee
+            </p>
+
           </div>
-        @else
-          <!-- ── Card: Pro (Best Value) ── -->
-          <div class="pricing-card reveal relative" style="transition-delay: 0.15s;">
+        </div>
 
-            <!-- Popular badge floating above card -->
-            <div class="flex justify-center mb-3">
-              <span class="badge-popular">
-                <i class="fa-solid fa-fire mr-1"></i> Paling Populer
-              </span>
-            </div>
+      </div>
 
-            <div class="bg-white rounded-2xl p-8 shadow-2xl border-2 border-brand-600 relative overflow-hidden">
-
-              <!-- Corner ribbon glow -->
-              <div class="absolute -top-10 -right-10 w-36 h-36 bg-brand-500/10 rounded-full blur-2xl"></div>
-
-              <div class="mb-6 relative">
-                <div class="inline-flex items-center gap-2 bg-brand-600 text-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
-                  {!! $paket->trusted_badge ? '<i class="fa-solid fa-gem"></i>' : '<i class="fa-solid fa-star"></i>' !!} Paket {{ $paket->name }}
-                </div>
-                <p class="text-slate-500 text-sm leading-relaxed">{{ $paket->short_desc ?? 'Solusi premium untuk aplikasi Anda rilis ke publik.' }}</p>
-              </div>
-
-              <!-- Price -->
-              <div class="mb-6 pb-6 border-b border-slate-100 relative">
-                <div class="flex items-baseline gap-1">
-                  <span class="text-brand-400 text-sm font-medium">Rp</span>
-                  <span class="text-5xl font-black text-brand-700">{{ number_format($paket->price, 0, ',', '.') }}</span>
-                </div>
-                <p class="text-slate-400 text-xs mt-1">Pembayaran sekali</p>
-              </div>
-
-              <!-- Features -->
-              <div class="package-desc-wrapper is-pro text-sm text-slate-600 mb-8 relative">
-                {!! $paket->desc !!}
-              </div>
-
-              <a href="{{ route('filament.developer.auth.login') }}" class="relative block w-full text-center py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-brand-600 to-brand-500 shadow-lg shadow-brand-200 hover:shadow-brand-300 hover:from-brand-700 hover:to-brand-600 transition duration-300 text-sm">
-                <i class="fa-solid fa-bolt mr-1"></i> Pilih {{ $paket->name }} – Mulai Sekarang
-              </a>
-
-              <p class="text-center text-xs text-slate-400 mt-3 relative">
-                <i class="fa-solid fa-lock text-xs mr-1"></i>Pembayaran aman
-              </p>
-
-            </div>
-          </div>
-        @endif
-      @endforeach
+      <!-- Comparison note -->
+      <div class="mt-10 text-center reveal">
+        <p class="text-slate-400 text-sm">
+          <i class="fa-solid fa-circle-info text-brand-400 mr-1"></i>
+          All packages include access to the 14-day real-time monitoring dashboard.
+          <a href="#" class="text-brand-600 font-semibold hover:underline ml-1">See full comparison →</a>
+        </p>
+      </div>
 
     </div>
   </section>
@@ -809,31 +797,8 @@
 
     <div class="max-w-3xl mx-auto text-center relative reveal">
 
-    <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white text-xs font-semibold px-4 py-2 rounded-full mb-6">
-      <i class="fa-solid fa-rocket"></i> Mulai perjalanan Anda hari ini
-    </div>
-
-    <h2 class="text-3xl sm:text-4xl font-black text-white leading-tight mb-4">
-      Siap Merilis Aplikasi Anda ke Play Store?
-    </h2>
-
-    <p class="text-blue-100 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
-      Atau ingin mulai membantu developer lain sambil menambah pengalaman QA Anda? Bergabung dengan <strong class="text-white">PlayTest ID</strong> sekarang dan jadilah bagian dari ekosistem pengujian terbaik Indonesia.
-    </p>
-
-    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-      <a href="{{ route('filament.developer.auth.login') }}" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-brand-700 font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition duration-300">
-        <i class="fa-solid fa-rocket"></i> Mulai Sebagai Developer
-      </a>
-      <a href="{{ route('filament.tester.auth.login') }}" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 border border-white/30 text-white font-semibold rounded-2xl hover:bg-white/20 transition duration-300 backdrop-blur-sm">
-        <i class="fa-solid fa-hand-pointer"></i> Daftar Sebagai Tester
-      </a>
-    </div>
-
-    <!-- Trust indicators -->
-    <div class="flex justify-center gap-8 mt-10 flex-wrap">
-      <div class="flex items-center gap-2 text-blue-200 text-xs font-medium">
-        <i class="fa-solid fa-shield-halved text-green-400"></i> Pembayaran Aman
+      <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white text-xs font-semibold px-4 py-2 rounded-full mb-6">
+        <i class="fa-solid fa-rocket"></i> Start your journey today
       </div>
 
       <h2 class="text-3xl sm:text-4xl font-black text-white leading-tight mb-4">

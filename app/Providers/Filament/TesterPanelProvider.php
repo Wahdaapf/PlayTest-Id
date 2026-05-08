@@ -131,7 +131,7 @@ class TesterPanelProvider extends PanelProvider
             // ── Assets ────────────────────────────────────────  
             ->renderHook(
                 'panels::head.end',
-                fn(): string => Blade::render("@vite('resources/css/app.css')"),
+                fn(): string => Blade::render("@vite(['resources/css/app.css', 'resources/css/filament-sidebar.css', 'resources/css/filament-topbar.css'])"),
             )
 
             // ── Middleware ────────────────────────────────────  

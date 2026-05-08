@@ -1,0 +1,1369 @@
+/* ══════════════════════════════════════════════════════════════════
+   PlayTest ID — PREMIUM Custom Topbar Styles  (v3)
+   Changes vs v2:
+     • Removed green status dot from user avatar
+     • Network status pill moved next to avatar (left of it)
+     • Forced green/red dots inline (theme-proof)
+     • Greeting username no longer clipped (whitespace-nowrap + no Str::limit)
+     • Clock uses ":" separator (handled in blade)
+     • Search bar: icon prefix, gradient ring, glow halo, ⌘K floating hint
+═══════════════════════════════════════════════════════════════════ */
+
+/* ── Custom Properties ─────────────────────────────────────────── */
+:root {
+    --topbar-bg-light: rgba(255, 255, 255, 0.78);
+    --topbar-border-light: rgba(226, 232, 240, 0.7);
+    --topbar-shadow-light: 0 6px 24px -6px rgba(15, 23, 42, 0.08);
+    --topbar-icon-hover-light: #2563eb;
+    --topbar-item-hover-bg-light: rgba(241, 245, 249, 0.9);
+    --topbar-aurora-light:
+        radial-gradient(900px 120px at 10% -20%, rgba(37, 99, 235, 0.18), transparent 60%),
+        radial-gradient(700px 120px at 60% -40%, rgba(139, 92, 246, 0.14), transparent 60%),
+        radial-gradient(700px 120px at 95% -20%, rgba(236, 72, 153, 0.12), transparent 60%);
+    --topbar-gradient: linear-gradient(90deg, #2563eb, #8b5cf6, #ec4899, #f59e0b, #2563eb);
+    --topbar-ring: rgba(37, 99, 235, 0.35);
+}
+
+.dark {
+    --topbar-bg-dark: rgba(11, 18, 32, 0.7);
+    --topbar-border-dark: rgba(30, 41, 59, 0.7);
+    --topbar-shadow-dark: 0 6px 24px -6px rgba(0, 0, 0, 0.55);
+    --topbar-icon-hover-dark: #60a5fa;
+    --topbar-item-hover-bg-dark: rgba(30, 41, 59, 0.9);
+    --topbar-aurora-dark:
+        radial-gradient(900px 120px at 10% -20%, rgba(59, 130, 246, 0.22), transparent 60%),
+        radial-gradient(700px 120px at 60% -40%, rgba(139, 92, 246, 0.20), transparent 60%),
+        radial-gradient(700px 120px at 95% -20%, rgba(217, 70, 239, 0.18), transparent 60%);
+    --topbar-gradient: linear-gradient(90deg, #3b82f6, #8b5cf6, #d946ef, #f59e0b, #3b82f6);
+    --topbar-ring: rgba(96, 165, 250, 0.45);
+}
+
+/* ══════════════════════════════════════
+   TOPBAR MAIN CONTAINER (Glass + Aurora)
+══════════════════════════════════════ */
+.fi-topbar {
+    position: sticky !important;
+    top: 0 !important;
+    background-color: var(--topbar-bg-light) !important;
+    backdrop-filter: blur(14px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(14px) saturate(160%) !important;
+    border-bottom: 1px solid var(--topbar-border-light) !important;
+    box-shadow: var(--topbar-shadow-light) !important;
+    transition: background-color 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease !important;
+    z-index: 40 !important;
+    overflow: visible !important;
+    isolation: isolate;
+}
+
+.fi-topbar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--topbar-aurora-light);
+    pointer-events: none;
+    opacity: 0.9;
+    z-index: -1;
+    animation: auroraDrift 16s ease-in-out infinite alternate;
+    clip-path: inset(0);
+}
+
+.fi-topbar .fi-user-menu .fi-dropdown-panel,
+.fi-topbar .fi-dropdown-panel[data-placement^="top"] {
+    top: 100% !important;
+    bottom: auto !important;
+    margin-top: 1.25rem !important;
+    transform-origin: top right !important;
+}
+
+.dark .fi-topbar {
+    background-color: var(--topbar-bg-dark) !important;
+    border-color: var(--topbar-border-dark) !important;
+    box-shadow: var(--topbar-shadow-dark) !important;
+}
+
+.dark .fi-topbar::before {
+    background: var(--topbar-aurora-dark);
+}
+
+@keyframes auroraDrift {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    100% {
+        transform: translate3d(2%, 1%, 0) scale(1.06);
+    }
+}
+
+.fi-topbar {
+    animation: topbarIn 0.7s cubic-bezier(.2, .7, .2, 1) both;
+}
+
+@keyframes topbarIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ══════════════════════════════════════
+   ANIMATED GRADIENT LINE
+══════════════════════════════════════ */
+.topbar-gradient-line {
+    height: 3px;
+    width: 100%;
+    background: var(--topbar-gradient);
+    background-size: 300% 100%;
+    animation: gradientMove 6s ease-in-out infinite;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    z-index: 50;
+    filter: drop-shadow(0 0 6px var(--topbar-ring));
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ══════════════════════════════════════
+   SCROLL PROGRESS BAR
+══════════════════════════════════════ */
+.topbar-scroll-progress {
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 3px;
+    width: var(--scroll, 0%);
+    background: linear-gradient(90deg, #22d3ee, #2563eb, #8b5cf6);
+    z-index: 51;
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.6);
+    transition: width 0.08s linear;
+    border-radius: 0 3px 3px 0;
+}
+
+/* ══════════════════════════════════════
+   ICON BUTTONS
+══════════════════════════════════════ */
+.fi-topbar .fi-icon-btn {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+        background-color 0.2s ease,
+        color 0.2s ease,
+        box-shadow 0.25s ease !important;
+    border-radius: 0.75rem !important;
+}
+
+.fi-topbar .fi-icon-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at center, rgba(37, 99, 235, 0.25) 0%, transparent 60%);
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.4s ease, transform 0.5s ease;
+    pointer-events: none;
+}
+
+.fi-topbar .fi-icon-btn:hover {
+    transform: translateY(-2px) scale(1.1) !important;
+    color: var(--topbar-icon-hover-light) !important;
+    background-color: var(--topbar-item-hover-bg-light) !important;
+    box-shadow: 0 6px 18px -8px var(--topbar-ring) !important;
+}
+
+.fi-topbar .fi-icon-btn:hover::after {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.fi-topbar .fi-icon-btn:active {
+    transform: translateY(0) scale(0.96) !important;
+}
+
+.dark .fi-topbar .fi-icon-btn:hover {
+    color: var(--topbar-icon-hover-dark) !important;
+    background-color: var(--topbar-item-hover-bg-dark) !important;
+}
+
+/* ══════════════════════════════════════
+   NAV ITEMS — animated underline
+══════════════════════════════════════ */
+.fi-topbar-nav-groups .fi-topbar-item {
+    position: relative;
+    transition: all 0.2s ease-in-out !important;
+    border-radius: 0.5rem !important;
+}
+
+.fi-topbar-nav-groups .fi-topbar-item::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 4px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #2563eb, #8b5cf6, #ec4899);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.35s cubic-bezier(.2, .7, .2, 1);
+}
+
+.fi-topbar-nav-groups .fi-topbar-item:hover::before,
+.fi-topbar-nav-groups .fi-topbar-item.fi-active::before {
+    transform: scaleX(1);
+}
+
+.fi-topbar-nav-groups .fi-topbar-item:hover {
+    background-color: var(--topbar-item-hover-bg-light) !important;
+    transform: translateY(-1px);
+}
+
+.dark .fi-topbar-nav-groups .fi-topbar-item:hover {
+    background-color: var(--topbar-item-hover-bg-dark) !important;
+}
+
+/* ══════════════════════════════════════
+   GLOBAL SEARCH — premium pill, gradient ring, glow, ⌘K hint
+══════════════════════════════════════ */
+.topbar-search-wrap {
+    position: relative;
+}
+
+.fi-topbar .fi-global-search-input-ctn {
+    position: relative;
+    transition: all 0.3s ease !important;
+}
+
+/* Animated gradient ring */
+.fi-topbar .fi-global-search-input-ctn::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 9999px;
+    padding: 2px;
+    background: linear-gradient(120deg, #2563eb, #8b5cf6, #ec4899, #f59e0b, #2563eb);
+    background-size: 300% 100%;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.55;
+    transition: opacity 0.35s ease;
+    animation: gradientMove 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.fi-topbar .fi-global-search-input-ctn:hover::before,
+.fi-topbar .fi-global-search-input-ctn:focus-within::before {
+    opacity: 1;
+}
+
+/* Outer halo glow */
+.fi-topbar .fi-global-search-input-ctn::after {
+    content: "";
+    position: absolute;
+    inset: -8px;
+    border-radius: 9999px;
+    background: radial-gradient(60% 100% at 50% 50%, rgba(139, 92, 246, 0.35), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(10px);
+}
+
+.fi-topbar .fi-global-search-input-ctn:focus-within::after {
+    opacity: 1;
+}
+
+.fi-topbar .fi-global-search-input {
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border-radius: 9999px !important;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(241, 245, 249, 0.75)) !important;
+    border: 1px solid rgba(148, 163, 184, 0.25) !important;
+    padding-left: 2.75rem !important;
+    padding-right: 1.25rem !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        inset 0 -1px 0 rgba(148, 163, 184, 0.1),
+        0 4px 12px -6px rgba(139, 92, 246, 0.25);
+    position: relative;
+    z-index: 2;
+    font-weight: 500;
+}
+
+.dark .fi-topbar .fi-global-search-input {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.7), rgba(2, 6, 23, 0.65)) !important;
+    border-color: rgba(71, 85, 105, 0.4) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.04),
+        0 4px 12px -6px rgba(139, 92, 246, 0.4);
+}
+
+.fi-topbar .fi-global-search-input:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95)) !important;
+    transform: translateY(-1px);
+}
+
+.dark .fi-topbar .fi-global-search-input:hover {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(2, 6, 23, 0.85)) !important;
+}
+
+.fi-topbar .fi-global-search-input:focus {
+    background: #ffffff !important;
+    border-color: transparent !important;
+    box-shadow:
+        0 0 0 4px var(--topbar-ring),
+        0 12px 30px -12px var(--topbar-ring),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+    transform: translateY(-1px);
+}
+
+.dark .fi-topbar .fi-global-search-input:focus {
+    background: #0b1220 !important;
+}
+
+/* Search icon: animated gradient + glow on focus */
+.fi-topbar .fi-global-search-field svg,
+.fi-topbar .fi-global-search-input-ctn svg {
+    transition: all 0.3s ease !important;
+    color: #8b5cf6 !important;
+    filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.35));
+}
+
+.fi-topbar .fi-global-search-input-ctn:focus-within svg {
+    color: #ec4899 !important;
+    filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.65));
+    transform: scale(1.18) rotate(-10deg);
+}
+
+/* Placeholder shimmer */
+.fi-topbar .fi-global-search-input::placeholder {
+    background: linear-gradient(90deg, #94a3b8 0%, #c084fc 30%, #f472b6 50%, #c084fc 70%, #94a3b8 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: placeholderShimmer 4s linear infinite;
+    font-weight: 500;
+}
+
+.dark .fi-topbar .fi-global-search-input::placeholder {
+    background: linear-gradient(90deg, #475569 0%, #a78bfa 30%, #f0abfc 50%, #a78bfa 70%, #475569 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes placeholderShimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Floating sparkle decorations */
+.topbar-search-spark {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.topbar-search-spark::before,
+.topbar-search-spark::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: inherit;
+}
+
+.topbar-search-spark--1 {
+    top: -3px;
+    right: 22px;
+    background: radial-gradient(circle, #f0abfc, #ec4899);
+    box-shadow: 0 0 10px #ec4899, 0 0 20px rgba(236, 72, 153, 0.5);
+    animation: sparkFloat 3.2s ease-in-out infinite;
+}
+
+.topbar-search-spark--2 {
+    bottom: -2px;
+    right: 50px;
+    width: 4px;
+    height: 4px;
+    background: radial-gradient(circle, #93c5fd, #2563eb);
+    box-shadow: 0 0 8px #2563eb;
+    animation: sparkFloat 4.1s ease-in-out infinite -1s;
+}
+
+.topbar-search-spark--3 {
+    top: 50%;
+    right: 8px;
+    width: 5px;
+    height: 5px;
+    background: radial-gradient(circle, #fde68a, #f59e0b);
+    box-shadow: 0 0 8px #f59e0b;
+    animation: sparkFloat 3.6s ease-in-out infinite -2s;
+}
+
+.topbar-search-wrap:hover .topbar-search-spark,
+.topbar-search-wrap:focus-within .topbar-search-spark {
+    opacity: 1;
+}
+
+@keyframes sparkFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-6px) scale(1.4);
+    }
+}
+
+/* Hide legacy ⌘K hint if present */
+.topbar-kbd,
+.topbar-search-kbd {
+    display: none !important;
+}
+
+/* ══════════════════════════════════════
+   NETWORK STATUS PILL (next to clock)
+══════════════════════════════════════ */
+.fi-topbar-network {
+    margin-right: 0.25rem;
+    /* gap handled via ml-2 in blade */
+}
+
+.topbar-net-dot {
+    position: relative;
+    display: inline-flex;
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7);
+}
+
+.topbar-net-dot.is-online {
+    background: #22c55e !important;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), 0 0 8px rgba(34, 197, 94, 0.7);
+}
+
+.topbar-net-dot.is-offline {
+    background: #ef4444 !important;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), 0 0 8px rgba(239, 68, 68, 0.7);
+}
+
+.dark .topbar-net-dot {
+    box-shadow: 0 0 0 2px rgba(11, 18, 32, 0.7);
+}
+
+.dark .topbar-net-dot.is-online {
+    box-shadow: 0 0 0 2px rgba(11, 18, 32, 0.7), 0 0 8px rgba(34, 197, 94, 0.8);
+}
+
+.dark .topbar-net-dot.is-offline {
+    box-shadow: 0 0 0 2px rgba(11, 18, 32, 0.7), 0 0 8px rgba(239, 68, 68, 0.8);
+}
+
+.topbar-net-ping {
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    background: #22c55e;
+    opacity: 0.6;
+    animation: netPing 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes netPing {
+    0% {
+        transform: scale(1);
+        opacity: 0.6;
+    }
+
+    80% {
+        transform: scale(2.2);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(2.2);
+        opacity: 0;
+    }
+}
+
+/* ══════════════════════════════════════
+   NOTIFICATIONS BADGE — pulse + glow
+══════════════════════════════════════ */
+@keyframes softPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.55);
+    }
+
+    70% {
+        transform: scale(1.12);
+        box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+
+.fi-topbar .fi-badge {
+    transition: all 0.2s ease !important;
+}
+
+.fi-topbar .fi-badge[class*="bg-danger"],
+.fi-topbar .fi-badge[class*="bg-red"] {
+    animation: softPulse 2s infinite !important;
+    font-weight: 700 !important;
+}
+
+/* ══════════════════════════════════════
+   USER MENU AVATAR — breathing ring (no green dot)
+══════════════════════════════════════ */
+.fi-topbar .fi-user-menu-trigger {
+    padding: 4px 8px !important;
+    border-radius: 0.75rem !important;
+    transition: all 0.2s ease !important;
+    position: relative;
+}
+
+.fi-topbar .fi-user-menu-trigger:hover {
+    background-color: var(--topbar-item-hover-bg-light) !important;
+}
+
+.dark .fi-topbar .fi-user-menu-trigger:hover {
+    background-color: var(--topbar-item-hover-bg-dark) !important;
+}
+
+.fi-topbar .fi-user-menu-trigger .fi-avatar {
+    position: relative;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease !important;
+    box-shadow: 0 0 0 2px var(--topbar-ring);
+    animation: avatarBreath 3.6s ease-in-out infinite;
+}
+
+@keyframes avatarBreath {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 2px var(--topbar-ring);
+    }
+
+    50% {
+        box-shadow: 0 0 0 4px var(--topbar-ring);
+    }
+}
+
+.fi-topbar .fi-user-menu-trigger:hover .fi-avatar {
+    transform: rotate(6deg) scale(1.1);
+    box-shadow: 0 8px 22px -6px var(--topbar-ring), 0 0 0 3px var(--topbar-ring);
+}
+
+/* Explicitly remove the old green status dot on avatar */
+.fi-topbar .fi-user-menu-trigger .fi-avatar::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* ══════════════════════════════════════
+   LOGO / BRAND MARK — soft glow + shimmer
+══════════════════════════════════════ */
+.fi-topbar .fi-logo {
+    position: relative;
+    background: linear-gradient(90deg, #2563eb, #8b5cf6, #ec4899, #2563eb) !important;
+    background-size: 200% auto !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    animation: brandShimmer 5s linear infinite;
+    letter-spacing: 0.2px;
+}
+
+@keyframes brandShimmer {
+    to {
+        background-position: 200% center;
+    }
+}
+
+/* ══════════════════════════════════════
+   GREETING WIDGET
+══════════════════════════════════════ */
+.topbar-greeting {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    margin-inline: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #334155;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(139, 92, 246, 0.08));
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 999px;
+    backdrop-filter: blur(6px);
+    white-space: nowrap;
+    flex-shrink: 1;
+    min-width: 0;
+    max-width: 340px;
+    overflow: hidden;
+}
+
+.topbar-greeting-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+}
+
+.topbar-greeting-name {
+    display: inline-block;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+    font-weight: 700;
+}
+
+@media (min-width: 1024px) {
+    .topbar-greeting {
+        display: inline-flex;
+    }
+}
+
+.dark .topbar-greeting {
+    color: #cbd5e1;
+    border-color: rgba(71, 85, 105, 0.5);
+}
+
+/* ── Combined Greeting + User Menu Pill ─────────────────────────── */
+.topbar-user-combined {
+    display: none;
+    align-items: center;
+    gap: 0;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(139, 92, 246, 0.08));
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    border-radius: 999px;
+    backdrop-filter: blur(6px);
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px -2px rgba(37, 99, 235, 0.10);
+    ring: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.topbar-user-combined:hover {
+    box-shadow: 0 4px 16px -4px rgba(37, 99, 235, 0.18);
+    border-color: rgba(139, 92, 246, 0.35);
+}
+
+@media (min-width: 1024px) {
+    .topbar-user-combined {
+        display: inline-flex;
+    }
+}
+
+.dark .topbar-user-combined {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(139, 92, 246, 0.12));
+    border-color: rgba(71, 85, 105, 0.5);
+}
+
+/* Greeting inside combined — strip its own border/bg */
+.topbar-user-combined .topbar-greeting,
+.topbar-greeting--merged {
+    display: inline-flex !important;
+    border: none !important;
+    background: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    margin-inline: 0 !important;
+    padding-right: 6px !important;
+    border-radius: 0 !important;
+}
+
+/* Divider line between greeting text and avatar */
+.topbar-user-combined .fi-topbar-user-menu-wrap--merged {
+    border-left: 1px solid rgba(148, 163, 184, 0.3);
+    padding-left: 2px;
+    margin-left: 0;
+}
+
+.dark .topbar-user-combined .fi-topbar-user-menu-wrap--merged {
+    border-left-color: rgba(71, 85, 105, 0.5);
+}
+
+/* Avatar trigger inside combined — flush right, round only right side */
+.topbar-user-combined .fi-user-menu-trigger {
+    padding: 3px 6px 3px 4px !important;
+    border-radius: 0 999px 999px 0 !important;
+    background: transparent !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.topbar-user-combined .fi-user-menu-trigger:hover {
+    background: rgba(37, 99, 235, 0.10) !important;
+}
+
+.dark .topbar-user-combined .fi-user-menu-trigger:hover {
+    background: rgba(96, 165, 250, 0.15) !important;
+}
+
+/* Keep avatar breath animation but slightly smaller */
+.topbar-user-combined .fi-user-menu-trigger .fi-avatar {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 0.7rem !important;
+}
+
+/* ══════════════════════════════════════
+   ACCESSIBILITY
+══════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+
+    .fi-topbar,
+    .fi-topbar *,
+    .topbar-gradient-line,
+    .topbar-scroll-progress {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* ══════════════════════════════════════
+   HIDE AVATAR — full pill becomes the trigger
+══════════════════════════════════════ */
+
+/* Hide the circular "A" avatar */
+.topbar-user-combined .fi-avatar,
+.fi-topbar-user-menu-wrap--merged .fi-avatar {
+    display: none !important;
+}
+
+/* Remove the vertical divider (no longer needed) */
+.topbar-user-combined .fi-topbar-user-menu-wrap--merged {
+    border-left: none !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
+
+/* Stretch the trigger button invisibly over the entire pill so
+   clicking anywhere on the greeting text opens the dropdown */
+.topbar-user-combined .fi-user-menu-trigger {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    padding: 0 !important;
+    z-index: 10 !important;
+    box-shadow: none !important;
+}
+
+/* Give the greeting a bit more right padding now that avatar is gone */
+.topbar-user-combined .topbar-greeting--merged {
+    padding-right: 16px !important;
+    padding-left: 14px !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+}
+
+/* Hover shimmer on full pill */
+.topbar-user-combined:hover {
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(139, 92, 246, 0.12)) !important;
+    box-shadow: 0 6px 20px -6px rgba(139, 92, 246, 0.25) !important;
+}
+
+/* ══════════════════════════════════════
+   USER MENU DROPDOWN PANEL — Premium Glass
+══════════════════════════════════════ */
+
+/* Main panel container */
+.fi-topbar .fi-user-menu .fi-dropdown-panel {
+    background: rgba(255, 255, 255, 0.88) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border: 1px solid rgba(148, 163, 184, 0.22) !important;
+    border-radius: 1.25rem !important;
+    box-shadow:
+        0 24px 60px -12px rgba(15, 23, 42, 0.18),
+        0 8px 24px -8px rgba(139, 92, 246, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.6) inset !important;
+    overflow: hidden !important;
+    animation: dropdownPremiumIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+    min-width: 210px !important;
+}
+
+.dark .fi-topbar .fi-user-menu .fi-dropdown-panel {
+    background: rgba(11, 18, 32, 0.88) !important;
+    border-color: rgba(71, 85, 105, 0.35) !important;
+    box-shadow:
+        0 24px 60px -12px rgba(0, 0, 0, 0.55),
+        0 8px 24px -8px rgba(139, 92, 246, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset !important;
+}
+
+@keyframes dropdownPremiumIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Rainbow accent line at top of panel */
+.fi-topbar .fi-user-menu .fi-dropdown-panel::before {
+    content: "";
+    display: block;
+    height: 3px;
+    background: linear-gradient(90deg, #2563eb, #8b5cf6, #ec4899, #f59e0b);
+    background-size: 300% 100%;
+    animation: gradientMove 6s ease-in-out infinite;
+    border-radius: 0 0 0 0;
+    flex-shrink: 0;
+}
+
+/* Header area (user name row) */
+.fi-topbar .fi-user-menu .fi-dropdown-panel .fi-dropdown-header,
+.fi-topbar .fi-user-menu .fi-dropdown-list:first-child {
+    background: linear-gradient(135deg,
+            rgba(37, 99, 235, 0.06),
+            rgba(139, 92, 246, 0.06)) !important;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15) !important;
+}
+
+.dark .fi-topbar .fi-user-menu .fi-dropdown-panel .fi-dropdown-header,
+.dark .fi-topbar .fi-user-menu .fi-dropdown-list:first-child {
+    background: linear-gradient(135deg,
+            rgba(59, 130, 246, 0.08),
+            rgba(139, 92, 246, 0.08)) !important;
+    border-bottom-color: rgba(71, 85, 105, 0.3) !important;
+}
+
+/* User name text in header */
+.fi-topbar .fi-user-menu .fi-dropdown-panel .fi-user-menu-name {
+    font-weight: 700 !important;
+    background: linear-gradient(135deg, #2563eb, #8b5cf6) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    letter-spacing: 0.01em;
+}
+
+/* List wrapper padding */
+.fi-topbar .fi-user-menu .fi-dropdown-list {
+    padding: 0.375rem !important;
+}
+
+/* Each dropdown list item */
+.fi-topbar .fi-user-menu .fi-dropdown-list-item button,
+.fi-topbar .fi-user-menu .fi-dropdown-list-item a {
+    border-radius: 0.75rem !important;
+    transition: all 0.2s ease !important;
+    font-weight: 500 !important;
+}
+
+.fi-topbar .fi-user-menu .fi-dropdown-list-item button:hover,
+.fi-topbar .fi-user-menu .fi-dropdown-list-item a:hover {
+    background: linear-gradient(135deg,
+            rgba(37, 99, 235, 0.08),
+            rgba(139, 92, 246, 0.08)) !important;
+    transform: translateX(3px) !important;
+    color: #6d28d9 !important;
+}
+
+.dark .fi-topbar .fi-user-menu .fi-dropdown-list-item button:hover,
+.dark .fi-topbar .fi-user-menu .fi-dropdown-list-item a:hover {
+    background: linear-gradient(135deg,
+            rgba(96, 165, 250, 0.1),
+            rgba(167, 139, 250, 0.1)) !important;
+    color: #a78bfa !important;
+}
+
+/* ── Theme toggle buttons (sun / moon / monitor) ─────────────────── */
+/* Filament renders these as fi-icon-btn inside the dropdown */
+.fi-topbar .fi-user-menu .fi-dropdown-panel .fi-icon-btn {
+    border-radius: 0.75rem !important;
+    border: 1.5px solid transparent !important;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.fi-topbar .fi-user-menu .fi-dropdown-panel .fi-icon-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at center,
+            rgba(139, 92, 246, 0.2) 0%, transparent 65%);
+    opacity: 0;
+    transform: scale(0.5);
+    transition: opacity 0.3s ease, transform 0.4s ease;
+    pointer-events: none;
+}
+
+.fi-topbar .fi-user-menu .fi-dropdown-panel .fi-icon-btn:hover {
+    background: linear-gradient(135deg,
+            rgba(37, 99, 235, 0.12),
+            rgba(139, 92, 246, 0.14)) !important;
+    border-color: rgba(139, 92, 246, 0.4) !important;
+    transform: translateY(-3px) scale(1.12) !important;
+    box-shadow: 0 6px 16px -4px rgba(139, 92, 246, 0.45) !important;
+    color: #8b5cf6 !important;
+}
+
+.fi-topbar .fi-user-menu .fi-dropdown-panel .fi-icon-btn:hover::after {
+    opacity: 1;
+    transform: scale(1.3);
+}
+
+/* Active / pressed theme button */
+.fi-topbar .fi-user-menu .fi-dropdown-panel .fi-icon-btn[aria-pressed="true"],
+.fi-topbar .fi-user-menu .fi-dropdown-panel .fi-icon-btn.fi-color-primary {
+    background: linear-gradient(135deg,
+            rgba(37, 99, 235, 0.18),
+            rgba(139, 92, 246, 0.22)) !important;
+    border-color: rgba(139, 92, 246, 0.55) !important;
+    color: #7c3aed !important;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15) !important;
+}
+
+.dark .fi-topbar .fi-user-menu .fi-dropdown-panel .fi-icon-btn:hover {
+    background: linear-gradient(135deg,
+            rgba(96, 165, 250, 0.15),
+            rgba(167, 139, 250, 0.18)) !important;
+    border-color: rgba(167, 139, 250, 0.45) !important;
+    color: #a78bfa !important;
+    box-shadow: 0 6px 16px -4px rgba(167, 139, 250, 0.4) !important;
+}
+
+/* ── Sign out — danger glow on hover ─────────────────────────────── */
+/* Targets the last list separator + sign out item */
+.fi-topbar .fi-user-menu .fi-dropdown-panel .fi-dropdown-list:last-child {
+    border-top: 1px solid rgba(148, 163, 184, 0.15) !important;
+    padding-top: 0.375rem !important;
+}
+
+.dark .fi-topbar .fi-user-menu .fi-dropdown-panel .fi-dropdown-list:last-child {
+    border-top-color: rgba(71, 85, 105, 0.3) !important;
+}
+
+.fi-topbar .fi-user-menu .fi-dropdown-panel .fi-dropdown-list:last-child .fi-dropdown-list-item button:hover,
+.fi-topbar .fi-user-menu .fi-dropdown-panel .fi-dropdown-list:last-child .fi-dropdown-list-item a:hover {
+    background: linear-gradient(135deg,
+            rgba(239, 68, 68, 0.09),
+            rgba(236, 72, 153, 0.07)) !important;
+    color: #ef4444 !important;
+    transform: translateX(3px) !important;
+    border-color: rgba(239, 68, 68, 0.2) !important;
+    box-shadow: none !important;
+}
+
+.fi-topbar .fi-user-menu .fi-dropdown-panel .fi-dropdown-list:last-child .fi-dropdown-list-item svg {
+    transition: all 0.2s ease !important;
+}
+
+.fi-topbar .fi-user-menu .fi-dropdown-panel .fi-dropdown-list:last-child .fi-dropdown-list-item button:hover svg,
+.fi-topbar .fi-user-menu .fi-dropdown-panel .fi-dropdown-list:last-child .fi-dropdown-list-item a:hover svg {
+    color: #ef4444 !important;
+    filter: drop-shadow(0 0 4px rgba(239, 68, 68, 0.5));
+}
+
+/* ══════════════════════════════════════
+   LOGOUT CONFIRMATION MODAL
+══════════════════════════════════════ */
+.logout-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: logoutBackdropIn 0.25s ease both;
+}
+
+@keyframes logoutBackdropIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.logout-modal-panel {
+    position: relative;
+    width: 90%;
+    max-width: 380px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    border-radius: 1.5rem;
+    box-shadow:
+        0 30px 70px -15px rgba(15, 23, 42, 0.25),
+        0 10px 30px -10px rgba(139, 92, 246, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+    overflow: hidden;
+    animation: logoutPanelIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+    padding: 0;
+}
+
+.dark .logout-modal-panel {
+    background: rgba(11, 18, 32, 0.92);
+    border-color: rgba(71, 85, 105, 0.35);
+    box-shadow:
+        0 30px 70px -15px rgba(0, 0, 0, 0.6),
+        0 10px 30px -10px rgba(139, 92, 246, 0.2),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+
+@keyframes logoutPanelIn {
+    from {
+        opacity: 0;
+        transform: scale(0.92) translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Rainbow accent bar */
+.logout-modal-panel::before {
+    content: "";
+    display: block;
+    height: 3px;
+    background: linear-gradient(90deg, #2563eb, #8b5cf6, #ec4899, #f59e0b);
+    background-size: 300% 100%;
+    animation: gradientMove 6s ease-in-out infinite;
+}
+
+.logout-modal-body {
+    padding: 2rem 1.75rem 1.5rem;
+    text-align: center;
+}
+
+.logout-modal-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(236, 72, 153, 0.1));
+    margin-bottom: 1rem;
+    animation: logoutIconPulse 2s ease-in-out infinite;
+}
+
+@keyframes logoutIconPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.25);
+    }
+
+    50% {
+        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+    }
+}
+
+.logout-modal-icon svg {
+    width: 28px;
+    height: 28px;
+    color: #ef4444;
+}
+
+.dark .logout-modal-icon {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.18), rgba(236, 72, 153, 0.14));
+}
+
+.logout-modal-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.dark .logout-modal-title {
+    color: #f1f5f9;
+}
+
+.logout-modal-desc {
+    font-size: 0.875rem;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+.dark .logout-modal-desc {
+    color: #94a3b8;
+}
+
+.logout-modal-actions {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0 1.75rem 1.75rem;
+}
+
+.logout-modal-actions form {
+    flex: 1;
+}
+
+.logout-modal-btn {
+    flex: 1;
+    padding: 0.625rem 1rem;
+    border-radius: 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: none;
+    outline: none;
+}
+
+.logout-modal-btn--cancel {
+    background: rgba(241, 245, 249, 0.9);
+    color: #475569;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+.logout-modal-btn--cancel:hover {
+    background: rgba(226, 232, 240, 0.95);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.1);
+}
+
+.dark .logout-modal-btn--cancel {
+    background: rgba(30, 41, 59, 0.8);
+    color: #cbd5e1;
+    border-color: rgba(71, 85, 105, 0.5);
+}
+
+.dark .logout-modal-btn--cancel:hover {
+    background: rgba(51, 65, 85, 0.9);
+}
+
+.logout-modal-btn--confirm {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+    box-shadow: 0 4px 14px -4px rgba(239, 68, 68, 0.5);
+}
+
+.logout-modal-btn--confirm:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px -6px rgba(239, 68, 68, 0.6);
+}
+
+.dark .logout-modal-btn--confirm {
+    box-shadow: 0 4px 14px -4px rgba(239, 68, 68, 0.4);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   PATCH v3.1 — Fix pill clipping, solid name color, logout toast
+══════════════════════════════════════════════════════════════════ */
+
+/* 1) Fix: kotak user-pill kepotong di bagian atas/bawah ----------- */
+.fi-topbar {
+    align-items: center !important;
+    padding-block: 10px !important;
+    /* ruang vertikal lebih lega */
+    min-height: 4rem !important;
+}
+
+.topbar-user-combined {
+    align-self: center !important;
+    margin-block: 6px !important;
+    /* jauh dari gradient line bawah */
+    overflow: visible !important;
+}
+
+/* 2) Fix: nama user memudar / kepotong --------------------------- */
+/* Matikan gradient text pada nama supaya solid, anti theme-bleed   */
+.topbar-greeting .topbar-greeting-name,
+.topbar-greeting--merged .topbar-greeting-name {
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    background-clip: initial !important;
+    -webkit-text-fill-color: currentColor !important;
+    color: #2563eb !important;
+    /* primary biru solid */
+    text-shadow: none !important;
+    filter: none !important;
+    -webkit-mask: none !important;
+    mask: none !important;
+    font-weight: 700 !important;
+
+    /* Anti-clipping untuk nama panjang */
+    display: inline-block !important;
+    max-width: clamp(120px, 22vw, 280px) !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    vertical-align: bottom !important;
+    line-height: 1.25 !important;
+}
+
+.dark .topbar-greeting .topbar-greeting-name,
+.dark .topbar-greeting--merged .topbar-greeting-name {
+    color: #93c5fd !important;
+    /* primary biru terang utk dark */
+}
+
+/* Pastikan container pill tidak memotong nama dengan mask/fade ----- */
+.topbar-user-combined,
+.topbar-greeting--merged,
+.topbar-greeting-text {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+}
+
+/* Beri ruang aman supaya tidak terpotong di kanan ------------------ */
+.topbar-user-combined .topbar-greeting--merged {
+    padding-right: 22px !important;
+    max-width: min(420px, 38vw) !important;
+}
+
+.topbar-greeting-text {
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   3) LOGOUT TOAST NOTIFICATION
+══════════════════════════════════════════════════════════════════ */
+.logout-toast {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 20px;
+    min-width: 280px;
+    max-width: 360px;
+    background: linear-gradient(135deg, #2563eb, #8b5cf6);
+    color: #fff;
+    border-radius: 14px;
+    box-shadow: 0 18px 40px -10px rgba(37, 99, 235, 0.45),
+        0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+    backdrop-filter: blur(10px);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+}
+
+.logout-toast--success {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.logout-toast--info {
+    background: linear-gradient(135deg, #2563eb, #8b5cf6);
+}
+
+.logout-toast svg {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+}
+
+.logout-toast-progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 0 0 14px 14px;
+    animation: logoutToastBar 2.2s linear forwards;
+}
+
+@keyframes logoutToastBar {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
+}
+
+.logout-toast-enter {
+    animation: logoutToastIn 0.35s cubic-bezier(.2, .7, .2, 1) both;
+}
+
+.logout-toast-leave {
+    animation: logoutToastOut 0.25s ease-in both;
+}
+
+@keyframes logoutToastIn {
+    from {
+        opacity: 0;
+        transform: translateY(-12px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes logoutToastOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+}

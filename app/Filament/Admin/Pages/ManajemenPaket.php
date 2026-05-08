@@ -25,7 +25,7 @@ class ManajemenPaket extends Page implements HasTable, HasForms
     use InteractsWithTable;
     use InteractsWithForms;
 
-    protected static ?string $navigationLabel = 'Manajemen Paket';
+    protected static ?string $navigationLabel = 'Paket';
     protected static ?string $title = 'Manajemen Paket';
     protected static ?string $slug = 'manajemen-paket';
     protected string $view = 'filament.admin.pages.manajemen-paket';
@@ -161,12 +161,83 @@ class ManajemenPaket extends Page implements HasTable, HasForms
             ];
         }
 
+        $paketListData = [];
+        foreach ($pakets as $p) {
+            $paketListData[] = [
+                'id' => $p->id,
+                'nama' => $p->name,
+                'subtitle' => $p->short_desc,
+                'harga' => $p->price,
+                'durasi' => 30, // default if not in db
+                'subscriber' => $p->pembayarans_count ?? 0,
+                'isAktif' => $p->aktif,
+                'isTrusted' => $p->trusted_badge,
+                'deskripsi' => $p->desc,
+                'maxKampanye' => 1,
+                'maxTester' => 10,
+                'coinReward' => $p->point,
+                'maxRevisi' => 2,
+                'tampilLanding' => $p->most_popular,
+            ];
+        }
+
         return [
             'statTotalPaket' => count($pakets),
             'statPaketAktif' => $totalAktif,
             'statTotalSubscriber' => $totalSubs,
             'statPendapatan' => 'Rp ' . number_format($totalPendapatan, 0, ',', '.'),
             'subscriberList' => $subscriberList,
+            'paketList' => $paketListData,
         ];
+    }
+
+    public function toggleAktif($id, $status)
+    {
+        $paket = Paket::find($id);
+        if ($paket) {
+            $paket->aktif = $status;
+            $paket->save();
+            \Filament\Notifications\Notification::make()->title('Status aktif berhasil diubah')->success()->send();
+        }
+    }
+
+    public function toggleTrusted($id, $status)
+    {
+        $paket = Paket::find($id);
+        if ($paket) {
+            $paket->trusted_badge = $status;
+            $paket->save();
+            \Filament\Notifications\Notification::make()->title('Trusted badge berhasil diubah')->success()->send();
+        }
+    }
+
+    public function deletePaket($id)
+    {
+        $paket = Paket::find($id);
+        if ($paket) {
+            $paket->delete();
+            \Filament\Notifications\Notification::make()->title('Paket berhasil dihapus')->success()->send();
+        }
+    }
+
+    public function updatePaket($data)
+    {
+        if (!isset($data['id'])) return;
+        
+        $paket = Paket::find($data['id']);
+        if ($paket) {
+            $paket->name = $data['nama'] ?? $paket->name;
+            $paket->short_desc = $data['subtitle'] ?? $paket->short_desc;
+            $paket->price = $data['harga'] ?? $paket->price;
+            $paket->desc = $data['deskripsi'] ?? $paket->desc;
+            $paket->point = $data['coinReward'] ?? $paket->point;
+            $paket->aktif = $data['isAktif'] ?? $paket->aktif;
+            $paket->trusted_badge = $data['isTrusted'] ?? $paket->trusted_badge;
+            $paket->most_popular = $data['tampilLanding'] ?? $paket->most_popular;
+            
+            $paket->save();
+            
+            \Filament\Notifications\Notification::make()->title('Paket berhasil diupdate')->success()->send();
+        }
     }
 }

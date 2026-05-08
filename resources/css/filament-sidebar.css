@@ -1,0 +1,324 @@
+/* ══════════════════════════════════════════════════════════════════
+   PlayTest ID — Unified Sidebar Styles
+   Applies to ALL panels: Admin, Developer, Tester
+   Supports Light Mode + Dark Mode
+══════════════════════════════════════════════════════════════════ */
+
+/* ── Custom Properties ────────────────────────────────────────── */
+:root {
+    --sidebar-bg: #ffffff;
+    --sidebar-border: #e8ecf1;
+    --sidebar-header-border: #f1f5f9;
+    --sidebar-group-label: #94a3b8;
+    --sidebar-item-color: #64748b;
+    --sidebar-item-hover-bg: #f1f5f9;
+    --sidebar-item-hover-color: #1e293b;
+    --sidebar-item-icon: #94a3b8;
+    --sidebar-item-icon-hover: #64748b;
+    --sidebar-item-active-bg: #eff6ff;
+    --sidebar-item-active-color: #2563eb;
+    --sidebar-item-active-border: #2563eb;
+    --sidebar-item-active-icon: #2563eb;
+    --sidebar-badge-bg: #eff6ff;
+    --sidebar-badge-color: #2563eb;
+    --sidebar-group-border: #f1f5f9;
+    --sidebar-footer-bg: #ffffff;
+    --sidebar-footer-border: #f1f5f9;
+    --sidebar-user-bg: #f8fafc;
+    --sidebar-user-border: #e2e8f0;
+    --sidebar-user-hover-bg: #f1f5f9;
+    --sidebar-user-name: #1e293b;
+    --sidebar-user-email: #64748b;
+    --sidebar-avatar-bg: linear-gradient(135deg, #2563eb, #7c3aed);
+    --sidebar-avatar-color: #ffffff;
+    --main-bg: #f8fafc;
+}
+
+.dark {
+    --sidebar-bg: #0f172a;
+    --sidebar-border: #1e293b;
+    --sidebar-header-border: #1e293b;
+    --sidebar-group-label: #475569;
+    --sidebar-item-color: #94a3b8;
+    --sidebar-item-hover-bg: #1e293b;
+    --sidebar-item-hover-color: #e2e8f0;
+    --sidebar-item-icon: #64748b;
+    --sidebar-item-icon-hover: #94a3b8;
+    --sidebar-item-active-bg: rgba(37, 99, 235, 0.12);
+    --sidebar-item-active-color: #60a5fa;
+    --sidebar-item-active-border: #3b82f6;
+    --sidebar-item-active-icon: #60a5fa;
+    --sidebar-badge-bg: rgba(37, 99, 235, 0.15);
+    --sidebar-badge-color: #60a5fa;
+    --sidebar-group-border: #1e293b;
+    --sidebar-footer-bg: #0f172a;
+    --sidebar-footer-border: #1e293b;
+    --sidebar-user-bg: #1e293b;
+    --sidebar-user-border: #334155;
+    --sidebar-user-hover-bg: #334155;
+    --sidebar-user-name: #f1f5f9;
+    --sidebar-user-email: #64748b;
+    --sidebar-avatar-bg: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    --sidebar-avatar-color: #ffffff;
+    --main-bg: #020617;
+}
+
+/* ══════════════════════════════════════
+   SIDEBAR ROOT
+══════════════════════════════════════ */
+.fi-sidebar {
+    background-color: var(--sidebar-bg) !important;
+    border-right: 1px solid var(--sidebar-border) !important;
+    transition: background-color 0.3s ease, border-color 0.3s ease !important;
+}
+
+.fi-sidebar-nav {
+    background-color: var(--sidebar-bg) !important;
+    transition: background-color 0.3s ease !important;
+}
+
+/* ══════════════════════════════════════
+   SIDEBAR HEADER / LOGO
+══════════════════════════════════════ */
+.fi-sidebar-header {
+    background-color: var(--sidebar-bg) !important;
+    border-bottom: 1px solid var(--sidebar-header-border) !important;
+    padding: 16px 20px !important;
+    transition: background-color 0.3s ease, border-color 0.3s ease !important;
+}
+
+/* ══════════════════════════════════════
+   NAV GROUP LABEL & DIVIDER
+══════════════════════════════════════ */
+.fi-sidebar-group-label {
+    color: var(--sidebar-group-label) !important;
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    transition: color 0.3s ease !important;
+}
+
+.fi-sidebar-group {
+    border-color: var(--sidebar-group-border) !important;
+    transition: border-color 0.3s ease !important;
+}
+
+/* ══════════════════════════════════════
+   NAV ITEM (IDLE, HOVER, ACTIVE)
+══════════════════════════════════════ */
+.fi-sidebar-item-btn {
+    color: var(--sidebar-item-color) !important;
+    border-radius: 0.75rem !important;
+    border-left: 3px solid transparent !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    margin: 2px 8px !important;
+    padding: 8px 12px !important;
+}
+
+.fi-sidebar-item-btn:hover {
+    background-color: var(--sidebar-item-hover-bg) !important;
+    color: var(--sidebar-item-hover-color) !important;
+    transform: translateX(2px);
+}
+
+.fi-sidebar-item-icon {
+    color: var(--sidebar-item-icon) !important;
+    transition: color 0.2s ease, transform 0.2s ease !important;
+}
+
+.fi-sidebar-item-btn:hover .fi-sidebar-item-icon {
+    color: var(--sidebar-item-icon-hover) !important;
+    transform: scale(1.08);
+}
+
+.fi-sidebar-item.fi-active .fi-sidebar-item-btn,
+.fi-sidebar-item-btn[aria-current="page"] {
+    background-color: var(--sidebar-item-active-bg) !important;
+    color: var(--sidebar-item-active-color) !important;
+    border-left: 3px solid var(--sidebar-item-active-border) !important;
+    font-weight: 600 !important;
+}
+
+.fi-sidebar-item.fi-active .fi-sidebar-item-icon,
+.fi-sidebar-item-btn[aria-current="page"] .fi-sidebar-item-icon {
+    color: var(--sidebar-item-active-icon) !important;
+    transform: scale(1.05);
+}
+
+.fi-sidebar-item-label {
+    transition: color 0.2s ease !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+}
+
+.fi-sidebar-item.fi-active .fi-sidebar-item-label {
+    font-weight: 600 !important;
+}
+
+/* ══════════════════════════════════════
+   BADGE (notification count on items)
+══════════════════════════════════════ */
+.fi-sidebar-item-badge-ctn .fi-badge {
+    transition: all 0.2s ease !important;
+}
+
+.dark .fi-sidebar-item-badge-ctn .fi-badge {
+    background-color: rgba(250, 204, 21, 0.2) !important;
+    color: #ef4444 !important;
+}
+
+/* ══════════════════════════════════════
+   SIDEBAR FOOTER & USER MENU
+══════════════════════════════════════ */
+.fi-sidebar-footer {
+    background-color: var(--sidebar-footer-bg) !important;
+    border-top: 1px solid var(--sidebar-footer-border) !important;
+    padding: 12px !important;
+    transition: background-color 0.3s ease, border-color 0.3s ease !important;
+}
+
+.fi-user-menu-trigger {
+    border-radius: 0.75rem !important;
+    transition: all 0.2s ease !important;
+}
+
+.fi-avatar {
+    background: var(--sidebar-avatar-bg) !important;
+    color: var(--sidebar-avatar-color) !important;
+    font-weight: 700 !important;
+    font-size: 0.7rem !important;
+    transition: transform 0.2s ease !important;
+}
+
+.fi-user-menu-trigger:hover .fi-avatar {
+    transform: scale(1.08);
+}
+
+/* ══════════════════════════════════════
+   PAGE BACKGROUND & OVERLAYS
+══════════════════════════════════════ */
+.fi-main {
+    background-color: var(--main-bg) !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.fi-sidebar-close-overlay {
+    background-color: rgba(15, 23, 42, 0.5) !important;
+    backdrop-filter: blur(4px) !important;
+}
+
+.fi-sidebar-group-collapse-btn {
+    transition: transform 0.2s ease !important;
+}
+
+.fi-collapsed .fi-sidebar-group-collapse-btn {
+    transform: rotate(180deg) !important;
+}
+
+/* ══════════════════════════════════════
+   SCROLLBAR STYLING (sidebar)
+══════════════════════════════════════ */
+.fi-sidebar-nav::-webkit-scrollbar { width: 4px; }
+.fi-sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+.fi-sidebar-nav::-webkit-scrollbar-thumb { background-color: var(--sidebar-group-border); border-radius: 9999px; }
+.fi-sidebar-nav::-webkit-scrollbar-thumb:hover { background-color: var(--sidebar-item-color); }
+
+/* ══════════════════════════════════════
+   SMOOTH TRANSITIONS FOR THEME SWITCH
+══════════════════════════════════════ */
+.fi-sidebar * {
+    transition-property: color, background-color, border-color;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+}
+
+/* ══════════════════════════════════════
+   DARK MODE — Cards, Tables, Panels
+══════════════════════════════════════ */
+.dark .fi-page { color: #e2e8f0; }
+.dark .fi-header-heading { color: #f1f5f9 !important; }
+.dark .fi-breadcrumbs-item-label { color: #94a3b8 !important; }
+.dark .fi-breadcrumbs-separator { color: #475569 !important; }
+
+.dark .fi-wi-stats-overview-stat,
+.dark .fi-ta-ctn {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+.dark .fi-ta-header-toolbar { background-color: #1e293b !important; }
+.dark .fi-ta-row { border-color: #1e293b !important; }
+.dark .fi-ta-row:hover { background-color: rgba(30, 41, 59, 0.5) !important; }
+.dark .fi-ta-cell { color: #cbd5e1 !important; }
+.dark .fi-section { background-color: #1e293b !important; border-color: #334155 !important; }
+.dark .fi-section-header { border-color: #334155 !important; }
+
+/* ══════════════════════════════════════
+   DARK MODE — Form Elements
+══════════════════════════════════════ */
+.dark .fi-fo-field-wrp label { color: #cbd5e1 !important; }
+.dark .fi-input, .dark .fi-select-input {
+    background-color: #0f172a !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+
+/* ══════════════════════════════════════
+   DARK MODE — Modal & Dropdown
+══════════════════════════════════════ */
+.dark .fi-modal-content, .dark .fi-dropdown-panel {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+.dark .fi-dropdown-list-item { color: #cbd5e1 !important; }
+.dark .fi-dropdown-list-item:hover { background-color: #334155 !important; }
+.dark .fi-btn { transition: all 0.2s ease !important; }
+
+/* ══════════════════════════════════════
+   PAGE-SPECIFIC: Hide default heading
+══════════════════════════════════════ */
+.fi-page-header-heading { display: none !important; }
+.fi-page { padding: 0 !important; }
+
+/* ══════════════════════════════════════
+   BREADCRUMBS
+══════════════════════════════════════ */
+.fi-breadcrumbs-item-label { color: #94a3b8 !important; transition: color 0.2s ease !important; }
+.fi-breadcrumbs-item-label.fi-active,
+.fi-breadcrumbs li:last-child .fi-breadcrumbs-item-label { color: #1e293b !important; font-weight: 600 !important; }
+.dark .fi-breadcrumbs li:last-child .fi-breadcrumbs-item-label { color: #f1f5f9 !important; }
+.fi-breadcrumbs-separator { color: #cbd5e1 !important; }
+
+/* ══════════════════════════════════════
+   ANIMATION: Page fade-in & Pulse
+══════════════════════════════════════ */
+@keyframes sidebarFadeIn {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+.fi-sidebar-nav-groups { animation: sidebarFadeIn 0.35s ease-out; }
+
+@keyframes activePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+    50% { box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08); }
+}
+.fi-sidebar-item.fi-active .fi-sidebar-item-btn { animation: activePulse 2.5s ease-in-out infinite; }
+
+/* ══════════════════════════════════════
+   DARK MODE — Custom dashboard cards
+══════════════════════════════════════ */
+.dark .adm-stat-card, .dark .adm-panel, .dark .dev-stat-card, .dark .dev-panel {
+    background-color: #1e293b !important; border-color: #334155 !important; color: #e2e8f0;
+}
+.dark .adm-panel-header, .dark .dev-panel-header { border-color: #334155 !important; }
+.dark .adm-table th { background-color: #0f172a !important; color: #94a3b8 !important; border-color: #334155 !important; }
+.dark .adm-table td { color: #cbd5e1 !important; border-color: #1e293b !important; }
+.dark .adm-table tr:hover td { background-color: rgba(30, 41, 59, 0.5) !important; }
+.dark .adm-kamp-card { background-color: #0f172a !important; border-color: #334155 !important; }
+.dark .adm-kamp-card:hover { background-color: #1e293b !important; }
+.dark .adm-progress-track { background-color: #334155 !important; }
+.dark .tsr-mission-card { background-color: #1e293b !important; border-color: #334155 !important; color: #e2e8f0; }
+.dark .tsr-mission-card:hover { background-color: #1e293b !important; }
+.dark .tsr-app-item { border-color: #1e293b !important; }
+.dark .tsr-app-item:hover { background-color: rgba(30, 41, 59, 0.5) !important; }
+.dark .tsr-progress-track { background-color: #334155 !important; }

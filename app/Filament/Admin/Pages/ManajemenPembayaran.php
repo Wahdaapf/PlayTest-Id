@@ -4,12 +4,12 @@ namespace App\Filament\Admin\Pages;
 
 use Filament\Pages\Page;
 
-class TransaksiKeuangan extends Page
+class ManajemenPembayaran extends Page
 {
     protected static ?string $navigationLabel = 'Pembayaran Developer';
     protected static ?string $title = 'Transaksi Developer';
-    protected static ?string $slug = 'transaksi-keuangan';
-    protected string $view = 'filament.admin.pages.transaksi-keuangan';
+    protected static ?string $slug = 'manajemen-pembayaran';
+    protected string $view = 'filament.admin.pages.manajemen-pembayaran';
 
     public ?int $pendingApproveId = null;
     public ?int $pendingRejectId = null;

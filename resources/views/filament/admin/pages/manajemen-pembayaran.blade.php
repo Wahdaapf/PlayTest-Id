@@ -430,6 +430,12 @@
             transform: scale(0.95);
         }
 
+        /* ══ SORT HEADER BUTTON ══ */
+        .tk-sort-btn { display: inline-flex; align-items: center; gap: 3px; background: none; border: none; cursor: pointer; font-size: .75rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: .07em; padding: 0; transition: color 0.2s; font-family: 'Inter', sans-serif; white-space: nowrap; }
+        .tk-sort-btn:hover  { color: #2563eb; }
+        .tk-sort-btn.active { color: #2563eb; }
+        .tk-sort-icon { font-size: .95rem !important; line-height: 1; }
+
         /* ══ TABLE ══ */
         .tk-table-wrap {
             background: #fff;
@@ -1200,15 +1206,63 @@
             <table class="tk-table">
                 <thead>
                     <tr>
-                        <th>ID Transaksi</th>
-                        <th>Developer</th>
-                        <th>Kampanye</th>
-                        <th>Paket</th>
-                        <th>Jumlah</th>
-                        <th>Metode</th>
-                        <th>Status</th>
-                        <th>Tanggal</th>
-                        <th>Aksi</th>
+                        <th>
+                            <button class="tk-sort-btn" :class="sortCol==='id'?'active':''" @click="setSort('id')">
+                                ID Transaksi
+                                <span class="material-symbols-outlined tk-sort-icon"
+                                      x-text="sortCol!=='id' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                            </button>
+                        </th>
+                        <th>
+                            <button class="tk-sort-btn" :class="sortCol==='developer'?'active':''" @click="setSort('developer')">
+                                Developer
+                                <span class="material-symbols-outlined tk-sort-icon"
+                                      x-text="sortCol!=='developer' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                            </button>
+                        </th>
+                        <th>
+                            <button class="tk-sort-btn" :class="sortCol==='kampanye'?'active':''" @click="setSort('kampanye')">
+                                Kampanye
+                                <span class="material-symbols-outlined tk-sort-icon"
+                                      x-text="sortCol!=='kampanye' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                            </button>
+                        </th>
+                        <th>
+                            <button class="tk-sort-btn" :class="sortCol==='paket'?'active':''" @click="setSort('paket')">
+                                Paket
+                                <span class="material-symbols-outlined tk-sort-icon"
+                                      x-text="sortCol!=='paket' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                            </button>
+                        </th>
+                        <th>
+                            <button class="tk-sort-btn" :class="sortCol==='jumlah'?'active':''" @click="setSort('jumlah')">
+                                Jumlah
+                                <span class="material-symbols-outlined tk-sort-icon"
+                                      x-text="sortCol!=='jumlah' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                            </button>
+                        </th>
+                        <th>
+                            <button class="tk-sort-btn" :class="sortCol==='metode'?'active':''" @click="setSort('metode')">
+                                Metode
+                                <span class="material-symbols-outlined tk-sort-icon"
+                                      x-text="sortCol!=='metode' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                            </button>
+                        </th>
+                        <th>
+                            <button class="tk-sort-btn" :class="sortCol==='status'?'active':''" @click="setSort('status')">
+                                Status
+                                <span class="material-symbols-outlined tk-sort-icon"
+                                      x-text="sortCol!=='status' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                            </button>
+                        </th>
+                        <th>
+                            <button class="tk-sort-btn" :class="sortCol==='tanggal'?'active':''" @click="setSort('tanggal')">
+                                Tanggal
+                                <span class="material-symbols-outlined tk-sort-icon"
+                                      x-text="sortCol!=='tanggal' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                            </button>
+                        </th>
+                        <th><span class="tk-sort-btn" style="cursor:default;pointer-events:none">Aksi</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1218,7 +1272,7 @@
                     $paketLower = strtolower($t['paket']);
                     $jumlahF = 'Rp ' . number_format($t['jumlah'], 0, ',', '.');
                     @endphp
-                    <tr data-status="{{ $t['status'] }}" data-paket="{{ $t['paket'] }}" data-metode="{{ $t['metode'] }}" data-nama="{{ strtolower($t['namaUser']) }}" data-id="{{ strtolower($t['id']) }}" data-kampanye="{{ strtolower($t['kampanye']) }}" data-item="{{ json_encode($t) }}"
+                    <tr data-status="{{ $t['status'] }}" data-paket="{{ $t['paket'] }}" data-metode="{{ $t['metode'] }}" data-nama="{{ strtolower($t['namaUser']) }}" data-id="{{ strtolower($t['id']) }}" data-kampanye="{{ strtolower($t['kampanye']) }}" data-jumlah="{{ $t['jumlah'] ?? 0 }}" data-tanggal="{{ strtotime($t['tanggal'] . ' ' . $t['waktu']) }}" data-item="{{ json_encode($t) }}"
                         x-show="tampilRow($el)"
                         x-transition.opacity.duration.300ms>
                         <td>
@@ -1474,9 +1528,11 @@
                 totalItems: 0,
                 totalPages: 1,
                 visibleIds: [],
+                sortCol: 'tanggal',
+                sortDir: 'desc',
                 modalTerbuka: false,
                 transaksi: null,
-
+                
                 init() {
                     this.updatePagi();
                     this.$watch('cariTeks', () => this.resetPagi());
@@ -1484,6 +1540,8 @@
                     this.$watch('filterPaket', () => this.resetPagi());
                     this.$watch('filterMetode', () => this.resetPagi());
                     this.$watch('perPage', () => this.resetPagi());
+                    this.$watch('sortCol', () => this.resetPagi());
+                    this.$watch('sortDir', () => this.resetPagi());
                 },
 
                 initChart() {
@@ -1503,12 +1561,39 @@
                     this.$nextTick(() => this.updatePagi());
                 },
 
+                setSort(col) {
+                    if (this.sortCol === col) { this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc'; }
+                    else { this.sortCol = col; this.sortDir = 'asc'; }
+                },
+
                 updatePagi() {
-                    const rows = Array.from(document.querySelectorAll('tbody tr[data-status]'));
+                    const tbody = document.querySelector('.tk-table tbody');
+                    if (!tbody) return;
+                    const rows = Array.from(tbody.querySelectorAll('tr[data-status]'));
+
+                    rows.sort((a, b) => {
+                        let va, vb;
+                        if (this.sortCol === 'id') { va = (a.dataset.id || ''); vb = (b.dataset.id || ''); }
+                        else if (this.sortCol === 'developer') { va = (a.dataset.nama || ''); vb = (b.dataset.nama || ''); }
+                        else if (this.sortCol === 'kampanye') { va = (a.dataset.kampanye || ''); vb = (b.dataset.kampanye || ''); }
+                        else if (this.sortCol === 'paket') { va = (a.dataset.paket || '').toLowerCase(); vb = (b.dataset.paket || '').toLowerCase(); }
+                        else if (this.sortCol === 'jumlah') { va = +(a.dataset.jumlah || 0); vb = +(b.dataset.jumlah || 0); }
+                        else if (this.sortCol === 'metode') { va = (a.dataset.metode || '').toLowerCase(); vb = (b.dataset.metode || '').toLowerCase(); }
+                        else if (this.sortCol === 'status') { va = (a.dataset.status || '').toLowerCase(); vb = (b.dataset.status || '').toLowerCase(); }
+                        else if (this.sortCol === 'tanggal') { va = +(a.dataset.tanggal || 0); vb = +(b.dataset.tanggal || 0); }
+                        else return 0;
+                        return va < vb ? (this.sortDir==='asc'?-1:1) : (va > vb ? (this.sortDir==='asc'?1:-1) : 0);
+                    });
+                    
+                    rows.forEach(r => tbody.appendChild(r));
+                    const emptyRow = tbody.querySelector('tr[x-show="totalItems === 0"]');
+                    if (emptyRow) tbody.appendChild(emptyRow);
+
                     const matching = rows.filter(r => this.cocokFilter(r));
                     this.totalItems = matching.length;
                     this.totalPages = Math.ceil(this.totalItems / this.perPage) || 1;
-                    if (this.currentPage > this.totalPages) this.currentPage = this.totalPages;
+                    if (this.currentPage > this.totalPages && this.totalPages > 0) this.currentPage = this.totalPages;
+                    else if (this.currentPage < 1 && this.totalPages > 0) this.currentPage = 1;
 
                     const start = (this.currentPage - 1) * parseInt(this.perPage);
                     const end = start + parseInt(this.perPage);
@@ -1555,6 +1640,8 @@
                     this.filterPaket = '';
                     this.filterMetode = '';
                     this.perPage = 10;
+                    this.sortCol = 'tanggal';
+                    this.sortDir = 'desc';
                 }
             };
         }
