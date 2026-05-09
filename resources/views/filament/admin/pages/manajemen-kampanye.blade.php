@@ -168,7 +168,8 @@
 {{-- ══════════════════════════════════════════════════
      ALPINE ROOT
 ══════════════════════════════════════════════════ --}}
-<div class="space-y-5" x-data="manajemenKampanye()" @keydown.escape.window="tutupModal()">
+<div class="space-y-5" x-data="manajemenKampanye()" @keydown.escape.window="tutupModal()" wire:poll.3s>
+    <div id="kampanye-data" style="display:none;" data-list="{{ json_encode($kampanyeList) }}"></div>
 
 {{-- ── PAGE HEADER ──────────────────────────────── --}}
 <div class="flex items-start justify-between animate-fade-in-up">
@@ -361,10 +362,14 @@
             {{-- App info --}}
             <div class="flex items-start justify-between mb-3">
                 <div class="flex items-center gap-3">
-                    <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 text-lg font-bold text-white"
-                         style="background:{{ $k['ikonGrad'] }};">
-                        {{ $k['ikonHuruf'] }}
-                    </div>
+                    @if($k['logo'])
+                        <img src="/storage/{{ $k['logo'] }}" alt="Logo" class="w-11 h-11 rounded-xl object-cover flex-shrink-0">
+                    @else
+                        <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 text-lg font-bold text-white"
+                             style="background:{{ $k['ikonGrad'] }};">
+                            {{ $k['ikonHuruf'] }}
+                        </div>
+                    @endif
                     <div>
                         <p class="text-sm font-semibold mp-sora leading-tight" style="color:#1e293b;">{{ $k['nama'] }}</p>
                         <p class="text-xs mt-0.5" style="color:#64748b;">{{ $k['developer'] }}</p>
@@ -472,8 +477,9 @@
 ══════════════════════════════════════════════ --}}
 <div x-show="viewMode === 'list'"
      x-cloak
-     class="bg-white rounded-2xl border border-slate-200 overflow-hidden"
+     class="bg-white rounded-2xl border border-slate-200 overflow-x-auto"
      style="box-shadow:0 4px 6px -1px rgba(0,0,0,0.02);">
+    <div class="min-w-[900px]">
 
     {{-- List Header --}}
     <div class="flex items-center gap-4 px-5 py-3" style="background:#f8fafc;border-bottom:1px solid #e2e8f0;">
@@ -508,8 +514,12 @@
 
         {{-- App info --}}
         <div class="flex items-center gap-3 w-56 flex-shrink-0">
-            <div class="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
-                 style="background:{{ $k['ikonGrad'] }};">{{ $k['ikonHuruf'] }}</div>
+            @if($k['logo'])
+                <img src="/storage/{{ $k['logo'] }}" alt="Logo" class="w-9 h-9 rounded-xl object-cover flex-shrink-0">
+            @else
+                <div class="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold text-white flex-shrink-0"
+                     style="background:{{ $k['ikonGrad'] }};">{{ $k['ikonHuruf'] }}</div>
+            @endif
             <div class="min-w-0">
                 <p class="text-sm font-semibold mp-sora truncate" style="color:#1e293b;">{{ $k['nama'] }}</p>
                 <p class="text-xs truncate" style="color:#64748b;">{{ $k['developer'] }}</p>
@@ -583,6 +593,7 @@
         <p class="text-xs mt-1 text-slate-400">Coba ubah filter atau kata kunci pencarian</p>
     </div>
 
+    </div>
 </div>{{-- end list view --}}
 
 
@@ -615,10 +626,15 @@
         {{-- Header --}}
         <div class="mk-modal-header">
             <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-xl flex items-center justify-center text-lg font-bold text-white flex-shrink-0"
-                     :style="'background:' + (kampanye?.ikonGrad ?? '#94a3b8')">
-                    <span x-text="kampanye?.ikonHuruf ?? ''"></span>
-                </div>
+                <template x-if="kampanye?.logo">
+                    <img :src="'/storage/' + kampanye.logo" alt="Logo" class="w-11 h-11 rounded-xl object-cover flex-shrink-0">
+                </template>
+                <template x-if="!kampanye?.logo">
+                    <div class="w-11 h-11 rounded-xl flex items-center justify-center text-lg font-bold text-white flex-shrink-0"
+                         :style="'background:' + (kampanye?.ikonGrad ?? '#94a3b8')">
+                        <span x-text="kampanye?.ikonHuruf ?? ''"></span>
+                    </div>
+                </template>
                 <div>
                     <p class="text-sm font-bold mp-sora" style="color:#1e293b;" x-text="kampanye?.nama ?? ''"></p>
                     <p class="text-xs" style="color:#64748b;" x-text="kampanye?.developer ?? ''"></p>
@@ -735,8 +751,6 @@
 
 @push('scripts')
 <script>
-const KAMPANYE_DATA = @json($kampanyeList);
-
 function manajemenKampanye() {
     return {
         viewMode     : 'grid',
@@ -745,6 +759,11 @@ function manajemenKampanye() {
         cariTeks     : '',
         modalTerbuka : false,
         kampanye     : null,
+
+        getCurrentData() {
+            const el = document.getElementById('kampanye-data');
+            return el ? JSON.parse(el.getAttribute('data-list')) : [];
+        },
 
         /* ── Filter Logic ─────────────── */
         tampilKard(status, nama, developer) {
@@ -757,7 +776,7 @@ function manajemenKampanye() {
         },
 
         filteredCount() {
-            return KAMPANYE_DATA.filter(k =>
+            return this.getCurrentData().filter(k =>
                 (!this.filterStatus || k.status === this.filterStatus) &&
                 (!this.cariTeks || k.nama.toLowerCase().includes(this.cariTeks.toLowerCase()) ||
                  k.developer.toLowerCase().includes(this.cariTeks.toLowerCase()))
@@ -772,7 +791,8 @@ function manajemenKampanye() {
 
         /* ── Modal ────────────────────── */
         bukaModal(idx) {
-            this.kampanye     = KAMPANYE_DATA[idx] ?? null;
+            const data = this.getCurrentData();
+            this.kampanye     = data[idx] ?? null;
             this.modalTerbuka = true;
             document.body.style.overflow = 'hidden';
         },

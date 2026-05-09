@@ -34,9 +34,13 @@
         <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between transition-all hover:shadow-md hover:border-blue-300">
           <div>
             <div class="flex justify-between items-start mb-4">
-              <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xl">
-                 {{ strtoupper(substr($m->nama_aplikasi, 0, 1)) }}
-              </div>
+              @if($m->logo)
+                <img src="/storage/{{ $m->logo }}" alt="Logo" class="w-12 h-12 rounded-xl object-cover shadow-sm">
+              @else
+                <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xl">
+                   {{ strtoupper(substr($m->nama_aplikasi, 0, 1)) }}
+                </div>
+              @endif
               <span class="bg-green-100 text-green-700 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5">
                 <span class="w-1.5 h-1.5 bg-green-500 rounded-full inline-block"></span> RUNNING
               </span>
@@ -145,7 +149,11 @@
         <div>  
           <div class="flex items-center justify-between mb-3">  
             <div class="flex items-center gap-3">  
-              <div class="app-icon icon-{{ $k['warna'] }}">{{ $k['inisial'] }}</div>  
+              @if($k['logo'])
+                <img src="/storage/{{ $k['logo'] }}" alt="Logo" class="w-9 h-9 rounded-xl object-cover flex-shrink-0">
+              @else
+                <div class="app-icon icon-{{ $k['warna'] }}">{{ $k['inisial'] }}</div>  
+              @endif
               <div>  
                 <p class="text-slate-800 text-sm font-semibold">{{ $k['misi_nama'] }} <span class="text-slate-400 font-normal">| Tester: {{ $k['tester_nama'] }}</span></p>  
                 <p class="text-slate-500" style="font-size:11px;">  

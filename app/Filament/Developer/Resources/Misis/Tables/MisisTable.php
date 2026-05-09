@@ -15,6 +15,34 @@ class MisisTable
     {
         return $table
             ->columns([
+                \Filament\Tables\Columns\TextColumn::make('logo_view')
+                    ->label('Logo')
+                    ->html()
+                    ->getStateUsing(function ($record) {
+                        if ($record->logo) {
+                            return '<img src="/storage/' . $record->logo . '" alt="Logo" class="w-9 h-9 rounded-xl object-cover" style="width:36px;height:36px;border-radius:10px;object-fit:cover;">';
+                        }
+                        
+                        $inisial = strtoupper(substr($record->nama_aplikasi, 0, 2));
+                        $colors = ['blue', 'amber', 'purple', 'green'];
+                        $warna = $colors[$record->id % count($colors)];
+                        
+                        $bg = match($warna) {
+                            'blue' => '#eff6ff',
+                            'amber' => '#fffbeb',
+                            'purple' => '#faf5ff',
+                            default => '#f0fdf4',
+                        };
+                        $text = match($warna) {
+                            'blue' => '#2563eb',
+                            'amber' => '#d97706',
+                            'purple' => '#7e22ce',
+                            default => '#16a34a',
+                        };
+                        
+                        return '<div style="width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;background:'.$bg.';color:'.$text.';">' . $inisial . '</div>';
+                    }),
+
                 TextColumn::make('nama_aplikasi')
                     ->label('Nama Aplikasi')
                     ->searchable()

@@ -26,6 +26,59 @@ class KelolaTester extends Page implements HasTable
         $this->record = $record;
     }
 
+    protected function getHeaderActions(): array
+    {
+        return [
+            \Filament\Actions\Action::make('get_emails')
+                ->label('Ambil List Email Tester')
+                ->icon('heroicon-o-clipboard-document-list')
+                ->color('primary')
+                ->form([
+                    \Filament\Forms\Components\Textarea::make('emails')
+                        ->label('Daftar Email Tester (Copy & Paste)')
+                        ->rows(5)
+                        ->extraAttributes(['readonly' => true])
+                        ->default(function () {
+                            return \App\Models\MisiAnggota::where('id_misi', $this->record->id)
+                                ->whereIn('status', ['accepted', 'progress', 'submitted', 'selesai'])
+                                ->with('user')
+                                ->get()
+                                ->pluck('user.email')
+                                ->implode(', ');
+                        }),
+                ])
+                ->modalSubmitAction(false)
+                ->modalCancelActionLabel('Tutup'),
+
+            \Filament\Actions\Action::make('input_link')
+                ->label('Input Link Aplikasi')
+                ->icon('heroicon-o-link')
+                ->color('success')
+                ->form([
+                    \Filament\Forms\Components\TextInput::make('link_aplikasi')
+                        ->label('Link Aplikasi (Misal: Google Play URL)')
+                        ->required()
+                        ->url()
+                        ->default($this->record->link_aplikasi),
+                ])
+                ->action(function (array $data) {
+                    $this->record->update([
+                        'link_aplikasi' => $data['link_aplikasi'],
+                        'status' => 'running',
+                    ]);
+
+                    \App\Models\MisiAnggota::where('id_misi', $this->record->id)
+                        ->where('status', 'accepted')
+                        ->update(['status' => 'progress']);
+
+                    \Filament\Notifications\Notification::make()
+                        ->title('Link Aplikasi Berhasil Disimpan & Misi Dimulai')
+                        ->success()
+                        ->send();
+                }),
+        ];
+    }
+
     public function table(Table $table): Table
     {
         return $table

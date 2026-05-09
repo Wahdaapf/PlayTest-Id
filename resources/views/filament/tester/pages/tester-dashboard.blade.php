@@ -227,12 +227,16 @@
                     {{-- Header: icon + nama + status --}}  
                     <div class="flex items-start justify-between mb-3">  
                         <div class="flex items-center gap-3">  
-                            <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"  
-                                 style="background:{{ $misi['gradient'] }};">  
-                                <span class="text-white font-bold text-sm">{{ $misi['inisial'] }}</span>  
-                            </div>  
+                            @if($misi['logo'])
+                                <img src="/storage/{{ $misi['logo'] }}" alt="Logo" class="w-11 h-11 rounded-xl object-cover shadow-sm flex-shrink-0">
+                            @else
+                                <div class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"  
+                                     style="background:{{ $misi['gradient'] }};">  
+                                    <span class="text-white font-bold text-sm">{{ $misi['inisial'] }}</span>  
+                                </div>  
+                            @endif
                             <div>  
-                                <p class="text-sm font-bold font-heading" style="color:#1e293b;">{{ $misi['nama'] }}</p>  
+                                <a href="/tester/misi-detail?misi_id={{ $misi['id'] }}" class="text-sm font-bold font-heading hover:underline" style="color:#1e293b;">{{ $misi['nama'] }}</a>  
                                 <p class="text-xs" style="color:#64748b;">{{ $misi['tipe'] }}</p>  
                             </div>  
                         </div>  
@@ -266,30 +270,37 @@
                             <span class="text-xs font-semibold" style="color:#10b981;">+{{ $misi['reward'] }} pts</span>  
                         </div>  
   
-                        @if($misi['aksi'] === 'submit')  
-                            @if($misi['rawStatus'] === 'starting')
-                                <button class="tsr-btn-submit">  
-                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">  
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>  
-                                    </svg>  
-                                    Submit Task  
-                                </button>  
-                            @else
-                                <button class="tsr-btn-submit" disabled style="opacity: 0.6; cursor: not-allowed; background: #f1f5f9; color: #94a3b8;">  
-                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">  
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>  
-                                    </svg>  
-                                    Pending  
-                                </button>
+                        <div class="flex items-center gap-2">
+                            @if($misi['aksi'] === 'submit')  
+                                @if($misi['rawStatus'] === 'progress')
+                                    <a href="/tester/misi-saya" class="tsr-btn-submit" style="text-decoration:none;">  
+                                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">  
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>  
+                                        </svg>  
+                                        Submit Task  
+                                    </a>  
+                                @else
+                                    <button class="tsr-btn-submit" disabled style="opacity: 0.6; cursor: not-allowed; background: #f1f5f9; color: #94a3b8;">  
+                                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">  
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>  
+                                        </svg>  
+                                        Pending  
+                                    </button>
+                                @endif
+                            @else  
+                            <button class="tsr-btn-laporkan">  
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">  
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>  
+                                </svg>  
+                                Laporkan  
+                            </button>  
+                            @endif  
+                            @if($misi['rawStatus'] !== 'progress')
+                                <a href="/tester/misi-detail?misi_id={{ $misi['id'] }}" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors flex items-center gap-1.5" style="text-decoration:none;">
+                                    Detail
+                                </a>
                             @endif
-                        @else  
-                        <button class="tsr-btn-laporkan">  
-                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">  
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>  
-                            </svg>  
-                            Laporkan  
-                        </button>  
-                        @endif  
+                        </div>  
                     </div>  
                 </div>  
                 @endforeach  
@@ -319,11 +330,15 @@
                 <div data-design-id="app-item-{{ $loop->iteration }}" class="tsr-app-item flex-col sm:flex-row items-start sm:items-center">  
   
                     <div class="flex items-center gap-4 w-full sm:w-auto">
-                        {{-- Icon --}}  
-                        <div class="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"  
-                             style="background:{{ $app['gradient'] }};">  
-                            <span class="text-white font-bold text-base">{{ $app['inisial'] }}</span>  
-                        </div>  
+                        {{-- Icon / Logo --}}  
+                        @if($app['logo'])
+                            <img src="/storage/{{ $app['logo'] }}" alt="Logo" class="w-12 h-12 rounded-2xl object-cover shadow-sm flex-shrink-0">
+                        @else
+                            <div class="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"  
+                                 style="background:{{ $app['gradient'] }};">  
+                                <span class="text-white font-bold text-base">{{ $app['inisial'] }}</span>  
+                            </div>  
+                        @endif
       
                         {{-- Info --}}  
                         <div class="flex-1 min-w-0">  
@@ -359,20 +374,25 @@
                         @php
                             $isRestricted = $app['isTrusted'] && ($userBadgeCount <= 5);
                         @endphp
-                        <button 
-                            @if(!$isRestricted) 
-                                wire:click="applyMisi('{{ $app['id'] }}')" 
-                            @endif
-                            @disabled($isRestricted)
-                            wire:loading.attr="disabled"
-                            class="tsr-btn-apply !px-3 font-bold"
-                            @if($isRestricted) title="Misi ini membutuhkan minimal 6 badge" @endif
-                        >
-                            <span wire:loading.remove wire:target="applyMisi('{{ $app['id'] }}')">
-                                {{ $isRestricted ? 'Locked' : 'Apply' }}
-                            </span>
-                            <span wire:loading wire:target="applyMisi('{{ $app['id'] }}')">...</span>
-                        </button>  
+                        <div class="flex items-center gap-2">
+                            <a href="/tester/misi-detail?misi_id={{ $app['id'] }}" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors flex items-center gap-1.5" style="text-decoration:none;">
+                                Detail
+                            </a>
+                            <button 
+                                @if(!$isRestricted) 
+                                    wire:click="applyMisi('{{ $app['id'] }}')" 
+                                @endif
+                                @disabled($isRestricted)
+                                wire:loading.attr="disabled"
+                                class="tsr-btn-apply !px-3 font-bold"
+                                @if($isRestricted) title="Misi ini membutuhkan minimal 6 badge" @endif
+                            >
+                                <span wire:loading.remove wire:target="applyMisi('{{ $app['id'] }}')">
+                                    {{ $isRestricted ? 'Locked' : 'Apply' }}
+                                </span>
+                                <span wire:loading wire:target="applyMisi('{{ $app['id'] }}')">...</span>
+                            </button>
+                        </div>  
                     </div>  
                 </div>  
                 @endforeach  

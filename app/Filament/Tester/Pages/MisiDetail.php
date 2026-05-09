@@ -18,11 +18,19 @@ class MisiDetail extends Page
     protected static bool $shouldRegisterNavigation = false;
 
     public ?Misi $misi = null;
+    public bool $alreadyJoined = false;
+    public ?MisiAnggota $misiAnggota = null;
 
     public function mount()
     {
         $misiId = request()->query('misi_id');
         $this->misi = Misi::findOrFail($misiId);
+        
+        $this->misiAnggota = MisiAnggota::where('id_misi', $this->misi->id)
+            ->where('id_user', Auth::id())
+            ->first();
+            
+        $this->alreadyJoined = $this->misiAnggota !== null;
     }
 
     public function takeMission()
@@ -61,7 +69,7 @@ class MisiDetail extends Page
         MisiAnggota::create([
             'id_misi' => $this->misi->id,
             'id_user' => Auth::id(),
-            'status' => 'reviewing',
+            'status' => 'accepted',
         ]);
 
         Notification::make()
