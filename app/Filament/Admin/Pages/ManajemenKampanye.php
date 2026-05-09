@@ -86,6 +86,7 @@ class ManajemenKampanye extends Page
                     'mulai'     => $misi->created_at ? $misi->created_at->format('d M Y') : '-',  
                     'selesai'   => $misi->created_at ? $misi->created_at->addDays(14)->format('d M Y') : '-',  
                     'paket'     => $misi->paket->nama_paket ?? 'Starter',  
+                    'logo'      => $misi->logo,
                     'ikonHuruf' => strtoupper(substr($misi->nama_aplikasi, 0, 1)),  
                     'ikonGrad'  => "linear-gradient(135deg, {$grad[0]} 0%, {$grad[1]} 100%)",  
                 ];

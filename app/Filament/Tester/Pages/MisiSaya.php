@@ -11,8 +11,14 @@ use Livewire\WithFileUploads;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
 
-class MisiSaya extends Page
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Schemas\Schema;
+use Filament\Forms\Components\FileUpload;
+
+class MisiSaya extends Page implements HasForms
 {
+    use InteractsWithForms;
     use WithFileUploads;
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
@@ -30,7 +36,24 @@ class MisiSaya extends Page
     // ─── State Livewire ───────────────────────────────────────────
     public bool $showSubmitForm = false;
     public ?int $selectedMissionId = null;
-    public $screenshot = null;
+    public ?array $data = [];
+
+    public function form(Schema $schema): Schema
+    {
+        return $schema
+            ->schema([
+                FileUpload::make('screenshot')
+                    ->label('')
+                    ->image()
+                    ->required()
+                    ->maxSize(10240)
+                    ->disk('public')
+                    ->directory('task-screenshots')
+                    ->imageEditor()
+                    ->helperText('Upload screenshot bukti task di sini (maks. 10MB)'),
+            ])
+            ->statePath('data');
+    }
 
     // ─── Navigation Badge ─────────────────────────────────────────
     public static function getNavigationBadge(): ?string
@@ -108,6 +131,8 @@ class MisiSaya extends Page
                 'progress'   => $persen,
                 'today_status' => $todayStatus,
                 'days_history' => $daysHistory,
+                'link_aplikasi' => $m->link_aplikasi,
+                'logo'       => $m->logo,
             ];
         }
 
@@ -119,27 +144,19 @@ class MisiSaya extends Page
     {
         $this->selectedMissionId = $missionId;
         $this->showSubmitForm    = true;
-        $this->screenshot        = null;
-        $this->resetValidation();
+        $this->form->fill();
     }
 
     public function backToList(): void
     {
         $this->showSubmitForm    = false;
         $this->selectedMissionId = null;
-        $this->screenshot        = null;
-        $this->resetValidation();
+        $this->form->fill();
     }
 
     public function submitTask(): void
     {
-        $this->validate([
-            'screenshot' => ['required', 'image', 'max:10240'],
-        ], [
-            'screenshot.required' => 'Screenshot wajib diunggah.',
-            'screenshot.image'    => 'File harus berupa gambar (jpg, png, dll).',
-            'screenshot.max'      => 'Ukuran file maksimal 10MB.',
-        ]);
+        $data = $this->form->getState();
 
         $misi = Misi::find($this->selectedMissionId);
         if (!$misi) {
@@ -158,12 +175,30 @@ class MisiSaya extends Page
             ->first();
 
         if (!$currentSub) {
-            Notification::make()
-                ->title('Error')
-                ->body('Jadwal misi tidak ditemukan untuk hari ini.')
-                ->danger()
-                ->send();
-            return;
+            // Hitung hari_ke (cari nilai max hari_ke sebelumnya, lalu tambah 1)
+            $lastSub = MisiSub::where('id_misi', $this->selectedMissionId)
+                ->where('id_user', Auth::id())
+                ->orderBy('hari_ke', 'desc')
+                ->first();
+                
+            $hariKe = $lastSub ? $lastSub->hari_ke + 1 : 1;
+
+            if ($hariKe > 14) {
+                Notification::make()
+                    ->title('Selesai')
+                    ->body('Anda sudah menyelesaikan 14 hari tugas untuk misi ini.')
+                    ->warning()
+                    ->send();
+                return;
+            }
+
+            // Buat record MisiSub baru untuk hari ini
+            $currentSub = MisiSub::create([
+                'id_misi' => $this->selectedMissionId,
+                'id_user' => Auth::id(),
+                'hari_ke' => $hariKe,
+                'status'  => 'notdone', // will be updated below
+            ]);
         }
 
         // Cek apakah sudah submit (status selain 'notdone' dan 'rejected' dianggap sudah submit)
@@ -176,10 +211,10 @@ class MisiSaya extends Page
             return;
         }
 
-        // Simpan file
-        $path = $this->screenshot->store('task-screenshots', 'public');
+        // File sudah otomatis terupload di disk public/task-screenshots oleh Filament
+        $path = $data['screenshot'];
 
-        // Update record yang sudah ada
+        // Update record
         $currentSub->update([
             'image'   => $path,
             'desc'    => 'Daily Task Submission',

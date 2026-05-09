@@ -66,12 +66,16 @@
                         {{-- Header kartu --}}
                         <div class="mb-4 flex items-start justify-between">
                             <div class="flex items-center gap-3">
-                                {{-- Avatar inisial --}}
-                                <div
-                                    class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white shadow-sm"
-                                    style="background-color: {{ $mission['color'] }}">
-                                    {{ $mission['initials'] }}
-                                </div>
+                                {{-- Avatar inisial atau Logo --}}
+                                @if($mission['logo'])
+                                    <img src="/storage/{{ $mission['logo'] }}" alt="Logo" class="flex h-11 w-11 flex-shrink-0 object-cover rounded-xl shadow-sm">
+                                @else
+                                    <div
+                                        class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white shadow-sm"
+                                        style="background-color: {{ $mission['color'] }}">
+                                        {{ $mission['initials'] }}
+                                    </div>
+                                @endif
                                 <div>
                                     <p class="text-sm font-bold text-slate-800" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                                         {{ $mission['name'] }}
@@ -235,17 +239,44 @@
                         <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                             <h3 class="mb-3 text-sm font-bold text-slate-800 uppercase tracking-wider">Detail Misi</h3>
                             <div class="flex items-center gap-4 rounded-xl bg-slate-50 p-4">
-                                <div
-                                    class="flex h-14 w-14 items-center justify-center rounded-xl text-lg font-bold text-white shadow-sm"
-                                    style="background-color: {{ $mission['color'] }}">
-                                    {{ $mission['initials'] }}
-                                </div>
+                                @if($mission['logo'])
+                                    <img src="/storage/{{ $mission['logo'] }}" alt="Logo" class="flex h-14 w-14 flex-shrink-0 object-cover rounded-xl shadow-sm">
+                                @else
+                                    <div
+                                        class="flex h-14 w-14 items-center justify-center rounded-xl text-lg font-bold text-white shadow-sm"
+                                        style="background-color: {{ $mission['color'] }}">
+                                        {{ $mission['initials'] }}
+                                    </div>
+                                @endif
                                 <div>
                                     <p class="font-bold text-slate-800 text-base">{{ $mission['name'] }}</p>
                                     <p class="text-sm font-medium text-slate-500 mt-0.5">Day {{ $mission['day'] }} of {{ $mission['total_days'] }}</p>
                                 </div>
                             </div>
                         </div>
+
+                        {{-- App Download Link --}}
+                        @if(!empty($mission['link_aplikasi']))
+                        <div class="rounded-2xl border border-blue-200 bg-blue-50 p-5 shadow-sm">
+                            <h3 class="mb-2 text-sm font-bold text-blue-800 uppercase tracking-wider">Akses Aplikasi</h3>
+                            <p class="text-sm text-blue-700 mb-4">
+                                Silakan download dan buka aplikasi yang akan diuji melalui link berikut:
+                            </p>
+                            <a href="{{ $mission['link_aplikasi'] }}" target="_blank" class="w-full flex items-center justify-center gap-2 rounded-xl bg-white border border-blue-300 py-3 text-sm font-bold text-blue-700 shadow-sm transition-colors hover:bg-blue-100">
+                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                                </svg>
+                                Buka Link Aplikasi
+                            </a>
+                        </div>
+                        @else
+                        <div class="rounded-2xl border border-amber-200 bg-amber-50 p-5 shadow-sm">
+                            <h3 class="mb-2 text-sm font-bold text-amber-800 uppercase tracking-wider">Menunggu Link</h3>
+                            <p class="text-sm text-amber-700">
+                                Developer belum memberikan link aplikasi. Mohon tunggu.
+                            </p>
+                        </div>
+                        @endif
 
                         {{-- Instruksi --}}
                         <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
@@ -288,72 +319,8 @@
                         <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
                             <h3 class="mb-4 text-sm font-bold text-slate-800 uppercase tracking-wider">Upload Screenshot</h3>
                             
-                            <label for="screenshot-upload" class="block cursor-pointer group">
-                                <div
-                                    class="rounded-2xl border-2 border-dashed {{ $screenshot ? 'p-4' : 'p-10' }} text-center transition-all duration-200
-                                        {{ $screenshot
-                                            ? 'border-emerald-300 bg-emerald-50'
-                                            : 'border-slate-300 bg-slate-50 group-hover:border-blue-400 group-hover:bg-blue-50/50' }}">
+                            {{ $this->form }}
 
-                                    @if ($screenshot)
-                                        {{-- State: sudah ada file (Preview) --}}
-                                        <div class="flex flex-col items-center gap-4">
-                                            <div class="relative group/preview w-full max-w-[240px] mx-auto">
-                                                <img src="{{ $screenshot->temporaryUrl() }}" 
-                                                     class="mx-auto max-h-48 rounded-xl shadow-lg border-4 border-white object-cover transition-transform group-hover/preview:scale-[1.02]">
-                                                <div class="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover/preview:opacity-100 transition-opacity rounded-xl">
-                                                     <span class="bg-white/90 text-slate-800 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm">Ganti Gambar</span>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <p class="text-base font-bold text-emerald-600">Screenshot siap dikirim!</p>
-                                                <p class="text-sm text-emerald-500/80 mt-1">Klik area ini untuk mengganti file</p>
-                                            </div>
-                                        </div>
-                                    @else
-                                        {{-- State: belum ada file --}}
-                                        <div class="flex flex-col items-center gap-3">
-                                            <div class="flex h-16 w-16 items-center justify-center rounded-full bg-white shadow-sm border border-slate-200 group-hover:bg-blue-100 group-hover:border-blue-200 transition-colors">
-                                                <svg class="h-8 w-8 text-slate-400 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                                                </svg>
-                                            </div>
-                                            <div>
-                                                <p class="text-base font-bold text-slate-700 group-hover:text-blue-600">Tap to Upload Screenshot</p>
-                                                <p class="text-sm text-slate-500 mt-1">PNG, JPG up to 10MB</p>
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
-
-                                {{-- Input file tersembunyi --}}
-                                <input
-                                    id="screenshot-upload"
-                                    type="file"
-                                    class="hidden"
-                                    wire:model="screenshot"
-                                    accept="image/*" />
-                            </label>
-
-                            {{-- Pesan error validasi --}}
-                            @error('screenshot')
-                                <p class="mt-3 text-sm font-medium text-red-500 flex items-center gap-1.5">
-                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    {{ $message }}
-                                </p>
-                            @enderror
-
-                            {{-- Loading indicator saat upload --}}
-                            <div wire:loading wire:target="screenshot" class="mt-3 flex items-center justify-center gap-2 text-sm font-medium text-blue-500">
-                                <svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
-                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                                </svg>
-                                Mengupload...
-                            </div>
                         </div>
 
                         {{-- Tombol Submit --}}

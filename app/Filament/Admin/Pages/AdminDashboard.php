@@ -86,6 +86,8 @@ class AdminDashboard extends Page
 
             return [
                 'nama' => $m->nama_aplikasi,
+                'logo' => $m->logo,
+                'inisial' => strtoupper(substr($m->nama_aplikasi, 0, 2)),
                 'developer' => $m->user->name ?? 'Unknown',
                 'tester' => $testerCount,
                 'max' => $maxTester,

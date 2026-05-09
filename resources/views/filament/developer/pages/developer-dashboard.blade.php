@@ -127,7 +127,11 @@
         <div>  
           <div class="flex items-center justify-between mb-3">  
             <div class="flex items-center gap-3">  
-              <div class="app-icon icon-{{ $k['warna'] }}">{{ $k['inisial'] }}</div>  
+              @if($k['logo'])
+                <img src="/storage/{{ $k['logo'] }}" alt="Logo" class="w-9 h-9 rounded-xl object-cover flex-shrink-0">
+              @else
+                <div class="app-icon icon-{{ $k['warna'] }}">{{ $k['inisial'] }}</div>  
+              @endif
               <div>  
                 <p class="text-slate-800 text-sm font-semibold">{{ $k['nama'] }}</p>  
                 <p class="text-slate-500" style="font-size:11px;">  
@@ -180,7 +184,7 @@
       </div>  
     </div>  
     <div class="overflow-x-auto">  
-      <table class="w-full">  
+      <table class="w-full min-w-[800px] whitespace-nowrap">  
         <thead>  
           <tr style="background:#f8fafc;border-bottom:1px solid #f1f5f9;">  
             <th class="text-left px-6 py-3 text-slate-400 font-semibold uppercase tracking-wider" style="font-size:10.5px;">App Name</th>  
@@ -195,7 +199,11 @@
           <tr class="tbl-row" style="border-bottom:1px solid #f8fafc;">  
             <td class="px-6 py-4">  
               <div class="flex items-center gap-3">  
-                <div class="app-icon icon-{{ $a['warna'] }}">{{ $a['inisial'] }}</div>  
+                @if($a['logo'])
+                  <img src="/storage/{{ $a['logo'] }}" alt="Logo" class="w-9 h-9 rounded-xl object-cover flex-shrink-0">
+                @else
+                  <div class="app-icon icon-{{ $a['warna'] }}">{{ $a['inisial'] }}</div>  
+                @endif
                 <div>  
                   <p class="text-slate-800 font-semibold text-sm">{{ $a['nama'] }}</p>  
                   <p class="text-slate-400" style="font-size:11px;">{{ $a['versi'] }}</p>  

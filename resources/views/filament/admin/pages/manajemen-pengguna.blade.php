@@ -282,7 +282,7 @@
 
         {{-- Table --}}
         <div class="overflow-x-auto">
-            <table class="mp-table">
+            <table class="mp-table min-w-[900px]">
                 <thead>
                     <tr>
                         <th style="width:32%;">

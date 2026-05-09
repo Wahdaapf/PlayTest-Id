@@ -35,8 +35,8 @@ class TesterDashboard extends Page
             return;
         }
 
-        // Tentukan status berdasarkan trusted_badge paket
-        $status = ($misi->paket && $misi->paket->trusted_badge) ? 'pending' : 'accepted';
+        // Status always accepted when applying
+        $status = 'accepted';
 
         MisiAnggota::create([
             'id_misi' => $misiId,
@@ -56,7 +56,7 @@ class TesterDashboard extends Page
         Notification::make()
             ->title('Berhasil!')
             ->success()
-            ->body($status === 'pending' ? 'Permintaan bergabung sedang ditinjau.' : 'Anda telah berhasil bergabung dengan misi ini.')
+            ->body('Anda telah berhasil bergabung dengan misi ini.')
             ->send();
     }
   
@@ -109,6 +109,8 @@ class TesterDashboard extends Page
                 $gId = $m->id % count($gradients);
 
                 return [
+                    'id'       => $m->id,
+                    'logo'     => $m->logo,
                     'inisial'  => strtoupper(substr($m->nama_aplikasi, 0, 2)),
                     'gradient' => $gradients[$gId]['icon'],
                     'nama'     => $m->nama_aplikasi,
@@ -159,13 +161,14 @@ class TesterDashboard extends Page
 
                 return [
                     'id'        => $m->id,
+                    'logo'      => $m->logo,
                     'inisial'   => strtoupper(substr($m->nama_aplikasi, 0, 2)),
                     'gradient'  => $gradients[$m->id % count($gradients)],
                     'nama'      => $m->nama_aplikasi,
                     'tipe'      => $cat['label'],
                     'tipeBg'    => $cat['bg'],
                     'tipeColor' => $cat['color'],
-                    'deskripsi' => $m->instruksi ? substr($m->instruksi, 0, 60) . '...' : 'Uji aplikasi ' . $m->nama_aplikasi . ' dan berikan feedback terbaik.',
+                    'deskripsi' => $m->instruksi ? substr(strip_tags($m->instruksi), 0, 60) . '...' : 'Uji aplikasi ' . $m->nama_aplikasi . ' dan berikan feedback terbaik.',
                     'durasi'    => '14 hari',
                     'testerCur' => $m->kapasitas,
                     'testerMax' => config('missions.max_capacity', 20),

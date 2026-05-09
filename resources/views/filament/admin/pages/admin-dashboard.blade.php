@@ -85,12 +85,14 @@
     font-size: 0.7rem; font-weight: 600;  
     color: #94a3b8; text-transform: uppercase; letter-spacing: 0.06em;  
     text-align: left; border-bottom: 1px solid #f1f5f9;  
+    white-space: nowrap;
 }  
 .adm-table td {  
     padding: 0.875rem 1.25rem;  
     font-size: 0.8125rem;  
     border-bottom: 1px solid #f8fafc;  
     color: #475569;  
+    white-space: nowrap;
 }  
 .adm-table tr:hover td { background-color: #fafafa; }  
 .adm-table tr:last-child td { border-bottom: none; }  
@@ -152,7 +154,7 @@
 {{-- ═══════════════════════════════════════════════  
      DASHBOARD CONTENT  (Alpine root)  
 ════════════════════════════════════════════════ --}}  
-<div class="adm-page" x-data="adminDashboard()" x-init="initBars()">  
+<div class="adm-page" x-data="adminDashboard()" wire:poll.3s>  
   
     {{-- ── PAGE HEADER ─────────────────────────────────── --}}  
     <div data-design-id="page-header" class="flex items-center justify-between mb-6 px-6 pt-6">  
@@ -172,7 +174,7 @@
             </button>  
             <button class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white"  
                     style="background:#2563eb;box-shadow:0 4px 14px rgba(37,99,235,0.3);"  
-                    @click="initBars()">  
+                    wire:click="$refresh">  
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">  
                     <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>  
                 </svg>  
@@ -340,13 +342,13 @@
                                 <div class="adm-chart-bar flex-1"  
                                      style="background:#2563eb;max-width:14px;  
                                             {{ ($i >= 5) ? 'opacity:0.65;' : '' }}  
-                                            height:0%;"  
+                                            height:{{ $chartDev[$i] }}%;"  
                                      data-target="{{ $chartDev[$i] }}%">  
                                 </div>  
                                 <div class="adm-chart-bar flex-1"  
                                      style="background:#10b981;max-width:14px;  
                                             {{ ($i >= 5) ? 'opacity:0.65;' : '' }}  
-                                            height:0%;"  
+                                            height:{{ $chartTester[$i] }}%;"  
                                      data-target="{{ $chartTester[$i] }}%">  
                                 </div>  
                             </div>  
@@ -586,10 +588,25 @@
                     <div class="adm-kamp-card">  
                         {{-- Nama + status --}}  
                         <div class="flex items-start justify-between gap-2 mb-2">  
-                            <div class="flex-1 min-w-0">  
-                                <p class="text-sm font-semibold truncate" style="color:#1e293b;">{{ $k['nama'] }}</p>  
-                                <p class="text-xs" style="color:#94a3b8;">by {{ $k['developer'] }}</p>  
-                            </div>  
+                            <div class="flex items-center gap-3 min-w-0">
+                                @if($k['logo'])
+                                    <img src="/storage/{{ $k['logo'] }}" alt="Logo" class="w-10 h-10 rounded-xl object-cover flex-shrink-0">
+                                @else
+                                    @php
+                                        $colors = ['#eff6ff', '#fffbeb', '#faf5ff', '#f0fdf4'];
+                                        $textCols = ['#2563eb', '#d97706', '#7e22ce', '#16a34a'];
+                                        $rnd = crc32($k['nama']) % 4;
+                                    @endphp
+                                    <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 text-sm font-bold"
+                                         style="background:{{ $colors[$rnd] }};color:{{ $textCols[$rnd] }};">
+                                        {{ $k['inisial'] }}
+                                    </div>
+                                @endif
+                                <div class="flex-1 min-w-0">  
+                                    <p class="text-sm font-semibold truncate" style="color:#1e293b;">{{ $k['nama'] }}</p>  
+                                    <p class="text-xs truncate" style="color:#94a3b8;">by {{ $k['developer'] }}</p>  
+                                </div>  
+                            </div>
                             <span class="adm-badge flex-shrink-0"  
                                   style="background:{{ $sc['bg'] }};color:{{ $sc['text'] }};">  
                                 {{ $k['status'] }}  
@@ -631,21 +648,7 @@
 @push('scripts')  
 <script>  
 function adminDashboard() {  
-    return {  
-        initBars() {  
-            this.$nextTick(() => {  
-                /* Animasi bar chart naik dari 0 ke target */  
-                document.querySelectorAll('.adm-chart-bar').forEach(bar => {  
-                    const target = bar.dataset.target || '0%';  
-                    bar.style.height = '0%';  
-                    setTimeout(() => {  
-                        bar.style.transition = 'height 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';  
-                        bar.style.height = target;  
-                    }, 300);  
-                });  
-            });  
-        }  
-    };  
+    return {};  
 }  
 </script>  
 @endpush  

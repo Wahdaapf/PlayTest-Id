@@ -181,6 +181,7 @@ class PantauProgress extends Page
                 'id' => $ma->id,
                 'misi_nama' => $misi->nama_aplikasi,
                 'tester_nama' => $u->name,
+                'logo' => $misi->logo,
                 'inisial' => strtoupper(substr($misi->nama_aplikasi, 0, 1) . substr($u->name, 0, 1)),
                 'warna' => $warna,
                 'status' => $ma->status,

@@ -52,6 +52,7 @@ class DeveloperDashboard extends Page
             };
 
             return [
+                'logo'    => $m->logo,
                 'inisial' => strtoupper(substr($m->nama_aplikasi, 0, 2)),
                 'nama'    => $m->nama_aplikasi,
                 'versi'   => 'v1.0.0', // Default karena kolom versi tdk ada di DB
@@ -76,6 +77,7 @@ class DeveloperDashboard extends Page
             };
 
             return [
+                'logo'      => $m->logo,
                 'inisial'   => strtoupper(substr($m->nama_aplikasi, 0, 2)),
                 'nama'      => $m->nama_aplikasi,
                 'versi'     => 'v1.0.0',
