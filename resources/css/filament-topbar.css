@@ -1367,3 +1367,43 @@
         transform: translateY(-12px);
     }
 }
+
+/* Fix for topbar dark mode elements */
+.dark .fi-topbar {
+    background-color: #0f172a !important;
+    border-color: #1e293b !important;
+}
+
+.dark .fi-breadcrumbs-item-label { color: #f1f5f9 !important; }
+.dark .fi-breadcrumbs-separator { color: #94a3b8 !important; }
+
+/* Dark mode for floating notification dots */
+.dark .w-2\.5.h-2\.5.rounded-full.bg-green-500 {
+    box-shadow: 0 0 0 2px #0f172a !important;
+}
+
+/* User Menu combined pill */
+.dark .topbar-user-combined {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+.dark .topbar-user-combined:hover {
+    background: rgba(30, 41, 59, 0.8) !important;
+}
+
+/* Auth Pages Specific overrides to ensure visibility */
+.dark .login-card-inner, .dark .rp-card-inner, .dark .fp-card-inner {
+    color: #e2e8f0;
+}
+.dark .fi-btn-label {
+    color: #ffffff !important;
+}
+
+/* Topbar Notification and other components fix */
+.dark .fi-dropdown-panel {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+.dark .fi-dropdown-list-item-label {
+    color: #e2e8f0 !important;
+}

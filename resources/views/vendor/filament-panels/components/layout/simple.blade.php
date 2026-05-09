@@ -18,6 +18,27 @@
         'subheading' => null,
     ])
 
+    {{-- ════════════════════════════════════════════════════════
+         FORCE LIGHT THEME ON AUTH PAGES
+         Auth pages (login, register, reset-password, etc.)
+         must always render in light mode regardless of the
+         user's stored theme preference.
+    ════════════════════════════════════════════════════════ --}}
+    @push('scripts')
+    <script>
+        (function () {
+            var forceLight = function () {
+                document.documentElement.classList.remove('dark');
+            };
+            // Remove dark class immediately (catches initial page load)
+            forceLight();
+            // Re-remove after Livewire SPA navigations (stays on auth pages)
+            document.addEventListener('livewire:navigated', forceLight);
+            document.addEventListener('DOMContentLoaded', forceLight);
+        })();
+    </script>
+    @endpush
+
     <div class="fi-simple-layout">
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::SIMPLE_LAYOUT_START, scopes: $renderHookScopes) }}
 

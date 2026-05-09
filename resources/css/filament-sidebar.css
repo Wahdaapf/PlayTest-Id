@@ -322,3 +322,1247 @@
 .dark .tsr-app-item { border-color: #1e293b !important; }
 .dark .tsr-app-item:hover { background-color: rgba(30, 41, 59, 0.5) !important; }
 .dark .tsr-progress-track { background-color: #334155 !important; }
+
+/* ══════════════════════════════════════
+   GLOBAL DARK MODE OVERRIDES (FIX INLINE STYLES)
+══════════════════════════════════════ */
+.dark [style*="color:#1e293b"], .dark [style*="color: #1e293b"],
+.dark [style*="color:#0f172a"], .dark [style*="color: #0f172a"],
+.dark [style*="color:#334155"], .dark [style*="color: #334155"] {
+    color: #f1f5f9 !important;
+}
+
+.dark [style*="color:#64748b"], .dark [style*="color: #64748b"],
+.dark [style*="color:#94a3b8"], .dark [style*="color: #94a3b8"],
+.dark [style*="color:#475569"], .dark [style*="color: #475569"] {
+    color: #94a3b8 !important;
+}
+
+.dark [style*="background:#ffffff"], .dark [style*="background: #ffffff"],
+.dark [style*="background:#f8fafc"], .dark [style*="background: #f8fafc"] {
+    background: #1e293b !important;
+}
+
+.dark [style*="background:#f1f5f9"], .dark [style*="background: #f1f5f9"] {
+    background: #334155 !important;
+}
+
+.dark [style*="border-color:#e2e8f0"], .dark [style*="border:1px solid #e2e8f0"],
+.dark [style*="border-color:#f1f5f9"], .dark [style*="border:1px solid #f1f5f9"],
+.dark [style*="border-top:1px solid #f1f5f9"], .dark [style*="border-bottom:1px solid #f1f5f9"],
+.dark [style*="border-bottom:1px solid #f8fafc"], .dark [style*="border-top:1px solid rgba(255,255,255,0.2)"] {
+    border-color: #334155 !important;
+}
+
+/* Accent Backgrounds Override */
+.dark [style*="background:#eff6ff"], .dark .bg-blue-50 { background: rgba(37, 99, 235, 0.15) !important; }
+.dark [style*="background:#f0fdf4"], .dark .bg-green-50 { background: rgba(22, 163, 74, 0.15) !important; }
+.dark [style*="background:#fffbeb"], .dark .bg-amber-50 { background: rgba(217, 119, 6, 0.15) !important; }
+.dark [style*="background:#faf5ff"], .dark .bg-purple-50 { background: rgba(147, 51, 234, 0.15) !important; }
+.dark [style*="background:#fef2f2"], .dark .bg-red-50 { background: rgba(220, 38, 38, 0.15) !important; }
+.dark [style*="background:#fff1f2"] { background: rgba(225, 29, 72, 0.15) !important; }
+.dark [style*="background:#fef9c3"] { background: rgba(234, 179, 8, 0.15) !important; }
+.dark [style*="background:#d1fae5"] { background: rgba(16, 185, 129, 0.15) !important; }
+
+/* Dashboard Cards & Table Overrides */
+.dark .dev-stat-card, .dark .dev-panel, .dark .tsr-mission-card, .dark .bg-white {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    color: #e2e8f0;
+}
+.dark .dev-panel-header { border-color: #334155 !important; }
+.dark .text-slate-800 { color: #f1f5f9 !important; }
+.dark .text-slate-600 { color: #cbd5e1 !important; }
+.dark .text-slate-500 { color: #94a3b8 !important; }
+.dark .text-slate-400 { color: #64748b !important; }
+.dark .text-slate-200 { color: #334155 !important; }
+
+/* Form inputs inside panels */
+.dark input[type="date"], .dark .form-input, .dark .form-textarea {
+    background-color: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+/* Modals */
+.dark .modal-box { background-color: #1e293b !important; }
+
+/* Progress tracks */
+.dark .prog-track, .dark .tsr-progress-track { background-color: #334155 !important; }
+
+/* General table rows */
+.dark .tbl-row:hover td { background-color: rgba(30, 41, 59, 0.5) !important; }
+
+/* Dompet page overrides */
+.dark .wlt-floating, .dark .wlt-floating-delayed { opacity: 0.05 !important; }
+
+.dark .tsr-filter-inactive {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: #cbd5e1 !important;
+}
+.dark .tsr-filter-inactive:hover {
+    background: #1e293b !important;
+    color: #f8fafc !important;
+}
+.dark .tsr-filter-active {
+    background: rgba(37, 99, 235, 0.2) !important;
+    border-color: rgba(37, 99, 235, 0.5) !important;
+    color: #60a5fa !important;
+}
+
+/* Fix specific colors */
+.dark .tsr-btn-submit {
+    background: #0f172a !important;
+    color: #cbd5e1 !important;
+    border-color: #334155 !important;
+}
+.dark .tsr-btn-submit:hover:not(:disabled) { background: #1e293b !important; }
+.dark .tsr-btn-submit:disabled {
+    background: #1e293b !important;
+    color: #64748b !important;
+}
+
+.dark .tsr-btn-laporkan {
+    background: rgba(220, 38, 38, 0.1) !important;
+    color: #ef4444 !important;
+    border-color: rgba(220, 38, 38, 0.3) !important;
+}
+
+.dark .btn-detail {
+    background: transparent !important;
+    color: #cbd5e1 !important;
+    border-color: #475569 !important;
+}
+.dark .btn-detail:hover {
+    background: rgba(37, 99, 235, 0.15) !important;
+    border-color: #3b82f6 !important;
+    color: #60a5fa !important;
+}
+
+/* Admin QA Button */
+.dark .adm-qa-btn {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+.dark .adm-qa-btn:hover { background: #1e293b !important; }
+
+/* Developer Days Track */
+.dark .day-future { background: #0f172a !important; }
+.dark .day-future .day-num { color: #64748b !important; }
+.dark .day-done { background: rgba(37, 99, 235, 0.15) !important; }
+.dark .day-done .day-num { color: #60a5fa !important; }
+.dark .day-today { background: #3b82f6 !important; }
+.dark .day-today .day-num { color: #ffffff !important; }
+
+/* Filament Select & Buttons inside cards fix */
+.dark .tsr-mission-card select, .dark .dev-panel select, .dark .adm-panel select {
+    background-color: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+/* Topbar Notification and Header Elements */
+.dark .topbar-greeting { color: #f1f5f9 !important; border-color: #334155 !important; }
+.dark .topbar-greeting-name { color: #60a5fa !important; }
+.dark .fi-topbar { background-color: #0f172a !important; border-bottom-color: #1e293b !important; }
+
+/* ════════════════════════════════════════════════════════════════════
+   DARK MODE — PAGE-SPECIFIC COMPREHENSIVE OVERRIDES
+   Covers all 3 roles: Admin (tk-, mw-, mp-, mk-, adm-),
+   Developer (dev-, dm-), Tester (tsr-, wlt-)
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── fi-main background override (beats per-page inline !important) ── */
+.dark .fi-main,
+.dark .fi-simple-main {
+    background-color: #020617 !important;
+}
+
+/* ════════════════════════════════════
+   STAT CARDS (all role prefixes)
+   ════════════════════════════════════ */
+.dark .tk-stat,
+.dark .mw-stat,
+.dark .mp-stat,
+.dark .dm-stat {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+.dark .tk-stat-value,
+.dark .mw-stat-value,
+.dark .mp-stat-value,
+.dark .dm-stat-value {
+    color: #f1f5f9 !important;
+}
+.dark .tk-stat-label,
+.dark .mw-stat-label,
+.dark .mp-stat-label,
+.dark .dm-stat-label {
+    color: #94a3b8 !important;
+}
+.dark .tk-stat-sub,
+.dark .mw-stat-sub,
+.dark .mp-stat-sub {
+    color: #64748b !important;
+}
+
+/* ════════════════════════════════════
+   FILTER BARS
+   ════════════════════════════════════ */
+.dark .tk-filter-bar,
+.dark .mw-filter-bar,
+.dark .mp-filter-bar {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+.dark .tk-filter-bar:hover,
+.dark .mw-filter-bar:hover,
+.dark .mp-filter-bar:hover {
+    box-shadow: none !important;
+}
+
+/* ════════════════════════════════════
+   SEARCH INPUTS & ICONS
+   ════════════════════════════════════ */
+.dark .tk-search-wrap,
+.dark .mw-search-wrap,
+.dark .mp-search-wrap {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+.dark .tk-search-input,
+.dark .mw-search-input,
+.dark .mp-search-input {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+.dark .tk-search-input::placeholder,
+.dark .mw-search-input::placeholder,
+.dark .mp-search-input::placeholder {
+    color: #475569 !important;
+}
+.dark .tk-search-icon,
+.dark .mw-search-icon,
+.dark .mp-search-icon,
+.dark .wlt-search-icon {
+    color: #64748b !important;
+}
+
+/* ════════════════════════════════════
+   SELECT / INPUT FIELDS
+   ════════════════════════════════════ */
+.dark .tk-input,
+.dark .tk-select,
+.dark .mw-input,
+.dark .mw-select,
+.dark .mp-input,
+.dark .mp-select,
+.dark .mp-form-input,
+.dark .mp-form-select,
+.dark .mp-form-textarea {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+.dark .tk-input:focus,
+.dark .tk-select:focus,
+.dark .mw-input:focus,
+.dark .mw-select:focus,
+.dark .mp-input:focus,
+.dark .mp-select:focus,
+.dark .mp-form-input:focus,
+.dark .mp-form-select:focus,
+.dark .mp-form-textarea:focus {
+    border-color: #3b82f6 !important;
+    background: #0f172a !important;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.15) !important;
+}
+
+/* ════════════════════════════════════
+   TABLE WRAPPERS & TABLES
+   ════════════════════════════════════ */
+.dark .tk-table-wrap,
+.dark .mw-table-wrap,
+.dark .mp-table-wrap {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+.dark .tk-table,
+.dark .mw-table,
+.dark .mp-table {
+    background: #1e293b !important;
+    color: #e2e8f0 !important;
+}
+.dark .tk-table thead tr,
+.dark .mw-table thead tr,
+.dark .mp-table thead tr,
+.dark .tk-table thead th,
+.dark .mw-table thead th,
+.dark .mp-table thead th {
+    background: #0f172a !important;
+    color: #94a3b8 !important;
+    border-color: #334155 !important;
+}
+.dark .tk-table tbody tr,
+.dark .mw-table tbody tr,
+.dark .mp-table tbody tr {
+    border-color: #1e293b !important;
+}
+.dark .tk-table tbody tr:hover,
+.dark .mw-table tbody tr:hover,
+.dark .mp-table tbody tr:hover {
+    background: rgba(30, 41, 59, 0.6) !important;
+}
+.dark .tk-table tbody td,
+.dark .mw-table tbody td,
+.dark .mp-table tbody td {
+    color: #cbd5e1 !important;
+    border-color: #1e293b !important;
+}
+
+/* ════════════════════════════════════
+   MODAL BOXES (all prefixes)
+   ════════════════════════════════════ */
+.dark .tk-modal-box,
+.dark .mw-modal-box,
+.dark .mp-modal-box,
+.dark .mk-modal-box {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+.dark .tk-modal-header,
+.dark .mw-modal-header,
+.dark .mp-modal-header,
+.dark .mk-modal-header {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+.dark .tk-modal-body,
+.dark .mw-modal-body {
+    background: #1e293b !important;
+}
+.dark .tk-modal-footer,
+.dark .mw-modal-footer,
+.dark .mp-modal-footer,
+.dark .mk-modal-footer {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+.dark .tk-modal-title,
+.dark .mw-modal-title {
+    color: #f1f5f9 !important;
+}
+.dark .tk-modal-title-icon,
+.dark .mw-modal-title-icon {
+    background: rgba(30, 41, 59, 0.8) !important;
+}
+.dark .tk-modal-overlay,
+.dark .mw-modal-overlay,
+.dark .mp-modal-overlay,
+.dark .mk-modal-overlay,
+.dark .mp-confirm-overlay {
+    background: rgba(2, 6, 23, 0.75) !important;
+}
+
+/* ════════════════════════════════════
+   DETAIL PANELS / ROWS (tk-, mw-)
+   ════════════════════════════════════ */
+.dark .tk-detail-panel,
+.dark .mw-detail-panel {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+.dark .tk-detail-section,
+.dark .mw-detail-section {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+.dark .tk-detail-bg,
+.dark .mw-detail-bg {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+.dark .tk-detail-header,
+.dark .mw-detail-header {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+.dark .tk-detail-body,
+.dark .mw-detail-body {
+    background: #1e293b !important;
+}
+.dark .tk-detail-footer,
+.dark .mw-detail-footer {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+.dark .tk-detail-row,
+.dark .mw-detail-row,
+.dark .mp-detail-row,
+.dark .mk-detail-row {
+    border-color: #334155 !important;
+}
+.dark .tk-detail-label,
+.dark .mw-detail-label,
+.dark .mp-detail-label,
+.dark .mk-detail-label {
+    color: #94a3b8 !important;
+}
+.dark .tk-detail-val,
+.dark .mw-detail-val,
+.dark .mp-detail-value,
+.dark .mk-detail-value {
+    color: #e2e8f0 !important;
+}
+
+/* ════════════════════════════════════
+   SUMMARY BOXES
+   ════════════════════════════════════ */
+.dark .tk-summary-box,
+.dark .mw-summary-box {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+
+/* ════════════════════════════════════
+   PAGINATION
+   ════════════════════════════════════ */
+.dark .tk-pagi,
+.dark .mw-pagi,
+.dark .mp-pagi {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #94a3b8 !important;
+}
+.dark .tk-pagi-btn,
+.dark .mw-pagi-btn,
+.dark .mp-pagi-btn {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: #cbd5e1 !important;
+}
+.dark .tk-pagi-btn:hover,
+.dark .mw-pagi-btn:hover,
+.dark .mp-pagi-btn:hover {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+}
+.dark .tk-pagi-btn.active,
+.dark .mw-pagi-btn.active,
+.dark .mp-pagi-btn.active {
+    background: #2563eb !important;
+    border-color: #2563eb !important;
+    color: #ffffff !important;
+}
+
+/* ════════════════════════════════════
+   PANEL CONTAINERS (mp-panel - Paket)
+   ════════════════════════════════════ */
+.dark .mp-panel {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+    box-shadow: none !important;
+}
+.dark .mp-panel-section,
+.dark .mp-panel-bg {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+.dark .mp-panel-header {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+.dark .mp-panel-footer {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+.dark .mp-toggle-row {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+.dark .mp-form-group label,
+.dark .mp-form-label {
+    color: #cbd5e1 !important;
+}
+.dark .mp-form-note {
+    color: #64748b !important;
+}
+
+/* ════════════════════════════════════
+   CONFIRM DIALOG (mp-)
+   ════════════════════════════════════ */
+.dark .mp-confirm-box {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+.dark .mp-confirm-header {
+    border-color: #334155 !important;
+}
+.dark .mp-confirm-footer {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+.dark .mp-confirm-title {
+    color: #f1f5f9 !important;
+}
+
+/* ════════════════════════════════════
+   KAMPANYE CARDS & LIST (mk-)
+   ════════════════════════════════════ */
+.dark .mk-card {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+.dark .mk-card:hover {
+    background: rgba(30, 41, 59, 0.9) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+}
+.dark .mk-list-row {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+.dark .mk-list-row:hover {
+    background: rgba(30, 41, 59, 0.8) !important;
+}
+.dark .mk-progress-track {
+    background: #334155 !important;
+}
+.dark .mk-view-toggle {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+.dark .mk-view-btn {
+    color: #94a3b8 !important;
+}
+.dark .mk-view-inactive {
+    color: #64748b !important;
+    background: transparent !important;
+}
+
+/* ════════════════════════════════════
+   ALERTS (all prefixes)
+   ════════════════════════════════════ */
+.dark .tk-alert,
+.dark .tk-alert-success,
+.dark .tk-alert-danger,
+.dark .mw-alert,
+.dark .mw-alert-success,
+.dark .mw-alert-danger,
+.dark .mp-alert,
+.dark .mp-alert-success,
+.dark .mp-alert-warning {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+.dark .tk-alert-text,
+.dark .tk-alert-title,
+.dark .mw-alert-text,
+.dark .mw-alert-title,
+.dark .mp-alert-title {
+    color: #e2e8f0 !important;
+}
+
+/* ════════════════════════════════════
+   EMPTY STATES
+   ════════════════════════════════════ */
+.dark .tk-empty,
+.dark .mw-empty,
+.dark .mp-empty {
+    color: #94a3b8 !important;
+}
+
+/* ════════════════════════════════════
+   ACTION BUTTONS
+   ════════════════════════════════════ */
+.dark .mp-action-detail,
+.dark .tk-action-detail,
+.dark .mw-action-detail {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+.dark .mp-action-danger,
+.dark .tk-action-danger,
+.dark .mw-action-danger {
+    background: rgba(220, 38, 38, 0.1) !important;
+    border-color: rgba(220, 38, 38, 0.3) !important;
+}
+.dark .tk-btn-secondary,
+.dark .mw-btn-secondary {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #cbd5e1 !important;
+}
+.dark .tk-btn-ghost,
+.dark .mw-btn-ghost,
+.dark .mp-btn-ghost {
+    background: transparent !important;
+    border-color: #334155 !important;
+    color: #94a3b8 !important;
+}
+.dark .tk-btn-ghost:hover,
+.dark .mw-btn-ghost:hover,
+.dark .mp-btn-ghost:hover {
+    background: #1e293b !important;
+    color: #e2e8f0 !important;
+}
+.dark .tk-btn-export,
+.dark .mw-btn-export {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #94a3b8 !important;
+}
+.dark .tk-btn-icon,
+.dark .mw-btn-icon,
+.dark .mp-btn-icon {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #94a3b8 !important;
+}
+
+/* ════════════════════════════════════
+   SORT / FILTER BUTTONS
+   ════════════════════════════════════ */
+.dark .tk-sort-btn,
+.dark .mw-sort-btn,
+.dark .mp-sort-btn {
+    color: #94a3b8 !important;
+}
+
+/* ════════════════════════════════════
+   CHART LABELS
+   ════════════════════════════════════ */
+.dark .tk-chart-label,
+.dark .mw-chart-label,
+.dark .mp-chart-label {
+    color: #94a3b8 !important;
+}
+
+/* ════════════════════════════════════
+   UPLOAD AREA (mw-withdraw)
+   ════════════════════════════════════ */
+.dark .mw-upload-area {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: #94a3b8 !important;
+}
+
+/* ════════════════════════════════════
+   DOMPET PAGE (wlt-)
+   ════════════════════════════════════ */
+.dark .wlt-tabs-container {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+.dark .wlt-tab {
+    color: #94a3b8 !important;
+}
+.dark .wlt-tab:hover:not(.active) {
+    background: #1e293b !important;
+    color: #cbd5e1 !important;
+}
+.dark .wlt-tab.active {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+}
+.dark .wlt-method {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+.dark .wlt-method:hover {
+    border-color: #3b82f6 !important;
+}
+.dark .wlt-method.active {
+    background: rgba(37, 99, 235, 0.15) !important;
+    border-color: #3b82f6 !important;
+}
+.dark .wlt-method-check {
+    border-color: #475569 !important;
+    background: #0f172a !important;
+}
+.dark .wlt-denom {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+.dark .wlt-denom:hover {
+    border-color: #3b82f6 !important;
+}
+.dark .wlt-denom.active {
+    background: rgba(37, 99, 235, 0.15) !important;
+    border-color: #3b82f6 !important;
+}
+.dark .wlt-denom-check {
+    border-color: #475569 !important;
+    background: #0f172a !important;
+}
+.dark .wlt-filter-ctrl {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+.dark .wlt-filter-ctrl:focus {
+    border-color: #3b82f6 !important;
+}
+.dark .wlt-btn-reset {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: #94a3b8 !important;
+}
+.dark .wlt-btn-reset:hover {
+    background: #1e293b !important;
+    color: #e2e8f0 !important;
+}
+.dark .wlt-history-row {
+    border-color: #1e293b !important;
+    color: #e2e8f0 !important;
+}
+.dark .wlt-history-row:hover {
+    background: rgba(30, 41, 59, 0.5) !important;
+}
+.dark .wlt-input,
+.dark .wlt-input-group {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+.dark .wlt-warning {
+    background: rgba(234, 179, 8, 0.1) !important;
+    border-color: rgba(234, 179, 8, 0.3) !important;
+    color: #fcd34d !important;
+}
+.dark .wlt-step-badge {
+    background: rgba(37, 99, 235, 0.15) !important;
+    color: #60a5fa !important;
+}
+
+/* ════════════════════════════════════
+   TAILWIND UTILITY OVERRIDES
+   ════════════════════════════════════ */
+.dark .bg-slate-50 { background-color: #0f172a !important; }
+.dark .bg-slate-100 { background-color: #1e293b !important; }
+.dark .bg-slate-200 { background-color: #334155 !important; }
+.dark .bg-gray-50 { background-color: #0f172a !important; }
+.dark .bg-gray-100 { background-color: #1e293b !important; }
+
+.dark .text-slate-900,
+.dark .text-gray-900 { color: #f1f5f9 !important; }
+.dark .text-slate-700,
+.dark .text-gray-700 { color: #cbd5e1 !important; }
+.dark .text-slate-600,
+.dark .text-gray-600 { color: #94a3b8 !important; }
+.dark .text-gray-500 { color: #64748b !important; }
+
+.dark .border-slate-100,
+.dark .border-slate-200,
+.dark .border-gray-100,
+.dark .border-gray-200 { border-color: #334155 !important; }
+
+/* ════════════════════════════════════
+   INLINE STYLE OVERRIDES (div/section with white BG)
+   ════════════════════════════════════ */
+/* List view header row with inline background */
+.dark div[style*="background:#f8fafc;border-bottom"],
+.dark div[style*="background: #f8fafc;border-bottom"],
+.dark div[style*="background:#f8fafc; border-bottom"],
+.dark div[style*="background: #f8fafc; border-bottom"] {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+
+/* Slide-over panel backgrounds (dompet, misi-detail) */
+.dark [style*="background:#fff; width:100%; max-width:420px"],
+.dark [style*="background: #fff; width:100%; max-width:420px"] {
+    background: #1e293b !important;
+}
+
+/* Progress grid area in modal (mk- modal detail) */
+.dark div[style*="background:#f8fafc;"] {
+    background: #0f172a !important;
+}
+
+/* Generic text color overrides in inline styles */
+.dark p[style*="color:#1e293b"],
+.dark span[style*="color:#1e293b"],
+.dark h1[style*="color:#1e293b"],
+.dark h2[style*="color:#1e293b"],
+.dark h3[style*="color:#1e293b"],
+.dark div[style*="color:#1e293b"],
+.dark td[style*="color:#1e293b"] {
+    color: #f1f5f9 !important;
+}
+.dark p[style*="color:#0f172a"],
+.dark span[style*="color:#0f172a"],
+.dark h2[style*="color:#0f172a"],
+.dark div[style*="color:#0f172a"] {
+    color: #f1f5f9 !important;
+}
+
+/* ════════════════════════════════════
+   DEVELOPER PAGES - MODAL + FORM FIX
+   ════════════════════════════════════ */
+/* Developer table header row with inline bg */
+.dark tr[style*="background:#f8fafc"],
+.dark tr[style*="background: #f8fafc"] {
+    background: #0f172a !important;
+}
+
+/* Developer search input (inline style) */
+.dark input[style*="background:#f8fafc"],
+.dark input[style*="background: #f8fafc"] {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+/* ════════════════════════════════════
+   PROGRESS BARS
+   ════════════════════════════════════ */
+.dark .mk-progress-track,
+.dark div[class*="progress-track"] { background: #334155 !important; }
+
+/* ════════════════════════════════════
+   TESTER: Additional Fixes
+   ════════════════════════════════════ */
+/* Misi Saya / Tester Dashboard section headers */
+.dark h2[style*="color:#1e293b"],
+.dark p[style*="color:#1e293b"] { color: #f1f5f9 !important; }
+
+/* Available missions header area in tester dashboard */
+.dark .tsr-app-item:hover { background: rgba(30, 41, 59, 0.4) !important; }
+
+/* ════════════════════════════════════
+   TAB COMPONENTS (mp-tab)
+   ════════════════════════════════════ */
+.dark .mp-tab.active {
+    color: #93c5fd !important;
+    border-bottom-color: #3b82f6 !important;
+}
+.dark .mp-tab.inactive {
+    color: #64748b !important;
+}
+.dark .mp-tab.inactive:hover {
+    color: #94a3b8 !important;
+}
+/* Tab container / wrapper */
+.dark .mp-tab-wrap,
+.dark .mp-tabs-wrap {
+    border-color: #334155 !important;
+    background: #1e293b !important;
+}
+
+/* ════════════════════════════════════
+   BADGE DARK VARIANTS (class-defined)
+   ════════════════════════════════════ */
+/* Kampanye badges */
+.dark .mk-badge-aktif    { background: rgba(37, 99, 235, 0.15) !important; color: #93c5fd !important; }
+.dark .mk-badge-selesai  { background: rgba(22, 163, 74, 0.15) !important; color: #86efac !important; }
+.dark .mk-badge-ditinjau { background: rgba(245, 158, 11, 0.15) !important; color: #fcd34d !important; }
+.dark .mk-badge-ditolak  { background: rgba(239, 68, 68, 0.15) !important; color: #fca5a5 !important; }
+.dark .mk-badge-pro      { background: rgba(245, 158, 11, 0.15) !important; color: #fcd34d !important; }
+.dark .mk-badge-starter  { background: rgba(37, 99, 235, 0.15) !important; color: #93c5fd !important; }
+.dark .mk-badge-business { background: rgba(139, 92, 246, 0.15) !important; color: #c4b5fd !important; }
+
+/* Manajemen Pengguna / Paket badges */
+.dark .mp-badge-developer  { background: rgba(37, 99, 235, 0.15) !important; color: #93c5fd !important; }
+.dark .mp-badge-tester     { background: rgba(22, 163, 74, 0.15) !important; color: #86efac !important; }
+.dark .mp-badge-aktif      { background: rgba(22, 163, 74, 0.15) !important; color: #86efac !important; }
+.dark .mp-badge-pending    { background: rgba(245, 158, 11, 0.15) !important; color: #fcd34d !important; }
+.dark .mp-badge-suspend    { background: rgba(239, 68, 68, 0.15) !important; color: #fca5a5 !important; }
+
+/* Pembayaran badges */
+.dark .tk-badge-berhasil { background: rgba(22, 163, 74, 0.15) !important; color: #86efac !important; }
+.dark .tk-badge-pending  { background: rgba(245, 158, 11, 0.15) !important; color: #fcd34d !important; }
+.dark .tk-badge-gagal    { background: rgba(239, 68, 68, 0.15) !important; color: #fca5a5 !important; }
+.dark .tk-badge-refund   { background: rgba(139, 92, 246, 0.15) !important; color: #c4b5fd !important; }
+
+/* Withdraw badges */
+.dark .mw-badge-success  { background: rgba(22, 163, 74, 0.15) !important; color: #86efac !important; }
+.dark .mw-badge-pending  { background: rgba(245, 158, 11, 0.15) !important; color: #fcd34d !important; }
+.dark .mw-badge-rejected { background: rgba(239, 68, 68, 0.15) !important; color: #fca5a5 !important; }
+
+/* Dompet badges */
+.dark .wlt-badge-success  { background: rgba(22, 163, 74, 0.15) !important; color: #86efac !important; }
+.dark .wlt-badge-pending  { background: rgba(245, 158, 11, 0.15) !important; color: #fcd34d !important; }
+.dark .wlt-badge-rejected { background: rgba(239, 68, 68, 0.15) !important; color: #fca5a5 !important; }
+
+/* ════════════════════════════════════
+   DEVELOPER DASHBOARD - CSS class fixes
+   ════════════════════════════════════ */
+/* Status badges in developer list */
+.dark .status-progress { background: rgba(22, 163, 74, 0.15) !important; color: #86efac !important; border-color: rgba(22, 163, 74, 0.3) !important; }
+.dark .status-pending  { background: rgba(245, 158, 11, 0.15) !important; color: #fcd34d !important; border-color: rgba(245, 158, 11, 0.3) !important; }
+.dark .status-selesai  { background: rgba(139, 92, 246, 0.15) !important; color: #c4b5fd !important; border-color: rgba(139, 92, 246, 0.3) !important; }
+
+/* Icon background chips in developer list */
+.dark .icon-blue   { background: rgba(37, 99, 235, 0.15) !important; color: #93c5fd !important; }
+.dark .icon-amber  { background: rgba(217, 119, 6, 0.15) !important; color: #fcd34d !important; }
+.dark .icon-purple { background: rgba(124, 58, 237, 0.15) !important; color: #c4b5fd !important; }
+
+/* Developer dashboard table */
+.dark .tbl-row td { color: #cbd5e1 !important; border-color: #1e293b !important; }
+.dark .tbl-row:hover td { background: rgba(30, 41, 59, 0.5) !important; }
+
+/* ════════════════════════════════════
+   TESTER DASHBOARD STATS SECTION
+   ════════════════════════════════════ */
+/* The stats heading + missions section */
+.dark .fi-simple-layout { background-color: #020617 !important; }
+
+/* ════════════════════════════════════
+   MISI SAYA (Tester)
+   ════════════════════════════════════ */
+/* Mission cards using Tailwind bg-white */
+.dark .rounded-2xl.border.border-slate-200.bg-white {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+.dark .text-slate-800 { color: #f1f5f9 !important; }
+.dark .text-slate-500 { color: #94a3b8 !important; }
+
+/* ════════════════════════════════════
+   ADMIN DASHBOARD - Text & Inline Fixes
+   ════════════════════════════════════ */
+/* Admin chart stats row */
+.dark div[style*="border-top:1px solid #f1f5f9"] {
+    border-color: #334155 !important;
+}
+/* Quick action btn text inline styles */
+.dark p[style*="color:#b45309"],
+.dark p[style*="color:#1d4ed8"],
+.dark p[style*="color:#6d28d9"],
+.dark p[style*="color:#15803d"] {
+    filter: brightness(1.4) !important;
+}
+
+/* ════════════════════════════════════
+   DETAIL ROW HOVER STATES
+   ════════════════════════════════════ */
+.dark .tk-detail-row:hover,
+.dark .mw-detail-row:hover,
+.dark .mp-detail-row:hover {
+    background: rgba(30, 41, 59, 0.5) !important;
+}
+
+/* ════════════════════════════════════
+   DETAIL PANEL BODY AREA
+   ════════════════════════════════════ */
+/* Slide-over detail panel body content area with f8fafc bg */
+.dark .tk-detail-bg,
+.dark .mw-detail-bg {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+
+/* ════════════════════════════════════
+   PEMBAYARAN CHART AREA
+   ════════════════════════════════════ */
+/* Progress bars in stat cards */
+.dark .tk-chart-bar-outer,
+.dark .mw-chart-bar-outer {
+    background: #0f172a !important;
+}
+
+/* ════════════════════════════════════
+   DEVELOPER MISI LIST (kelola-tester)
+   ════════════════════════════════════ */
+/* dev-panel is already covered, but make modal dark */
+.dark .modal-backdrop {
+    background: rgba(2, 6, 23, 0.7) !important;
+}
+
+/* ════════════════════════════════════
+   MANAJEMEN PAKET — EXTRA
+   ════════════════════════════════════ */
+/* Paket tab header underline in dark */
+.dark .mp-tab {
+    border-bottom-color: transparent !important;
+    color: #94a3b8 !important;
+}
+
+/* ════════════════════════════════════
+   UNIVERSAL: fi-breadcrumbs in dashboard
+   ════════════════════════════════════ */
+.dark .fi-breadcrumbs { color: #94a3b8 !important; }
+.dark .fi-breadcrumbs-item-label { color: #94a3b8 !important; }
+.dark .fi-breadcrumbs-item-label.fi-active,
+.dark .fi-breadcrumbs li:last-child .fi-breadcrumbs-item-label { color: #f1f5f9 !important; }
+
+/* ════════════════════════════════════
+   WIDGET & FILAMENT BUILT-IN COMPONENTS
+   ════════════════════════════════════ */
+/* Stats overview widget card */
+.dark .fi-wi-stats-overview-stat {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+    color: #e2e8f0 !important;
+}
+.dark .fi-wi-stats-overview-stat-label { color: #94a3b8 !important; }
+.dark .fi-wi-stats-overview-stat-value { color: #f1f5f9 !important; }
+.dark .fi-wi-stats-overview-stat-description { color: #64748b !important; }
+
+/* Table container Filament native */
+.dark .fi-ta-ctn {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+.dark .fi-ta-header-cell { color: #94a3b8 !important; background: #0f172a !important; }
+.dark .fi-ta-header-toolbar { background: #1e293b !important; }
+.dark .fi-ta-record { border-color: #1e293b !important; }
+.dark .fi-ta-record:hover { background: rgba(30, 41, 59, 0.5) !important; }
+
+/* ════════════════════════════════════════════════════════════════════
+   DARK MODE — TABLE CELL TEXT CLASSES (ALL ROLES)
+   Fixes text invisibility on dark backgrounds
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── Pembayaran Table Cells (tk-) ── */
+.dark .tk-td-id       { color: #cbd5e1 !important; }
+.dark .tk-td-subid    { color: #64748b !important; }
+.dark .tk-td-name     { color: #f1f5f9 !important; }
+.dark .tk-td-campaign { color: #cbd5e1 !important; }
+.dark .tk-td-nom      { color: #f1f5f9 !important; }
+.dark .tk-td-metode   { color: #94a3b8 !important; }
+.dark .tk-td-bank     { color: #64748b !important; }
+.dark .tk-td-date     { color: #cbd5e1 !important; }
+.dark .tk-td-time     { color: #64748b !important; }
+
+/* ── Withdraw Table Cells (mw-) ── */
+.dark .mw-td-id       { color: #cbd5e1 !important; }
+.dark .mw-td-name     { color: #f1f5f9 !important; }
+.dark .mw-td-point    { color: #fca5a5 !important; }
+.dark .mw-td-nom      { color: #f1f5f9 !important; }
+.dark .mw-td-metode   { color: #94a3b8 !important; }
+.dark .mw-td-akun     { color: #94a3b8 !important; }
+.dark .mw-td-date     { color: #cbd5e1 !important; }
+.dark .mw-td-time     { color: #64748b !important; }
+
+/* ── Pembayaran Stat/Chart Elements (tk-) ── */
+.dark .tk-stat-value  { color: #f1f5f9 !important; }
+.dark .tk-stat-label  { color: #94a3b8 !important; }
+.dark .tk-stat-sub    { color: #64748b !important; }
+.dark .tk-growth      { background: rgba(22, 163, 74, 0.15) !important; color: #86efac !important; }
+.dark .tk-paket-starter { background: rgba(71, 85, 105, 0.2) !important; color: #94a3b8 !important; }
+.dark .tk-paket-pro     { background: rgba(37, 99, 235, 0.15) !important; color: #93c5fd !important; }
+.dark .tk-paket-business { background: rgba(126, 34, 206, 0.15) !important; color: #c4b5fd !important; }
+
+/* ── Withdraw Stat Elements (mw-) ── */
+.dark .mw-stat-value  { color: #f1f5f9 !important; }
+.dark .mw-stat-label  { color: #94a3b8 !important; }
+.dark .mw-stat-sub    { color: #64748b !important; }
+
+/* ── Developer Stat Elements (dm-) ── */
+.dark .dm-stat-value  { color: #f1f5f9 !important; }
+.dark .dm-stat-label  { color: #94a3b8 !important; }
+.dark .dm-stat-sub    { color: #64748b !important; }
+
+/* ── Pembayaran Sort & Table Header (tk-) ── */
+.dark .tk-sort-btn    { color: #94a3b8 !important; }
+.dark .tk-sort-btn:hover,
+.dark .tk-sort-btn.active { color: #60a5fa !important; }
+.dark .tk-table th    { color: #94a3b8 !important; }
+
+/* ── Withdraw Sort & Table Header (mw-) ── */
+.dark .mw-sort-btn    { color: #94a3b8 !important; }
+.dark .mw-sort-btn:hover,
+.dark .mw-sort-btn.active { color: #60a5fa !important; }
+.dark .mw-table th    { color: #94a3b8 !important; }
+
+/* ── Pembayaran Action Buttons (tk-) ── */
+.dark .tk-action-detail { background: rgba(37, 99, 235, 0.15) !important; color: #60a5fa !important; }
+.dark .tk-action-detail:hover { background: rgba(37, 99, 235, 0.25) !important; }
+.dark .tk-btn-icon    { background: #334155 !important; color: #94a3b8 !important; }
+.dark .tk-btn-icon:hover { background: #475569 !important; color: #f1f5f9 !important; }
+
+/* ── Withdraw Action Buttons (mw-) ── */
+.dark .mw-action-detail { background: rgba(37, 99, 235, 0.15) !important; color: #60a5fa !important; }
+.dark .mw-action-detail:hover { background: rgba(37, 99, 235, 0.25) !important; }
+.dark .mw-btn-icon    { background: #334155 !important; color: #94a3b8 !important; }
+.dark .mw-btn-icon:hover { background: #475569 !important; color: #f1f5f9 !important; }
+
+/* ── Pembayaran Buttons Dark (tk-) ── */
+.dark .tk-btn-secondary { background: #1e293b !important; border-color: #334155 !important; color: #cbd5e1 !important; }
+.dark .tk-btn-secondary:hover { background: #334155 !important; color: #f1f5f9 !important; }
+.dark .tk-btn-ghost   { background: #1e293b !important; border-color: #334155 !important; color: #94a3b8 !important; }
+.dark .tk-btn-ghost:hover { background: #334155 !important; color: #f1f5f9 !important; }
+.dark .tk-btn-ghost-danger { background: rgba(220, 38, 38, 0.1) !important; border-color: rgba(220, 38, 38, 0.3) !important; color: #fca5a5 !important; }
+.dark .tk-btn-ghost-danger:hover { background: rgba(220, 38, 38, 0.2) !important; }
+
+/* ── Withdraw Buttons Dark (mw-) ── */
+.dark .mw-btn-ghost-danger { background: rgba(220, 38, 38, 0.1) !important; border-color: rgba(220, 38, 38, 0.3) !important; color: #fca5a5 !important; }
+.dark .mw-btn-ghost-danger:hover { background: rgba(220, 38, 38, 0.2) !important; }
+.dark .mw-upload-label { color: #cbd5e1 !important; }
+
+/* ── Pembayaran Modal Title Dark (tk-) ── */
+.dark .tk-modal-title { color: #f1f5f9 !important; }
+.dark .tk-modal-title-icon.success { background: rgba(16, 185, 129, 0.15) !important; }
+.dark .tk-modal-title-icon.danger  { background: rgba(239, 68, 68, 0.15) !important; }
+
+/* ── Withdraw Modal Title Dark (mw-) ── */
+.dark .mw-modal-title { color: #f1f5f9 !important; }
+
+/* ── Alert Text Dark Mode (tk-, mw-) ── */
+.dark .tk-alert-title.success { color: #86efac !important; }
+.dark .tk-alert-title.danger  { color: #fca5a5 !important; }
+.dark .tk-alert-text.success  { color: #6ee7b7 !important; }
+.dark .tk-alert-text.danger   { color: #fca5a5 !important; }
+.dark .mw-alert-title.success { color: #86efac !important; }
+.dark .mw-alert-title.danger  { color: #fca5a5 !important; }
+.dark .mw-alert-text.success  { color: #6ee7b7 !important; }
+.dark .mw-alert-text.danger   { color: #fca5a5 !important; }
+
+/* ── Pembayaran Chart/Stat Containers Dark ── */
+.dark .tk-stat         { background: #1e293b !important; border-color: #334155 !important; }
+.dark .tk-empty-icon   { background: #334155 !important; }
+
+/* ── Withdraw Chart/Stat Containers Dark ── */
+.dark .mw-stat         { background: #1e293b !important; border-color: #334155 !important; }
+.dark .mw-empty-icon   { background: #334155 !important; }
+
+/* ── Developer Stat Containers Dark (dm-) ── */
+.dark .dm-stat         { background: #1e293b !important; border-color: #334155 !important; }
+.dark .dm-btn-primary  { background: #334155 !important; }
+.dark .dm-btn-primary:hover { background: #475569 !important; }
+
+/* ── Pembayaran Detail Panel Dark (tk-) ── */
+.dark .tk-detail-panel { background: #1e293b !important; }
+.dark .tk-detail-header { background: #0f172a !important; border-color: #334155 !important; }
+.dark .tk-detail-body  { background: #1e293b !important; }
+.dark .tk-detail-footer { background: #0f172a !important; border-color: #334155 !important; }
+.dark .tk-detail-row   { border-color: #334155 !important; }
+.dark .tk-detail-row:hover { background: rgba(30, 41, 59, 0.5) !important; }
+.dark .tk-detail-label { color: #94a3b8 !important; }
+.dark .tk-detail-val   { color: #e2e8f0 !important; }
+.dark .tk-detail-section { color: #64748b !important; }
+
+/* ═══ DOMPET (Tester Wallet) — Text in Dark Mode ═══ */
+/* History row text */
+.dark .wlt-history-row { color: #e2e8f0 !important; }
+.dark .wlt-history-row:hover { background: rgba(30, 41, 59, 0.5) !important; border-left-color: #0ea5e9 !important; }
+
+/* History row container (bg-white card) */
+.dark .wlt-page .bg-white,
+.dark .wlt-page div[style*="border: 1px solid #e2e8f0"] {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+/* Dompet invoice detail drawer */
+.dark .wlt-modal-content,
+.dark .wlt-page div[style*="background:#fff; width:100%"],
+.dark .wlt-page div[style*="background:#fff;width:100%"] {
+    background: #1e293b !important;
+}
+.dark .wlt-page div[style*="background:#f8fafc"] {
+    background: #0f172a !important;
+}
+
+/* Warning box in dark mode */
+.dark .wlt-warning {
+    background: rgba(37, 99, 235, 0.1) !important;
+    border-color: rgba(37, 99, 235, 0.3) !important;
+    color: #93c5fd !important;
+}
+.dark .wlt-warning .text-blue-900,
+.dark .wlt-warning p[style*="color:#1e3a8a"] {
+    color: #93c5fd !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   COMPREHENSIVE INLINE STYLE OVERRIDES FOR DARK MODE
+   Covers all dark text colors used as inline styles across all views
+   ════════════════════════════════════════════════════════════════════ */
+
+/* Text colors #0f172a (very dark) → light */
+.dark [style*="color:#0f172a"],
+.dark [style*="color: #0f172a"] {
+    color: #f1f5f9 !important;
+}
+
+/* Text colors #1e293b → light */
+.dark [style*="color:#1e293b"],
+.dark [style*="color: #1e293b"] {
+    color: #f1f5f9 !important;
+}
+
+/* Text colors #334155 → lighter */
+.dark [style*="color:#334155"],
+.dark [style*="color: #334155"] {
+    color: #cbd5e1 !important;
+}
+
+/* Text colors #475569 → lighter */
+.dark [style*="color:#475569"],
+.dark [style*="color: #475569"] {
+    color: #94a3b8 !important;
+}
+
+/* Text colors #64748b → keep visible */
+.dark [style*="color:#64748b"],
+.dark [style*="color: #64748b"] {
+    color: #94a3b8 !important;
+}
+
+/* Alert text colors in dark (green-dark tones) */
+.dark [style*="color:#064e3b"],
+.dark [style*="color: #064e3b"],
+.dark [style*="color:#065f46"],
+.dark [style*="color: #065f46"] {
+    color: #6ee7b7 !important;
+}
+
+/* Alert text colors in dark (red-dark tones) */
+.dark [style*="color:#7f1d1d"],
+.dark [style*="color: #7f1d1d"],
+.dark [style*="color:#991b1b"],
+.dark [style*="color: #991b1b"] {
+    color: #fca5a5 !important;
+}
+
+/* Blue tones used in info boxes */
+.dark [style*="color:#1e3a8a"],
+.dark [style*="color: #1e3a8a"] {
+    color: #93c5fd !important;
+}
+
+/* Border dashed lines */
+.dark [style*="border-top:1px dashed #cbd5e1"],
+.dark [style*="border-top: 1px dashed #cbd5e1"] {
+    border-color: #334155 !important;
+}
+.dark [style*="border-bottom:1px dashed #e2e8f0"],
+.dark [style*="border-bottom: 1px dashed #e2e8f0"] {
+    border-color: #334155 !important;
+}
+
+/* Background overrides for inline white/light backgrounds */
+.dark [style*="background:#ffffff"],
+.dark [style*="background: #ffffff"],
+.dark [style*="background:#fff"],
+.dark [style*="background: #fff"] {
+    background: #1e293b !important;
+}
+
+/* ═══ Filament table header cell labels dark fix ═══ */
+.dark .fi-ta-header-cell label,
+.dark .fi-ta-header-cell span {
+    color: #94a3b8 !important;
+}
+
+/* ═══ Filament table content cell dark fix ═══ */
+.dark .fi-ta-cell,
+.dark .fi-ta-record td {
+    color: #cbd5e1 !important;
+}
