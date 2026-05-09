@@ -4,9 +4,14 @@ use App\Http\Controllers\Auth\EmailVerificationController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Paket;
 
-Route::get('/', function () {
-    $pakets = Paket::where('aktif', true)->orderBy('price', 'asc')->get();
-    return view('welcome', compact('pakets'));
+Route::redirect('/', '/id');
+
+Route::prefix('{locale}')->where(['locale' => 'id|en'])->group(function () {
+    Route::get('/', function ($locale) {
+        App::setLocale($locale);
+        $pakets = Paket::where('aktif', true)->orderBy('price', 'asc')->get();
+        return view('welcome', compact('pakets'));
+    })->name('welcome');
 });
 
 /*
