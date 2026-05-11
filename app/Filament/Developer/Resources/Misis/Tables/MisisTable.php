@@ -154,8 +154,6 @@ class MisisTable
                     ->color('info')
                     ->button()
                     ->visible(fn (\App\Models\Misi $record): bool => 
-                        $record->paket && 
-                        $record->paket->trusted_badge && 
                         in_array($record->status, ['open', 'closed'])
                     )
                     ->url(fn (\App\Models\Misi $record): string => \App\Filament\Developer\Resources\Misis\MisiResource::getUrl('kelola-tester', ['record' => $record])),
