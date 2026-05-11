@@ -485,17 +485,17 @@
     {{-- Data Dummy Provider --}}
     @php
     $ewallets = [
-    'gopay' => ['label' => 'GoPay', 'color' => '#00a550', 'bg' => '#ecfdf5', 'icon' => 'account_balance_wallet'],
-    'dana' => ['label' => 'DANA', 'color' => '#118ee9', 'bg' => '#eff6ff', 'icon' => 'account_balance_wallet'],
-    'shopeepay' => ['label' => 'ShopeePay', 'color' => '#ee4d2d', 'bg' => '#fff7ed', 'icon' => 'account_balance_wallet'],
-    'ovo' => ['label' => 'OVO', 'color' => '#4c2a86', 'bg' => '#f5f3ff', 'icon' => 'account_balance_wallet'],
+    'gopay' => ['label' => 'GoPay', 'img' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Gopay_logo.svg'],
+    'dana' => ['label' => 'DANA', 'img' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Logo_dana_blue.svg'],
+    'shopeepay' => ['label' => 'ShopeePay', 'img' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Shopee.svg'],
+    'ovo' => ['label' => 'OVO', 'img' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Logo_ovo_purple.svg'],
     ];
     $banks = [
-    'bca' => ['label' => 'BCA', 'color' => '#005bac', 'bg' => '#eff6ff', 'icon' => 'account_balance'],
-    'mandiri' => ['label' => 'Mandiri', 'color' => '#f2a122', 'bg' => '#fefce8', 'icon' => 'account_balance'],
-    'bni' => ['label' => 'BNI', 'color' => '#005e6a', 'bg' => '#eff6ff', 'icon' => 'account_balance'],
-    'bri' => ['label' => 'BRI', 'color' => '#00529c', 'bg' => '#eff6ff', 'icon' => 'account_balance'],
-    'bsi' => ['label' => 'BSI', 'color' => '#00a0a0', 'bg' => '#f0fdfa', 'icon' => 'account_balance'],
+    'bca' => ['label' => 'BCA', 'img' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Central_Asia.svg'],
+    'mandiri' => ['label' => 'Mandiri', 'img' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Mandiri_logo_2016.svg'],
+    'bni' => ['label' => 'BNI', 'img' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Negara_Indonesia_logo_(2004).svg'],
+    'bri' => ['label' => 'BRI', 'img' => 'https://commons.wikimedia.org/wiki/Special:FilePath/BRI_2020.svg'],
+    'bsi' => ['label' => 'BSI', 'img' => 'https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Syariah_Indonesia.svg'],
     ];
     @endphp
 
@@ -544,8 +544,8 @@
                             @foreach($ewallets as $key => $data)
                             <div class="wlt-method" :class="{ 'active': $wire.selectedMethod === '{{ $key }}' }" wire:click="$set('selectedMethod', '{{ $key }}')">
                                 <span class="wlt-method-check material-symbols-outlined">check_circle</span>
-                                <div class="wlt-method-icon" style="background:{{ $data['bg'] }};">
-                                    <span class="material-symbols-outlined" style="color:{{ $data['color'] }};">{{ $data['icon'] }}</span>
+                                <div class="wlt-method-icon" style="background:#f8fafc; border:1px solid #f1f5f9; padding: 4px;">
+                                    <img src="{{ $data['img'] }}" alt="{{ $data['label'] }}" class="w-full h-full object-contain" />
                                 </div>
                                 <p class="text-sm font-bold font-heading" style="color:#1e293b;">{{ $data['label'] }}</p>
                             </div>
@@ -559,8 +559,8 @@
                             @foreach($banks as $key => $data)
                             <div class="wlt-method" :class="{ 'active': $wire.selectedMethod === '{{ $key }}' }" wire:click="$set('selectedMethod', '{{ $key }}')">
                                 <span class="wlt-method-check material-symbols-outlined">check_circle</span>
-                                <div class="wlt-method-icon" style="background:{{ $data['bg'] }};">
-                                    <span class="material-symbols-outlined" style="color:{{ $data['color'] }};">{{ $data['icon'] }}</span>
+                                <div class="wlt-method-icon" style="background:#f8fafc; border:1px solid #f1f5f9; padding: 4px;">
+                                    <img src="{{ $data['img'] }}" alt="{{ $data['label'] }}" class="w-full h-full object-contain" />
                                 </div>
                                 <p class="text-sm font-bold font-heading" style="color:#1e293b;">{{ $data['label'] }}</p>
                             </div>

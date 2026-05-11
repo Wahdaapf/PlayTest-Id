@@ -1134,8 +1134,25 @@
                     <div class="space-y-3">
                         @forelse($metodeBreakdown as $m)
                         <div class="flex items-center gap-3 group">
-                            <div class="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center border border-slate-100 transition-transform group-hover:scale-110 group-hover:bg-green-50 group-hover:text-green-600">
-                                <span class="material-symbols-outlined text-[1.2rem] text-slate-500 group-hover:text-green-600 transition-colors">account_balance_wallet</span>
+                            @php
+                                $mLabel = strtolower($m['label']);
+                                $logoUrl = null;
+                                if ($mLabel === 'gopay') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Gopay_logo.svg';
+                                elseif ($mLabel === 'dana') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Logo_dana_blue.svg';
+                                elseif ($mLabel === 'shopeepay') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Shopee.svg';
+                                elseif ($mLabel === 'ovo') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Logo_ovo_purple.svg';
+                                elseif ($mLabel === 'bca') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Central_Asia.svg';
+                                elseif ($mLabel === 'mandiri') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Mandiri_logo_2016.svg';
+                                elseif ($mLabel === 'bni') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Negara_Indonesia_logo_(2004).svg';
+                                elseif ($mLabel === 'bri') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/BRI_2020.svg';
+                                elseif ($mLabel === 'bsi') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Syariah_Indonesia.svg';
+                            @endphp
+                            <div class="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center border border-slate-100 transition-transform group-hover:scale-110 p-1">
+                                @if($logoUrl)
+                                    <img src="{{ $logoUrl }}" alt="{{ $m['label'] }}" class="w-full h-full object-contain" />
+                                @else
+                                    <span class="material-symbols-outlined text-[1.2rem] text-slate-500 group-hover:text-green-600 transition-colors">account_balance_wallet</span>
+                                @endif
                             </div>
                             <div class="flex-1">
                                 <div class="flex justify-between text-xs mb-1.5 transition-transform group-hover:translate-x-1">
