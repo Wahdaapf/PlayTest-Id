@@ -62,6 +62,39 @@ class KelolaTester extends Page implements HasTable
                         ->default($this->record->link_aplikasi),
                 ])
                 ->action(function (array $data) {
+                    // 1. Jika paket trusted badge = true, ubah semua tester pending/reviewing menjadi accepted
+                    if ($this->record->paket && $this->record->paket->trusted_badge) {
+                        \App\Models\MisiAnggota::where('id_misi', $this->record->id)
+                            ->whereIn('status', ['pending', 'reviewing'])
+                            ->update(['status' => 'accepted']);
+                    }
+
+                    // 2. Ambil semua tester yang sudah accepted
+                    $acceptedTesters = \App\Models\MisiAnggota::where('id_misi', $this->record->id)
+                        ->where('status', 'accepted')
+                        ->get();
+
+                    // 3. Buat 14 sub misi untuk setiap tester yang accepted
+                    $now = \Carbon\Carbon::now();
+                    $subMisis = [];
+                    foreach ($acceptedTesters as $tester) {
+                        for ($i = 1; $i <= 14; $i++) {
+                            $subMisis[] = [
+                                'id_misi' => $this->record->id,
+                                'id_user' => $tester->id_user,
+                                'hari_ke' => $i,
+                                'status'  => 'notdone',
+                                'created_at' => $now->copy()->addDays($i - 1),
+                                'updated_at' => $now->copy()->addDays($i - 1),
+                            ];
+                        }
+                    }
+
+                    if (!empty($subMisis)) {
+                        \App\Models\MisiSub::insert($subMisis);
+                    }
+
+                    // 4. Ubah status misi menjadi running & simpan link
                     $this->record->update([
                         'link_aplikasi' => $data['link_aplikasi'],
                         'status' => 'running',
@@ -72,7 +105,8 @@ class KelolaTester extends Page implements HasTable
                         ->update(['status' => 'progress']);
 
                     \Filament\Notifications\Notification::make()
-                        ->title('Link Aplikasi Berhasil Disimpan & Misi Dimulai')
+                        ->title('Misi Berhasil Dimulai')
+                        ->body('Status misi telah diubah menjadi running dan sub-misi tester telah dibuat.')
                         ->success()
                         ->send();
                 }),
