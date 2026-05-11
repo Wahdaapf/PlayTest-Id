@@ -157,21 +157,17 @@ class PantauProgress extends Page
                 }
             }
 
-            $hariAktif = 1;
             $today = now()->format('Y-m-d');
-            foreach ($subs as $sub) {
-                if ($sub->created_at && $sub->created_at->format('Y-m-d') === $today) {
-                    $hariAktif = $sub->hari_ke;
-                    break;
+            $lastSub = $subs->sortByDesc('hari_ke')->first();
+            
+            if ($lastSub) {
+                if ($lastSub->created_at && $lastSub->created_at->format('Y-m-d') === $today) {
+                    $hariAktif = $lastSub->hari_ke;
+                } else {
+                    $hariAktif = $lastSub->hari_ke + 1;
                 }
-            }
-
-            if ($hariAktif === 1) {
-                $currentSub = MisiSub::where('id_misi', $misi->id)
-                    ->where('id_user', $ma->id_user)
-                    ->whereDate('created_at', now()->toDateString())
-                    ->first();
-                $hariAktif = $currentSub ? $currentSub->hari_ke : 1;
+            } else {
+                $hariAktif = 1;
             }
 
             $colors = ['blue', 'amber', 'purple', 'green'];
@@ -206,21 +202,22 @@ class PantauProgress extends Page
                 ];
             })->toArray();
 
-        // Hitung hari_ke untuk hari ini
-        $currentSubToday = MisiSub::where('id_misi', $misi->id)
-            ->whereDate('created_at', now()->toDateString())
-            ->first();
-
-        if ($currentSubToday) {
-            $hariToday = $currentSubToday->hari_ke;
-        } else {
-            // Jika hari ini tidak ada di jadwal, kita cek apakah sudah melewati jadwal hari ke-14
-            $lastSub = MisiSub::where('id_misi', $misi->id)->where('hari_ke', 14)->first();
-            if ($lastSub && now()->isAfter($lastSub->created_at)) {
-                $hariToday = 15; // Menandakan sudah lewat masa 14 hari
+        // Hitung max hari_ke dari semua tester
+        $maxHariKe = MisiSub::where('id_misi', $misi->id)->max('hari_ke');
+        
+        if ($maxHariKe) {
+            $lastMaxSub = MisiSub::where('id_misi', $misi->id)
+                ->where('hari_ke', $maxHariKe)
+                ->latest()
+                ->first();
+                
+            if ($lastMaxSub && $lastMaxSub->created_at && $lastMaxSub->created_at->format('Y-m-d') === now()->format('Y-m-d')) {
+                $hariToday = $maxHariKe;
             } else {
-                $hariToday = 1;
+                $hariToday = $maxHariKe + 1;
             }
+        } else {
+            $hariToday = 1;
         }
 
         // Cek apakah sudah ada minimal 1 tester yang menyelesaikan seluruh 14 hari (status done)
@@ -261,29 +258,20 @@ class PantauProgress extends Page
                 continue;
             }
 
-            // Ambil hari_ke hari ini dari jadwal misi_sub
-            $currentSub = MisiSub::where('id_user', $ma->id_user)
+            // Cek apakah ada submission kemarin
+            $subYesterday = MisiSub::where('id_user', $ma->id_user)
                 ->where('id_misi', $misi->id)
-                ->whereDate('created_at', $today)
+                ->whereDate('created_at', $yesterday)
                 ->first();
 
-            if (!$currentSub) {
-                continue;
-            }
-
-            $hariToday = $currentSub->hari_ke;
-            $hariYesterday = $hariToday - 1;
-
-            // Jika hari kemarin masuk dalam rentang 14 hari kampanye
-            if ($hariYesterday >= 1 && $hariYesterday <= 14) {
-                // Cek apakah ada submission untuk hari tersebut
-                $sub = MisiSub::where('id_user', $ma->id_user)
+            if (!$subYesterday) {
+                // Hitung total submit sebelum hari ini
+                $totalSub = MisiSub::where('id_user', $ma->id_user)
                     ->where('id_misi', $misi->id)
-                    ->where('hari_ke', $hariYesterday)
-                    ->first();
+                    ->whereDate('created_at', '<', $today)
+                    ->count();
 
-                // Jika tidak ada atau statusnya masih 'notdone', maka status tester di misi tersebut diubah jadi failed
-                if (!$sub || $sub->status === 'notdone') {
+                if ($totalSub < 14) {
                     $ma->update(['status' => 'failed']);
                     
                     // Kurangi kapasitas misi (tester berkurang)

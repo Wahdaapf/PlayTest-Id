@@ -81,7 +81,7 @@ class MisiSaya extends Page implements HasForms
         $this->checkMissedSubmissions($userId);
 
         $misiAnggotas = MisiAnggota::where('id_user', $userId)
-            ->whereIn('status', ['accepted', 'progress'])
+            ->whereIn('status', ['accepted', 'progress', 'failed'])
             ->with('misi')
             ->get();
 
@@ -90,8 +90,20 @@ class MisiSaya extends Page implements HasForms
             $m = $ma->misi;
             if (!$m) continue;
 
-                        $currentSub = MisiSub::where("id_misi", $m->id)->where("id_user", $userId)->whereDate("created_at", now()->toDateString())->first();
-            $hari = $currentSub ? $currentSub->hari_ke : 1;
+                        $lastSub = MisiSub::where('id_misi', $m->id)
+                ->where('id_user', $userId)
+                ->orderBy('hari_ke', 'desc')
+                ->first();
+                
+            if ($lastSub) {
+                if ($lastSub->created_at && $lastSub->created_at->format('Y-m-d') === now()->toDateString()) {
+                    $hari = $lastSub->hari_ke;
+                } else {
+                    $hari = $lastSub->hari_ke + 1;
+                }
+            } else {
+                $hari = 1;
+            }
             $persen = round(($hari / 14) * 100);
 
             $colors = ['#10b981', '#8b5cf6', '#3b82f6', '#f59e0b'];
@@ -118,13 +130,17 @@ class MisiSaya extends Page implements HasForms
                 }
             }
 
+            $statusLabel = 'Aktif';
+            if ($ma->status === 'failed') $statusLabel = 'Gagal';
+            elseif ($ma->status === 'selesai') $statusLabel = 'Selesai';
+
             $data[$m->id] = [
                 'id'         => $m->id,
                 'name'       => $m->nama_aplikasi,
                 'type'       => $m->id % 2 === 0 ? 'Functional Testing' : 'UX Research',
                 'day'        => $hari,
                 'total_days' => 14,
-                'status'     => 'Aktif',
+                'status'     => $statusLabel,
                 'points'     => $m->point,
                 'color'      => $color,
                 'initials'   => strtoupper(substr($m->nama_aplikasi, 0, 2)),
@@ -133,6 +149,7 @@ class MisiSaya extends Page implements HasForms
                 'days_history' => $daysHistory,
                 'link_aplikasi' => $m->link_aplikasi,
                 'logo'       => $m->logo,
+                'ma_status'  => $ma->status,
             ];
         }
 
@@ -275,26 +292,20 @@ class MisiSaya extends Page implements HasForms
             $joinDate = $ma->created_at->toDateString();
             if ($joinDate >= $today) continue;
 
-            // Ambil hari_ke hari ini dari jadwal misi_sub
-            $currentSub = MisiSub::where('id_user', $userId)
+            // Cek apakah ada submission kemarin
+            $subYesterday = MisiSub::where('id_user', $userId)
                 ->where('id_misi', $ma->id_misi)
-                ->whereDate('created_at', $today)
+                ->whereDate('created_at', $yesterday)
                 ->first();
 
-            if (!$currentSub) {
-                continue;
-            }
-
-            $hariToday = $currentSub->hari_ke;
-            $hariYesterday = $hariToday - 1;
-
-            if ($hariYesterday >= 1 && $hariYesterday <= 14) {
-                $sub = MisiSub::where('id_user', $userId)
+            if (!$subYesterday) {
+                // Hitung total submit sebelum hari ini
+                $totalSub = MisiSub::where('id_user', $userId)
                     ->where('id_misi', $ma->id_misi)
-                    ->where('hari_ke', $hariYesterday)
-                    ->first();
+                    ->whereDate('created_at', '<', $today)
+                    ->count();
 
-                if (!$sub || $sub->status === 'notdone') {
+                if ($totalSub < 14) {
                     $ma->update(['status' => 'failed']);
                     $misi->decrement('kapasitas');
                     if ($misi->status === 'closed') {

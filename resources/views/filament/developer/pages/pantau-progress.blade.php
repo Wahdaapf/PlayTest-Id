@@ -8,6 +8,7 @@
   .status-pending{background:#fffbeb;color:#b45309;border:1px solid #fde68a;}  
   .status-selesai{background:#faf5ff;color:#7e22ce;border:1px solid #e9d5ff;}  
   .status-closed{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca;}
+  .status-failed{background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;}
   .app-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;}  
   .icon-blue{background:#eff6ff;color:#2563eb;}  
   .icon-amber{background:#fffbeb;color:#d97706;}  
@@ -166,6 +167,7 @@
               @elseif($k['status']==='pending')<span class="inline-block w-1.5 h-1.5 bg-amber-500 rounded-full"></span> PENDING  
               @elseif($k['status']==='accepted')<span class="inline-block w-1.5 h-1.5 bg-blue-500 rounded-full"></span> ACCEPTED  
               @elseif($k['status']==='selesai')<x-heroicon-m-check class="w-2.5 h-2.5"/> COMPLETED 
+              @elseif($k['status']==='failed')<x-heroicon-m-x-mark class="w-2.5 h-2.5"/> FAILED 
               @else {{ strtoupper($k['status']) }} @endif  
             </span>  
           </div>  

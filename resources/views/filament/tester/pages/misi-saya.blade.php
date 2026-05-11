@@ -86,9 +86,15 @@
                                 </div>
                             </div>
                             {{-- Badge status --}}
-                            <span class="rounded-lg bg-green-50 px-2 py-0.5 text-xs font-semibold text-green-600">
-                                {{ $mission['status'] }}
-                            </span>
+                            @if($mission['ma_status'] === 'failed')
+                                <span class="rounded-lg bg-red-50 px-2 py-0.5 text-xs font-semibold text-red-600 border border-red-200">
+                                    {{ $mission['status'] }}
+                                </span>
+                            @else
+                                <span class="rounded-lg bg-green-50 px-2 py-0.5 text-xs font-semibold text-green-600">
+                                    {{ $mission['status'] }}
+                                </span>
+                            @endif
                         </div>
 
                         {{-- Progress bar --}}
@@ -127,14 +133,14 @@
                                         } elseif ($hist === 'rejected') {
                                             $cellClass = 'bg-red-100 border border-red-200 text-red-600';
                                         } else {
-                                            if ($h < $mission['day']) {
+                                            if ($mission['ma_status'] === 'failed' || $h < $mission['day']) {
                                                 // Missed
                                                 $cellClass = 'bg-slate-50 border border-red-100 text-red-400 opacity-60';
                                             }
                                         }
                                         
                                         // Highlight today
-                                        if ($isToday) {
+                                        if ($isToday && $mission['ma_status'] !== 'failed') {
                                             if ($hist === 'notdone') {
                                                 $cellClass = 'bg-blue-500 border-blue-600 text-white shadow-sm ring-1 ring-blue-300 ring-offset-1';
                                             } else {
@@ -157,7 +163,16 @@
                                 </svg>
                                 +{{ $mission['points'] }} pts
                             </span>
-                            @if ($mission['today_status'] === 'done')
+                            @if ($mission['ma_status'] === 'failed')
+                                <button
+                                    disabled
+                                    class="inline-flex items-center gap-1.5 rounded-xl border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-bold text-red-600 opacity-80 cursor-not-allowed">
+                                    <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    Misi Gagal
+                                </button>
+                            @elseif ($mission['today_status'] === 'done')
                                 <button
                                     disabled
                                     class="inline-flex items-center gap-1.5 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-600 opacity-80 cursor-not-allowed">
