@@ -17,6 +17,7 @@ use Filament\Forms\Components\Hidden;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
 use Illuminate\Support\HtmlString;
+use Filament\Forms\Components\Select;
 
 class MisiForm
 {
@@ -117,28 +118,15 @@ class MisiForm
                             Grid::make(3)
                                 ->schema([
 
-                                    // ── Kolom Kiri: Instruksi + Upload ──────────
-                                    Section::make('Upload Bukti Pembayaran')
-                                        ->icon('heroicon-o-arrow-up-tray')
-                                        ->description('Transfer ke salah satu rekening di bawah, lalu upload buktiya')
+                                    // ── Kolom Kiri: Info Duitku ──────────
+                                    Section::make('Metode Pembayaran')
+                                        ->icon('heroicon-o-credit-card')
+                                        ->description('Pilih metode pembayaran yang akan digunakan. Anda akan diarahkan ke halaman pembayaran Duitku setelah menekan tombol submit.')
                                         ->schema([
-
-                                            // Info rekening (static display)
-                                            View::make('filament.developer.components.payment-accounts')
+                                            Hidden::make('payment_method')
+                                                ->required(),
+                                            View::make('filament.developer.components.payment-methods')
                                                 ->columnSpanFull(),
-
-                                            FileUpload::make('pembayaran_image')
-                                                ->label('Bukti Transfer')
-                                                ->disk('public')
-                                                ->directory('bukti-pembayaran')
-                                                ->image()
-                                                ->imagePreviewHeight('180')
-                                                ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp'])
-                                                ->maxSize(5120)
-                                                ->required()
-                                                ->helperText('Upload screenshot transfer (PNG / JPG / WebP, maks 5MB)')
-                                                ->columnSpanFull()
-                                                ->panelLayout('compact'),
                                         ])
                                         ->columnSpan(2),
 

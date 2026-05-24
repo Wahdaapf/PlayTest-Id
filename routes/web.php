@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\DuitkuController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Paket;
 
@@ -13,6 +14,10 @@ Route::prefix('{locale}')->where(['locale' => 'id|en'])->group(function () {
         return view('welcome', compact('pakets'));
     })->name('welcome');
 });
+
+Route::post('/payment', [DuitkuController::class, 'createTransaction']);
+Route::post('/duitku/callback', [DuitkuController::class, 'callback']);
+Route::get('/duitku/return', [DuitkuController::class, 'return']);
 
 /*
 |--------------------------------------------------------------------------
@@ -66,9 +71,9 @@ Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 've
 // ── C. Link Expired Page ─────────────────────────────────────────────────
 
 Route::get('/email/expired', function () {
-    $panel         = request()->query('panel', 'tester');
+    $panel = request()->query('panel', 'tester');
     $allowedPanels = ['tester', 'developer', 'admin'];
-    if (! in_array($panel, $allowedPanels, true)) {
+    if (!in_array($panel, $allowedPanels, true)) {
         $panel = 'tester';
     }
     return view('auth.email-expired', compact('panel'));
@@ -81,7 +86,7 @@ Route::get('/email/verified', function () {
 
     // Whitelist panel paths — cegah open-redirect
     $allowedPanels = ['/tester', '/developer', '/admin'];
-    if (! in_array($panel, $allowedPanels, true)) {
+    if (!in_array($panel, $allowedPanels, true)) {
         $panel = '/tester';
     }
 

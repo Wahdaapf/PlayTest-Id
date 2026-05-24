@@ -16,6 +16,8 @@ class Pembayaran extends Model
         'id_admin',
         'id_paket',
         'id_misi',
+        'reference',
+        'payment_url',
     ];
 
     public function user(): BelongsTo
