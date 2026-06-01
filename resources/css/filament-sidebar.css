@@ -4,6 +4,20 @@
    Supports Light Mode + Dark Mode
 ══════════════════════════════════════════════════════════════════ */
 
+/* WAJIB: Mencegah font teks universal (*, body, dsb) menimpa font ikon */
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined' !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    display: inline-block;
+    line-height: 1;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+    word-wrap: normal !important;
+    white-space: nowrap !important;
+    direction: ltr !important;
+}
+
 /* ── Custom Properties ────────────────────────────────────────── */
 :root {
     --sidebar-bg: #ffffff;
@@ -593,33 +607,39 @@
 }
 .dark .tk-table,
 .dark .mw-table,
-.dark .mp-table {
+.dark .mp-table,
+.dark .adm-table {
     background: #1e293b !important;
     color: #e2e8f0 !important;
 }
 .dark .tk-table thead tr,
 .dark .mw-table thead tr,
 .dark .mp-table thead tr,
+.dark .adm-table thead tr,
 .dark .tk-table thead th,
 .dark .mw-table thead th,
-.dark .mp-table thead th {
+.dark .mp-table thead th,
+.dark .adm-table thead th {
     background: #0f172a !important;
     color: #94a3b8 !important;
     border-color: #334155 !important;
 }
 .dark .tk-table tbody tr,
 .dark .mw-table tbody tr,
-.dark .mp-table tbody tr {
+.dark .mp-table tbody tr,
+.dark .adm-table tbody tr {
     border-color: #1e293b !important;
 }
 .dark .tk-table tbody tr:hover,
 .dark .mw-table tbody tr:hover,
-.dark .mp-table tbody tr:hover {
+.dark .mp-table tbody tr:hover,
+.dark .adm-table tbody tr:hover {
     background: rgba(30, 41, 59, 0.6) !important;
 }
 .dark .tk-table tbody td,
 .dark .mw-table tbody td,
-.dark .mp-table tbody td {
+.dark .mp-table tbody td,
+.dark .adm-table tbody td {
     color: #cbd5e1 !important;
     border-color: #1e293b !important;
 }
@@ -936,8 +956,16 @@
    ════════════════════════════════════ */
 .dark .tk-sort-btn,
 .dark .mw-sort-btn,
-.dark .mp-sort-btn {
+.dark .mp-sort-btn,
+.dark .mk-sort-btn,
+.dark .adm-sort-btn {
     color: #94a3b8 !important;
+}
+.dark .mk-sort-btn:hover,
+.dark .mk-sort-btn.active,
+.dark .adm-sort-btn:hover,
+.dark .adm-sort-btn.active {
+    color: #60a5fa !important;
 }
 
 /* ════════════════════════════════════

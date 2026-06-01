@@ -13,8 +13,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <style>
     body, .fi-main, .fi-simple-main { font-family: 'Inter', sans-serif !important; }
-    .mp-sora { font-family: 'Sora', sans-serif !important; }
-    .mp-mono  { font-family: 'JetBrains Mono', monospace !important; }
+    .mp-sora { font-family: 'Inter', sans-serif !important; }
+    .mp-mono  { font-family: 'Inter', sans-serif !important; }
     .fi-main  { background-color: #f8fafc !important; }
     [x-cloak] { display: none !important; }
 

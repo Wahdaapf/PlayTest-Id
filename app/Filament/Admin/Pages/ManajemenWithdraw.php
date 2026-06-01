@@ -186,6 +186,9 @@ class ManajemenWithdraw extends Page
         $totalRejected = 0;
         $totalRupiahSuccess = 0;
         $rupiahBulanIni = 0;
+        $rupiahBulanLalu = 0;
+        $pendingMingguIni = 0;
+        $rejectedMingguIni = 0;
 
         // Metode breakdown
         $metodeCount = [];
@@ -199,15 +202,26 @@ class ManajemenWithdraw extends Page
             $metodeLabel = Withdraw::METHODS[$w->metode] ?? $w->metode;
             $metodeCount[$metodeLabel] = ($metodeCount[$metodeLabel] ?? 0) + 1;
 
-            if ($w->status === 'pending') $totalPending++;
-            elseif ($w->status === 'success') {
+            if ($w->status === 'pending') {
+                $totalPending++;
+                if ($w->created_at && $w->created_at >= now()->startOfWeek()) {
+                    $pendingMingguIni++;
+                }
+            } elseif ($w->status === 'success') {
                 $totalSuccess++;
                 $totalRupiahSuccess += $w->rupiah;
                 if ($w->created_at && $w->created_at->format('Y-m') === now()->format('Y-m')) {
                     $rupiahBulanIni += $w->rupiah;
+                } elseif ($w->created_at && $w->created_at->format('Y-m') === now()->subMonth()->format('Y-m')) {
+                    $rupiahBulanLalu += $w->rupiah;
                 }
             }
-            elseif ($w->status === 'rejected') $totalRejected++;
+            elseif ($w->status === 'rejected') {
+                $totalRejected++;
+                if ($w->created_at && $w->created_at >= now()->startOfWeek()) {
+                    $rejectedMingguIni++;
+                }
+            }
 
             $dateObj = $w->created_at ?: now();
 
@@ -246,9 +260,6 @@ class ManajemenWithdraw extends Page
             })->sum('rupiah');
             $chartNilai[] = $sum > 0 ? $sum : 0;
         }
-        if (max($chartNilai) == 0) {
-            $chartNilai = [0, 0, 0, 0, 0, 1];
-        }
 
         // ── Metode breakdown (top metode) ──
         $totalTrx = count($withdrawals);
@@ -262,20 +273,31 @@ class ManajemenWithdraw extends Page
             ];
         }
 
+        // Kalkulasi growth
+        $growthRupiah = $rupiahBulanLalu > 0
+            ? round((($rupiahBulanIni - $rupiahBulanLalu) / $rupiahBulanLalu) * 100)
+            : ($rupiahBulanIni > 0 ? 100 : 0);
+        $growthPrefix = $growthRupiah >= 0 ? '+' : '';
+
         return [
-            'withdrawList'       => $list,
-            'totalPending'       => $totalPending,
-            'totalSuccess'       => $totalSuccess,
-            'totalRejected'      => $totalRejected,
+            'withdrawList' => $list,
+            'totalPending' => $totalPending,
+            'pendingMingguIni' => '+' . $pendingMingguIni,
+            'totalSuccess' => $totalSuccess,
+            'totalRejected' => $totalRejected,
+            'rejectedMingguIni' => '+' . $rejectedMingguIni,
             'totalRupiahSuccess' => 'Rp ' . number_format($totalRupiahSuccess, 0, ',', '.'),
-            'rupiahBulanIni'     => 'Rp ' . number_format($rupiahBulanIni, 0, ',', '.'),
-
-            /* chart */
-            'chartBulan'         => $chartBulan,
-            'chartNilai'         => $chartNilai,
-
-            /* ringkasan & metode */
-            'metodeBreakdown'    => $metodeBreakdown,
+            'rupiahBulanIni' => 'Rp ' . number_format($rupiahBulanIni, 0, ',', '.'),
+            'growthRupiah' => $growthPrefix . $growthRupiah . '%',
+            'chartBulan' => $chartBulan,
+            'chartNilai' => $chartNilai,
+            'metodeBreakdown' => collect($metodeCount)->map(function($count, $label) use ($totalSuccess, $totalPending, $totalRejected) {
+                $total = $totalSuccess + $totalPending + $totalRejected;
+                return [
+                    'label' => $label,
+                    'pct' => $total > 0 ? round(($count / $total) * 100) : 0
+                ];
+            })->sortByDesc('pct')->take(4)->values()->toArray(),
         ];
     }
 }

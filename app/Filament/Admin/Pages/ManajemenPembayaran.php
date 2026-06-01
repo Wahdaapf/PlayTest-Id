@@ -11,67 +11,6 @@ class ManajemenPembayaran extends Page
     protected static ?string $slug = 'manajemen-pembayaran';
     protected string $view = 'filament.admin.pages.manajemen-pembayaran';
 
-    public ?int $pendingApproveId = null;
-    public ?int $pendingRejectId = null;
-
-    public function confirmApprove(int $id): void
-    {
-        $this->pendingApproveId = $id;
-        $this->pendingRejectId = null;
-    }
-
-    public function confirmReject(int $id): void
-    {
-        $this->pendingRejectId = $id;
-        $this->pendingApproveId = null;
-    }
-
-    public function cancelAction(): void
-    {
-        $this->pendingApproveId = null;
-        $this->pendingRejectId = null;
-    }
-
-    public function approvePembayaran()
-    {
-        $id = $this->pendingApproveId;
-        if (!$id) return;
-
-        $pembayaran = \App\Models\Pembayaran::find($id);
-        if ($pembayaran) {
-            $pembayaran->update([
-                'status' => 'success',
-                'id_admin' => auth()->id()
-            ]);
-
-            if ($pembayaran->misi) {
-                $pembayaran->misi->update(['status' => 'open']);
-            }
-        }
-        $this->cancelAction();
-        $this->dispatch('data-updated');
-    }
-
-    public function rejectPembayaran()
-    {
-        $id = $this->pendingRejectId;
-        if (!$id) return;
-
-        $pembayaran = \App\Models\Pembayaran::find($id);
-        if ($pembayaran) {
-            $pembayaran->update([
-                'status' => 'rejected',
-                'id_admin' => auth()->id()
-            ]);
-
-            if ($pembayaran->misi) {
-                $pembayaran->misi->update(['status' => 'rejected']);
-            }
-        }
-        $this->cancelAction();
-        $this->dispatch('data-updated');
-    }
-
     protected function getViewData(): array
     {
         $pembayarans = \App\Models\Pembayaran::with(['user', 'paket', 'misi'])->orderBy('created_at', 'desc')->get();
@@ -79,10 +18,13 @@ class ManajemenPembayaran extends Page
         $transaksiList = [];
         $totalPendapatan = 0;
         $pendapatanBulanIni = 0;
+        $pendapatanBulanLalu = 0;
         $statBerhasil = 0;
         $statPending = 0;
-        $statRefund = 0;
         $statGagal = 0;
+
+        $berhasilBulanIni = 0;
+        $pendingMingguIni = 0;
 
         foreach ($pembayarans as $p) {
             $userNama = $p->user ? $p->user->name : 'Unknown User';
@@ -90,44 +32,33 @@ class ManajemenPembayaran extends Page
             $avatarColors = ['from-blue-500 to-cyan-400', 'from-emerald-500 to-teal-400', 'from-violet-500 to-purple-400', 'from-orange-500 to-amber-400', 'from-pink-500 to-rose-400'];
             $avatarColor = $avatarColors[crc32($userNama) % count($avatarColors)];
 
-            $paketDesc = $p->paket ? $p->paket->desc : 'Unknown Paket';
-            $paketNama = 'Starter';
-            if (stripos($paketDesc, 'Pro') !== false) {
-                $paketNama = 'Pro';
-            } elseif (stripos($paketDesc, 'Business') !== false) {
-                $paketNama = 'Business';
-            }
+            $paketNama = $p->paket ? $p->paket->name : 'Unknown';
+            $jumlah = $p->paket ? ($p->paket->price + ($p->paket->fee ?? 0)) : 0;
 
-            $jumlah = $p->paket ? $p->paket->price : 0;
-
-            $statusUI = 'Pending';
-            if ($p->status === 'success') {
+            // Map status dari Duitku callback
+            $statusUI = 'Menunggu Bayar';
+            if ($p->status === 'accepted' || $p->status === 'success') {
                 $statusUI = 'Berhasil';
                 $statBerhasil++;
                 $totalPendapatan += $jumlah;
                 if ($p->created_at && $p->created_at->format('Y-m') === now()->format('Y-m')) {
                     $pendapatanBulanIni += $jumlah;
                 }
+                if ($p->created_at && $p->created_at->format('Y-m') === now()->subMonth()->format('Y-m')) {
+                    $pendapatanBulanLalu += $jumlah;
+                }
+                if ($p->created_at && $p->created_at->format('Y-m') === now()->format('Y-m')) {
+                    $berhasilBulanIni++;
+                }
             } elseif ($p->status === 'pending') {
-                $statusUI = 'Pending';
+                $statusUI = 'Menunggu Bayar';
                 $statPending++;
-            } elseif ($p->status === 'failed') {
+                if ($p->created_at && $p->created_at >= now()->startOfWeek()) {
+                    $pendingMingguIni++;
+                }
+            } elseif ($p->status === 'rejected' || $p->status === 'failed') {
                 $statusUI = 'Gagal';
                 $statGagal++;
-            } else {
-                $statusUI = 'Refund';
-                $statRefund++;
-            }
-
-            $metode = 'Transfer Bank';
-            if ($p->id % 3 == 0)
-                $metode = 'QRIS';
-            if ($p->id % 3 == 1)
-                $metode = 'Virtual Account';
-
-            $bank = '-';
-            if ($metode == 'Transfer Bank' || $metode == 'Virtual Account') {
-                $bank = ['BCA', 'Mandiri', 'BNI', 'BRI'][$p->id % 4];
             }
 
             $dateObj = $p->created_at ? $p->created_at : now();
@@ -142,33 +73,35 @@ class ManajemenPembayaran extends Page
                 'kampanye' => $p->misi ? $p->misi->app_name : ($p->paket ? $p->paket->desc : 'Unknown'),
                 'paket' => $paketNama,
                 'jumlah' => $jumlah,
-                'metode' => $metode,
-                'bank' => $bank,
+                'reference' => $p->reference ?? '-',
+                'paymentUrl' => $p->payment_url ?? null,
+                'gateway' => 'Duitku',
                 'status' => $statusUI,
                 'tanggal' => $dateObj->format('d M Y'),
                 'waktu' => $dateObj->format('H:i'),
             ];
         }
 
+        // Growth calculation (real)
+        $growthPendapatan = $pendapatanBulanLalu > 0
+            ? round((($pendapatanBulanIni - $pendapatanBulanLalu) / $pendapatanBulanLalu) * 100)
+            : ($pendapatanBulanIni > 0 ? 100 : 0);
+        $growthPrefix = $growthPendapatan >= 0 ? '+' : '';
+
         // Chart bulanan (6 bulan terakhir)  
         $chartBulan = [];
         $chartNilai = [];
         for ($i = 5; $i >= 0; $i--) {
             $date = now()->subMonths($i);
-            // Bahasa Indonesia format:  
             $bulanIndo = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
             $chartBulan[] = $bulanIndo[(int) $date->format('n') - 1];
 
             $sum = collect($pembayarans)->filter(function ($p) use ($date) {
-                return $p->status === 'success' && clone $p->created_at && $p->created_at->format('Y-m') === $date->format('Y-m');
+                return in_array($p->status, ['accepted', 'success']) && $p->created_at && $p->created_at->format('Y-m') === $date->format('Y-m');
             })->sum(function ($p) {
-                return $p->paket ? $p->paket->price : 0;
+                return $p->paket ? ($p->paket->price + ($p->paket->fee ?? 0)) : 0;
             });
             $chartNilai[] = $sum > 0 ? $sum : 0;
-        }
-        // Fallback max so it doesn't divide by zero if no stats  
-        if (max($chartNilai) == 0) {
-            $chartNilai = [0, 0, 0, 0, 0, 10000]; // Small dummy to prevent dividing by zero error in template  
         }
 
         return [
@@ -176,11 +109,11 @@ class ManajemenPembayaran extends Page
             'statTotalPendapatan' => 'Rp ' . number_format($totalPendapatan, 0, ',', '.'),
             'statBulanIni' => 'Rp ' . number_format($pendapatanBulanIni, 0, ',', '.'),
             'statBerhasil' => $statBerhasil,
+            'statBerhasilBulanIni' => '+' . $berhasilBulanIni,
             'statPending' => $statPending,
-            'statRefund' => $statRefund,
+            'statPendingMingguIni' => '+' . $pendingMingguIni,
             'statGagal' => $statGagal,
-            'growthPendapatan' => '+15%', // Data simulasi dummy  
-            'growthBulanIni' => '+8%',  // Data simulasi dummy  
+            'growthPendapatan' => $growthPrefix . $growthPendapatan . '%',
 
             /* ── Data chart bulanan (6 bulan) ── */
             'chartBulan' => $chartBulan,

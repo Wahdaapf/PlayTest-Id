@@ -49,8 +49,10 @@ class PembayaransTable
                 //
             ])
             ->actions([
-                Action::make('accept')
+                \Filament\Tables\Actions\Action::make('accept')
                     ->label('Accepted')
+                    ->tooltip('Accepted')
+                    ->iconButton()
                     ->color('success')
                     ->icon('heroicon-o-check-circle')
                     ->requiresConfirmation()
@@ -64,8 +66,10 @@ class PembayaransTable
                         }
                     })
                     ->visible(fn($record) => $record->status === 'waiting'),
-                Action::make('reject')
+                \Filament\Tables\Actions\Action::make('reject')
                     ->label('Rejected')
+                    ->tooltip('Rejected')
+                    ->iconButton()
                     ->color('danger')
                     ->icon('heroicon-o-x-circle')
                     ->requiresConfirmation()

@@ -12,6 +12,7 @@ use App\Filament\Admin\Pages\ManajemenPembayaran;
 use App\Filament\Admin\Pages\ManajemenPaket;
 use App\Filament\Admin\Pages\ProfileAdmin;
 use App\Filament\Admin\Pages\ManajemenWithdraw;
+use App\Filament\Admin\Pages\TipsBantuan;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -63,7 +64,7 @@ class AdminPanelProvider extends PanelProvider
             // ── Sidebar Navigation ────────────────────────────  
             ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
                 return $builder->groups([
-                    NavigationGroup::make('Menu Utama')
+                    NavigationGroup::make('Manajemen Utama')
                         ->items([
                             NavigationItem::make('Dashboard')
                                 ->icon('heroicon-o-squares-2x2')
@@ -72,18 +73,18 @@ class AdminPanelProvider extends PanelProvider
 
                             NavigationItem::make('Pengguna')
                                 ->icon('heroicon-o-users')
-                                ->badge(fn() => \App\Models\User::where('role', '!=', \App\Enums\UserRole::admin)->count())
+                                ->badge(fn() => \App\Models\User::where('role', '!=', \App\Enums\UserRole::admin)->count() ?: null)
                                 ->isActiveWhen(fn() => request()->is('admin/manajemen-pengguna*'))
                                 ->url(fn() => ManajemenPengguna::getUrl()),
 
                             NavigationItem::make('Kampanye')
                                 ->icon('heroicon-o-clipboard-document-list')
-                                ->badge(fn() => \App\Models\Misi::count())
+                                ->badge(fn() => \App\Models\Misi::count() ?: null)
                                 ->isActiveWhen(fn() => request()->is('admin/manajemen-kampanye*'))
                                 ->url(fn() => ManajemenKampanye::getUrl()),
 
                             NavigationItem::make('Paket')
-                                ->icon('heroicon-o-squares-2x2')
+                                ->icon('heroicon-o-currency-dollar')
                                 ->url(fn() => ManajemenPaket::getUrl())
                                 ->isActiveWhen(fn() => request()->is('admin/manajemen-paket*')),
                         ]),
@@ -103,20 +104,17 @@ class AdminPanelProvider extends PanelProvider
                                 ->url(fn() => ManajemenWithdraw::getUrl()),
                         ]),
 
-                    NavigationGroup::make('Sistem')
+                    NavigationGroup::make('Profil & Bantuan')
                         ->items([
                             NavigationItem::make('Profil Saya')
                                 ->icon('heroicon-o-user-circle')
                                 ->isActiveWhen(fn() => request()->routeIs('filament.admin.pages.profile-admin'))
                                 ->url(fn() => ProfileAdmin::getUrl()),
 
-                            NavigationItem::make('Pengaturan')
-                                ->icon('heroicon-o-cog-6-tooth')
-                                ->url('#'),
-
-                            NavigationItem::make('Log Aktivitas')
-                                ->icon('heroicon-o-clock')
-                                ->url('#'),
+                            NavigationItem::make('Tips & Bantuan')
+                                ->icon('heroicon-o-question-mark-circle')
+                                ->isActiveWhen(fn() => request()->routeIs('filament.admin.pages.tips-bantuan'))
+                                ->url(fn() => TipsBantuan::getUrl()),
                         ]),
                 ]);
             })
@@ -130,6 +128,7 @@ class AdminPanelProvider extends PanelProvider
                 ManajemenPaket::class,
                 ProfileAdmin::class,
                 ManajemenWithdraw::class,
+                TipsBantuan::class,
             ])
             ->discoverPages(
                 in: app_path('Filament/Admin/Pages'),
@@ -141,6 +140,12 @@ class AdminPanelProvider extends PanelProvider
             )
             ->widgets([
                 Widgets\AccountWidget::class,
+            ])
+            ->userMenuItems([
+                'profile' => \Filament\Navigation\MenuItem::make()
+                    ->label(fn() => auth()->user()->name)
+                    ->url(fn(): string => ProfileAdmin::getUrl())
+                    ->icon('heroicon-o-user-circle'),
             ])
 
             // ── Assets ───────────────────────────────────────  

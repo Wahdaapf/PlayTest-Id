@@ -6,8 +6,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <style>
     body, .fi-main, .fi-simple-main { font-family: 'Inter', sans-serif !important; }
-    .mp-sora { font-family: 'Sora', sans-serif !important; }
-    .mp-mono  { font-family: 'JetBrains Mono', monospace !important; }
+    .mp-sora { font-family: 'Inter', sans-serif !important; }
+    .mp-mono  { font-family: 'Inter', sans-serif !important; }
     .fi-main  { background-color: #f8fafc !important; }
     [x-cloak] { display: none !important; }
 
@@ -362,13 +362,11 @@
                     </td>
                     <td>
                         <div class="flex items-center gap-2">
-                            <button class="mp-action mp-action-edit" @click="bukaEdit($el.closest('tr'))">
-                                <span class="material-symbols-outlined text-[.9rem]">edit</span>
-                                Edit
+                            <button class="mp-action mp-action-edit" style="padding: 6px;" @click="bukaEdit($el.closest('tr'))" title="Edit">
+                                <span class="material-symbols-outlined text-[1.1rem]">edit</span>
                             </button>
-                            <button class="mp-action mp-action-delete" @click="bukaDeleteKonfirmasi({{ $p['id'] }}, '{{ addslashes($p['nama']) }}')">
-                                <span class="material-symbols-outlined text-[.9rem]">delete</span>
-                                Hapus
+                            <button class="mp-action mp-action-delete" style="padding: 6px;" @click="bukaDeleteKonfirmasi({{ $p['id'] }}, '{{ addslashes($p['nama']) }}')" title="Hapus">
+                                <span class="material-symbols-outlined text-[1.1rem]">delete</span>
                             </button>
                         </div>
                     </td>

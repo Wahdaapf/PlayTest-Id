@@ -12,11 +12,11 @@
         }
 
         .mw-sora {
-            font-family: 'Sora', sans-serif !important;
+            font-family: 'Inter', sans-serif !important;
         }
 
         .mw-mono {
-            font-family: 'JetBrains Mono', monospace !important;
+            font-family: 'Inter', sans-serif !important;
         }
 
         .fi-main {
@@ -1032,6 +1032,10 @@
                     <div>
                         <div class="mw-stat-label">Bulan Ini</div>
                         <div class="mw-stat-value mw-mono text-[1.1rem]">{{ $rupiahBulanIni }}</div>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="mw-growth {{ str_starts_with($growthRupiah, '-') ? 'bg-red-100 text-red-700 px-1 rounded' : 'bg-green-100 text-green-700 px-1 rounded' }} text-xs font-medium">{{ $growthRupiah }}</span>
+                            <span class="mw-stat-sub text-xs">vs bln lalu</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1045,7 +1049,7 @@
                     <div>
                         <div class="mw-stat-label">Pending</div>
                         <div class="mw-stat-value text-[#d97706]">{{ $totalPending }}</div>
-                        <div class="mw-stat-sub">menunggu review</div>
+                        <div class="mw-stat-sub text-[#d97706] font-medium">{{ $pendingMingguIni }} minggu ini</div>
                     </div>
                 </div>
             </div>
@@ -1059,7 +1063,7 @@
                     <div>
                         <div class="mw-stat-label">Ditolak</div>
                         <div class="mw-stat-value text-[#dc2626]">{{ $totalRejected }}</div>
-                        <div class="mw-stat-sub">transaksi</div>
+                        <div class="mw-stat-sub text-[#dc2626] font-medium">{{ $rejectedMingguIni }} minggu ini</div>
                     </div>
                 </div>
             </div>
@@ -1313,7 +1317,9 @@
                         </td>
                         <td>
                             <div class="flex items-center gap-2">
-                                <button class="mw-action mw-action-detail" @click="bukaDetail($el.closest('tr'))">Detail</button>
+                                <button class="mw-action mw-action-detail" @click="bukaDetail($el.closest('tr'))" title="Detail">
+                                    <span class="material-symbols-outlined text-[1.1rem]">visibility</span>
+                                </button>
                             </div>
                         </td>
                     </tr>

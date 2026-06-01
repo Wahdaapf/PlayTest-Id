@@ -31,7 +31,7 @@ class ManajemenPengguna extends Page
             'statTotal'     => \App\Models\User::where('role', '!=', \App\Enums\UserRole::admin)->count(),  
             'statDeveloper' => \App\Models\User::where('role', \App\Enums\UserRole::developer)->count(),  
             'statTester'    => \App\Models\User::where('role', \App\Enums\UserRole::tester)->count(),  
-            'statPending'   => 0,  
+            'statPending'   => \App\Models\User::where('role', '!=', \App\Enums\UserRole::admin)->whereNull('email_verified_at')->count(),  
   
             // ── Daftar Pengguna ───────────────────────────────────  
             'penggunaList' => $users->map(function($user, $idx) use ($misiCounts, $colors) {
@@ -45,7 +45,7 @@ class ManajemenPengguna extends Page
                     'email'        => $user->email,  
                     'role'         => ucfirst($user->role->value),  
                     'tanggal'      => $user->created_at->format('d M Y'),  
-                    'status'       => 'Aktif',  
+                    'status'       => $user->email_verified_at ? 'Aktif' : 'Pending',  
                     'kampanye'     => $misiCounts[$user->id] ?? 0,  
                     'phone'        => '-',  
                     'kota'         => '-',  

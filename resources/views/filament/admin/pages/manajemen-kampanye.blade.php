@@ -13,8 +13,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
 <style>
     body, .fi-main, .fi-simple-main { font-family: 'Inter', sans-serif !important; }
-    .mp-sora { font-family: 'Sora', sans-serif !important; }
-    .mp-mono  { font-family: 'JetBrains Mono', monospace !important; }
+    .mp-sora { font-family: 'Inter', sans-serif !important; }
+    .mp-mono  { font-family: 'Inter', sans-serif !important; }
     .fi-main  { background-color: #f8fafc !important; }
     [x-cloak] { display: none !important; }
 
@@ -134,6 +134,12 @@
     .mk-btn-more:hover    { background: #f1f5f9; }
     .mk-btn-report  { background: #f0fdf4; border-color: #bbf7d0; }
     .mk-btn-report:hover  { background: #dcfce7; }
+
+    /* ══ SORT HEADER BUTTON ══ */
+    .mk-sort-btn { display: inline-flex; align-items: center; gap: 3px; background: none; border: none; cursor: pointer; font-size: .72rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: .07em; padding: 0; transition: color 0.2s; font-family: 'Inter', sans-serif; white-space: nowrap; }
+    .mk-sort-btn:hover  { color: #2563eb; }
+    .mk-sort-btn.active { color: #2563eb; }
+    .mk-sort-icon { font-size: .95rem !important; line-height: 1; }
 
     /* ══ LIST VIEW ══ */
     .mk-list-row {
@@ -422,13 +428,13 @@
 
             {{-- Action Buttons --}}
             <div class="flex items-center gap-2">
-                <button class="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-semibold"
+                <button class="flex-1 flex items-center justify-center py-2 rounded-xl"
                         style="background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;transition:all .15s;"
                         onmouseover="this.style.background='#dbeafe'"
                         onmouseout="this.style.background='#eff6ff'"
-                        @click="bukaModal({{ $idx }})">
-                    <span class="material-symbols-outlined text-[.95rem]">visibility</span>
-                    Detail
+                        @click="bukaModal({{ $idx }})"
+                        title="Detail">
+                    <span class="material-symbols-outlined text-[1.1rem]">visibility</span>
                 </button>
 
                 @if($k['status'] === 'Aktif')
@@ -482,24 +488,44 @@
     <div class="min-w-[900px]">
 
     {{-- List Header --}}
-    <div class="flex items-center gap-4 px-5 py-3" style="background:#f8fafc;border-bottom:1px solid #e2e8f0;">
+    <div class="mk-list-header flex items-center gap-4 px-5 py-3" style="background:#f8fafc;border-bottom:1px solid #e2e8f0;">
         <div class="w-56 flex-shrink-0">
-            <span class="mp-sort-btn" style="cursor:default;font-size:.72rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.07em;">Kampanye</span>
+            <button class="mk-sort-btn" :class="sortCol==='nama'?'active':''" @click="setSort('nama')">
+                Kampanye
+                <span class="material-symbols-outlined mk-sort-icon"
+                      x-text="sortCol!=='nama' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+            </button>
         </div>
         <div class="w-24 flex-shrink-0">
-            <span style="font-size:.72rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.07em;">Status</span>
+            <button class="mk-sort-btn" :class="sortCol==='status'?'active':''" @click="setSort('status')">
+                Status
+                <span class="material-symbols-outlined mk-sort-icon"
+                      x-text="sortCol!=='status' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+            </button>
         </div>
         <div class="flex-1">
-            <span style="font-size:.72rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.07em;">Tester</span>
+            <button class="mk-sort-btn" :class="sortCol==='tester'?'active':''" @click="setSort('tester')">
+                Tester
+                <span class="material-symbols-outlined mk-sort-icon"
+                      x-text="sortCol!=='tester' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+            </button>
         </div>
         <div class="w-32 flex-shrink-0">
-            <span style="font-size:.72rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.07em;">Timeline</span>
+            <button class="mk-sort-btn" :class="sortCol==='timeline'?'active':''" @click="setSort('timeline')">
+                Timeline
+                <span class="material-symbols-outlined mk-sort-icon"
+                      x-text="sortCol!=='timeline' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+            </button>
         </div>
         <div class="w-24 flex-shrink-0">
-            <span style="font-size:.72rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.07em;">Paket</span>
+            <button class="mk-sort-btn" :class="sortCol==='paket'?'active':''" @click="setSort('paket')">
+                Paket
+                <span class="material-symbols-outlined mk-sort-icon"
+                      x-text="sortCol!=='paket' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+            </button>
         </div>
         <div class="w-28 flex-shrink-0 text-center">
-            <span style="font-size:.72rem;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:.07em;">Aksi</span>
+            <span class="mk-sort-btn" style="cursor:default;pointer-events:none">Aksi</span>
         </div>
     </div>
 
@@ -509,8 +535,15 @@
         $pctTester = $k['maxTester'] > 0 ? round($k['tester']/$k['maxTester']*100) : 0;
         $pctHari   = $k['maxHari']   > 0 ? round($k['hariKe']/$k['maxHari']*100)   : 0;
     @endphp
-    <div class="mk-list-row"
-         x-show="tampilKard('{{ $k['status'] }}', '{{ strtolower($k['nama']) }}', '{{ strtolower($k['developer']) }}')">
+    <div class="mk-list-row" data-row-id="{{ $idx }}"
+         data-nama="{{ strtolower($k['nama']) }}"
+         data-developer="{{ strtolower($k['developer']) }}"
+         data-status="{{ $k['status'] }}"
+         data-tester="{{ $k['tester'] }}"
+         data-timeline="{{ $k['hariKe'] }}"
+         data-paket="{{ $k['paket'] }}"
+         data-idx="{{ $idx }}"
+         x-show="tampilListRow($el)">
 
         {{-- App info --}}
         <div class="flex items-center gap-3 w-56 flex-shrink-0">
@@ -759,13 +792,93 @@ function manajemenKampanye() {
         cariTeks     : '',
         modalTerbuka : false,
         kampanye     : null,
+        sortCol      : 'nama',
+        sortDir      : 'asc',
+        listVisibleIds : [],
+        currentPage  : 1,
+        perPage      : 50,
+        totalItems   : 0,
+        totalPages   : 1,
+
+        init() {
+            this.updateListSort();
+            this.$watch('cariTeks', () => this.resetListPagi());
+            this.$watch('filterStatus', () => this.resetListPagi());
+            this.$watch('sortCol', () => this.resetListPagi());
+            this.$watch('sortDir', () => this.resetListPagi());
+        },
 
         getCurrentData() {
             const el = document.getElementById('kampanye-data');
             return el ? JSON.parse(el.getAttribute('data-list')) : [];
         },
 
-        /* ── Filter Logic ─────────────── */
+        /* ── Sort ─────────────────────── */
+        setSort(col) {
+            if (this.sortCol === col) { this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc'; }
+            else { this.sortCol = col; this.sortDir = 'asc'; }
+        },
+
+        resetListPagi() {
+            this.currentPage = 1;
+            this.$nextTick(() => this.updateListSort());
+        },
+
+        updateListSort() {
+            const container = document.querySelector('.min-w-\\[900px\\]');
+            if (!container) return;
+            const rows = Array.from(container.querySelectorAll('.mk-list-row[data-row-id]'));
+
+            rows.sort((a, b) => {
+                let va, vb;
+                if (this.sortCol === 'nama')     { va = (a.dataset.nama || ''); vb = (b.dataset.nama || ''); }
+                else if (this.sortCol === 'status')   { va = (a.dataset.status || '').toLowerCase(); vb = (b.dataset.status || '').toLowerCase(); }
+                else if (this.sortCol === 'tester')   { va = +(a.dataset.tester || 0); vb = +(b.dataset.tester || 0); }
+                else if (this.sortCol === 'timeline') { va = +(a.dataset.timeline || 0); vb = +(b.dataset.timeline || 0); }
+                else if (this.sortCol === 'paket')    { va = (a.dataset.paket || '').toLowerCase(); vb = (b.dataset.paket || '').toLowerCase(); }
+                else return 0;
+                return va < vb ? (this.sortDir==='asc'?-1:1) : (va > vb ? (this.sortDir==='asc'?1:-1) : 0);
+            });
+
+            // Re-append sorted rows after the header
+            const header = container.querySelector('.mk-list-header');
+            rows.forEach(r => {
+                if (header && header.nextSibling) {
+                    container.appendChild(r);
+                } else {
+                    container.appendChild(r);
+                }
+            });
+            // Move empty state to end
+            const emptyState = container.querySelector('[x-show="filteredCount() === 0"]');
+            if (emptyState) container.appendChild(emptyState);
+
+            const matching = rows.filter(r => this.cocokListFilter(r));
+            this.totalItems = matching.length;
+            this.totalPages = Math.ceil(this.totalItems / this.perPage) || 1;
+            if (this.currentPage > this.totalPages && this.totalPages > 0) this.currentPage = this.totalPages;
+            else if (this.currentPage < 1 && this.totalPages > 0) this.currentPage = 1;
+
+            const s = (this.currentPage - 1) * parseInt(this.perPage);
+            this.listVisibleIds = matching.slice(s, s + parseInt(this.perPage)).map(r => r.dataset.rowId);
+        },
+
+        cocokListFilter(el) {
+            const status = el.dataset.status || '';
+            const nama = el.dataset.nama || '';
+            const developer = el.dataset.developer || '';
+            const q = this.cariTeks.toLowerCase().trim();
+
+            if (this.filterStatus && status !== this.filterStatus) return false;
+            if (q && !nama.includes(q) && !developer.includes(q)) return false;
+            return true;
+        },
+
+        tampilListRow(el) {
+            return this.listVisibleIds.includes(el.dataset.rowId);
+        },
+
+        /* ── Filter Logic (Grid view) ─── */
         tampilKard(status, nama, developer) {
             if (this.filterStatus && status !== this.filterStatus) return false;
             if (this.cariTeks) {
@@ -787,6 +900,8 @@ function manajemenKampanye() {
             this.filterStatus = '';
             this.sortBy       = 'terbaru';
             this.cariTeks     = '';
+            this.sortCol      = 'nama';
+            this.sortDir      = 'asc';
         },
 
         /* ── Modal ────────────────────── */

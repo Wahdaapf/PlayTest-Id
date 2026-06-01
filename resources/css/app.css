@@ -10,3 +10,95 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+/* ════════════════════════════════════════════════════════
+   DARK THEME OVERRIDES FOR CUSTOM ADMIN PAGES 
+   ════════════════════════════════════════════════════════ */
+html.dark .bg-white, html.dark .adm-stat-card, html.dark .tk-stat, html.dark .mp-stat, html.dark .mk-stat, html.dark .mw-stat,
+html.dark .tk-table-wrap, html.dark .mp-table-wrap, html.dark .mk-table-wrap, html.dark .mw-table-wrap,
+html.dark .tk-filter-bar, html.dark .mp-filter-bar, html.dark .mk-filter-bar, html.dark .mw-filter-bar,
+html.dark .tk-modal-box, html.dark .mp-modal-box, html.dark .mk-modal-box, html.dark .mw-modal-box,
+html.dark .mk-panel, html.dark .mp-panel, html.dark .mk-confirm-box, html.dark .tk-detail-panel, html.dark .mw-detail-panel,
+html.dark .profile-card, html.dark .tb-content {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+html.dark .tk-detail-header, html.dark .tk-detail-footer, html.dark .mw-detail-header, html.dark .mw-detail-footer,
+html.dark .tk-table thead tr, html.dark .mp-table thead tr, html.dark .mk-table thead tr, html.dark .mw-table thead tr,
+html.dark .tk-pagi, html.dark .mp-pagi, html.dark .mk-pagi, html.dark .mw-pagi,
+html.dark .tk-modal-footer, html.dark .mp-modal-footer, html.dark .mk-modal-footer, html.dark .mw-modal-footer, html.dark .mk-confirm-footer {
+    background: #0f172a !important;
+    border-color: #334155 !important;
+}
+
+html.dark .tk-table tbody tr:hover, html.dark .mp-table tbody tr:hover, html.dark .mk-table tbody tr:hover, html.dark .mw-table tbody tr:hover, html.dark .tk-detail-row:hover, html.dark .mw-detail-row:hover {
+    background: #0f172a !important;
+}
+
+html.dark .text-slate-900, html.dark .text-slate-800, html.dark .text-slate-700, 
+html.dark .tk-td-name, html.dark .mp-td-name, html.dark .mk-td-title, html.dark .mw-td-name,
+html.dark p[style*="#1e293b"], html.dark p[style*="#0f172a"], html.dark .tk-stat-value, html.dark .mw-stat-value, html.dark .mp-stat-value, html.dark .mk-stat-value,
+html.dark .tk-modal-title, html.dark .mp-modal-title, html.dark .mk-title, html.dark .mw-modal-title, html.dark .mk-confirm-title,
+html.dark .tk-detail-val, html.dark .mw-detail-val, html.dark .mp-detail-value, html.dark .mk-detail-value, html.dark h1, html.dark h2, html.dark h3, html.dark .tb-content h2, html.dark .tb-content h3, html.dark .tb-content h4 {
+    color: #f8fafc !important;
+}
+
+html.dark .text-slate-600, html.dark .text-slate-500, html.dark .text-slate-400, 
+html.dark .tk-td-date, html.dark .mp-td-date, html.dark .mk-td-date, html.dark .mw-td-date, html.dark th,
+html.dark .tk-stat-label, html.dark .mw-stat-label, html.dark p[style*="#94a3b8"], html.dark p[style*="#64748b"], html.dark .mw-stat-sub, html.dark .tk-stat-sub, html.dark .mp-stat-sub, html.dark .mk-stat-sub,
+html.dark .tk-detail-label, html.dark .mw-detail-label, html.dark p, html.dark .tb-content p, html.dark .tb-content li {
+    color: #cbd5e1 !important;
+}
+
+html.dark .tk-input, html.dark .tk-select, html.dark .mp-input, html.dark .mp-select, html.dark .mk-input, html.dark .mk-select, html.dark .mw-input, html.dark .mw-select, html.dark .mp-form-input, html.dark .mp-form-select, html.dark .mp-form-textarea, html.dark .mk-form-input, html.dark .mk-form-select, html.dark .mk-form-textarea,
+html.dark .tk-pagi-btn, html.dark .mp-pagi-btn, html.dark .mk-pagi-btn, html.dark .mw-pagi-btn, html.dark .tb-tab--inactive {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f8fafc !important;
+}
+
+html.dark .tk-input:focus, html.dark .tk-select:focus, html.dark .mp-input:focus, html.dark .mp-select:focus, html.dark .mk-input:focus, html.dark .mk-select:focus, html.dark .mw-input:focus, html.dark .mw-select:focus, html.dark .mp-form-input:focus, html.dark .mp-form-select:focus, html.dark .mp-form-textarea:focus, html.dark .mk-form-input:focus, html.dark .mk-form-select:focus, html.dark .mk-form-textarea:focus {
+    border-color: #3b82f6 !important;
+}
+
+html.dark .tk-btn-secondary, html.dark .tk-btn-ghost, html.dark .mp-btn-secondary, html.dark .mp-btn-ghost, html.dark .mk-btn-secondary, html.dark .mk-btn-ghost, html.dark .mw-btn-secondary, html.dark .mw-btn-ghost, html.dark .tb-tab--inactive:hover {
+    background: #334155 !important;
+    color: #f8fafc !important;
+    border-color: #475569 !important;
+}
+
+html.dark .tk-btn-secondary:hover, html.dark .tk-btn-ghost:hover, html.dark .mp-btn-secondary:hover, html.dark .mp-btn-ghost:hover, html.dark .mk-btn-secondary:hover, html.dark .mk-btn-ghost:hover, html.dark .mw-btn-secondary:hover, html.dark .mw-btn-ghost:hover {
+    background: #475569 !important;
+}
+
+html.dark .tk-btn-icon, html.dark .mp-btn-icon, html.dark .mw-btn-icon {
+    background: #334155 !important;
+    color: #f8fafc !important;
+}
+html.dark .tk-btn-icon:hover, html.dark .mp-btn-icon:hover, html.dark .mw-btn-icon:hover {
+    background: #475569 !important;
+}
+
+html.dark .tk-alert-success, html.dark .mw-alert-success, html.dark .mp-alert-success, html.dark .mk-alert-success {
+    background: rgba(16, 185, 129, 0.1) !important;
+    border-color: rgba(16, 185, 129, 0.2) !important;
+}
+html.dark .tk-alert-danger, html.dark .mw-alert-danger, html.dark .mp-alert-danger, html.dark .mk-alert-danger {
+    background: rgba(239, 68, 68, 0.1) !important;
+    border-color: rgba(239, 68, 68, 0.2) !important;
+}
+
+html.dark td, html.dark .tk-detail-row, html.dark .mw-detail-row {
+    border-color: #334155 !important;
+}
+
+html.dark .adm-stat-icon[style*="background:#eff6ff;"], html.dark .tk-stat-icon.tk-bg-blue, html.dark .mw-stat-icon.mw-bg-blue, html.dark .mp-stat-icon.mp-bg-blue, html.dark .mk-stat-icon.mk-bg-blue { background: rgba(37, 99, 235, 0.1) !important; }
+html.dark .adm-stat-icon[style*="background:#f0fdf4;"], html.dark .tk-stat-icon.tk-bg-emerald, html.dark .mw-stat-icon.mw-bg-emerald, html.dark .mp-stat-icon.mp-bg-emerald, html.dark .mk-stat-icon.mk-bg-emerald { background: rgba(16, 185, 129, 0.1) !important; }
+html.dark .adm-stat-icon[style*="background:#fffbeb;"], html.dark .tk-stat-icon.tk-bg-orange, html.dark .mw-stat-icon.mw-bg-orange, html.dark .mp-stat-icon.mp-bg-orange, html.dark .mk-stat-icon.mk-bg-orange { background: rgba(245, 158, 11, 0.1) !important; }
+html.dark .adm-stat-icon[style*="background:#f5f3ff;"], html.dark .tk-stat-icon.tk-bg-purple, html.dark .mw-stat-icon.mw-bg-purple, html.dark .mp-stat-icon.mp-bg-purple, html.dark .mk-stat-icon.mk-bg-purple { background: rgba(139, 92, 246, 0.1) !important; }
+html.dark .adm-stat-icon[style*="background:#fef2f2;"], html.dark .tk-stat-icon.tk-bg-red, html.dark .mw-stat-icon.mw-bg-red, html.dark .mp-stat-icon.mp-bg-red, html.dark .mk-stat-icon.mk-bg-red { background: rgba(239, 68, 68, 0.1) !important; }
+html.dark .tk-stat-icon.tk-bg-green, html.dark .mw-stat-icon.mw-bg-green, html.dark .mp-stat-icon.mp-bg-green, html.dark .mk-stat-icon.mk-bg-green { background: rgba(34, 197, 94, 0.1) !important; }
+html.dark .mw-upload-area { background: #0f172a !important; border-color: #334155 !important; }
+html.dark .mw-upload-area.has-file { background: rgba(34, 197, 94, 0.1) !important; border-color: rgba(34, 197, 94, 0.3) !important; }
+html.dark .mw-upload-preview { background: #0f172a !important; border-color: #334155 !important; }

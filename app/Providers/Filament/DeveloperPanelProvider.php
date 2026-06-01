@@ -134,6 +134,12 @@ class DeveloperPanelProvider extends PanelProvider
                 AccountWidget::class,
                 FilamentInfoWidget::class,
             ])
+            ->userMenuItems([
+                'profile' => \Filament\Navigation\MenuItem::make()
+                    ->label(fn() => auth()->user()->name)
+                    ->url(fn (): string => ProfileDeveloper::getUrl())
+                    ->icon('heroicon-o-user-circle'),
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

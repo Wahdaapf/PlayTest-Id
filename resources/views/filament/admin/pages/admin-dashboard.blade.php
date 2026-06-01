@@ -11,14 +11,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">  
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">  
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">  
   
 <style>  
 /* ══════════════════════════════════════  
    FONTS  
 ══════════════════════════════════════ */  
 .adm-page, .adm-page * { font-family: 'Inter', sans-serif; }  
-.font-sora  { font-family: 'Sora', sans-serif !important; }  
-.font-mono-data { font-family: 'JetBrains Mono', monospace !important; }  
+.font-sora  { font-family: 'Inter', sans-serif !important; }  
+.font-mono-data { font-family: 'Inter', sans-serif !important; }  
   
 /* ══════════════════════════════════════  
    STAT CARDS  
@@ -96,6 +97,14 @@
 }  
 .adm-table tr:hover td { background-color: #fafafa; }  
 .adm-table tr:last-child td { border-bottom: none; }  
+
+/* ══════════════════════════════════════  
+   SORT HEADER BUTTON  
+══════════════════════════════════════ */  
+.adm-sort-btn { display: inline-flex; align-items: center; gap: 3px; background: none; border: none; cursor: pointer; font-size: .7rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: .06em; padding: 0; transition: color 0.2s; font-family: 'Inter', sans-serif; white-space: nowrap; }  
+.adm-sort-btn:hover  { color: #2563eb; }  
+.adm-sort-btn.active { color: #2563eb; }  
+.adm-sort-icon { font-size: .95rem !important; line-height: 1; }  
   
 /* ══════════════════════════════════════  
    BADGES  
@@ -202,11 +211,11 @@
                     <div class="flex-1 min-w-0">  
                         <p class="text-xs font-medium uppercase tracking-wider" style="color:#94a3b8;">Developer</p>  
                         <p class="text-2xl font-bold mt-0.5 leading-none font-mono-data" style="color:#1e293b;">{{ $statDeveloper }}</p>  
-                        <p class="text-xs font-medium mt-1" style="color:#10b981;">+12 bulan ini</p>  
+                        <p class="text-xs font-medium mt-1" style="color:#10b981;">{{ $devBulanIni }} bulan ini</p>  
                     </div>  
                 </div>  
                 <div class="adm-progress-track mt-3">  
-                    <div class="adm-progress-fill" style="width:71%;background:#2563eb;"></div>  
+                    <div class="adm-progress-fill" style="width:{{ $statDeveloper > 0 ? min(round(($devBulanIni / $statDeveloper) * 100), 100) : 0 }}%;background:#2563eb;"></div>  
                 </div>  
             </div>  
   
@@ -222,11 +231,11 @@
                     <div class="flex-1 min-w-0">  
                         <p class="text-xs font-medium uppercase tracking-wider" style="color:#94a3b8;">Tester</p>  
                         <p class="text-2xl font-bold mt-0.5 leading-none font-mono-data" style="color:#1e293b;">{{ $statTester }}</p>  
-                        <p class="text-xs font-medium mt-1" style="color:#10b981;">+87 bulan ini</p>  
+                        <p class="text-xs font-medium mt-1" style="color:#10b981;">{{ $testerBulanIni }} bulan ini</p>  
                     </div>  
                 </div>  
-                <div class="adm-progress-track">  
-                    <div class="adm-progress-fill" style="width:84%;background:#10b981;"></div>  
+                <div class="adm-progress-track mt-3">  
+                    <div class="adm-progress-fill" style="width:{{ $statTester > 0 ? min(round(($testerBulanIni / $statTester) * 100), 100) : 0 }}%;background:#10b981;"></div>  
                 </div>  
             </div>  
   
@@ -241,11 +250,11 @@
                     <div class="flex-1 min-w-0">  
                         <p class="text-xs font-medium uppercase tracking-wider" style="color:#94a3b8;">Aktif</p>  
                         <p class="text-2xl font-bold mt-0.5 leading-none font-mono-data" style="color:#1e293b;">{{ $statAktif }}</p>  
-                        <p class="text-xs font-medium mt-1" style="color:#f59e0b;">+3 minggu ini</p>  
+                        <p class="text-xs font-medium mt-1" style="color:#f59e0b;">{{ $aktifMingguIni }} minggu ini</p>  
                     </div>  
                 </div>  
-                <div class="adm-progress-track">  
-                    <div class="adm-progress-fill" style="width:56%;background:#f59e0b;"></div>  
+                <div class="adm-progress-track mt-3">  
+                    <div class="adm-progress-fill" style="width:{{ $statAktif > 0 ? min(round(($aktifMingguIni / $statAktif) * 100), 100) : 0 }}%;background:#f59e0b;"></div>  
                 </div>  
             </div>  
   
@@ -264,7 +273,7 @@
                     </div>  
                 </div>  
                 <div class="adm-progress-track">  
-                    <div class="adm-progress-fill" style="width:87%;background:#8b5cf6;"></div>  
+                    <div class="adm-progress-fill" style="width:{{ $statTotalKampanye > 0 ? min(round(($statSelesai / $statTotalKampanye) * 100), 100) : 0 }}%;background:#8b5cf6;"></div>  
                 </div>  
             </div>  
   
@@ -279,11 +288,11 @@
                     <div class="flex-1 min-w-0">  
                         <p class="text-xs font-medium uppercase tracking-wider" style="color:#94a3b8;">Pendapatan</p>  
                         <p class="text-xl font-bold mt-0.5 leading-none font-mono-data" style="color:#1e293b;">Rp {{ $statPendapatan }}</p>  
-                        <p class="text-xs font-medium mt-1" style="color:#10b981;">+18% vs bln lalu</p>  
+                        <p class="text-xs font-medium mt-1" style="color:#10b981;">{{ $statGrowthPendapatan }} vs bln lalu</p>  
                     </div>  
                 </div>  
-                <div class="adm-progress-track">  
-                    <div class="adm-progress-fill" style="width:63%;background:#10b981;"></div>  
+                <div class="adm-progress-track mt-3">  
+                    <div class="adm-progress-fill" style="width:{{ (int) str_replace(['+', '%'], '', $statGrowthPendapatan) > 0 ? min(100, (int) str_replace(['+', '%'], '', $statGrowthPendapatan)) : 10 }}%;background:#10b981;"></div>  
                 </div>  
             </div>  
   
@@ -336,20 +345,21 @@
                 <div class="px-5 py-5">  
                     {{-- Bar chart --}}  
                     <div class="flex items-end gap-3" style="height:144px;">  
+                        @php $maxChartVal = max(array_merge($chartDev ?: [0], $chartTester ?: [0])) ?: 1; @endphp
                         @foreach($chartHari as $i => $hari)  
                         <div class="flex-1 flex flex-col items-center gap-1">  
                             <div class="w-full flex items-end gap-0.5 justify-center" style="height:112px;">  
                                 <div class="adm-chart-bar flex-1"  
                                      style="background:#2563eb;max-width:14px;  
                                             {{ ($i >= 5) ? 'opacity:0.65;' : '' }}  
-                                            height:{{ $chartDev[$i] }}%;"  
-                                     data-target="{{ $chartDev[$i] }}%">  
+                                            height:{{ round(($chartDev[$i] / $maxChartVal) * 100) }}%;"  
+                                     data-target="{{ round(($chartDev[$i] / $maxChartVal) * 100) }}%">  
                                 </div>  
                                 <div class="adm-chart-bar flex-1"  
                                      style="background:#10b981;max-width:14px;  
                                             {{ ($i >= 5) ? 'opacity:0.65;' : '' }}  
-                                            height:{{ $chartTester[$i] }}%;"  
-                                     data-target="{{ $chartTester[$i] }}%">  
+                                            height:{{ round(($chartTester[$i] / $maxChartVal) * 100) }}%;"  
+                                     data-target="{{ round(($chartTester[$i] / $maxChartVal) * 100) }}%">  
                                 </div>  
                             </div>  
                             <span class="text-xs font-medium" style="color:#94a3b8;">{{ $hari }}</span>  
@@ -360,19 +370,19 @@
                     {{-- Chart stats row --}}  
                     <div class="flex items-center justify-between mt-4 pt-4" style="border-top:1px solid #f1f5f9;">  
                         <div class="text-center">  
-                            <p class="text-sm font-bold font-mono-data" style="color:#2563eb;">+48</p>  
+                            <p class="text-sm font-bold font-mono-data" style="color:#2563eb;">{{ $statDevMingguIni }}</p>  
                             <p class="text-xs" style="color:#94a3b8;">Dev minggu ini</p>  
                         </div>  
                         <div class="text-center">  
-                            <p class="text-sm font-bold font-mono-data" style="color:#10b981;">+312</p>  
+                            <p class="text-sm font-bold font-mono-data" style="color:#10b981;">{{ $statTesterMingguIni }}</p>  
                             <p class="text-xs" style="color:#94a3b8;">Tester minggu ini</p>  
                         </div>  
                         <div class="text-center">  
-                            <p class="text-sm font-bold font-mono-data" style="color:#1e293b;">1:6.5</p>  
+                            <p class="text-sm font-bold font-mono-data" style="color:#1e293b;">{{ $statRasio }}</p>  
                             <p class="text-xs" style="color:#94a3b8;">Rasio Dev:Tester</p>  
                         </div>  
                         <div class="text-center">  
-                            <p class="text-sm font-bold font-mono-data" style="color:#f59e0b;">Jumat</p>  
+                            <p class="text-sm font-bold font-mono-data" style="color:#f59e0b;">{{ $statHariAktif }}</p>  
                             <p class="text-xs" style="color:#94a3b8;">Hari paling aktif</p>  
                         </div>  
                     </div>  
@@ -487,16 +497,46 @@
                     <table class="adm-table">  
                         <thead>  
                             <tr>  
-                                <th>Nama</th>  
-                                <th>Role</th>  
-                                <th>Tanggal</th>  
-                                <th>Status</th>  
-                                <th class="text-right">Aksi</th>  
+                                <th>
+                                    <button class="adm-sort-btn" :class="sortCol==='nama'?'active':''" @click="setSort('nama')">
+                                        Nama
+                                        <span class="material-symbols-outlined adm-sort-icon"
+                                              x-text="sortCol!=='nama' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    </button>
+                                </th>
+                                <th>
+                                    <button class="adm-sort-btn" :class="sortCol==='role'?'active':''" @click="setSort('role')">
+                                        Role
+                                        <span class="material-symbols-outlined adm-sort-icon"
+                                              x-text="sortCol!=='role' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    </button>
+                                </th>
+                                <th>
+                                    <button class="adm-sort-btn" :class="sortCol==='tanggal'?'active':''" @click="setSort('tanggal')">
+                                        Tanggal
+                                        <span class="material-symbols-outlined adm-sort-icon"
+                                              x-text="sortCol!=='tanggal' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    </button>
+                                </th>
+                                <th>
+                                    <button class="adm-sort-btn" :class="sortCol==='status'?'active':''" @click="setSort('status')">
+                                        Status
+                                        <span class="material-symbols-outlined adm-sort-icon"
+                                              x-text="sortCol!=='status' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    </button>
+                                </th>
+                                <th class="text-right">
+                                    <span class="adm-sort-btn" style="cursor:default;pointer-events:none">Aksi</span>
+                                </th>  
                             </tr>  
                         </thead>  
                         <tbody>  
                             @foreach($pendaftaranList as $user)  
-                            <tr>  
+                            <tr data-nama="{{ strtolower($user['nama']) }}"
+                                data-role="{{ strtolower($user['role']) }}"
+                                data-tanggal="{{ $user['tanggal'] }}"
+                                data-tanggal-sort="{{ $user['timestamp'] }}"
+                                data-status="{{ strtolower($user['status']) }}">  
                                 {{-- Avatar + nama + email --}}  
                                 <td>  
                                     <div class="flex items-center gap-3">  
@@ -540,14 +580,14 @@
                                 {{-- Aksi --}}  
                                 <td class="text-right">  
                                     <div class="flex items-center justify-end gap-2">  
-                                        <button class="text-xs font-semibold px-3 py-1 rounded-lg"  
-                                                style="background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;">  
-                                            Detail  
+                                        <button class="flex items-center justify-center p-1.5 rounded-lg"  
+                                                style="background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;" title="Detail">  
+                                            <span class="material-symbols-outlined text-[1.1rem]">visibility</span>
                                         </button>  
                                         @if($user['status'] === 'Pending')  
-                                        <button class="text-xs font-semibold px-3 py-1 rounded-lg"  
-                                                style="background:#fffbeb;color:#b45309;border:1px solid #fde68a;">  
-                                            Approve  
+                                        <button class="flex items-center justify-center p-1.5 rounded-lg"  
+                                                style="background:#fffbeb;color:#b45309;border:1px solid #fde68a;" title="Approve">  
+                                            <span class="material-symbols-outlined text-[1.1rem]">check_circle</span>
                                         </button>  
                                         @endif  
                                     </div>  
@@ -648,7 +688,39 @@
 @push('scripts')  
 <script>  
 function adminDashboard() {  
-    return {};  
+    return {
+        sortCol: 'tanggal',
+        sortDir: 'desc',
+
+        init() {
+            this.updateTableSort();
+            this.$watch('sortCol', () => this.updateTableSort());
+            this.$watch('sortDir', () => this.updateTableSort());
+        },
+
+        setSort(col) {
+            if (this.sortCol === col) { this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc'; }
+            else { this.sortCol = col; this.sortDir = 'asc'; }
+        },
+
+        updateTableSort() {
+            const tbody = document.querySelector('.adm-table tbody');
+            if (!tbody) return;
+            const rows = Array.from(tbody.querySelectorAll('tr[data-nama]'));
+
+            rows.sort((a, b) => {
+                let va, vb;
+                if (this.sortCol === 'nama')    { va = (a.dataset.nama || '').toLowerCase(); vb = (b.dataset.nama || '').toLowerCase(); }
+                else if (this.sortCol === 'role')     { va = (a.dataset.role || '').toLowerCase(); vb = (b.dataset.role || '').toLowerCase(); }
+                else if (this.sortCol === 'tanggal')  { va = +(a.dataset.tanggalSort || 0); vb = +(b.dataset.tanggalSort || 0); }
+                else if (this.sortCol === 'status')   { va = (a.dataset.status || '').toLowerCase(); vb = (b.dataset.status || '').toLowerCase(); }
+                else return 0;
+                return va < vb ? (this.sortDir==='asc'?-1:1) : (va > vb ? (this.sortDir==='asc'?1:-1) : 0);
+            });
+
+            rows.forEach(r => tbody.appendChild(r));
+        },
+    };  
 }  
 </script>  
 @endpush  

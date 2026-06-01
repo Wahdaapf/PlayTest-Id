@@ -416,4 +416,409 @@
 </div>
 
 <x-filament-actions::modals />
+
+{{-- ── Tips & Bantuan — Floating Help Tooltips Panel ──────────────── --}}
+<div x-data="tipsBantuanPanel()" x-on:open-tips-bantuan.window="open()" x-on:keydown.escape.window="close()">
+    <template x-teleport="body">
+        {{-- Backdrop --}}
+        <div x-show="isOpen" x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+             class="tips-backdrop" x-cloak @click.self="close()">
+
+            {{-- Panel --}}
+            <div class="tips-panel"
+                 x-show="isOpen"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 scale-95 translate-y-4"
+                 x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 scale-100"
+                 x-transition:leave-end="opacity-0 scale-95 translate-y-4"
+                 @click.stop>
+
+                {{-- Header --}}
+                <div class="tips-header">
+                    <div class="tips-header-content">
+                        <div class="tips-header-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="tips-title">Tips & Bantuan</h3>
+                            <p class="tips-subtitle" x-text="roleLabel"></p>
+                        </div>
+                    </div>
+                    <button @click="close()" class="tips-close-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                {{-- Search --}}
+                <div class="tips-search-wrap">
+                    <svg class="tips-search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                    </svg>
+                    <input type="text" x-model="search" placeholder="Cari tips..." class="tips-search-input" />
+                </div>
+
+                {{-- Category Tabs --}}
+                <div class="tips-tabs">
+                    <template x-for="cat in categories" :key="cat.id">
+                        <button @click="activeCategory = cat.id"
+                                :class="activeCategory === cat.id ? 'tips-tab-active' : 'tips-tab-inactive'"
+                                class="tips-tab"
+                                x-text="cat.label">
+                        </button>
+                    </template>
+                </div>
+
+                {{-- Tips List --}}
+                <div class="tips-list">
+                    <template x-for="(tip, index) in filteredTips" :key="index">
+                        <div class="tips-card" @click="toggleTip(index)"
+                             :class="expandedTip === index ? 'tips-card-expanded' : ''">
+                            <div class="tips-card-header">
+                                <div class="tips-card-icon" :style="'background:' + tip.iconBg">
+                                    <span x-text="tip.emoji" style="font-size:1.1rem;"></span>
+                                </div>
+                                <div class="tips-card-title-wrap">
+                                    <h4 class="tips-card-title" x-text="tip.title"></h4>
+                                    <span class="tips-card-category" x-text="tip.categoryLabel"></span>
+                                </div>
+                                <svg class="tips-card-chevron" :class="expandedTip === index ? 'rotate-180' : ''"
+                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                                </svg>
+                            </div>
+                            <div x-show="expandedTip === index" x-collapse.duration.200ms class="tips-card-body">
+                                <p x-text="tip.desc" class="tips-card-desc"></p>
+                                <div class="tips-card-steps" x-show="tip.steps && tip.steps.length > 0">
+                                    <template x-for="(step, si) in (tip.steps || [])" :key="si">
+                                        <div class="tips-step">
+                                            <span class="tips-step-num" x-text="si + 1"></span>
+                                            <span class="tips-step-text" x-text="step"></span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                    <div x-show="filteredTips.length === 0" class="tips-empty">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mx-auto mb-3" style="color:#94a3b8;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>
+                        <p>Tidak ada tips yang cocok</p>
+                    </div>
+                </div>
+
+                {{-- Footer --}}
+                <div class="tips-footer">
+                    <div class="tips-footer-info">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+                        </svg>
+                        <span x-text="filteredTips.length + ' tips tersedia'"></span>
+                    </div>
+                    <div style="display:flex;gap:6px;align-items:center;">
+                        <button @click="close(); $nextTick(() => window.dispatchEvent(new CustomEvent('start-guided-tour')))" class="tips-tour-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:14px;height:14px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09Z"/>
+                            </svg>
+                            Mulai Tur
+                        </button>
+                        <span class="tips-footer-kbd">ESC untuk tutup</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</div>
+
+<script>
+function tipsBantuanPanel() {
+    // Detect panel
+    const path = window.location.pathname;
+    let role = 'admin';
+    if (path.startsWith('/developer')) role = 'developer';
+    else if (path.startsWith('/tester')) role = 'tester';
+
+    const roleLabels = {
+        admin: 'Panduan untuk Administrator',
+        developer: 'Panduan untuk Developer',
+        tester: 'Panduan untuk Tester'
+    };
+
+    const tipsData = {
+        admin: [
+            { title: 'Navigasi Dashboard', emoji: '📊', iconBg: 'rgba(37,99,235,0.12)', category: 'navigasi', categoryLabel: 'Navigasi', desc: 'Dashboard Admin menampilkan ringkasan seluruh platform PlayTest ID. Anda bisa melihat statistik developer, tester, kampanye aktif, dan pendapatan secara real-time.', steps: ['Buka menu "Dashboard" di sidebar', 'Lihat kartu statistik di bagian atas', 'Scroll ke bawah untuk melihat grafik dan tabel'] },
+            { title: 'Kelola Pengguna', emoji: '👥', iconBg: 'rgba(16,185,129,0.12)', category: 'fitur', categoryLabel: 'Fitur', desc: 'Manajemen Pengguna memungkinkan Anda untuk approve, suspend, atau menolak pendaftaran Developer dan Tester.', steps: ['Buka menu "Pengguna" di sidebar', 'Gunakan filter untuk mencari user', 'Klik tombol aksi di setiap baris untuk mengelola'] },
+            { title: 'Manajemen Kampanye', emoji: '🚀', iconBg: 'rgba(245,158,11,0.12)', category: 'fitur', categoryLabel: 'Fitur', desc: 'Kelola semua kampanye testing yang ada di platform. Anda bisa memantau progres dan status setiap kampanye.', steps: ['Buka menu "Kampanye" di sidebar', 'Lihat daftar kampanye yang aktif', 'Klik detail untuk melihat informasi lengkap'] },
+            { title: 'Verifikasi Pembayaran', emoji: '💳', iconBg: 'rgba(139,92,246,0.12)', category: 'fitur', categoryLabel: 'Fitur', desc: 'Review dan verifikasi bukti pembayaran dari Developer. Anda bisa menyetujui atau menolak pembayaran.', steps: ['Buka menu "Pembayaran Developer"', 'Lihat daftar pembayaran pending', 'Klik detail untuk melihat bukti transfer', 'Approve atau tolak pembayaran'] },
+            { title: 'Manajemen Withdraw', emoji: '🏦', iconBg: 'rgba(236,72,153,0.12)', category: 'fitur', categoryLabel: 'Fitur', desc: 'Kelola permintaan penarikan saldo dari Tester. Pastikan data rekening benar sebelum memproses.', steps: ['Buka menu "Penarikan Tester"', 'Review permintaan withdraw', 'Verifikasi data rekening tujuan', 'Proses atau tolak penarikan'] },
+            { title: 'Manajemen Paket', emoji: '📦', iconBg: 'rgba(59,130,246,0.12)', category: 'fitur', categoryLabel: 'Fitur', desc: 'Atur paket-paket testing yang tersedia. Anda bisa menambah, mengedit, atau menonaktifkan paket.', steps: ['Buka menu "Paket" di sidebar', 'Klik "Tambah Paket" untuk membuat paket baru', 'Edit paket yang ada melalui tombol aksi'] },
+            { title: 'Dark Mode', emoji: '🌙', iconBg: 'rgba(71,85,105,0.12)', category: 'umum', categoryLabel: 'Umum', desc: 'Aktifkan mode gelap untuk pengalaman yang lebih nyaman di malam hari. Semua halaman mendukung dark mode.', steps: ['Klik nama Anda di pojok kanan atas', 'Pilih ikon bulan untuk mode gelap', 'Pilih ikon matahari untuk mode terang'] },
+            { title: 'Keyboard Shortcuts', emoji: '⌨️', iconBg: 'rgba(34,211,238,0.12)', category: 'umum', categoryLabel: 'Umum', desc: 'Gunakan pintasan keyboard untuk navigasi lebih cepat.', steps: ['Ctrl/⌘ + K untuk membuka pencarian global', 'ESC untuk menutup modal atau panel', 'Tab untuk navigasi antar elemen form'] },
+        ],
+        developer: [
+            { title: 'Dashboard Developer', emoji: '🏠', iconBg: 'rgba(37,99,235,0.12)', category: 'navigasi', categoryLabel: 'Navigasi', desc: 'Dashboard Developer menampilkan ringkasan aplikasi Anda, progres testing, dan statistik kampanye.', steps: ['Buka menu "Home" di sidebar', 'Lihat kartu statistik di bagian atas', 'Periksa notifikasi dan update terbaru'] },
+            { title: 'Buat Test Case Baru', emoji: '📝', iconBg: 'rgba(16,185,129,0.12)', category: 'fitur', categoryLabel: 'Fitur', desc: 'Buat kampanye testing baru untuk aplikasi Anda. Tentukan langkah-langkah testing yang perlu dilakukan tester.', steps: ['Klik menu "New Test Case"', 'Isi nama dan deskripsi kampanye', 'Tentukan langkah-langkah testing', 'Submit dan tunggu tester bergabung'] },
+            { title: 'Pantau Progress', emoji: '📈', iconBg: 'rgba(245,158,11,0.12)', category: 'fitur', categoryLabel: 'Fitur', desc: 'Monitor progres testing aplikasi Anda secara real-time. Lihat berapa tester yang sudah menyelesaikan tugas.', steps: ['Buka menu "Pantau Progress"', 'Pilih kampanye yang ingin dilihat', 'Lihat grafik dan statistik progres'] },
+            { title: 'Pembayaran Paket', emoji: '💰', iconBg: 'rgba(139,92,246,0.12)', category: 'fitur', categoryLabel: 'Fitur', desc: 'Pilih dan bayar paket testing untuk aplikasi Anda. Upload bukti transfer untuk verifikasi.', steps: ['Pilih paket testing yang sesuai', 'Lakukan pembayaran sesuai nominal', 'Upload bukti transfer', 'Tunggu verifikasi dari Admin'] },
+            { title: 'Profil Developer', emoji: '👤', iconBg: 'rgba(236,72,153,0.12)', category: 'navigasi', categoryLabel: 'Navigasi', desc: 'Kelola profil dan informasi akun Developer Anda.', steps: ['Buka menu "Profil Saya"', 'Edit informasi yang ingin diubah', 'Klik simpan untuk menyimpan perubahan'] },
+            { title: 'Dark Mode', emoji: '🌙', iconBg: 'rgba(71,85,105,0.12)', category: 'umum', categoryLabel: 'Umum', desc: 'Aktifkan mode gelap untuk kenyamanan mata Anda.', steps: ['Klik nama Anda di pojok kanan atas', 'Pilih ikon tema yang diinginkan'] },
+            { title: 'Keyboard Shortcuts', emoji: '⌨️', iconBg: 'rgba(34,211,238,0.12)', category: 'umum', categoryLabel: 'Umum', desc: 'Gunakan pintasan keyboard untuk produktivitas lebih tinggi.', steps: ['Ctrl/⌘ + K untuk pencarian global', 'ESC untuk menutup modal'] },
+        ],
+        tester: [
+            { title: 'Dashboard Tester', emoji: '🏠', iconBg: 'rgba(14,165,233,0.12)', category: 'navigasi', categoryLabel: 'Navigasi', desc: 'Dashboard Tester menampilkan misi yang tersedia, progres pengujian, dan saldo dompet Anda.', steps: ['Buka menu "Home" di sidebar', 'Lihat misi baru yang tersedia', 'Periksa saldo dan progres Anda'] },
+            { title: 'Ambil & Selesaikan Misi', emoji: '🎯', iconBg: 'rgba(16,185,129,0.12)', category: 'fitur', categoryLabel: 'Fitur', desc: 'Ambil misi testing yang tersedia dan selesaikan sesuai langkah-langkah yang ditentukan untuk mendapatkan reward.', steps: ['Buka menu "Misi Saya"', 'Lihat misi yang tersedia', 'Klik misi untuk melihat detail', 'Ikuti langkah testing yang diminta', 'Submit hasil testing Anda'] },
+            { title: 'Dompet & Penghasilan', emoji: '💰', iconBg: 'rgba(245,158,11,0.12)', category: 'fitur', categoryLabel: 'Fitur', desc: 'Kelola saldo dan lakukan penarikan penghasilan dari misi testing yang telah Anda selesaikan.', steps: ['Buka menu "Dompet"', 'Lihat saldo dan riwayat transaksi', 'Klik "Withdraw" untuk menarik saldo', 'Masukkan jumlah dan data rekening', 'Tunggu proses oleh Admin'] },
+            { title: 'Laporkan Bug', emoji: '🐛', iconBg: 'rgba(239,68,68,0.12)', category: 'fitur', categoryLabel: 'Fitur', desc: 'Laporkan bug yang ditemukan saat testing. Laporan yang detail akan membantu developer memperbaiki aplikasi.', steps: ['Saat mengerjakan misi, klik "Laporkan Bug"', 'Jelaskan bug secara detail', 'Sertakan screenshot jika ada', 'Submit laporan'] },
+            { title: 'Profil Tester', emoji: '👤', iconBg: 'rgba(139,92,246,0.12)', category: 'navigasi', categoryLabel: 'Navigasi', desc: 'Kelola profil dan informasi akun Tester Anda.', steps: ['Buka menu "Profil" di sidebar', 'Edit data diri Anda', 'Pastikan data rekening benar untuk withdraw'] },
+            { title: 'Tips Mendapat Misi', emoji: '💡', iconBg: 'rgba(34,211,238,0.12)', category: 'umum', categoryLabel: 'Umum', desc: 'Beberapa tips untuk mendapatkan lebih banyak misi testing.', steps: ['Selalu cek dashboard secara berkala', 'Selesaikan misi tepat waktu', 'Berikan laporan yang detail dan berkualitas', 'Jaga rating akun Anda tetap tinggi'] },
+            { title: 'Dark Mode', emoji: '🌙', iconBg: 'rgba(71,85,105,0.12)', category: 'umum', categoryLabel: 'Umum', desc: 'Aktifkan mode gelap untuk kenyamanan mata Anda.', steps: ['Klik nama Anda di pojok kanan atas', 'Pilih ikon tema yang diinginkan'] },
+        ]
+    };
+
+    return {
+        isOpen: false,
+        search: '',
+        activeCategory: 'semua',
+        expandedTip: null,
+        role: role,
+        roleLabel: roleLabels[role],
+        tips: tipsData[role] || tipsData.admin,
+        categories: [
+            { id: 'semua', label: 'Semua' },
+            { id: 'navigasi', label: 'Navigasi' },
+            { id: 'fitur', label: 'Fitur' },
+            { id: 'umum', label: 'Umum' },
+        ],
+        get filteredTips() {
+            let result = this.tips;
+            if (this.activeCategory !== 'semua') {
+                result = result.filter(t => t.category === this.activeCategory);
+            }
+            if (this.search.trim()) {
+                const q = this.search.toLowerCase();
+                result = result.filter(t =>
+                    t.title.toLowerCase().includes(q) ||
+                    t.desc.toLowerCase().includes(q)
+                );
+            }
+            return result;
+        },
+        open() {
+            this.isOpen = true;
+            this.search = '';
+            this.expandedTip = null;
+            this.activeCategory = 'semua';
+            document.body.style.overflow = 'hidden';
+        },
+        close() {
+            this.isOpen = false;
+            document.body.style.overflow = '';
+        },
+        toggleTip(index) {
+            this.expandedTip = this.expandedTip === index ? null : index;
+        }
+    };
+}
+</script>
+
+{{-- Intercept sidebar "Tips & Bantuan" / "Bantuan" / "Support" clicks --}}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    function interceptHelpLinks() {
+        document.querySelectorAll('.fi-sidebar-item a[href="#"], .fi-sidebar-item a[href$="#"]').forEach(link => {
+            if (link.dataset.tipsIntercepted) return;
+            const label = (link.textContent || '').trim().toLowerCase();
+            if (label.includes('tips') || label.includes('bantuan') || label.includes('support') || label.includes('help')) {
+                link.dataset.tipsIntercepted = 'true';
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.dispatchEvent(new CustomEvent('open-tips-bantuan'));
+                    if (window.matchMedia('(max-width: 1024px)').matches && window.Alpine) {
+                        Alpine.store('sidebar')?.close();
+                    }
+                });
+            }
+        });
+    }
+    const observer = new MutationObserver(interceptHelpLinks);
+    observer.observe(document.body, { childList: true, subtree: true });
+    interceptHelpLinks();
+});
+</script>
+
+{{-- ── Floating Help FAB ──────────────────────────────────────────── --}}
+<div x-data="{ fabOpen: false, fabHover: false }" class="ht-fab-wrap">
+    <template x-teleport="body">
+        {{-- Mini menu --}}
+        <div class="ht-fab-menu" x-show="fabOpen" x-cloak
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+             x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+             @click.outside="fabOpen = false">
+            <button class="ht-fab-menu-item" @click="fabOpen=false; window.dispatchEvent(new CustomEvent('open-tips-bantuan'))">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/></svg>
+                <span>Panduan Lengkap</span>
+            </button>
+            <button class="ht-fab-menu-item" @click="fabOpen=false; window.dispatchEvent(new CustomEvent('start-guided-tour'))">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"/></svg>
+                <span>Mulai Tur Halaman</span>
+            </button>
+        </div>
+        {{-- FAB --}}
+        <button class="ht-fab-btn" :class="fabOpen ? 'ht-fab-btn--active' : ''"
+                @click="fabOpen = !fabOpen"
+                @mouseenter="fabHover = true" @mouseleave="fabHover = false"
+                title="Tips & Bantuan">
+            <svg x-show="!fabOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="ht-fab-icon">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"/>
+            </svg>
+            <svg x-show="fabOpen" x-cloak xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="ht-fab-icon">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+            </svg>
+        </button>
+    </template>
+</div>
+
+{{-- ── Guided Tour Tooltips System ────────────────────────────────── --}}
+<div x-data="guidedTourSystem()" x-on:start-guided-tour.window="startTour()" x-on:keydown.escape.window="if(touring) endTour()">
+    <template x-teleport="body">
+        {{-- Overlay --}}
+        <div x-show="touring" x-cloak class="gt-overlay" @click="endTour()"></div>
+        {{-- Highlight --}}
+        <div x-show="touring && highlightStyle" x-cloak class="gt-highlight" :style="highlightStyle"></div>
+        {{-- Tooltip --}}
+        <div x-show="touring" x-cloak class="gt-tooltip" :style="tooltipStyle"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-90"
+             x-transition:enter-end="opacity-100 scale-100">
+            <div class="gt-tooltip-arrow" :style="arrowStyle"></div>
+            <div class="gt-tooltip-header">
+                <span class="gt-tooltip-step" x-text="'Langkah ' + (currentStep+1) + ' dari ' + totalSteps"></span>
+                <button @click="endTour()" class="gt-tooltip-close">&times;</button>
+            </div>
+            <div class="gt-tooltip-emoji" x-text="currentTip.emoji"></div>
+            <h4 class="gt-tooltip-title" x-text="currentTip.title"></h4>
+            <p class="gt-tooltip-desc" x-text="currentTip.desc"></p>
+            <div class="gt-tooltip-actions">
+                <button x-show="currentStep > 0" @click="prevStep()" class="gt-btn gt-btn--prev">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:14px;height:14px"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/></svg>
+                    Kembali
+                </button>
+                <button @click="nextStep()" class="gt-btn gt-btn--next">
+                    <span x-text="currentStep < totalSteps - 1 ? 'Lanjut' : 'Selesai'"></span>
+                    <svg x-show="currentStep < totalSteps - 1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:14px;height:14px"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5"/></svg>
+                    <svg x-show="currentStep >= totalSteps - 1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:14px;height:14px"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
+                </button>
+            </div>
+            <div class="gt-tooltip-progress">
+                <template x-for="(_, i) in steps" :key="i">
+                    <span class="gt-dot" :class="i <= currentStep ? 'gt-dot--active' : ''"></span>
+                </template>
+            </div>
+        </div>
+    </template>
+</div>
+
+<script>
+function guidedTourSystem() {
+    const path = window.location.pathname;
+    let role = 'admin';
+    if (path.startsWith('/developer')) role = 'developer';
+    else if (path.startsWith('/tester')) role = 'tester';
+
+    const tourSteps = {
+        admin: [
+            { selector: '.fi-topbar', emoji: '🎯', title: 'Topbar Navigasi', desc: 'Ini adalah topbar utama. Di sini Anda bisa melihat jam, status jaringan, dan mengakses menu profil.' },
+            { selector: '.fi-sidebar-nav', emoji: '📋', title: 'Sidebar Menu', desc: 'Menu navigasi utama ada di sidebar ini. Klik menu untuk berpindah halaman.' },
+            { selector: '.fi-sidebar-item:first-child', emoji: '📊', title: 'Dashboard', desc: 'Halaman Dashboard menampilkan ringkasan statistik platform secara real-time.' },
+            { selector: '.fi-topbar-end', emoji: '👤', title: 'Profil & Pengaturan', desc: 'Klik avatar Anda untuk mengakses profil, tema, dan opsi logout.' },
+            { selector: '.fi-main', emoji: '📄', title: 'Area Konten', desc: 'Area utama ini menampilkan konten halaman yang sedang Anda buka. Gunakan sidebar untuk navigasi.' },
+        ],
+        developer: [
+            { selector: '.fi-topbar', emoji: '🎯', title: 'Topbar Navigasi', desc: 'Topbar menampilkan informasi penting seperti jam, status jaringan, dan menu profil.' },
+            { selector: '.fi-sidebar-nav', emoji: '📋', title: 'Sidebar Menu', desc: 'Gunakan sidebar untuk navigasi ke berbagai fitur developer.' },
+            { selector: '.fi-topbar-end', emoji: '👤', title: 'Profil Developer', desc: 'Akses profil dan pengaturan akun Anda di sini.' },
+            { selector: '.fi-main', emoji: '📄', title: 'Area Konten', desc: 'Di sini Anda bisa mengelola test case, melihat progress, dan mengatur aplikasi.' },
+        ],
+        tester: [
+            { selector: '.fi-topbar', emoji: '🎯', title: 'Topbar Navigasi', desc: 'Topbar berisi informasi waktu, status jaringan, dan akses cepat ke profil.' },
+            { selector: '.fi-sidebar-nav', emoji: '📋', title: 'Sidebar Menu', desc: 'Navigasi ke misi, dompet, dan pengaturan melalui sidebar.' },
+            { selector: '.fi-topbar-end', emoji: '👤', title: 'Profil Tester', desc: 'Kelola profil dan pengaturan akun Anda.' },
+            { selector: '.fi-main', emoji: '📄', title: 'Area Konten', desc: 'Lihat misi yang tersedia, riwayat, dan kelola dompet Anda di area ini.' },
+        ]
+    };
+
+    return {
+        touring: false,
+        currentStep: 0,
+        highlightStyle: '',
+        tooltipStyle: '',
+        arrowStyle: '',
+        steps: tourSteps[role] || tourSteps.admin,
+        get totalSteps() { return this.steps.length; },
+        get currentTip() { return this.steps[this.currentStep] || this.steps[0]; },
+        startTour() {
+            this.currentStep = 0;
+            this.touring = true;
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => this.positionTooltip(), 200);
+        },
+        endTour() {
+            this.touring = false;
+            document.body.style.overflow = '';
+            this.highlightStyle = '';
+        },
+        nextStep() {
+            if (this.currentStep < this.totalSteps - 1) {
+                this.currentStep++;
+                setTimeout(() => this.positionTooltip(), 100);
+            } else { this.endTour(); }
+        },
+        prevStep() {
+            if (this.currentStep > 0) {
+                this.currentStep--;
+                setTimeout(() => this.positionTooltip(), 100);
+            }
+        },
+        positionTooltip() {
+            const el = document.querySelector(this.currentTip.selector);
+            if (!el) {
+                this.highlightStyle = '';
+                this.tooltipStyle = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);';
+                this.arrowStyle = 'display:none;';
+                return;
+            }
+            const r = el.getBoundingClientRect();
+            const pad = 8;
+            this.highlightStyle = `position:fixed;top:${r.top-pad}px;left:${r.left-pad}px;width:${r.width+pad*2}px;height:${r.height+pad*2}px;`;
+            const tw = 340, th = 220;
+            let top, left, aTop, aLeft;
+            if (r.bottom + th + 20 < window.innerHeight) {
+                top = r.bottom + 16; left = Math.max(16, Math.min(r.left + r.width/2 - tw/2, window.innerWidth - tw - 16));
+                aTop = '-8px'; aLeft = Math.min(Math.max(20, r.left + r.width/2 - left), tw - 20) + 'px';
+                this.arrowStyle = `position:absolute;top:${aTop};left:${aLeft};width:16px;height:16px;background:inherit;transform:rotate(45deg);border-radius:3px;`;
+            } else {
+                top = r.top - th - 16; left = Math.max(16, Math.min(r.left + r.width/2 - tw/2, window.innerWidth - tw - 16));
+                aLeft = Math.min(Math.max(20, r.left + r.width/2 - left), tw - 20) + 'px';
+                this.arrowStyle = `position:absolute;bottom:-8px;left:${aLeft};width:16px;height:16px;background:inherit;transform:rotate(45deg);border-radius:3px;`;
+            }
+            this.tooltipStyle = `position:fixed;top:${top}px;left:${left}px;width:${tw}px;`;
+        }
+    };
+}
+</script>
+
 </div>

@@ -17,8 +17,6 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\NavigationGroup;
 use Filament\Navigation\NavigationBuilder;
 use Filament\Navigation\NavigationItem;
-use Hammadzafar05\MobileBottomNav\MobileBottomNav;
-use Hammadzafar05\MobileBottomNav\MobileBottomNavItem;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -41,28 +39,6 @@ class TesterPanelProvider extends PanelProvider
             ->login(Login::class)
             ->registration(Register::class)
             ->passwordReset(RequestResetPassword::class, ResetPassword::class)
-            ->plugins([
-                MobileBottomNav::make()
-                    ->items([
-                        MobileBottomNavItem::make('Home')
-                            ->icon('heroicon-o-home')
-                            ->activeIcon('heroicon-s-home')
-                            ->url(fn() => TesterDashboard::getUrl())
-                            ->isActive(fn() => request()->routeIs('filament.tester.pages.tester-dashboard')),
-                        MobileBottomNavItem::make('Misi')
-                            ->icon('heroicon-o-clipboard-document-check')
-                            ->url('#'),
-                        MobileBottomNavItem::make('Dompet')
-                            ->icon('heroicon-o-credit-card')
-                            ->url(fn() => Dompet::getUrl())
-                            ->isActive(fn() => request()->routeIs('filament.tester.pages.dompet')),
-                        MobileBottomNavItem::make('Profil')
-                            ->icon('heroicon-o-user-circle')
-                            ->activeIcon('heroicon-s-user-circle')
-                            ->url(fn() => ProfileTester::getUrl())
-                            ->isActive(fn() => request()->routeIs('filament.tester.pages.profile-tester')),
-                    ]),
-            ])
 
             // ── Warna primer: Sky/Cyan sesuai design gradient ────  
             ->colors([
@@ -127,6 +103,12 @@ class TesterPanelProvider extends PanelProvider
                 in: app_path('Filament/Tester/Pages'),
                 for: 'App\\Filament\\Tester\\Pages'
             )
+            ->userMenuItems([
+                'profile' => \Filament\Navigation\MenuItem::make()
+                    ->label(fn() => auth()->user()->name)
+                    ->url(fn (): string => ProfileTester::getUrl())
+                    ->icon('heroicon-o-user-circle'),
+            ])
 
             // ── Assets ────────────────────────────────────────  
             ->renderHook(

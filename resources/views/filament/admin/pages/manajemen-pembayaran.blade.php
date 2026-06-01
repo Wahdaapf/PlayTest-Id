@@ -12,11 +12,11 @@
         }
 
         .tk-sora {
-            font-family: 'Sora', sans-serif !important;
+            font-family: 'Inter', sans-serif !important;
         }
 
         .tk-mono {
-            font-family: 'JetBrains Mono', monospace !important;
+            font-family: 'Inter', sans-serif !important;
         }
 
         .fi-main {
@@ -992,7 +992,7 @@
         <div class="flex items-center justify-between animate-fade-in-up">
             <div>
                 <h1 class="tk-sora text-xl font-bold text-slate-900">Manajemen Pembayaran Developer</h1>
-                <p class="text-sm text-slate-500 mt-0.5">Rekap seluruh transaksi pembayaran paket kampanye</p>
+                <p class="text-sm text-slate-500 mt-0.5">Transaksi otomatis via <strong class="text-blue-600">Duitku</strong> Payment Gateway</p>
             </div>
             <button class="tk-btn tk-btn-export">
                 <span class="material-symbols-outlined text-[1.1rem]">download</span>
@@ -1001,10 +1001,9 @@
         </div>
 
         {{-- ══ STAT CARDS ══ --}}
-        <!-- Ubah xl:grid-cols-5 menjadi xl:grid-cols-6 -->
-        <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 animate-fade-in-up delay-100">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in-up delay-100">
 
-            <div class="tk-stat xl:col-span-2">
+            <div class="tk-stat">
                 <div class="tk-stat-accent tk-grad-blue"></div>
                 <div class="flex items-start gap-3 mt-1">
                     <div class="tk-stat-icon tk-bg-blue">
@@ -1014,15 +1013,14 @@
                         <div class="tk-stat-label">Total Pendapatan</div>
                         <div class="tk-stat-value tk-mono">{{ $statTotalPendapatan }}</div>
                         <div class="flex items-center gap-2 mt-1">
-                            <span class="tk-growth bg-green-100 text-green-700">{{ $growthPendapatan }}</span>
+                            <span class="tk-growth {{ str_starts_with($growthPendapatan, '-') ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700' }}">{{ $growthPendapatan }}</span>
                             <span class="tk-stat-sub">vs bulan lalu</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Tambahkan xl:col-span-2 di sini -->
-            <div class="tk-stat xl:col-span-2">
+            <div class="tk-stat">
                 <div class="tk-stat-accent tk-grad-emerald"></div>
                 <div class="flex items-start gap-3 mt-1">
                     <div class="tk-stat-icon tk-bg-emerald">
@@ -1031,7 +1029,6 @@
                     <div>
                         <div class="tk-stat-label">Bulan Ini</div>
                         <div class="tk-stat-value tk-mono text-[1.1rem]">{{ $statBulanIni }}</div>
-                        <span class="tk-growth bg-green-100 text-green-700 inline-block mt-1">{{ $growthBulanIni }}</span>
                     </div>
                 </div>
             </div>
@@ -1045,7 +1042,7 @@
                     <div>
                         <div class="tk-stat-label">Berhasil</div>
                         <div class="tk-stat-value">{{ $statBerhasil }}</div>
-                        <div class="tk-stat-sub">transaksi</div>
+                        <div class="tk-stat-sub text-green-600 font-medium">{{ $statBerhasilBulanIni }} bulan ini</div>
                     </div>
                 </div>
             </div>
@@ -1057,9 +1054,9 @@
                         <span class="material-symbols-outlined">schedule</span>
                     </div>
                     <div>
-                        <div class="tk-stat-label">Pending</div>
+                        <div class="tk-stat-label">Menunggu Bayar</div>
                         <div class="tk-stat-value text-[#d97706]">{{ $statPending }}</div>
-                        <div class="tk-stat-sub">menunggu konfirmasi</div>
+                        <div class="tk-stat-sub text-[#d97706] font-medium">{{ $statPendingMingguIni }} minggu ini</div>
                     </div>
                 </div>
             </div>
@@ -1104,13 +1101,13 @@
                 <div class="bg-white border border-slate-200 rounded-2xl p-5 flex-1 shadow-sm hover:shadow-md transition-shadow">
                     <div class="tk-sora font-bold text-slate-800 text-sm mb-4">Ringkasan Status</div>
                     <div class="space-y-4">
-                        @php $total = $statBerhasil + $statPending + $statRefund; @endphp
+                        @php $total = $statBerhasil + $statPending + $statGagal; @endphp
                         @if($total > 0)
                         @php
                         $ringkasan = [
                         ['label'=>'Berhasil','val'=>$statBerhasil,'pct'=>round($statBerhasil/$total*100),'color'=>'#22c55e'],
-                        ['label'=>'Pending', 'val'=>$statPending, 'pct'=>round($statPending/$total*100), 'color'=>'#f59e0b'],
-                        ['label'=>'Refund', 'val'=>$statRefund, 'pct'=>round($statRefund/$total*100), 'color'=>'#3b82f6'],
+                        ['label'=>'Menunggu Bayar', 'val'=>$statPending, 'pct'=>round($statPending/$total*100), 'color'=>'#f59e0b'],
+                        ['label'=>'Gagal', 'val'=>$statGagal, 'pct'=>round($statGagal/$total*100), 'color'=>'#ef4444'],
                         ];
                         @endphp
                         @foreach($ringkasan as $r)
@@ -1132,32 +1129,34 @@
                     </div>
                 </div>
 
-                <div class="bg-white border border-slate-200 rounded-2xl p-5 flex-1 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="tk-sora font-bold text-slate-800 text-sm mb-4">Metode Pembayaran</div>
-                    <div class="space-y-3">
-                        @php
-                        $metodes = [
-                        ['label'=>'Transfer Bank', 'pct'=>48,'icon'=>'account_balance'],
-                        ['label'=>'QRIS', 'pct'=>33,'icon'=>'qr_code_scanner'],
-                        ['label'=>'Virtual Account','pct'=>19,'icon'=>'payment'],
-                        ];
-                        @endphp
-                        @foreach($metodes as $m)
-                        <div class="flex items-center gap-3 group">
-                            <div class="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center border border-slate-100 transition-transform group-hover:scale-110 group-hover:bg-blue-50 group-hover:text-blue-600">
-                                <span class="material-symbols-outlined text-[1.2rem] text-slate-500 group-hover:text-blue-600 transition-colors">{{ $m['icon'] }}</span>
-                            </div>
-                            <div class="flex-1">
-                                <div class="flex justify-between text-xs mb-1.5 transition-transform group-hover:translate-x-1">
-                                    <span class="text-slate-600 font-medium">{{ $m['label'] }}</span>
-                                    <span class="text-slate-800 font-bold">{{ $m['pct'] }}%</span>
-                                </div>
-                                <div class="w-full rounded-full h-1.5 bg-slate-100 overflow-hidden">
-                                    <div class="h-1.5 rounded-full bg-blue-600 transition-all duration-1000 ease-out" style="width:{{ $m['pct'] }}%;"></div>
-                                </div>
-                            </div>
+                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 flex-1 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="tk-sora font-bold text-slate-800 dark:text-slate-100 text-sm mb-4">Payment Gateway</div>
+                    <div class="flex items-center gap-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-700/50 dark:to-slate-700/50 rounded-xl border border-blue-100 dark:border-slate-600">
+                        <div class="w-12 h-12 rounded-xl bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center border border-blue-100 dark:border-slate-600">
+                            <span class="material-symbols-outlined text-[1.6rem] text-blue-600 dark:text-blue-400">account_balance</span>
                         </div>
-                        @endforeach
+                        <div class="flex-1">
+                            <div class="font-bold text-slate-800 dark:text-slate-100 text-sm">Duitku</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Payment gateway otomatis</div>
+                        </div>
+                        <div class="flex items-center gap-1.5 bg-green-100 dark:bg-emerald-900/30 text-green-700 dark:text-emerald-400 px-3 py-1.5 rounded-full text-xs font-bold">
+                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                            Aktif
+                        </div>
+                    </div>
+                    <div class="mt-4 space-y-2.5">
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-slate-500 dark:text-slate-400">Mode</span>
+                            <span class="font-semibold text-slate-700 dark:text-slate-200">{{ config('duitku.mode') === 'production' ? 'Production' : 'Sandbox' }}</span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-slate-500 dark:text-slate-400">Callback</span>
+                            <span class="font-semibold text-green-600 dark:text-emerald-400">Otomatis</span>
+                        </div>
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-slate-500 dark:text-slate-400">Verifikasi Admin</span>
+                            <span class="font-semibold text-slate-400 dark:text-slate-500">Tidak diperlukan</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1168,26 +1167,19 @@
             <div class="flex flex-wrap gap-3 items-center flex-1">
                 <div class="tk-search-wrap">
                     <span class="material-symbols-outlined tk-search-icon">search</span>
-                    <input type="text" placeholder="Cari nama, ID transaksi, kampanye…" class="tk-input tk-search-input" x-model="cariTeks">
+                    <input type="text" placeholder="Cari nama, ID transaksi, referensi, kampanye…" class="tk-input tk-search-input" x-model="cariTeks">
                 </div>
                 <select class="tk-select" x-model="filterStatus">
                     <option value="">Semua Status</option>
                     <option value="Berhasil">Berhasil</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Refund">Refund</option>
+                    <option value="Menunggu Bayar">Menunggu Bayar</option>
                     <option value="Gagal">Gagal</option>
                 </select>
                 <select class="tk-select" x-model="filterPaket">
                     <option value="">Semua Paket</option>
-                    <option value="Starter">Starter</option>
-                    <option value="Pro">Pro</option>
-                    <option value="Business">Business</option>
-                </select>
-                <select class="tk-select" x-model="filterMetode">
-                    <option value="">Semua Metode</option>
-                    <option value="Transfer Bank">Transfer Bank</option>
-                    <option value="QRIS">QRIS</option>
-                    <option value="Virtual Account">Virtual Account</option>
+                    @foreach(\App\Models\Paket::orderBy('name')->get() as $pkt)
+                    <option value="{{ $pkt->name }}">{{ $pkt->name }}</option>
+                    @endforeach
                 </select>
                 <select class="tk-select max-w-[120px]" x-model="perPage">
                     <option value="5">5 Data</option>
@@ -1242,10 +1234,10 @@
                             </button>
                         </th>
                         <th>
-                            <button class="tk-sort-btn" :class="sortCol==='metode'?'active':''" @click="setSort('metode')">
-                                Metode
+                            <button class="tk-sort-btn" :class="sortCol==='referensi'?'active':''" @click="setSort('referensi')">
+                                Referensi
                                 <span class="material-symbols-outlined tk-sort-icon"
-                                      x-text="sortCol!=='metode' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                      x-text="sortCol!=='referensi' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
@@ -1268,11 +1260,15 @@
                 <tbody>
                     @foreach($transaksiList as $idx => $t)
                     @php
-                    $statusLower = strtolower($t['status']);
-                    $paketLower = strtolower($t['paket']);
+                    $statusClass = match($t['status']) {
+                        'Berhasil' => 'berhasil',
+                        'Menunggu Bayar' => 'pending',
+                        'Gagal' => 'gagal',
+                        default => 'pending',
+                    };
                     $jumlahF = 'Rp ' . number_format($t['jumlah'], 0, ',', '.');
                     @endphp
-                    <tr data-status="{{ $t['status'] }}" data-paket="{{ $t['paket'] }}" data-metode="{{ $t['metode'] }}" data-nama="{{ strtolower($t['namaUser']) }}" data-id="{{ strtolower($t['id']) }}" data-kampanye="{{ strtolower($t['kampanye']) }}" data-jumlah="{{ $t['jumlah'] ?? 0 }}" data-tanggal="{{ strtotime($t['tanggal'] . ' ' . $t['waktu']) }}" data-item="{{ json_encode($t) }}"
+                    <tr data-status="{{ $t['status'] }}" data-paket="{{ $t['paket'] }}" data-nama="{{ strtolower($t['namaUser']) }}" data-id="{{ strtolower($t['id']) }}" data-kampanye="{{ strtolower($t['kampanye']) }}" data-referensi="{{ strtolower($t['reference']) }}" data-jumlah="{{ $t['jumlah'] ?? 0 }}" data-tanggal="{{ strtotime($t['tanggal'] . ' ' . $t['waktu']) }}" data-item="{{ json_encode($t) }}"
                         x-show="tampilRow($el)"
                         x-transition.opacity.duration.300ms>
                         <td>
@@ -1288,19 +1284,17 @@
                         <td>
                             <div class="tk-td-campaign">{{ $t['kampanye'] }}</div>
                         </td>
-                        <td><span class="tk-paket tk-paket-{{ $paketLower }}">{{ $t['paket'] }}</span></td>
+                        <td><span class="tk-paket tk-paket-{{ strtolower($t['paket']) }}">{{ $t['paket'] }}</span></td>
                         <td>
                             <div class="tk-mono tk-td-nom">{{ $jumlahF }}</div>
                         </td>
                         <td>
-                            <div class="tk-td-metode">{{ $t['metode'] }}</div>
-                            @if($t['bank'] !== '-')
-                            <div class="tk-td-bank">{{ $t['bank'] }}</div>
-                            @endif
+                            <div class="tk-td-metode tk-mono" style="font-size:.73rem">{{ $t['reference'] }}</div>
+                            <div class="tk-td-bank">{{ $t['gateway'] }}</div>
                         </td>
                         <td>
-                            <span class="tk-badge tk-badge-{{ $statusLower }}">
-                                <span class="tk-dot tk-dot-{{ $statusLower }}"></span>
+                            <span class="tk-badge tk-badge-{{ $statusClass }}">
+                                <span class="tk-dot tk-dot-{{ $statusClass }}"></span>
                                 {{ $t['status'] }}
                             </span>
                         </td>
@@ -1310,7 +1304,9 @@
                         </td>
                         <td>
                             <div class="flex items-center gap-2">
-                                <button class="tk-action tk-action-detail" @click="bukaModal($el.closest('tr'))">Detail</button>
+                                <button class="tk-action tk-action-detail" @click="bukaModal($el.closest('tr'))" title="Detail">
+                                    <span class="material-symbols-outlined text-[1.1rem]">visibility</span>
+                                </button>
                             </div>
                         </td>
                     </tr>
@@ -1341,84 +1337,6 @@
                 </div>
             </div>
         </div>
-
-        {{-- ══ APPROVE CONFIRMATION MODAL ══ --}}
-        @if($pendingApproveId)
-        <template x-teleport="body">
-            <div class="tk-modal-overlay" x-data="{ open: true }" x-show="open" x-cloak
-                x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                @click.self="open = false; $wire.cancelAction()">
-                <div class="tk-modal-box"
-                    x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="opacity-0 scale-90 translate-y-8" x-transition:enter-end="opacity-100 scale-100 translate-y-0">
-                    <div class="tk-modal-header">
-                        <h3 class="tk-sora tk-modal-title">
-                            <span class="material-symbols-outlined tk-modal-title-icon success">verified</span>
-                            Konfirmasi Persetujuan
-                        </h3>
-                        <button @click="open = false; $wire.cancelAction()" class="tk-btn-icon">
-                            <span class="material-symbols-outlined">close</span>
-                        </button>
-                    </div>
-                    <div class="tk-modal-body">
-                        <div class="tk-alert tk-alert-success">
-                            <span class="material-symbols-outlined tk-alert-icon success">info</span>
-                            <div>
-                                <p class="tk-alert-title success">Apakah Anda yakin?</p>
-                                <p class="tk-alert-text success">Anda akan mengkonfirmasi pembayaran developer ini. Aksi ini akan membuka kunci paket fitur pada sistem mereka dan tidak dapat dibatalkan.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tk-modal-footer">
-                        <button class="tk-btn tk-btn-secondary" @click="open = false; $wire.cancelAction()">Batal</button>
-                        <button class="tk-btn tk-btn-primary" wire:click="approvePembayaran" wire:loading.attr="disabled" wire:target="approvePembayaran">
-                            <span wire:loading.remove wire:target="approvePembayaran">Ya, Konfirmasi</span>
-                            <span wire:loading wire:target="approvePembayaran">Memproses...</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </template>
-        @endif
-
-        {{-- ══ REJECT CONFIRMATION MODAL ══ --}}
-        @if($pendingRejectId)
-        <template x-teleport="body">
-            <div class="tk-modal-overlay" x-data="{ open: true }" x-show="open" x-cloak
-                x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                @click.self="open = false; $wire.cancelAction()">
-                <div class="tk-modal-box"
-                    x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="opacity-0 scale-90 translate-y-8" x-transition:enter-end="opacity-100 scale-100 translate-y-0">
-                    <div class="tk-modal-header">
-                        <h3 class="tk-sora tk-modal-title">
-                            <span class="material-symbols-outlined tk-modal-title-icon danger">warning</span>
-                            Konfirmasi Penolakan
-                        </h3>
-                        <button @click="open = false; $wire.cancelAction()" class="tk-btn-icon">
-                            <span class="material-symbols-outlined">close</span>
-                        </button>
-                    </div>
-                    <div class="tk-modal-body">
-                        <div class="tk-alert tk-alert-danger">
-                            <span class="material-symbols-outlined tk-alert-icon danger">info</span>
-                            <div>
-                                <p class="tk-alert-title danger">Apakah Anda yakin?</p>
-                                <p class="tk-alert-text danger">Anda akan menolak pembayaran ini. Transaksi akan dibatalkan secara permanen di sistem.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tk-modal-footer">
-                        <button class="tk-btn tk-btn-secondary" @click="open = false; $wire.cancelAction()">Batal</button>
-                        <button class="tk-btn tk-btn-danger" wire:click="rejectPembayaran" wire:loading.attr="disabled" wire:target="rejectPembayaran">
-                            <span wire:loading.remove wire:target="rejectPembayaran">Ya, Tolak</span>
-                            <span wire:loading wire:target="rejectPembayaran">Memproses...</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </template>
-        @endif
 
         {{-- ══ MODAL DETAIL ══ --}}
         <div class="tk-detail-bg" x-show="modalTerbuka" x-cloak style="display:none"
@@ -1453,8 +1371,7 @@
                             <div class="tk-mono text-white font-bold text-3xl" x-text="'Rp ' + transaksi.jumlah.toLocaleString('id-ID')"></div>
                             <div class="flex items-center gap-2 mt-3">
                                 <template x-if="transaksi.status === 'Berhasil'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500 text-white shadow-sm shadow-green-500/50">✓ Berhasil</span></template>
-                                <template x-if="transaksi.status === 'Pending'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-500 text-white shadow-sm shadow-amber-500/50">⏳ Pending</span></template>
-                                <template x-if="transaksi.status === 'Refund'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-500 text-white shadow-sm shadow-blue-500/50">↩ Refund</span></template>
+                                <template x-if="transaksi.status === 'Menunggu Bayar'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-500 text-white shadow-sm shadow-amber-500/50">⏳ Menunggu Bayar</span></template>
                                 <template x-if="transaksi.status === 'Gagal'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-red-500 text-white shadow-sm shadow-red-500/50">✗ Gagal</span></template>
                                 <span class="text-blue-300 text-[.75rem]" x-text="transaksi.tanggal + ' · ' + transaksi.waktu"></span>
                             </div>
@@ -1465,8 +1382,22 @@
                             <div class="tk-detail-row"><span class="tk-detail-label">ID Transaksi</span><span class="tk-detail-val tk-mono text-xs" x-text="transaksi.id"></span></div>
                             <div class="tk-detail-row"><span class="tk-detail-label">No. Invoice</span><span class="tk-detail-val tk-mono text-xs" x-text="transaksi.invoice"></span></div>
                             <div class="tk-detail-row"><span class="tk-detail-label">Tanggal</span><span class="tk-detail-val" x-text="transaksi.tanggal + ' · ' + transaksi.waktu"></span></div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Metode</span><span class="tk-detail-val" x-text="transaksi.metode + (transaksi.bank !== '-' ? ' · ' + transaksi.bank : '')"></span></div>
                             <div class="tk-detail-row"><span class="tk-detail-label">Status</span><span class="tk-detail-val" x-text="transaksi.status"></span></div>
+                        </div>
+
+                        <div class="tk-detail-section">Payment Gateway</div>
+                        <div>
+                            <div class="tk-detail-row"><span class="tk-detail-label">Gateway</span><span class="tk-detail-val font-bold text-blue-600" x-text="transaksi.gateway || 'Duitku'"></span></div>
+                            <div class="tk-detail-row"><span class="tk-detail-label">Reference ID</span><span class="tk-detail-val tk-mono text-xs" x-text="transaksi.reference || '-'"></span></div>
+                            <template x-if="transaksi.paymentUrl">
+                                <div class="tk-detail-row">
+                                    <span class="tk-detail-label">Payment URL</span>
+                                    <a :href="transaksi.paymentUrl" target="_blank" class="tk-detail-val text-blue-600 text-xs hover:underline flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[.9rem]">open_in_new</span>
+                                        Buka Link
+                                    </a>
+                                </div>
+                            </template>
                         </div>
 
                         <div class="tk-detail-section">Paket &amp; Kampanye</div>
@@ -1478,11 +1409,12 @@
 
                         <div class="tk-detail-section">Rincian Pembayaran</div>
                         <div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Harga Paket</span><span class="tk-detail-val tk-mono text-xs" x-text="'Rp ' + transaksi.jumlah.toLocaleString('id-ID')"></span></div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Biaya Layanan</span><span class="tk-detail-val tk-mono text-xs">Rp 0</span></div>
-                            <div class="tk-detail-row bg-slate-50 -mx-1 px-1 py-3 rounded-lg mt-2">
-                                <span class="tk-detail-label font-bold text-slate-800">Total Dibayar</span>
-                                <span class="tk-detail-val tk-mono font-bold text-blue-700 text-[.95rem]" x-text="'Rp ' + transaksi.jumlah.toLocaleString('id-ID')"></span>
+                            <div class="tk-detail-row"><span class="tk-detail-label">Total Bayar</span><span class="tk-detail-val tk-mono text-xs" x-text="'Rp ' + transaksi.jumlah.toLocaleString('id-ID')"></span></div>
+                            <div class="tk-detail-row bg-blue-50 -mx-1 px-3 py-3 rounded-lg mt-2 border border-blue-100">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-blue-500 text-[1.1rem]">info</span>
+                                    <span class="text-xs text-blue-700">Pembayaran diproses otomatis via Duitku</span>
+                                </div>
                             </div>
                         </div>
 
@@ -1490,23 +1422,26 @@
                 </template>
 
                 <div class="tk-detail-footer">
-                    <template x-if="transaksi && transaksi.status === 'Pending'">
-                        <div class="flex gap-2 w-full">
-                            <button class="tk-btn flex-1 tk-btn-primary" @click="$wire.confirmApprove(transaksi.db_id); tutupModal()">✓ Konfirmasi</button>
-                            <button class="tk-btn flex-1 tk-btn-ghost-danger" @click="$wire.confirmReject(transaksi.db_id); tutupModal()">✗ Tolak</button>
+                    <template x-if="transaksi && transaksi.status === 'Menunggu Bayar' && transaksi.paymentUrl">
+                        <a :href="transaksi.paymentUrl" target="_blank" class="tk-btn flex-1 tk-btn-primary text-center no-underline">
+                            <span class="material-symbols-outlined text-[1.1rem]">open_in_new</span>
+                            Buka Halaman Pembayaran
+                        </a>
+                    </template>
+                    <template x-if="transaksi && transaksi.status === 'Menunggu Bayar' && !transaksi.paymentUrl">
+                        <div class="flex items-center gap-2 w-full justify-center text-sm text-amber-600">
+                            <span class="material-symbols-outlined text-[1.1rem]">warning</span>
+                            Link pembayaran tidak tersedia
                         </div>
                     </template>
                     <template x-if="transaksi && transaksi.status === 'Berhasil'">
-                        <div class="flex gap-2 w-full">
-                            <button class="tk-btn flex-1 tk-btn-ghost">📄 Unduh Invoice</button>
-                            <button class="tk-btn flex-1 bg-amber-50 text-amber-600 border border-amber-200 hover:bg-amber-100 transition-colors">↩ Proses Refund</button>
-                        </div>
-                    </template>
-                    <template x-if="transaksi && transaksi.status === 'Refund'">
-                        <button class="tk-btn w-full tk-btn-ghost">📄 Lihat Bukti Refund</button>
+                        <button class="tk-btn flex-1 tk-btn-ghost">📄 Unduh Invoice</button>
                     </template>
                     <template x-if="transaksi && transaksi.status === 'Gagal'">
-                        <button class="tk-btn w-full tk-btn-ghost">🔄 Cek Status Payment</button>
+                        <div class="flex items-center gap-2 w-full justify-center text-sm text-red-500">
+                            <span class="material-symbols-outlined text-[1.1rem]">error</span>
+                            Pembayaran gagal / ditolak
+                        </div>
                     </template>
                 </div>
 
@@ -1522,7 +1457,6 @@
                 cariTeks: '',
                 filterStatus: '',
                 filterPaket: '',
-                filterMetode: '',
                 perPage: 10,
                 currentPage: 1,
                 totalItems: 0,
@@ -1538,7 +1472,6 @@
                     this.$watch('cariTeks', () => this.resetPagi());
                     this.$watch('filterStatus', () => this.resetPagi());
                     this.$watch('filterPaket', () => this.resetPagi());
-                    this.$watch('filterMetode', () => this.resetPagi());
                     this.$watch('perPage', () => this.resetPagi());
                     this.$watch('sortCol', () => this.resetPagi());
                     this.$watch('sortDir', () => this.resetPagi());
@@ -1578,7 +1511,7 @@
                         else if (this.sortCol === 'kampanye') { va = (a.dataset.kampanye || ''); vb = (b.dataset.kampanye || ''); }
                         else if (this.sortCol === 'paket') { va = (a.dataset.paket || '').toLowerCase(); vb = (b.dataset.paket || '').toLowerCase(); }
                         else if (this.sortCol === 'jumlah') { va = +(a.dataset.jumlah || 0); vb = +(b.dataset.jumlah || 0); }
-                        else if (this.sortCol === 'metode') { va = (a.dataset.metode || '').toLowerCase(); vb = (b.dataset.metode || '').toLowerCase(); }
+                        else if (this.sortCol === 'referensi') { va = (a.dataset.referensi || '').toLowerCase(); vb = (b.dataset.referensi || '').toLowerCase(); }
                         else if (this.sortCol === 'status') { va = (a.dataset.status || '').toLowerCase(); vb = (b.dataset.status || '').toLowerCase(); }
                         else if (this.sortCol === 'tanggal') { va = +(a.dataset.tanggal || 0); vb = +(b.dataset.tanggal || 0); }
                         else return 0;
@@ -1604,16 +1537,15 @@
                 cocokFilter(el) {
                     const status = el.dataset.status || '';
                     const paket = el.dataset.paket || '';
-                    const metode = el.dataset.metode || '';
                     const nama = el.dataset.nama || '';
                     const id = el.dataset.id || '';
                     const kampanye = el.dataset.kampanye || '';
+                    const referensi = el.dataset.referensi || '';
                     const q = this.cariTeks.toLowerCase().trim();
 
                     if (this.filterStatus && status !== this.filterStatus) return false;
                     if (this.filterPaket && paket !== this.filterPaket) return false;
-                    if (this.filterMetode && metode !== this.filterMetode) return false;
-                    if (q && !nama.includes(q) && !id.includes(q) && !kampanye.includes(q)) return false;
+                    if (q && !nama.includes(q) && !id.includes(q) && !kampanye.includes(q) && !referensi.includes(q)) return false;
 
                     return true;
                 },
@@ -1638,7 +1570,6 @@
                     this.cariTeks = '';
                     this.filterStatus = '';
                     this.filterPaket = '';
-                    this.filterMetode = '';
                     this.perPage = 10;
                     this.sortCol = 'tanggal';
                     this.sortDir = 'desc';
