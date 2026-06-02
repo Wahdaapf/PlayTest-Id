@@ -11,6 +11,7 @@
         "guzzlehttp/guzzle": "^7.10",
         "hammadzafar05/mobile-bottom-nav": "1.2",
         "laravel/framework": "^13.0",
+        "laravel/socialite": "^5.27",
         "laravel/tinker": "^3.0"
     },
     "require-dev": {

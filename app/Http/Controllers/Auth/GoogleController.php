@@ -1,0 +1,96 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Enums\UserRole;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
+
+class GoogleController extends Controller
+{
+    public function redirectToGoogle(Request $request)
+    {
+        // Store the originating panel in session so we can redirect back on cancel
+        $panel = $request->query('panel', 'tester');
+        $allowedPanels = ['tester', 'developer', 'admin'];
+
+        if (!in_array($panel, $allowedPanels, true)) {
+            $panel = 'tester';
+        }
+
+        session(['google_auth_panel' => $panel]);
+
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        // Retrieve the panel the user came from
+        $panel = session('google_auth_panel', 'tester');
+        $loginUrl = "/{$panel}/login";
+
+        try {
+            $googleUser = Socialite::driver('google')->user();
+
+            $user = User::where('email', $googleUser->getEmail())->first();
+
+            if ($user) {
+                // Admin panel: only allow if user already has admin role
+                if ($panel === 'admin' && $user->role !== UserRole::admin) {
+                    session()->forget('google_auth_panel');
+                    return redirect($loginUrl)->with('error', 'This account does not have admin access.');
+                }
+
+                // Existing user — link Google ID if not already linked
+                if (!$user->google_id) {
+                    $user->google_id = $googleUser->getId();
+                    $user->save();
+                }
+                Auth::login($user);
+            } else {
+                // Admin panel: do NOT allow creating new accounts via Google
+                if ($panel === 'admin') {
+                    session()->forget('google_auth_panel');
+                    return redirect($loginUrl)->with('error', 'Admin account not registered. Please contact an administrator.');
+                }
+
+                // New user — create account with Google info (tester/developer only)
+                $user = User::create([
+                    'name' => $googleUser->getName() ?? $googleUser->getNickname() ?? 'Google User',
+                    'email' => $googleUser->getEmail(),
+                    'google_id' => $googleUser->getId(),
+                    'password' => Str::random(32),
+                    'email_verified_at' => now(),
+                    'role' => $panel,
+                ]);
+                Auth::login($user);
+            }
+
+            // Clean up session
+            session()->forget('google_auth_panel');
+
+            // Redirect based on role (using enum comparison)
+            return match ($user->role) {
+                UserRole::admin     => redirect()->intended('/admin'),
+                UserRole::developer => redirect()->intended('/developer'),
+                default             => redirect()->intended('/tester'),
+            };
+        } catch (\Exception $e) {
+            Log::error('Google OAuth login failed', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            // Clean up session
+            session()->forget('google_auth_panel');
+
+            // Redirect back to the login page of the panel they came from
+            return redirect($loginUrl)->with('error', 'Login with Google failed. Please try again.');
+        }
+    }
+}

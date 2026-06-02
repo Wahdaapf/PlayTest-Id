@@ -19,6 +19,9 @@ Route::post('/payment', [DuitkuController::class, 'createTransaction']);
 Route::post('/duitku/callback', [DuitkuController::class, 'callback']);
 Route::get('/duitku/return', [DuitkuController::class, 'return']);
 
+Route::get('/auth/google', [\App\Http\Controllers\Auth\GoogleController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/auth/google/callback', [\App\Http\Controllers\Auth\GoogleController::class, 'handleGoogleCallback']);
+
 /*
 |--------------------------------------------------------------------------
 | Email Verification Routes
