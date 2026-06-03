@@ -677,10 +677,7 @@
         {{-- ======================================================= --}}
         <div class="verify-mobile-header">
             <div class="verify-mobile-header-logo">
-                <div class="verify-mobile-header-icon">
-                    <span class="material-symbols-outlined">science</span>
-                </div>
-                <h1 class="verify-mobile-brand-name">PlayTest ID</h1>
+                <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-10 w-auto object-contain" />
             </div>
             <p class="verify-mobile-header-tagline">Pass Closed Testing Faster</p>
         </div>
@@ -695,8 +692,7 @@
 
             <div class="verify-hero-content">
                 <div class="verify-logo">
-                    <span class="material-symbols-outlined verify-logo-icon">science</span>
-                    <h1 class="verify-brand-name">PlayTest ID</h1>
+                    <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-12 w-auto object-contain" />
                 </div>
 
                 <h2 class="verify-hero-title">

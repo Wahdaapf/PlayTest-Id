@@ -795,10 +795,7 @@
         {{-- ======================================================= --}}
         <div class="fp-mobile-header">
             <div class="fp-mobile-header-logo">
-                <div class="fp-mobile-header-icon">
-                    <span class="material-symbols-outlined">science</span>
-                </div>
-                <h1 class="fp-mobile-brand-name">PlayTest ID</h1>
+                <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-10 w-auto object-contain" />
             </div>
             <p class="fp-mobile-header-tagline">Pass Closed Testing Faster</p>
         </div>
@@ -813,8 +810,7 @@
             <div class="fp-hero-content">
                 {{-- Logo --}}
                 <div class="fp-logo">
-                    <span class="material-symbols-outlined" style="font-size:1.875rem; color:#4F46E5;">science</span>
-                    <h1 class="fp-brand-name">PlayTest ID</h1>
+                    <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-12 w-auto object-contain" />
                 </div>
 
                 {{-- Desktop-only extended hero --}}

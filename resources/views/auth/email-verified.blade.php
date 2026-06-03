@@ -519,10 +519,7 @@
 
         <!-- Brand -->
         <div class="brand">
-            <div class="brand-icon">
-                <span class="material-symbols-outlined">science</span>
-            </div>
-            <span class="brand-name">PlayTest ID</span>
+            <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-10 w-auto object-contain" />
         </div>
 
         <!-- Success badge -->

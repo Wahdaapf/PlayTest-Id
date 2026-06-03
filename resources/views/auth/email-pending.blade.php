@@ -744,10 +744,7 @@
         {{-- MOBILE HEADER --}}
         <div class="verify-mobile-header">
             <div class="verify-mobile-header-logo">
-                <div class="verify-mobile-header-icon">
-                    <span class="material-symbols-outlined">science</span>
-                </div>
-                <h1 class="verify-mobile-brand-name">PlayTest ID</h1>
+                <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-10 w-auto object-contain" />
             </div>
             <p class="verify-mobile-header-tagline">Pass Closed Testing Faster</p>
         </div>
@@ -761,8 +758,7 @@
 
                 {{-- TOP: Logo --}}
                 <div class="verify-logo">
-                    <span class="material-symbols-outlined verify-logo-icon" style="font-size:1.875rem; color:#4F46E5;">science</span>
-                    <h1 class="verify-brand-name">PlayTest ID</h1>
+                    <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-12 w-auto object-contain" />
                 </div>
 
                 {{-- Desktop-only extended hero --}}

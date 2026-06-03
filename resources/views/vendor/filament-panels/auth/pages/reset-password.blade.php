@@ -654,10 +654,7 @@
         {{-- MOBILE HEADER --}}
         <div class="rp-mobile-header">
             <div class="rp-mobile-header-logo">
-                <div class="rp-mobile-header-icon">
-                    <span class="material-symbols-outlined">science</span>
-                </div>
-                <h1 class="rp-mobile-brand-name">PlayTest ID</h1>
+                <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-10 w-auto object-contain" />
             </div>
             <p class="rp-mobile-header-tagline">Pass Closed Testing Faster</p>
         </div>
@@ -668,8 +665,7 @@
             <div class="rp-hero-bg-overlay"></div>
             <div class="rp-hero-content">
                 <div class="rp-logo">
-                    <span class="material-symbols-outlined" style="font-size:1.875rem; color:#4F46E5;">science</span>
-                    <h1 class="rp-brand-name">PlayTest ID</h1>
+                    <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-12 w-auto object-contain" />
                 </div>
                 <div class="rp-hero-extended">
                     <h2 class="rp-hero-title">Create New Password.</h2>

@@ -902,10 +902,7 @@
         {{-- ======================================================= --}}
         <div class="login-mobile-header">
             <div class="login-mobile-header-logo">
-                <div class="login-mobile-header-icon">
-                    <span class="material-symbols-outlined">science</span>
-                </div>
-                <h1 class="login-mobile-brand-name">PlayTest ID</h1>
+                <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-10 w-auto object-contain" />
             </div>
             <p class="login-mobile-header-tagline">Pass Closed Testing Faster</p>
         </div>
@@ -921,8 +918,7 @@
             <div class="login-hero-content">
                 {{-- Logo --}}
                 <div class="login-logo">
-                    <span class="material-symbols-outlined login-logo-icon" style="font-size:1.875rem; color:#4F46E5;">science</span>
-                    <h1 class="login-brand-name">PlayTest ID</h1>
+                    <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-12 w-auto object-contain" />
                 </div>
 
                 {{-- Desktop-only extended hero --}}

@@ -269,7 +269,7 @@
 
         <!-- Logo -->
         <a href="/" class="flex items-center select-none animate-fadeUp">
-          <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-9 w-auto object-contain" />
+          <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-12 w-auto object-contain" />
         </a>
 
         <!-- Desktop Menu -->
@@ -851,7 +851,7 @@
         <!-- Brand -->
         <div class="md:col-span-2">
           <div class="flex items-center mb-4">
-            <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-9 w-auto object-contain" />
+            <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-12 w-auto object-contain" />
           </div>
           <p class="text-sm leading-relaxed max-w-xs">{{ __('A collaboration platform for Indonesian Developers and Testers based on Project Based Learning to fulfill Google Play Closed Testing requirements.') }}</p>
           <div class="flex gap-3 mt-5">
