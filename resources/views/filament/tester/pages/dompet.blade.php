@@ -629,15 +629,13 @@
             </div>
 
             {{-- ══ RIWAYAT WITHDRAWAL (WITH FILTER & PAGINATION) ══ --}}
-            @if(isset($riwayat) && count($riwayat) > 0)
             <div class="mt-16" x-data="{
             search: '',
             perPage: '5',
             filterStatus: 'all',
             filterMethod: 'all',
-            historyData: @js($riwayat),
             get filteredHistory() {
-                let result = this.historyData;
+                let result = this.$wire.riwayat || [];
 
                 // Status Filter
                 if (this.filterStatus !== 'all') {
@@ -668,7 +666,8 @@
             },
             get uniqueMethods() {
                 // Mendapatkan list unik metode untuk dropdown
-                const methods = this.historyData.map(r => r.metode).filter(m => m);
+                const history = this.$wire.riwayat || [];
+                const methods = history.map(r => r.metode).filter(m => m);
                 return [...new Set(methods)];
             }
         }">
@@ -713,8 +712,11 @@
                         </select>
 
                         <button @click="search = ''; filterStatus = 'all'; filterMethod = 'all'; perPage = '5'"
-                            class="wlt-btn-reset flex-1 sm:flex-none" title="Reset filter">
-                            <span class="material-symbols-outlined" style="font-size: 1.1rem;">restart_alt</span> Reset
+                            wire:click="loadRiwayat"
+                            wire:loading.attr="disabled"
+                            wire:target="loadRiwayat"
+                            class="wlt-btn-reset flex-1 sm:flex-none" title="Refresh data">
+                            <span class="material-symbols-outlined" wire:loading.class="animate-spin" wire:target="loadRiwayat" style="font-size: 1.1rem;">refresh</span> Refresh
                         </button>
                     </div>
                 </div>
@@ -766,7 +768,6 @@
 
                 </div>
             </div>
-            @endif
 
         </div>
 

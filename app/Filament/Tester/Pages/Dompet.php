@@ -25,6 +25,42 @@ class Dompet extends Page
     // Invoice detail modal
     public ?array $invoiceDetail = null;
 
+    // Reactive riwayat list (public agar Alpine bisa entangle)
+    public array $riwayat = [];
+
+    public function mount(): void
+    {
+        $this->loadRiwayat();
+    }
+
+    /**
+     * Load / refresh riwayat withdraw untuk user yang sedang login
+     */
+    public function loadRiwayat(): void
+    {
+        $user = \Illuminate\Support\Facades\Auth::user();
+        $this->riwayat = Withdraw::where('id_user', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->take(10)
+            ->get()
+            ->map(function ($w) {
+                return [
+                    'id'        => $w->id,
+                    'point'     => $w->point,
+                    'rupiah'    => $w->rupiah,
+                    'rupiahF'   => 'Rp ' . number_format($w->rupiah, 0, ',', '.'),
+                    'metode'    => Withdraw::METHODS[$w->metode] ?? $w->metode,
+                    'nomorAkun' => $w->nomor_akun,
+                    'status'    => $w->status,
+                    'tanggal'   => $w->created_at->format('d M Y'),
+                    'waktu'     => $w->created_at->format('H:i'),
+                    'catatan'   => $w->catatan,
+                    'image'     => $w->image ? asset('storage/' . $w->image) : null,
+                ];
+            })
+            ->toArray();
+    }
+
     public function selectMethod(string $method): void
     {
         $this->selectedMethod = $method;
@@ -135,7 +171,8 @@ class Dompet extends Page
                     ->send();
             }
 
-            // Refresh modal data
+            // Refresh modal data + list riwayat
+            $this->loadRiwayat();
             $this->showInvoice($withdraw->id);
         } catch (\Exception $e) {
             Notification::make()
@@ -290,6 +327,9 @@ class Dompet extends Page
                     ->send();
             }
 
+            // Refresh riwayat agar data baru langsung muncul tanpa reload halaman
+            $this->loadRiwayat();
+
         } catch (\Exception $e) {
             // Jika transaksi gagal di tahap apa pun setelah record dibuat, refund points & tolak
             if (isset($withdraw)) {
@@ -310,6 +350,9 @@ class Dompet extends Page
                 ->danger()
                 ->body('Terjadi kesalahan: ' . $e->getMessage())
                 ->send();
+
+            // Refresh riwayat so the failed withdrawal immediately shows up as rejected
+            $this->loadRiwayat();
         }
     }
 
@@ -329,26 +372,7 @@ class Dompet extends Page
             ];
         })->toArray();
 
-        // Riwayat withdraw
-        $riwayat = Withdraw::where('id_user', $user->id)
-            ->orderBy('created_at', 'desc')
-            ->take(10)
-            ->get()
-            ->map(function ($w) {
-                return [
-                    'id'        => $w->id,
-                    'point'     => $w->point,
-                    'rupiah'    => $w->rupiah,
-                    'rupiahF'   => 'Rp ' . number_format($w->rupiah, 0, ',', '.'),
-                    'metode'    => Withdraw::METHODS[$w->metode] ?? $w->metode,
-                    'nomorAkun' => $w->nomor_akun,
-                    'status'    => $w->status,
-                    'tanggal'   => $w->created_at->format('d M Y'),
-                    'waktu'     => $w->created_at->format('H:i'),
-                    'catatan'   => $w->catatan,
-                    'image'     => $w->image ? asset('storage/' . $w->image) : null,
-                ];
-            })->toArray();
+        // Riwayat dikelola sebagai public property ($this->riwayat) agar reaktif di Alpine
 
         // Estimasi rupiah dari total point
         $estimasiRupiah = Withdraw::pointToRupiah($currentPoints);
@@ -361,7 +385,6 @@ class Dompet extends Page
             'methods'       => Withdraw::METHODS,
             'minPoint'      => Withdraw::MIN_POINT,
             'ratePerPoint'  => Withdraw::RATE_PER_POINT,
-            'riwayat'       => $riwayat,
         ];
     }
 }
