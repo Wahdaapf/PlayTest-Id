@@ -58,6 +58,7 @@ class TesterPanelProvider extends PanelProvider
             ])
 
             // ── Sidebar Navigation ────────────────────────────  
+            ->favicon('/logoheader.png')
             ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
                 return $builder->groups([
                     NavigationGroup::make('Menu')

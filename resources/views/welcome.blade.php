@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PlayTest ID – Closed Testing Partner for Indonesian Developers & Testers</title>
+  <link rel="icon" href="{{ asset('logoheader.png') }}" type="image/png" />
 
   <!-- ─── Google Fonts: Inter ─── -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />

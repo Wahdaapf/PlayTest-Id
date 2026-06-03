@@ -55,6 +55,7 @@ class DeveloperPanelProvider extends PanelProvider
                     950 => '23 37 84',
                 ],
             ])
+            ->favicon('/logoheader.png')
             ->navigationGroups([
                 NavigationGroup::make('MAIN'),
                 NavigationGroup::make('SETTINGS'),
