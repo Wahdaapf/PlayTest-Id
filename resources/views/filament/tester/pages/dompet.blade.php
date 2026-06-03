@@ -830,6 +830,21 @@
                             </div>
                         </div>
 
+                        @if($invoiceDetail['status'] === 'pending' && $invoiceDetail['xendit_payout_id'])
+                        <div style="margin-bottom: 24px;">
+                            <button wire:click="syncStatus({{ $invoiceDetail['id'] }})"
+                                    wire:loading.attr="disabled"
+                                    style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 12px; background: #ffffff; color: #0ea5e9; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);"
+                                    onmouseover="this.style.borderColor='#0ea5e9'; this.style.background='#f0f9ff'; this.style.transform='translateY(-1px)';"
+                                    onmouseout="this.style.borderColor='#e2e8f0'; this.style.background='#ffffff'; this.style.transform='none';">
+                                <span class="material-symbols-outlined animate-spin" wire:loading wire:target="syncStatus" style="font-size: 1.2rem;">sync</span>
+                                <span class="material-symbols-outlined" wire:loading.remove wire:target="syncStatus" style="font-size: 1.2rem;">sync</span>
+                                <span wire:loading.remove wire:target="syncStatus">Sync Status Transaksi</span>
+                                <span wire:loading wire:target="syncStatus">Sinkronisasi...</span>
+                            </button>
+                        </div>
+                        @endif
+
                         {{-- Detail Info --}}
                         <div style="display:flex;flex-direction:column;gap:16px;">
                             <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px dashed #e2e8f0;">

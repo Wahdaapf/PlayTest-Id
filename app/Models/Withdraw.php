@@ -16,6 +16,7 @@ class Withdraw extends Model
         'rupiah',
         'metode',
         'nomor_akun',
+        'xendit_payout_id',
         'image',
         'status',
         'catatan',

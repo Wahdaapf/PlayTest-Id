@@ -102,6 +102,73 @@ class ManajemenWithdraw extends Page
         $this->dispatch('data-updated');
     }
 
+    /**
+     * Synchronize payout status from Xendit
+     */
+    public function syncWithdrawStatus(int $id): void
+    {
+        $withdraw = Withdraw::find($id);
+        if (!$withdraw || !$withdraw->xendit_payout_id) {
+            Notification::make()
+                ->title('Gagal')
+                ->danger()
+                ->body('Transaksi tidak memiliki Xendit Payout ID.')
+                ->send();
+            return;
+        }
+
+        try {
+            $xenditService = app(\App\Services\XenditService::class);
+            $payout = $xenditService->getPayout($withdraw->xendit_payout_id);
+            $status = strtoupper($payout['status']);
+
+            if ($status === 'COMPLETED' || $status === 'SUCCEEDED') {
+                $withdraw->update([
+                    'status' => 'success',
+                    'id_admin' => Auth::id(),
+                    'catatan' => 'Withdrawal completed via Xendit Payout.',
+                ]);
+                Notification::make()
+                    ->title('Withdrawal Berhasil')
+                    ->success()
+                    ->body('Transaksi #' . $id . ' selesai diproses via Xendit.')
+                    ->send();
+            } elseif ($status === 'FAILED' || $status === 'REJECTED') {
+                \Illuminate\Support\Facades\DB::transaction(function () use ($withdraw, $payout) {
+                    $balance = UserBalance::where('id_user', $withdraw->id_user)->first();
+                    if ($balance) {
+                        $balance->increment('point', $withdraw->point);
+                    }
+                    $withdraw->update([
+                        'status' => 'rejected',
+                        'id_admin' => Auth::id(),
+                        'catatan' => 'Xendit payout failed: ' . ($payout['failure_code'] ?? 'Unknown Reason'),
+                    ]);
+                });
+
+                Notification::make()
+                    ->title('Withdrawal Gagal')
+                    ->danger()
+                    ->body('Transaksi #' . $id . ' gagal/ditolak. Point dikembalikan ke user.')
+                    ->send();
+            } else {
+                Notification::make()
+                    ->title('Sedang Diproses')
+                    ->info()
+                    ->body('Transaksi ini masih diproses oleh Xendit. Status: ' . $status)
+                    ->send();
+            }
+
+            $this->dispatch('data-updated');
+        } catch (\Exception $e) {
+            Notification::make()
+                ->title('Gagal sinkronisasi')
+                ->danger()
+                ->body($e->getMessage())
+                ->send();
+        }
+    }
+
     public function rejectWithdraw(): void
     {
         $id = $this->pendingRejectId;
@@ -226,24 +293,25 @@ class ManajemenWithdraw extends Page
             $dateObj = $w->created_at ?: now();
 
             $list[] = [
-                'id'          => $w->id,
-                'withdrawId'  => 'WD-' . $dateObj->format('Y') . '-' . str_pad($w->id, 4, '0', STR_PAD_LEFT),
-                'namaUser'    => $userName,
-                'inisial'     => $inisial,
-                'avatarColor' => $avatarColor,
-                'point'       => $w->point,
-                'rupiah'      => $w->rupiah,
-                'rupiahF'     => 'Rp ' . number_format($w->rupiah, 0, ',', '.'),
-                'metode'      => $metodeLabel,
-                'metodeKey'   => $w->metode,
-                'nomorAkun'   => $w->nomor_akun,
-                'status'      => $w->status,
-                'catatan'     => $w->catatan,
-                'tanggal'     => $dateObj->format('d M Y'),
-                'waktu'       => $dateObj->format('H:i'),
-                'adminNama'   => $w->admin ? $w->admin->name : '-',
-                'image'       => $w->image ? asset('storage/' . $w->image) : null,
-                'updatedAt'   => $w->updated_at ? $w->updated_at->format('d M Y H:i') : '-',
+                'id'               => $w->id,
+                'withdrawId'       => 'WD-' . $dateObj->format('Y') . '-' . str_pad($w->id, 4, '0', STR_PAD_LEFT),
+                'namaUser'         => $userName,
+                'inisial'          => $inisial,
+                'avatarColor'      => $avatarColor,
+                'point'            => $w->point,
+                'rupiah'           => $w->rupiah,
+                'rupiahF'          => 'Rp ' . number_format($w->rupiah, 0, ',', '.'),
+                'metode'           => $metodeLabel,
+                'metodeKey'        => $w->metode,
+                'nomorAkun'        => $w->nomor_akun,
+                'xendit_payout_id' => $w->xendit_payout_id,
+                'status'           => $w->status,
+                'catatan'          => $w->catatan,
+                'tanggal'          => $dateObj->format('d M Y'),
+                'waktu'            => $dateObj->format('H:i'),
+                'adminNama'        => $w->admin ? $w->admin->name : '-',
+                'image'            => $w->image ? asset('storage/' . $w->image) : null,
+                'updatedAt'        => $w->updated_at ? $w->updated_at->format('d M Y H:i') : '-',
             ];
         }
 

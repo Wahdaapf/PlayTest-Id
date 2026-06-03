@@ -53,20 +53,21 @@ class Dompet extends Page
         }
 
         $this->invoiceDetail = [
-            'id'         => $w->id,
-            'point'      => $w->point,
-            'rupiah'     => $w->rupiah,
-            'rupiahF'    => 'Rp ' . number_format($w->rupiah, 0, ',', '.'),
-            'metode'     => Withdraw::METHODS[$w->metode] ?? $w->metode,
-            'metodeKey'  => $w->metode,
-            'nomorAkun'  => $w->nomor_akun,
-            'status'     => $w->status,
-            'catatan'    => $w->catatan,
-            'tanggal'    => $w->created_at->format('d M Y'),
-            'waktu'      => $w->created_at->format('H:i'),
-            'adminNama'  => $w->admin ? $w->admin->name : '-',
-            'image'      => $w->image ? asset('storage/' . $w->image) : null,
-            'updatedAt'  => $w->updated_at->format('d M Y H:i'),
+            'id'               => $w->id,
+            'point'            => $w->point,
+            'rupiah'           => $w->rupiah,
+            'rupiahF'          => 'Rp ' . number_format($w->rupiah, 0, ',', '.'),
+            'metode'           => Withdraw::METHODS[$w->metode] ?? $w->metode,
+            'metodeKey'        => $w->metode,
+            'nomorAkun'        => $w->nomor_akun,
+            'xendit_payout_id' => $w->xendit_payout_id,
+            'status'           => $w->status,
+            'catatan'          => $w->catatan,
+            'tanggal'          => $w->created_at->format('d M Y'),
+            'waktu'            => $w->created_at->format('H:i'),
+            'adminNama'        => $w->admin ? $w->admin->name : '-',
+            'image'            => $w->image ? asset('storage/' . $w->image) : null,
+            'updatedAt'        => $w->updated_at->format('d M Y H:i'),
         ];
 
         $this->dispatch('open-invoice-modal');
@@ -75,6 +76,74 @@ class Dompet extends Page
     public function closeInvoice(): void
     {
         $this->invoiceDetail = null;
+    }
+
+    /**
+     * Synchronize the status of a pending withdrawal with Xendit
+     */
+    public function syncStatus(int $id): void
+    {
+        $user = Auth::user();
+        $withdraw = Withdraw::where('id', $id)->where('id_user', $user->id)->first();
+
+        if (!$withdraw || !$withdraw->xendit_payout_id) {
+            Notification::make()
+                ->title('Gagal')
+                ->danger()
+                ->body('Data transaksi tidak valid atau tidak memiliki Xendit Payout ID.')
+                ->send();
+            return;
+        }
+
+        try {
+            $xenditService = app(\App\Services\XenditService::class);
+            $payout = $xenditService->getPayout($withdraw->xendit_payout_id);
+            $status = strtoupper($payout['status']);
+
+            if ($status === 'COMPLETED' || $status === 'SUCCEEDED') {
+                $withdraw->update([
+                    'status' => 'success',
+                    'catatan' => 'Withdrawal completed via Xendit.',
+                ]);
+                Notification::make()
+                    ->title('Berhasil!')
+                    ->success()
+                    ->body('Withdrawal Anda sebesar Rp ' . number_format($withdraw->rupiah, 0, ',', '.') . ' telah sukses dikirim.')
+                    ->send();
+            } elseif ($status === 'FAILED' || $status === 'REJECTED') {
+                \Illuminate\Support\Facades\DB::transaction(function () use ($withdraw, $payout) {
+                    $balance = UserBalance::where('id_user', $withdraw->id_user)->first();
+                    if ($balance) {
+                        $balance->increment('point', $withdraw->point);
+                    }
+                    $withdraw->update([
+                        'status' => 'rejected',
+                        'catatan' => 'Xendit payout failed: ' . ($payout['failure_code'] ?? 'Unknown Reason'),
+                    ]);
+                });
+
+                Notification::make()
+                    ->title('Pencairan Gagal')
+                    ->danger()
+                    ->body('Transaksi gagal. Point sebesar ' . $withdraw->point . ' telah dikembalikan ke saldo Anda.')
+                    ->send();
+            } else {
+                Notification::make()
+                    ->title('Sedang Diproses')
+                    ->info()
+                    ->body('Transaksi masih diproses oleh Xendit (Status: ' . $status . '). Silakan cek kembali nanti.')
+                    ->send();
+            }
+
+            // Refresh modal data
+            $this->showInvoice($withdraw->id);
+        } catch (\Exception $e) {
+            Notification::make()
+                ->title('Gagal Sinkronisasi')
+                ->danger()
+                ->body($e->getMessage())
+                ->send();
+        }
     }
 
     public function submitWithdraw(): void
@@ -149,28 +218,99 @@ class Dompet extends Page
             return;
         }
 
-        // Kurangi point user
-        $balance->decrement('point', $point);
+        // Gunakan DB Transaction untuk menjamin konsistensi data
+        try {
+            $withdraw = \Illuminate\Support\Facades\DB::transaction(function () use ($user, $balance, $point, $rupiah) {
+                // Kurangi point user
+                $balance->decrement('point', $point);
 
-        // Buat record withdraw
-        Withdraw::create([
-            'id_user'    => $user->id,
-            'point'      => $point,
-            'rupiah'     => $rupiah,
-            'metode'     => $this->selectedMethod,
-            'nomor_akun' => trim($this->nomorAkun),
-            'status'     => 'pending',
-        ]);
+                // Buat record withdraw
+                return Withdraw::create([
+                    'id_user'    => $user->id,
+                    'point'      => $point,
+                    'rupiah'     => $rupiah,
+                    'metode'     => $this->selectedMethod,
+                    'nomor_akun' => trim($this->nomorAkun),
+                    'status'     => 'pending',
+                ]);
+            });
 
-        // Reset form
-        $this->selectedDenom = null;
-        $this->nomorAkun = '';
+            // Call Xendit to perform disbursement/payout
+            $xenditService = app(\App\Services\XenditService::class);
+            $payout = $xenditService->createPayout([
+                'reference_id' => 'WD-' . date('Ymd') . '-' . $withdraw->id,
+                'channel_code' => 'ID_' . strtoupper($this->selectedMethod),
+                'account_number' => trim($this->nomorAkun),
+                'account_holder_name' => $user->name,
+                'amount' => $rupiah,
+                'description' => 'Penarikan Saldo PlayTest ID - ' . $user->name,
+            ]);
 
-        Notification::make()
-            ->title('Berhasil!')
-            ->success()
-            ->body('Pengajuan withdrawal sebesar Rp ' . number_format($rupiah, 0, ',', '.') . ' (' . $point . ' pts) sedang diproses. Maksimal 24 jam.')
-            ->send();
+            // Update database dengan response dari Xendit
+            $xenditStatus = strtoupper($payout['status']);
+            $finalStatus = 'pending';
+            $catatan = 'Disbursement initiated via Xendit.';
+
+            if ($xenditStatus === 'COMPLETED' || $xenditStatus === 'SUCCEEDED') {
+                $finalStatus = 'success';
+                $catatan = 'Withdrawal completed via Xendit.';
+            } elseif ($xenditStatus === 'FAILED' || $xenditStatus === 'REJECTED') {
+                $finalStatus = 'rejected';
+                $catatan = 'Xendit payout failed: ' . ($payout['failure_code'] ?? 'Unknown Reason');
+
+                // Refund points
+                \Illuminate\Support\Facades\DB::transaction(function () use ($balance, $point) {
+                    $balance->increment('point', $point);
+                });
+
+                throw new \Exception('Xendit Payout failed directly: ' . ($payout['failure_code'] ?? 'Unknown'));
+            }
+
+            $withdraw->update([
+                'xendit_payout_id' => $payout['id'] ?? $payout['payout_id'] ?? null,
+                'status'           => $finalStatus,
+                'catatan'          => $catatan,
+            ]);
+
+            // Reset form
+            $this->selectedDenom = null;
+            $this->nomorAkun = '';
+
+            if ($finalStatus === 'success') {
+                Notification::make()
+                    ->title('Berhasil!')
+                    ->success()
+                    ->body('Pengajuan withdrawal sebesar Rp ' . number_format($rupiah, 0, ',', '.') . ' telah berhasil dicairkan!')
+                    ->send();
+            } else {
+                Notification::make()
+                    ->title('Pengajuan Dibuat')
+                    ->success()
+                    ->body('Pengajuan withdrawal sebesar Rp ' . number_format($rupiah, 0, ',', '.') . ' (' . $point . ' pts) sedang diproses.')
+                    ->send();
+            }
+
+        } catch (\Exception $e) {
+            // Jika transaksi gagal di tahap apa pun setelah record dibuat, refund points & tolak
+            if (isset($withdraw)) {
+                \Illuminate\Support\Facades\DB::transaction(function () use ($balance, $withdraw, $point, $e) {
+                    // Cek apakah poin sudah didecrement, jika iya kembalikan
+                    // (Tapi karena $withdraw dibuat di dalam DB transaction, jika error terjadi SEBELUM commit,
+                    // data tidak tersimpan. Namun jika error terjadi setelah commit [saat hit API], maka kita kembalikan poin di sini)
+                    $balance->increment('point', $point);
+                    $withdraw->update([
+                        'status' => 'rejected',
+                        'catatan' => 'Gagal memproses via Xendit: ' . $e->getMessage()
+                    ]);
+                });
+            }
+
+            Notification::make()
+                ->title('Gagal Melakukan Penarikan')
+                ->danger()
+                ->body('Terjadi kesalahan: ' . $e->getMessage())
+                ->send();
+        }
     }
 
     public function getViewData(): array

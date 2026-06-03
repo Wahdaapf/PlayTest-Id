@@ -992,7 +992,7 @@
     </style>
     @endpush
 
-    <div class="space-y-5" x-data="withdrawAdmin()" x-init="initChart()">
+    <div class="space-y-5" x-data="withdrawAdmin()" x-init="initChart()" @data-updated.window="tutupDetail()">
 
         {{-- ══ HEADER ══ --}}
         <div class="flex items-center justify-between animate-fade-in-up">
@@ -1552,9 +1552,23 @@
                 </template>
                 <div class="mw-detail-footer">
                     <template x-if="detail && detail.status === 'pending'">
-                        <div class="flex gap-2 w-full">
-                            <button class="mw-btn flex-1 mw-btn-primary" @click="$wire.confirmApprove(detail.id); tutupDetail()">✓ Setujui</button>
-                            <button class="mw-btn flex-1 mw-btn-ghost-danger" @click="$wire.confirmReject(detail.id); tutupDetail()">✗ Tolak</button>
+                        <div class="flex flex-col gap-2 w-full">
+                            <template x-if="detail.xendit_payout_id">
+                                <button class="mw-btn w-full mw-btn-primary"
+                                        wire:click="syncWithdrawStatus(detail.id)"
+                                        wire:loading.attr="disabled">
+                                    <span class="material-symbols-outlined animate-spin" wire:loading wire:target="syncWithdrawStatus" style="font-size:1.1rem;">sync</span>
+                                    <span class="material-symbols-outlined" wire:loading.remove wire:target="syncWithdrawStatus" style="font-size:1.1rem;">sync</span>
+                                    <span wire:loading.remove wire:target="syncWithdrawStatus">Sync Xendit Status</span>
+                                    <span wire:loading wire:target="syncWithdrawStatus">Synchronizing...</span>
+                                </button>
+                            </template>
+                            <template x-if="!detail.xendit_payout_id">
+                                <div class="flex gap-2 w-full">
+                                    <button class="mw-btn flex-1 mw-btn-primary" @click="$wire.confirmApprove(detail.id); tutupDetail()">✓ Setujui</button>
+                                    <button class="mw-btn flex-1 mw-btn-ghost-danger" @click="$wire.confirmReject(detail.id); tutupDetail()">✗ Tolak</button>
+                                </div>
+                            </template>
                         </div>
                     </template>
                     <template x-if="detail && detail.status === 'success' && detail.image">
