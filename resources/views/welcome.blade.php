@@ -268,13 +268,8 @@
       <div class="flex items-center justify-between h-16">
 
         <!-- Logo -->
-        <a href="/" class="flex items-center gap-2 select-none">
-          <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center shadow-md">
-            <i class="fa-solid fa-gamepad text-white text-sm"></i>
-          </div>
-          <span class="text-xl font-800 font-black text-slate-800">
-            Play<span class="text-brand-600">Test</span> <span class="text-slate-500 font-semibold">ID</span>
-          </span>
+        <a href="/" class="flex items-center select-none animate-fadeUp">
+          <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-9 w-auto object-contain" />
         </a>
 
         <!-- Desktop Menu -->
@@ -855,11 +850,8 @@
 
         <!-- Brand -->
         <div class="md:col-span-2">
-          <div class="flex items-center gap-2 mb-4">
-            <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center shadow">
-              <i class="fa-solid fa-gamepad text-white text-sm"></i>
-            </div>
-            <span class="text-white text-xl font-black">Play<span class="text-brand-400">Test</span> <span class="text-slate-400 font-semibold text-base">ID</span></span>
+          <div class="flex items-center mb-4">
+            <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-9 w-auto object-contain" />
           </div>
           <p class="text-sm leading-relaxed max-w-xs">{{ __('A collaboration platform for Indonesian Developers and Testers based on Project Based Learning to fulfill Google Play Closed Testing requirements.') }}</p>
           <div class="flex gap-3 mt-5">
