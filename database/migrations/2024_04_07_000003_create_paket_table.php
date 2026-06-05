@@ -10,6 +10,7 @@ return new class extends Migration {
         Schema::create('paket', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('short_desc')->nullable();
             $table->decimal('price', 15, 2);
             $table->decimal('fee', 15, 2);
             $table->text('desc');

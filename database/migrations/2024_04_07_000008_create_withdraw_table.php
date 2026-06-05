@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->integer('rupiah');
             $table->string('metode'); // gopay, dana, ovo, bca
             $table->string('nomor_akun'); // nomor e-wallet / rekening
+            $table->string('xendit_payout_id')->nullable();
             $table->string('image')->nullable(); // bukti transfer dari admin
             $table->enum('status', ['pending', 'success', 'rejected'])->default('pending');
             $table->text('catatan')->nullable(); // catatan admin

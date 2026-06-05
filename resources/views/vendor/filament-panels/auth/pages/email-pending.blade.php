@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Link Expired - PlayTest ID</title>
+    <title>Verify Your Email - PlayTest ID</title>
     <link rel="icon" href="{{ asset('logoheader.png') }}" type="image/png" />
 
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -23,6 +23,8 @@
             margin: 0;
             padding: 0;
             -webkit-font-smoothing: antialiased;
+            overflow: hidden;
+            /* Mencegah scroll di level body */
         }
 
         /* ================================================================
@@ -31,9 +33,11 @@
         .verify-page {
             display: flex;
             flex-direction: column;
-            min-height: 100dvh;
+            height: 100dvh;
             font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
             background: linear-gradient(160deg, #3730a3 0%, #4F46E5 38%, #7c3aed 100%);
+            overflow-y: auto;
+            /* Scroll hanya muncul jika layar sangat-sangat kecil */
         }
 
         /* ================================================================
@@ -41,7 +45,7 @@
            ================================================================ */
         .verify-mobile-header {
             position: relative;
-            padding: calc(env(safe-area-inset-top, 0px) + 2.5rem) 1.75rem 0;
+            padding: calc(env(safe-area-inset-top, 0px) + 2rem) 1.75rem 0;
             text-align: center;
             animation: verifyFadeInDown 0.55s cubic-bezier(0.22, 1, 0.36, 1);
             z-index: 1;
@@ -52,13 +56,13 @@
             align-items: center;
             justify-content: center;
             gap: 0.625rem;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
         }
 
         .verify-mobile-header-icon {
-            width: 2.75rem;
-            height: 2.75rem;
-            border-radius: 0.875rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.75rem;
             background: rgba(255, 255, 255, 0.18);
             backdrop-filter: blur(6px);
             display: flex;
@@ -68,12 +72,12 @@
         }
 
         .verify-mobile-header-icon .material-symbols-outlined {
-            font-size: 1.625rem !important;
+            font-size: 1.5rem !important;
             color: #fff !important;
         }
 
         .verify-mobile-brand-name {
-            font-size: 1.375rem;
+            font-size: 1.25rem;
             font-weight: 800;
             letter-spacing: -0.025em;
             color: #fff;
@@ -81,7 +85,7 @@
         }
 
         .verify-mobile-header-tagline {
-            font-size: 0.875rem;
+            font-size: 0.8125rem;
             font-weight: 500;
             color: rgba(255, 255, 255, 0.75);
             margin: 0;
@@ -92,6 +96,15 @@
            HERO / LEFT PANEL (desktop only)
            ================================================================ */
         .verify-hero {
+            position: relative;
+            flex-shrink: 0;
+            padding: 2.5rem 1.5rem 1.75rem;
+            text-align: center;
+            background: #f9fafb;
+            overflow: hidden;
+            animation: loginFadeInDown 0.6s ease-out;
+            border-bottom: 1px solid #e5e7eb;
+            /* Hidden on mobile — shown only ≥1024px */
             display: none;
         }
 
@@ -152,12 +165,17 @@
         }
 
         .verify-hero-desc {
-            font-size: 1.0625rem;
+            font-size: 0.9375rem;
             color: #6b7280;
             line-height: 1.65;
-            font-weight: 500;
-            max-width: 400px;
             margin: 0;
+            font-weight: 500;
+        }
+
+        /* Desktop-only elements — hidden on mobile */
+        .verify-hero-extended,
+        .verify-hero-footer {
+            display: none;
         }
 
         .verify-hero-pills {
@@ -170,11 +188,11 @@
         .verify-hero-pill {
             display: inline-flex;
             align-items: center;
-            background: rgba(79, 70, 229, 0.05);
-            border: 1.5px solid rgba(79, 70, 229, 0.3);
-            color: #4F46E5;
-            border-radius: 9999px;
             padding: 0.4rem 0.875rem;
+            border-radius: 9999px;
+            border: 1.5px solid rgba(79, 70, 229, 0.3);
+            background: rgba(79, 70, 229, 0.05);
+            color: #4F46E5;
             font-size: 0.8125rem;
             font-weight: 700;
             white-space: nowrap;
@@ -185,42 +203,12 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            padding-top: 2rem;
+            padding-top: 1.5rem;
             border-top: 1px solid #e5e7eb;
-            margin-top: 2rem;
-        }
-
-        .verify-avatars {
-            display: flex;
-        }
-
-        .verify-avatar-initials {
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: white;
-            border: 2px solid #ffffff;
-            margin-left: -0.5rem;
-        }
-
-        .verify-avatar-initials:first-child {
-            margin-left: 0;
-        }
-
-        .verify-social-proof {
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin: 0;
-            font-weight: 500;
         }
 
         /* ================================================================
-           CARD SECTION
+           CARD SECTION (RIGHT PANEL)
            ================================================================ */
         .verify-card-section {
             flex: 1;
@@ -231,57 +219,57 @@
 
         .verify-card {
             flex: 1;
-            padding: 2rem 1.5rem;
             background: #ffffff;
-            border-radius: 1.5rem 1.5rem 0 0;
+            border-radius: 1.75rem 1.75rem 0 0;
+            padding: 2.5rem 1.5rem 2rem;
+            box-shadow: 0 -8px 40px rgba(55, 48, 163, 0.18);
             display: flex;
             flex-direction: column;
-            animation: verifySlideUp 0.5s ease-out 0.1s both;
-            box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
+            animation: verifySlideUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
         }
 
         .verify-card-inner {
             width: 100%;
-            max-width: 440px;
+            max-width: 420px;
             margin: 0 auto;
         }
 
         /* ================================================================
-           EXPIRED ICON BADGE
+           ENVELOPE ANIMATION (Diperkecil untuk hemat ruang)
            ================================================================ */
         .verify-envelope-wrap {
             display: flex;
             justify-content: center;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
-        .verify-expired-badge {
+        .verify-envelope-badge {
             position: relative;
-            width: 6rem;
-            height: 6rem;
-            background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
-            border-radius: 1.5rem;
+            width: 5rem;
+            height: 5rem;
+            background: linear-gradient(135deg, #4F46E5 0%, #7c3aed 100%);
+            border-radius: 1.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 12px 32px rgba(239, 68, 68, 0.35);
-            animation: expiredPulse 2.5s ease-in-out infinite;
+            box-shadow: 0 8px 24px rgba(79, 70, 229, 0.3);
+            animation: verifyPulse 2.5s ease-in-out infinite;
         }
 
-        .verify-expired-badge .material-symbols-outlined {
-            font-size: 2.75rem;
+        .verify-envelope-badge .material-symbols-outlined {
+            font-size: 2.25rem;
             color: #ffffff;
         }
 
-        .verify-expired-dot {
+        .verify-envelope-dot {
             position: absolute;
-            top: -4px;
-            right: -4px;
-            width: 1.25rem;
-            height: 1.25rem;
-            background: #f59e0b;
+            top: -3px;
+            right: -3px;
+            width: 1rem;
+            height: 1rem;
+            background: #10b981;
             border-radius: 50%;
-            border: 3px solid #ffffff;
+            border: 2.5px solid #ffffff;
             animation: verifyBounce 1s ease-in-out infinite alternate;
         }
 
@@ -290,128 +278,195 @@
            ================================================================ */
         .verify-card-header {
             text-align: center;
-            margin-bottom: 1.25rem;
-        }
-
-        .verify-card-label {
-            display: inline-block;
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(249, 115, 22, 0.08) 100%);
-            border: 1px solid rgba(239, 68, 68, 0.25);
-            color: #ef4444;
-            font-size: 0.75rem;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            border-radius: 9999px;
-            padding: 0.3rem 0.875rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .verify-card-title {
-            font-size: 1.625rem;
-            font-weight: 900;
+            font-size: 1.75rem;
+            font-weight: 800;
             color: #111827;
-            margin: 0 0 0.625rem;
             letter-spacing: -0.03em;
+            margin: 0 0 0.375rem;
             line-height: 1.2;
         }
 
         .verify-card-subtitle {
-            font-size: 0.9375rem;
+            font-size: 0.0.9375rem;
             color: #6b7280;
-            margin: 0;
-            line-height: 1.65;
             font-weight: 500;
+            margin: 0;
+            line-height: 1.5;
         }
 
         /* ================================================================
-           WHAT HAPPENED BOX
+           EMAIL CHIP
            ================================================================ */
-        .verify-reason-box {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            border-radius: 0.875rem;
-            padding: 1rem 1.125rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .verify-reason-title {
-            font-size: 0.8125rem;
-            font-weight: 800;
-            color: #991b1b;
-            margin: 0 0 0.5rem;
+        .verify-email-chip {
             display: flex;
             align-items: center;
-            gap: 0.375rem;
+            gap: 0.625rem;
+            background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
+            border: 1.5px solid #c7d2fe;
+            border-radius: 0.875rem;
+            padding: 0.875rem 1.125rem;
+            margin-bottom: 1.5rem;
         }
 
-        .verify-reason-title .material-symbols-outlined {
-            font-size: 1rem !important;
-        }
-
-        .verify-reason-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.375rem;
-        }
-
-        .verify-reason-list li {
-            font-size: 0.8125rem;
-            color: #b91c1c;
-            font-weight: 600;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.375rem;
-        }
-
-        .verify-reason-list li::before {
-            content: '•';
+        .verify-email-chip-icon {
+            font-size: 1.25rem !important;
+            color: #4F46E5;
             flex-shrink: 0;
-            margin-top: 0.05rem;
+        }
+
+        .verify-email-chip-text {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #4338ca;
+            word-break: break-all;
         }
 
         /* ================================================================
-           ACTION BUTTONS
+           STEPS LIST (Sejajar sempurna)
+           ================================================================ */
+        .verify-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .verify-step {
+            display: flex;
+            align-items: center;
+            /* Memastikan teks dan angka sejajar */
+            gap: 0.875rem;
+        }
+
+        .verify-step-num {
+            flex-shrink: 0;
+            width: 1.75rem;
+            height: 1.75rem;
+            background: linear-gradient(135deg, #4F46E5 0%, #7c3aed 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .verify-step-text {
+            font-size: 0.875rem;
+            color: #374151;
+            line-height: 1.4;
+            font-weight: 500;
+            margin: 0;
+            /* Penting untuk menjaga sejajar vertikal */
+        }
+
+        .verify-step-text strong {
+            color: #111827;
+            font-weight: 700;
+        }
+
+        /* ================================================================
+           RESEND FORM
            ================================================================ */
         .verify-form-wrapper {
             margin-bottom: 1.25rem;
         }
 
-        .verify-register-btn {
+        .verify-resend-btn {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
             width: 100%;
-            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            outline: none;
             background: linear-gradient(135deg, #4F46E5 0%, #7c3aed 100%);
             color: #ffffff;
-            border-radius: 0.875rem;
+            border-radius: 0.75rem;
             padding: 0.875rem 1.5rem;
             min-height: 3.25rem;
             font-size: 1rem;
             font-weight: 700;
             font-family: 'Manrope', sans-serif;
             letter-spacing: 0.01em;
-            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.38);
+            box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
             transition: all 0.2s ease;
         }
 
-        .verify-register-btn:hover {
+        .verify-resend-btn:hover:not(:disabled) {
             background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
-            box-shadow: 0 8px 24px rgba(79, 70, 229, 0.45);
-            color: #ffffff;
+            box-shadow: 0 6px 18px rgba(79, 70, 229, 0.4);
         }
 
-        .verify-register-btn:active {
+        .verify-resend-btn:active:not(:disabled) {
             transform: scale(0.98);
         }
 
-        .verify-register-btn .material-symbols-outlined {
+        .verify-resend-btn:disabled {
+            background: linear-gradient(135deg, #a5b4fc 0%, #c4b5fd 100%) !important;
+            box-shadow: none !important;
+            cursor: not-allowed;
+        }
+
+        .verify-resend-btn .material-symbols-outlined {
             font-size: 1.1rem !important;
+        }
+
+        /* Flash messages */
+        .verify-flash {
+            padding: 0.6rem 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .verify-flash-success {
+            background: #ecfdf5;
+            border: 1px solid #6ee7b7;
+            color: #065f46;
+        }
+
+        .verify-flash-error {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            color: #991b1b;
+        }
+
+        /* ================================================================
+           SPAM NOTE
+           ================================================================ */
+        .verify-spam-note {
+            display: flex;
+            align-items: center;
+            /* Sejajar vertikal */
+            gap: 0.5rem;
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 0.625rem;
+            padding: 0.875rem 1rem;
+            margin-top: 1.25rem;
+        }
+
+        .verify-spam-note .material-symbols-outlined {
+            font-size: 1rem !important;
+            color: #d97706;
+            flex-shrink: 0;
+        }
+
+        .verify-spam-note-text {
+            font-size: 0.8125rem;
+            color: #92400e;
+            line-height: 1.45;
+            font-weight: 600;
+            margin: 0;
         }
 
         /* ================================================================
@@ -419,9 +474,9 @@
            ================================================================ */
         .verify-back-link {
             text-align: center;
-            font-size: 0.8125rem;
+            font-size: 0.875rem;
             color: #6b7280;
-            margin-top: 0.75rem;
+            margin-top: 1.5rem;
             font-weight: 500;
         }
 
@@ -437,35 +492,6 @@
         }
 
         /* ================================================================
-           SPAM NOTE — reused as info note
-           ================================================================ */
-        .verify-spam-note {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.5rem;
-            background: #fffbeb;
-            border: 1px solid #fde68a;
-            border-radius: 0.75rem;
-            padding: 0.875rem 1rem;
-            margin-top: 1.25rem;
-        }
-
-        .verify-spam-note .material-symbols-outlined {
-            font-size: 1.1rem !important;
-            color: #d97706;
-            flex-shrink: 0;
-            margin-top: 0.125rem;
-        }
-
-        .verify-spam-note-text {
-            font-size: 0.8rem;
-            color: #92400e;
-            line-height: 1.55;
-            font-weight: 600;
-            margin: 0;
-        }
-
-        /* ================================================================
            MOBILE FEATURE PILLS
            ================================================================ */
         .verify-mobile-features {
@@ -473,7 +499,7 @@
             justify-content: center;
             flex-wrap: wrap;
             gap: 0.5rem;
-            padding: 1rem 1.5rem calc(1.5rem + env(safe-area-inset-bottom, 0px));
+            padding: 1rem 1.5rem calc(1rem + env(safe-area-inset-bottom, 0px));
             background: #ffffff;
             border-top: 1px solid #f3f4f6;
             animation: verifyFadeIn 0.5s ease-out 0.5s both;
@@ -483,11 +509,11 @@
             background: linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(124, 58, 237, 0.08) 100%);
             color: #4F46E5;
             border-radius: 9999px;
-            padding: 0.4rem 0.875rem;
-            font-size: 0.75rem;
+            padding: 0.35rem 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
+            font-family: 'Manrope', sans-serif;
             border: 1px solid rgba(79, 70, 229, 0.18);
-            letter-spacing: 0.01em;
         }
 
         /* ================================================================
@@ -527,16 +553,16 @@
             }
         }
 
-        @keyframes expiredPulse {
+        @keyframes verifyPulse {
 
             0%,
             100% {
-                box-shadow: 0 12px 32px rgba(239, 68, 68, 0.35);
+                box-shadow: 0 8px 24px rgba(79, 70, 229, 0.3);
             }
 
             50% {
-                box-shadow: 0 12px 48px rgba(239, 68, 68, 0.5);
-                transform: scale(1.04);
+                box-shadow: 0 12px 32px rgba(79, 70, 229, 0.45);
+                transform: scale(1.03);
             }
         }
 
@@ -546,7 +572,17 @@
             }
 
             to {
-                transform: scale(1.25);
+                transform: scale(1.2);
+            }
+        }
+
+        @keyframes verifySpin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
             }
         }
 
@@ -555,19 +591,18 @@
            ================================================================ */
         @media (min-width: 640px) {
             .verify-card {
-                padding: 2.5rem 2.5rem 2rem;
+                padding: 2rem 2.5rem;
             }
 
-            .verify-card-title {
-                font-size: 1.875rem;
+            .verify-card-section {
+                margin-top: 2rem;
             }
         }
 
         /* ================================================================
-           DESKTOP (≥ 1024px) — Split-screen
+           DESKTOP (≥ 1024px)
            ================================================================ */
         @media (min-width: 1024px) {
-
             .verify-page {
                 background: #ffffff;
                 flex-direction: row;
@@ -582,8 +617,6 @@
             }
 
             .verify-hero {
-                position: relative;
-                overflow: hidden;
                 display: flex;
                 flex: 1;
                 flex-direction: column;
@@ -596,6 +629,60 @@
                 background: #f9fafb;
             }
 
+            .verify-hero-title {
+                font-size: 2.875rem;
+                margin: 2rem 0 1rem;
+            }
+
+            .verify-hero-desc {
+                font-size: 1.0625rem;
+                max-width: 400px;
+            }
+
+            /* Show desktop extras */
+            .verify-hero-extended {
+                display: block;
+                margin-top: 0;
+            }
+
+            .verify-hero-footer {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                padding-top: 2rem;
+                border-top: 1px solid #e5e7eb;
+                margin-top: 2rem;
+            }
+
+            .verify-avatars {
+                display: flex;
+            }
+
+            .verify-avatar-initials {
+                width: 2rem;
+                height: 2rem;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.6rem;
+                font-weight: 700;
+                color: white;
+                border: 2px solid #ffffff;
+                margin-left: -0.5rem;
+            }
+
+            .verify-avatar-initials:first-child {
+                margin-left: 0;
+            }
+
+            .verify-social-proof {
+                font-size: 0.875rem;
+                color: #6b7280;
+                margin: 0;
+                font-weight: 500;
+            }
+
             .verify-card-section {
                 margin-top: 0;
                 width: 50%;
@@ -603,50 +690,27 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                overflow-y: auto;
             }
 
             .verify-card {
                 border-radius: 0;
                 box-shadow: none;
-                padding: 2.5rem 3rem;
+                padding: 2rem 3rem;
+                /* Dikurangi agar tidak scroll */
                 flex: none;
                 background: #ffffff;
                 animation: verifyFadeIn 0.5s ease-out;
-                height: 100dvh;
-                overflow: hidden;
             }
 
-            .verify-card-inner {
-                max-width: 400px;
-                margin: 0 auto;
-            }
-
-            .verify-card-header {
-                text-align: center;
-            }
-
-            .verify-card-title {
-                font-size: 2rem;
-            }
-
-            .verify-register-btn {
+            .verify-resend-btn {
+                background: #4F46E5 !important;
                 border-radius: 0.5rem !important;
-                padding: 0.75rem 1.5rem !important;
-                font-size: 0.9375rem !important;
-                min-height: 3rem !important;
                 box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3) !important;
                 letter-spacing: 0 !important;
             }
 
-            .verify-expired-badge {
-                width: 4.5rem;
-                height: 4.5rem;
-                border-radius: 1.25rem;
-            }
-
-            .verify-expired-badge .material-symbols-outlined {
-                font-size: 2rem;
+            .verify-resend-btn:hover:not(:disabled) {
+                background: rgba(79, 70, 229, 0.9) !important;
             }
         }
 
@@ -663,7 +727,12 @@
             }
 
             .verify-card {
-                padding: 3.5rem 4.5rem;
+                padding: 2rem 4rem;
+            }
+
+            /* Vertikal tetap kecil, horizontal tambah agar lega */
+            .verify-card-section {
+                max-width: 50%;
             }
         }
     </style>
@@ -673,44 +742,43 @@
 
     <div class="verify-page" id="verify-page">
 
-        {{-- ======================================================= --}}
-        {{-- MOBILE HEADER                                            --}}
-        {{-- ======================================================= --}}
+        {{-- MOBILE HEADER --}}
         <div class="verify-mobile-header">
             <div class="verify-mobile-header-logo">
-                <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-10 w-auto object-contain" />
+                <img src="{{ asset('logo.png') }}" alt="PlayTest ID" style="height: 2.5rem; width: auto; object-fit: contain;" />
             </div>
             <p class="verify-mobile-header-tagline">Pass Closed Testing Faster</p>
         </div>
 
-        {{-- ======================================================= --}}
-        {{-- LEFT HERO PANEL (desktop only)                           --}}
-        {{-- ======================================================= --}}
+        {{-- LEFT HERO PANEL (Desktop) --}}
         <div class="verify-hero">
-            {{-- Background image + overlay --}}
             <div class="verify-hero-bg-img"></div>
             <div class="verify-hero-bg-overlay"></div>
 
             <div class="verify-hero-content">
+
+                {{-- TOP: Logo --}}
                 <div class="verify-logo">
-                    <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-12 w-auto object-contain" />
+                    <img src="{{ asset('logo.png') }}" alt="PlayTest ID" style="height: 3rem; width: auto; object-fit: contain;" />
                 </div>
 
-                <h2 class="verify-hero-title">
-                    No Worries,<br>Try Again!
-                </h2>
-                <p class="verify-hero-desc">
-                    Verification links expire after 60 minutes for security.
-                    Simply register again and we'll send you a fresh link instantly.
-                </p>
+                {{-- Desktop-only extended hero --}}
+                <div class="verify-hero-extended">
+                    <h2 class="verify-hero-title">
+                        One Step Away<br>from Testing!
+                    </h2>
+                    <p class="verify-hero-desc">
+                        We just sent a verification link to your email. Check your inbox and click the link to activate your account.
+                    </p>
+                </div>
 
                 <div class="verify-hero-pills">
                     @foreach(['✓ 20+ Real Testers', '✓ Real Feedback', '✓ 14-Day Testing', '✓ Google Play Console', '✓ Instant Access'] as $feature)
-                    <span class="verify-hero-pill">{!! $feature !!}</span>
+                    <span class="verify-hero-pill">{{ $feature }}</span>
                     @endforeach
                 </div>
 
-                {{-- PINDAHKAN FOOTER KE DALAM SINI AGAR MIRIP LOGIN PAGE --}}
+                {{-- BOTTOM: Footer & Social Proof --}}
                 <div class="verify-hero-footer">
                     <div class="verify-avatars">
                         @php
@@ -728,65 +796,97 @@
             </div>
         </div>
 
-        {{-- ======================================================= --}}
-        {{-- RIGHT PANEL — CARD                                       --}}
-        {{-- ======================================================= --}}
+        {{-- RIGHT PANEL: Form Card --}}
         <div class="verify-card-section">
             <div class="verify-card">
                 <div class="verify-card-inner">
 
-                    {{-- Expired icon badge --}}
+                    {{-- Animated envelope icon --}}
                     <div class="verify-envelope-wrap">
-                        <div class="verify-expired-badge">
-                            <span class="material-symbols-outlined">link_off</span>
-                            <div class="verify-expired-dot"></div>
+                        <div class="verify-envelope-badge">
+                            <span class="material-symbols-outlined">mark_email_unread</span>
+                            <div class="verify-envelope-dot"></div>
                         </div>
                     </div>
 
                     {{-- Card header --}}
                     <div class="verify-card-header">
-                        <span class="verify-card-label">&#9888; Link Expired</span>
-                        <h2 class="verify-card-title">Verification Link<br>Has Expired</h2>
+                        <h2 class="verify-card-title">Check Your Inbox!</h2>
                         <p class="verify-card-subtitle">
-                            This verification link is no longer valid.
-                            Register again to get a fresh link sent to your inbox.
+                            We've sent a verification link to your email.
                         </p>
                     </div>
 
-                    {{-- Why did this happen --}}
-                    <div class="verify-reason-box">
-                        <p class="verify-reason-title">
-                            <span class="material-symbols-outlined">help</span>
-                            Why did this happen?
-                        </p>
-                        <ul class="verify-reason-list">
-                            <li>The link expired after <strong>60 minutes</strong></li>
-                            <li>The link was already used to verify this account</li>
-                            <li>The link was opened in a different browser or device</li>
-                        </ul>
+                    {{-- Email chip --}}
+                    @if(!empty($email))
+                    <div class="verify-email-chip">
+                        <span class="material-symbols-outlined verify-email-chip-icon">mail</span>
+                        <span class="verify-email-chip-text">{{ $email }}</span>
+                    </div>
+                    @endif
+
+                    {{-- Steps --}}
+                    <div class="verify-steps">
+                        <div class="verify-step">
+                            <div class="verify-step-num">1</div>
+                            <p class="verify-step-text">
+                                <strong>Open your email</strong> — look for a message from <strong>PlayTest ID</strong>
+                            </p>
+                        </div>
+                        <div class="verify-step">
+                            <div class="verify-step-num">2</div>
+                            <p class="verify-step-text">
+                                <strong>Click "Verify My Email"</strong> inside the message
+                            </p>
+                        </div>
+                        <div class="verify-step">
+                            <div class="verify-step-num">3</div>
+                            <p class="verify-step-text">
+                                <strong>You're in!</strong> — start exploring missions and earning
+                            </p>
+                        </div>
                     </div>
 
-                    {{-- Register Again button --}}
+                    {{-- Flash messages --}}
+                    @if(session('resent'))
+                    <div class="verify-flash verify-flash-success">
+                        ✓ A new verification email has been sent. Check your inbox!
+                    </div>
+                    @endif
+
+                    @if(session('resend_error'))
+                    <div class="verify-flash verify-flash-error">
+                        ⚠ {{ session('resend_error') }}
+                    </div>
+                    @endif
+
+                    {{-- Resend button --}}
+                    @if(!empty($token))
                     <div class="verify-form-wrapper">
-                        <a href="/{{ $panel ?? 'tester' }}/register" class="verify-register-btn">
-                            <span class="material-symbols-outlined">person_add</span>
-                            Register Again
-                        </a>
+                        <form action="{{ route('email.pending.resend') }}" method="POST" id="resend-form">
+                            @csrf
+                            <input type="hidden" name="token" value="{{ $token }}">
+                            <button type="submit" class="verify-resend-btn" id="resend-btn">
+                                <span class="material-symbols-outlined" id="resend-icon">refresh</span>
+                                <span id="resend-label">Resend Verification Email</span>
+                            </button>
+                        </form>
                     </div>
+                    @endif
 
-                    {{-- Info note --}}
+                    {{-- Spam warning --}}
                     <div class="verify-spam-note">
                         <span class="material-symbols-outlined">info</span>
                         <p class="verify-spam-note-text">
-                            Your previous registration was not saved. Re-registering with
-                            the same email is completely fine — just complete the verification this time!
+                            Can't find the email? Check your <strong>Spam</strong> or <strong>Promotions</strong> folder.
+                            The link expires in <strong>60 minutes</strong>.
                         </p>
                     </div>
 
                     {{-- Back to login --}}
                     <p class="verify-back-link">
-                        Already have an account?
-                        <a href="/{{ $panel ?? 'tester' }}/login">Log in here</a>
+                        Wrong account?
+                        <a href="/{{ $panel ?? 'tester' }}/login">Log in with another account</a>
                     </p>
 
                 </div>
@@ -794,13 +894,52 @@
 
             {{-- Mobile-only feature pills --}}
             <div class="verify-mobile-features">
-                @foreach(['&#10003; 20+ Testers', '&#10003; 14-Day Test', '&#10003; Instant Access'] as $feature)
-                <span class="verify-mobile-pill">{!! $feature !!}</span>
+                @foreach(['✓ 20+ Testers', '✓ 14-Day Test', '✓ Instant Access'] as $feature)
+                <span class="verify-mobile-pill">{{ $feature }}</span>
                 @endforeach
             </div>
         </div>
 
     </div>
+
+    <script>
+        const form = document.getElementById('resend-form');
+        const btn = document.getElementById('resend-btn');
+        const icon = document.getElementById('resend-icon');
+        const lbl = document.getElementById('resend-label');
+
+        if (form) {
+            @if(session('resent'))
+            startCooldown(60);
+            @endif
+
+            form.addEventListener('submit', function() {
+                if (btn.disabled) return;
+                btn.disabled = true;
+                icon.style.animation = 'verifySpin 0.8s linear infinite';
+                lbl.textContent = 'Sending…';
+            });
+        }
+
+        function startCooldown(seconds) {
+            btn.disabled = true;
+            icon.textContent = 'schedule';
+            icon.style.animation = '';
+            let s = Math.max(0, seconds);
+            lbl.textContent = 'Resend available in ' + s + 's';
+            const interval = setInterval(function() {
+                s--;
+                if (s <= 0) {
+                    clearInterval(interval);
+                    btn.disabled = false;
+                    icon.textContent = 'refresh';
+                    lbl.textContent = 'Resend Verification Email';
+                } else {
+                    lbl.textContent = 'Resend available in ' + s + 's';
+                }
+            }, 1000);
+        }
+    </script>
 
 </body>
 

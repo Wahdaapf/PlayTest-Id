@@ -38,7 +38,7 @@ class ResetPasswordMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.auth.reset-password-email',
+            view: 'vendor.filament-panels.emails.auth.reset-password-email',
             with: [
                 'url' => $this->url,
             ],

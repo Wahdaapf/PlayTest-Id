@@ -49,7 +49,7 @@ Route::get('/email/pending', function () {
     $email = request()->query('email', '');
     $panel = request()->query('panel', 'tester');
     $token = request()->query('token', '');
-    return view('auth.email-pending', compact('email', 'panel', 'token'));
+    return view('vendor.filament-panels.auth.pages.email-pending', compact('email', 'panel', 'token'));
 })->name('email.pending');
 
 // Resend email verifikasi untuk pending registration (user belum di DB)
@@ -80,7 +80,7 @@ Route::get('/email/expired', function () {
     if (!in_array($panel, $allowedPanels, true)) {
         $panel = 'tester';
     }
-    return view('auth.email-expired', compact('panel'));
+    return view('vendor.filament-panels.auth.pages.email-expired', compact('panel'));
 })->name('email.expired');
 
 // ── D. Success Page ──────────────────────────────────────────────────────
@@ -94,6 +94,6 @@ Route::get('/email/verified', function () {
         $panel = '/tester';
     }
 
-    return view('auth.email-verified', compact('panel'));
+    return view('vendor.filament-panels.auth.pages.email-verified', compact('panel'));
 })->name('email.verified');
 

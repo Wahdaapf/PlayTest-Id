@@ -12,6 +12,8 @@ return new class extends Migration
             $table->id();
             $table->string('image')->nullable();
             $table->string('status')->default('pending');
+            $table->string('reference')->nullable();
+            $table->text('payment_url')->nullable();
             $table->foreignId('id_user')->constrained('users')->cascadeOnDelete();
             $table->foreignId('id_admin')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('id_paket')->nullable()->constrained('paket')->nullOnDelete();

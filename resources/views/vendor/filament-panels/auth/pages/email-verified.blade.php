@@ -520,7 +520,7 @@
 
         <!-- Brand -->
         <div class="brand">
-            <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-10 w-auto object-contain" />
+            <img src="{{ asset('logo.png') }}" alt="PlayTest ID" style="height: 2.5rem; width: auto; object-fit: contain;" />
         </div>
 
         <!-- Success badge -->

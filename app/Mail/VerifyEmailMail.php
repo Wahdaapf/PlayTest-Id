@@ -40,7 +40,7 @@ class VerifyEmailMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.auth.verify-email',
+            view: 'vendor.filament-panels.emails.auth.verify-email',
             with: [
                 'url'      => $this->url,
                 'userName' => $this->userName,
