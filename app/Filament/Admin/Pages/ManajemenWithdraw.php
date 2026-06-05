@@ -18,35 +18,12 @@ class ManajemenWithdraw extends Page
     protected static ?string $slug = 'manajemen-withdraw';
     protected string $view = 'filament.admin.pages.manajemen-withdraw';
 
-    // Image upload for approval proof
+    // Image upload for approval proof (removed, now using Xendit)
     public $buktiTransfer = null;
     public ?string $previewUrl = null;
     public ?int $pendingApproveId = null;
     public ?int $pendingRejectId = null;
     public string $rejectCatatan = '';
-
-    public function updatedBuktiTransfer(): void
-    {
-        if ($this->buktiTransfer) {
-            $this->previewUrl = $this->buktiTransfer->temporaryUrl();
-        }
-    }
-
-    public function confirmApprove(int $id): void
-    {
-        $this->pendingApproveId = $id;
-        $this->pendingRejectId = null;
-        $this->buktiTransfer = null;
-        $this->dispatch('open-approve-modal');
-    }
-
-    public function confirmReject(int $id): void
-    {
-        $this->pendingRejectId = $id;
-        $this->pendingApproveId = null;
-        $this->rejectCatatan = '';
-        $this->dispatch('open-reject-modal');
-    }
 
     public function cancelAction(): void
     {
@@ -55,51 +32,6 @@ class ManajemenWithdraw extends Page
         $this->buktiTransfer = null;
         $this->previewUrl = null;
         $this->rejectCatatan = '';
-    }
-
-    public function approveWithdraw(): void
-    {
-        $id = $this->pendingApproveId;
-        if (!$id) return;
-
-        $withdraw = Withdraw::find($id);
-        if (!$withdraw || $withdraw->status !== 'pending') {
-            Notification::make()
-                ->title('Error')
-                ->danger()
-                ->body('Withdrawal tidak ditemukan atau sudah diproses.')
-                ->send();
-            $this->cancelAction();
-            return;
-        }
-
-        // Validate image upload
-        if (!$this->buktiTransfer) {
-            Notification::make()
-                ->title('Bukti Transfer Wajib')
-                ->danger()
-                ->body('Harap upload bukti transfer sebelum menyetujui withdrawal.')
-                ->send();
-            return;
-        }
-
-        // Store the image
-        $imagePath = $this->buktiTransfer->store('withdraw-proofs', 'public');
-
-        $withdraw->update([
-            'status'   => 'success',
-            'id_admin' => Auth::id(),
-            'image'    => $imagePath,
-        ]);
-
-        Notification::make()
-            ->title('Withdrawal Disetujui')
-            ->success()
-            ->body('Withdrawal #' . $id . ' sebesar Rp ' . number_format($withdraw->rupiah, 0, ',', '.') . ' telah dikonfirmasi.')
-            ->send();
-
-        $this->cancelAction();
-        $this->dispatch('data-updated');
     }
 
     /**
@@ -169,43 +101,6 @@ class ManajemenWithdraw extends Page
         }
     }
 
-    public function rejectWithdraw(): void
-    {
-        $id = $this->pendingRejectId;
-        if (!$id) return;
-
-        $withdraw = Withdraw::find($id);
-        if (!$withdraw || $withdraw->status !== 'pending') {
-            Notification::make()
-                ->title('Error')
-                ->danger()
-                ->body('Withdrawal tidak ditemukan atau sudah diproses.')
-                ->send();
-            $this->cancelAction();
-            return;
-        }
-
-        // Kembalikan point ke user
-        $balance = UserBalance::where('id_user', $withdraw->id_user)->first();
-        if ($balance) {
-            $balance->increment('point', $withdraw->point);
-        }
-
-        $withdraw->update([
-            'status'   => 'rejected',
-            'id_admin' => Auth::id(),
-            'catatan'  => !empty($this->rejectCatatan) ? $this->rejectCatatan : 'Ditolak oleh admin.',
-        ]);
-
-        Notification::make()
-            ->title('Withdrawal Ditolak')
-            ->warning()
-            ->body('Withdrawal #' . $id . ' ditolak. Point telah dikembalikan ke user.')
-            ->send();
-
-        $this->cancelAction();
-        $this->dispatch('data-updated');
-    }
 
     public function exportCsv()
     {

@@ -9,6 +9,7 @@ use App\Filament\Auth\Pages\ResetPassword;
 use App\Filament\Developer\Pages\DeveloperDashboard;
 use App\Filament\Developer\Pages\ProfileDeveloper;
 use App\Filament\Developer\Pages\PantauProgress;
+use App\Filament\Developer\Pages\TipsBantuanDeveloper;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -58,7 +59,7 @@ class DeveloperPanelProvider extends PanelProvider
             ->favicon('/logoheader.png')
             ->navigationGroups([
                 NavigationGroup::make('MAIN'),
-                NavigationGroup::make('SETTINGS'),
+                NavigationGroup::make('Profil & Bantuan'),
             ])
             ->navigationItems([
                 NavigationItem::make('New Test Case')
@@ -75,19 +76,15 @@ class DeveloperPanelProvider extends PanelProvider
                     ->sort(2),
                 NavigationItem::make('Profil Saya')
                     ->icon('heroicon-o-user-circle')
-                    ->group('SETTINGS')
+                    ->group('Profil & Bantuan')
                     ->url(fn(): string => ProfileDeveloper::getUrl())
                     ->isActiveWhen(fn() => request()->routeIs('filament.developer.pages.profile-developer'))
                     ->sort(1),
-                NavigationItem::make('Settings')
-                    ->icon('heroicon-o-cog-8-tooth')
-                    ->group('SETTINGS')
-                    ->url('#')
-                    ->sort(2),
-                NavigationItem::make('Support')
-                    ->icon('heroicon-o-lifebuoy')
-                    ->group('SETTINGS')
-                    ->url('#')
+                NavigationItem::make('Tips & Bantuan')
+                    ->icon('heroicon-o-question-mark-circle')
+                    ->group('Profil & Bantuan')
+                    ->url(fn(): string => TipsBantuanDeveloper::getUrl())
+                    ->isActiveWhen(fn() => request()->routeIs('filament.developer.pages.tips-bantuan'))
                     ->sort(3),
             ])
             ->plugins([
@@ -138,7 +135,7 @@ class DeveloperPanelProvider extends PanelProvider
             ->userMenuItems([
                 'profile' => \Filament\Navigation\MenuItem::make()
                     ->label(fn() => auth()->user()->name)
-                    ->url(fn (): string => ProfileDeveloper::getUrl())
+                    ->url(fn(): string => ProfileDeveloper::getUrl())
                     ->icon('heroicon-o-user-circle'),
             ])
             ->middleware([
@@ -157,4 +154,3 @@ class DeveloperPanelProvider extends PanelProvider
             ]);
     }
 }
-
