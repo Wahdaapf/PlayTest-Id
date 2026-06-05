@@ -24,6 +24,7 @@
   <!-- ─── Tailwind Config Extension ─── -->
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
@@ -80,6 +81,16 @@
     }
   </script>
 
+  <!-- ─── Dark mode init (prevent flash) ─── -->
+  <script>
+    (function() {
+      const saved = localStorage.getItem('pt-theme');
+      if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+
   <!-- ─── Custom CSS ─── -->
   <style>
     /* Base font */
@@ -97,6 +108,10 @@
       box-shadow: 0 4px 24px 0 rgba(37, 99, 235, 0.08);
       background: rgba(255, 255, 255, 0.97);
     }
+    .dark #navbar.scrolled {
+      box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.3);
+      background: rgba(15, 23, 42, 0.97);
+    }
 
     /* ── Hamburger animated icon ── */
     .ham-line {
@@ -107,6 +122,9 @@
       border-radius: 2px;
       transition: all 0.3s ease;
       transform-origin: center;
+    }
+    .dark .ham-line {
+      background: #93c5fd;
     }
 
     #hamburger.open .ham-line:nth-child(1) {
@@ -130,7 +148,7 @@
     }
 
     #mobile-menu.open {
-      max-height: 360px;
+      max-height: 420px;
     }
 
     /* ── Glassmorphism card ── */
@@ -144,6 +162,9 @@
     /* ── Gradient hero background ── */
     .hero-bg {
       background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 40%, #2563eb 70%, #3b82f6 100%);
+    }
+    .dark .hero-bg {
+      background: linear-gradient(135deg, #0a1628 0%, #0f1d3a 40%, #162a56 70%, #1a3470 100%);
     }
 
     /* ── Tab underline indicator ── */
@@ -168,6 +189,9 @@
     .tab-btn.active {
       color: #1d4ed8;
       font-weight: 700;
+    }
+    .dark .tab-btn.active {
+      color: #60a5fa;
     }
 
     .tab-btn.active::after {
@@ -219,6 +243,9 @@
     .cta-bg {
       background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #60a5fa 100%);
     }
+    .dark .cta-bg {
+      background: linear-gradient(135deg, #0a1628 0%, #162a56 60%, #1a3470 100%);
+    }
 
     /* ── Scroll-reveal helper ── */
     .reveal {
@@ -256,16 +283,64 @@
       border-radius: 999px;
       box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
     }
+
+    /* ── Theme toggle ── */
+    .theme-toggle {
+      position: relative;
+      width: 52px;
+      height: 28px;
+      border-radius: 9999px;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      transition: background 0.3s ease;
+      background: linear-gradient(135deg, #bfdbfe, #93c5fd);
+      box-shadow: inset 0 1px 3px rgba(0,0,0,.1);
+    }
+    .dark .theme-toggle {
+      background: linear-gradient(135deg, #1e293b, #334155);
+    }
+    .theme-toggle-knob {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,.2);
+      transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+    .dark .theme-toggle-knob {
+      transform: translateX(24px);
+      background: #1e293b;
+    }
+    .theme-toggle-knob .icon-sun,
+    .theme-toggle-knob .icon-moon { transition: opacity 0.2s; }
+    .theme-toggle-knob .icon-sun { color: #f59e0b; }
+    .theme-toggle-knob .icon-moon { color: #60a5fa; position: absolute; }
+    .dark .theme-toggle-knob .icon-sun { opacity: 0; }
+    .theme-toggle-knob .icon-moon { opacity: 0; }
+    .dark .theme-toggle-knob .icon-moon { opacity: 1; }
+
+    /* ── Smooth body transition ── */
+    body, #navbar, .pricing-card > div, .glass-card {
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
   </style>
 </head>
 
-<body class="bg-slate-50 text-slate-800 antialiased">
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 antialiased">
 
   <!-- ════════════════════════════════════════════
      1. NAVBAR – Sticky, responsive with hamburger menu (jQuery)
      ════════════════════════════════════════════ -->
-  <header id="navbar" class="fixed top-0 inset-x-0 z-50 bg-white/95 border-b border-slate-100 transition-all duration-300">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <header id="navbar" class="fixed top-0 inset-x-0 z-50 bg-white/95 dark:bg-slate-900/95 border-b border-slate-100 dark:border-slate-800 transition-all duration-300">
+    <nav class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
 
         <!-- Logo -->
@@ -274,44 +349,61 @@
         </a>
 
         <!-- Desktop Menu -->
-        <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-          <li><a href="#how-it-works" class="hover:text-brand-600 transition duration-200">{{ __('How It Works') }}</a></li>
-          <li><a href="#benefits" class="hover:text-brand-600 transition duration-200">{{ __('Benefits') }}</a></li>
-          <li><a href="#pricing" class="hover:text-brand-600 transition duration-200">{{ __('Pricing') }}</a></li>
+        <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600 dark:text-slate-400">
+          <li><a href="#how-it-works" class="hover:text-brand-600 dark:hover:text-brand-400 transition duration-200">{{ __('How It Works') }}</a></li>
+          <li><a href="#benefits" class="hover:text-brand-600 dark:hover:text-brand-400 transition duration-200">{{ __('Benefits') }}</a></li>
+          <li><a href="#pricing" class="hover:text-brand-600 dark:hover:text-brand-400 transition duration-200">{{ __('Pricing') }}</a></li>
         </ul>
 
         <!-- Desktop CTA -->
         <div class="hidden md:flex items-center gap-3">
-          <button onclick="openAuthModal('login')" class="px-4 py-2 text-sm font-semibold text-brand-600 border-2 border-brand-600 rounded-xl hover:bg-brand-50 transition duration-200">
+          <button onclick="openAuthModal('login')" class="px-4 py-2 text-sm font-semibold text-brand-600 dark:text-brand-400 border-2 border-brand-600 dark:border-brand-500 rounded-xl hover:bg-brand-50 dark:hover:bg-brand-950 transition duration-200">
             {{ __('Login') }}
           </button>
           <button onclick="openAuthModal('register')" class="px-4 py-2 text-sm font-semibold text-white bg-brand-600 rounded-xl shadow-md hover:bg-brand-700 transition duration-200">
             {{ __('Register') }}
           </button>
 
+          <!-- Theme Toggle -->
+          <button class="theme-toggle ml-1" onclick="toggleTheme()" aria-label="Toggle dark mode">
+            <span class="theme-toggle-knob">
+              <i class="fa-solid fa-sun icon-sun"></i>
+              <i class="fa-solid fa-moon icon-moon"></i>
+            </span>
+          </button>
+
           <!-- Language Switcher -->
-          <div class="flex items-center gap-1.5 ml-2 pl-4 border-l border-slate-200">
-            <a href="{{ url('/en') }}" class="w-8 h-8 flex items-center justify-center rounded-lg text-[10px] font-black transition {{ App::getLocale() == 'en' ? 'bg-brand-600 text-white shadow-sm' : 'bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-slate-600' }}">EN</a>
-            <a href="{{ url('/id') }}" class="w-8 h-8 flex items-center justify-center rounded-lg text-[10px] font-black transition {{ App::getLocale() == 'id' ? 'bg-brand-600 text-white shadow-sm' : 'bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-slate-600' }}">ID</a>
+          <div class="flex items-center gap-1.5 ml-2 pl-4 border-l border-slate-200 dark:border-slate-700">
+            <a href="{{ url('/en') }}" class="w-8 h-8 flex items-center justify-center rounded-lg text-[10px] font-black transition {{ App::getLocale() == 'en' ? 'bg-brand-600 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-600 dark:hover:text-slate-300' }}">EN</a>
+            <a href="{{ url('/id') }}" class="w-8 h-8 flex items-center justify-center rounded-lg text-[10px] font-black transition {{ App::getLocale() == 'id' ? 'bg-brand-600 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-600 dark:hover:text-slate-300' }}">ID</a>
           </div>
         </div>
 
         <!-- Hamburger (Mobile) -->
-        <button id="hamburger" aria-label="Toggle menu" class="md:hidden flex flex-col gap-[6px] p-2 rounded-lg hover:bg-brand-50 transition">
-          <span class="ham-line"></span>
-          <span class="ham-line"></span>
-          <span class="ham-line"></span>
-        </button>
+        <div class="md:hidden flex items-center gap-2">
+          <!-- Mobile Theme Toggle -->
+          <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" style="width:44px;height:24px;">
+            <span class="theme-toggle-knob" style="width:18px;height:18px;font-size:10px;">
+              <i class="fa-solid fa-sun icon-sun"></i>
+              <i class="fa-solid fa-moon icon-moon"></i>
+            </span>
+          </button>
+          <button id="hamburger" aria-label="Toggle menu" class="flex flex-col gap-[6px] p-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 transition">
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+            <span class="ham-line"></span>
+          </button>
+        </div>
       </div>
 
       <!-- Mobile Menu (collapsible, jQuery controlled) -->
-      <div id="mobile-menu" class="md:hidden border-t border-slate-100">
-        <ul class="flex flex-col py-4 gap-1 text-sm font-medium text-slate-700">
-          <li><a href="#how-it-works" class="block px-3 py-2 rounded-lg hover:bg-brand-50 hover:text-brand-600 transition">{{ __('How It Works') }}</a></li>
-          <li><a href="#benefits" class="block px-3 py-2 rounded-lg hover:bg-brand-50 hover:text-brand-600 transition">{{ __('Benefits') }}</a></li>
-          <li><a href="#pricing" class="block px-3 py-2 rounded-lg hover:bg-brand-50 hover:text-brand-600 transition">{{ __('Pricing') }}</a></li>
-          <li class="border-t border-slate-100 mt-2 pt-3 flex gap-2">
-            <button onclick="openAuthModal('login')" class="flex-1 text-center px-4 py-2 font-semibold text-brand-600 border-2 border-brand-600 rounded-xl hover:bg-brand-50 transition">{{ __('Login') }}</button>
+      <div id="mobile-menu" class="md:hidden border-t border-slate-100 dark:border-slate-800">
+        <ul class="flex flex-col py-4 gap-1 text-sm font-medium text-slate-700 dark:text-slate-300">
+          <li><a href="#how-it-works" class="block px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">{{ __('How It Works') }}</a></li>
+          <li><a href="#benefits" class="block px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">{{ __('Benefits') }}</a></li>
+          <li><a href="#pricing" class="block px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">{{ __('Pricing') }}</a></li>
+          <li class="border-t border-slate-100 dark:border-slate-800 mt-2 pt-3 flex gap-2">
+            <button onclick="openAuthModal('login')" class="flex-1 text-center px-4 py-2 font-semibold text-brand-600 dark:text-brand-400 border-2 border-brand-600 dark:border-brand-500 rounded-xl hover:bg-brand-50 dark:hover:bg-brand-950 transition">{{ __('Login') }}</button>
             <button onclick="openAuthModal('register')" class="flex-1 text-center px-4 py-2 font-semibold text-white bg-brand-600 rounded-xl shadow hover:bg-brand-700 transition">{{ __('Register') }}</button>
           </li>
           <li class="mt-2 flex justify-center gap-4">
@@ -464,7 +556,7 @@
 
     <!-- Wave divider -->
     <div class="absolute bottom-0 left-0 right-0 overflow-hidden leading-none">
-      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" class="w-full h-14 fill-slate-50">
+      <svg viewBox="0 0 1440 60" preserveAspectRatio="none" class="w-full h-14 fill-slate-50 dark:fill-slate-950">
         <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" />
       </svg>
     </div>
@@ -474,45 +566,45 @@
   <!-- ════════════════════════════════════════════
      3. HOW IT WORKS – Steps
      ════════════════════════════════════════════ -->
-  <section id="how-it-works" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50">
+  <section id="how-it-works" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950">
     <div class="max-w-7xl mx-auto">
 
       <div class="text-center mb-14 reveal">
         <span class="text-brand-600 font-semibold text-sm uppercase tracking-widest">{{ __('How It Works') }}</span>
-        <h2 class="text-3xl sm:text-4xl font-black text-slate-800 mt-2">{{ __('Three Simple Steps') }}</h2>
-        <p class="text-slate-500 mt-3 max-w-xl mx-auto">{{ __('A simple, transparent, and fully monitored process to ensure your app successfully passes closed testing.') }}</p>
+        <h2 class="text-3xl sm:text-4xl font-black text-slate-800 dark:text-white mt-2">{{ __('Three Simple Steps') }}</h2>
+        <p class="text-slate-500 dark:text-slate-400 mt-3 max-w-xl mx-auto">{{ __('A simple, transparent, and fully monitored process to ensure your app successfully passes closed testing.') }}</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
 
         <!-- Step 1 -->
-        <div class="reveal bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-300 relative text-center">
+        <div class="reveal bg-white dark:bg-slate-900 rounded-2xl p-8 shadow-lg hover:shadow-xl dark:shadow-slate-900/50 transition duration-300 relative text-center border border-transparent dark:border-slate-800">
           <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-brand-600 text-white rounded-full flex items-center justify-center font-black text-sm shadow-lg">1</div>
-          <div class="w-16 h-16 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
-            <i class="fa-solid fa-upload text-brand-600 text-2xl"></i>
+          <div class="w-16 h-16 bg-brand-100 dark:bg-brand-900/30 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <i class="fa-solid fa-upload text-brand-600 dark:text-brand-400 text-2xl"></i>
           </div>
-          <h3 class="font-bold text-lg text-slate-800 mb-2">{{ __('Register & Upload Your App') }}</h3>
-          <p class="text-slate-500 text-sm leading-relaxed">{{ __('Developers sign up, choose a package, and submit their Google Play app link for closed testing.') }}</p>
+          <h3 class="font-bold text-lg text-slate-800 dark:text-white mb-2">{{ __('Register & Upload Your App') }}</h3>
+          <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Developers sign up, choose a package, and submit their Google Play app link for closed testing.') }}</p>
         </div>
 
         <!-- Step 2 -->
-        <div class="reveal bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-300 relative text-center" style="transition-delay: 0.15s;">
+        <div class="reveal bg-white dark:bg-slate-900 rounded-2xl p-8 shadow-lg hover:shadow-xl dark:shadow-slate-900/50 transition duration-300 relative text-center border border-transparent dark:border-slate-800" style="transition-delay: 0.15s;">
           <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-brand-600 text-white rounded-full flex items-center justify-center font-black text-sm shadow-lg">2</div>
-          <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
-            <i class="fa-solid fa-users text-green-600 text-2xl"></i>
+          <div class="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <i class="fa-solid fa-users text-green-600 dark:text-green-400 text-2xl"></i>
           </div>
-          <h3 class="font-bold text-lg text-slate-800 mb-2">{{ __('20 Testers Join') }}</h3>
-          <p class="text-slate-500 text-sm leading-relaxed">{{ __('Our platform automatically connects 20 verified active testers to your app\'s testing session.') }}</p>
+          <h3 class="font-bold text-lg text-slate-800 dark:text-white mb-2">{{ __('20 Testers Join') }}</h3>
+          <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Our platform automatically connects 20 verified active testers to your app\'s testing session.') }}</p>
         </div>
 
         <!-- Step 3 -->
-        <div class="reveal bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition duration-300 relative text-center" style="transition-delay: 0.3s;">
+        <div class="reveal bg-white dark:bg-slate-900 rounded-2xl p-8 shadow-lg hover:shadow-xl dark:shadow-slate-900/50 transition duration-300 relative text-center border border-transparent dark:border-slate-800" style="transition-delay: 0.3s;">
           <div class="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-brand-600 text-white rounded-full flex items-center justify-center font-black text-sm shadow-lg">3</div>
-          <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-5">
-            <i class="fa-solid fa-trophy text-purple-600 text-2xl"></i>
+          <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <i class="fa-solid fa-trophy text-purple-600 dark:text-purple-400 text-2xl"></i>
           </div>
-          <h3 class="font-bold text-lg text-slate-800 mb-2">{{ __('Pass & Release to Play Store') }}</h3>
-          <p class="text-slate-500 text-sm leading-relaxed">{{ __('After 14 consecutive days with 20 active testers, your app is ready to launch on Google Play Store.') }}</p>
+          <h3 class="font-bold text-lg text-slate-800 dark:text-white mb-2">{{ __('Pass & Release to Play Store') }}</h3>
+          <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('After 14 consecutive days with 20 active testers, your app is ready to launch on Google Play Store.') }}</p>
         </div>
 
       </div>
@@ -523,22 +615,22 @@
   <!-- ════════════════════════════════════════════
      4. DUAL INFO SECTION – Tabbed layout (jQuery)
      ════════════════════════════════════════════ -->
-  <section id="benefits" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+  <section id="benefits" class="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900">
     <div class="max-w-5xl mx-auto">
 
       <div class="text-center mb-10 reveal">
-        <span class="text-brand-600 font-semibold text-sm uppercase tracking-widest">{{ __('Benefits') }}</span>
-        <h2 class="text-3xl sm:text-4xl font-black text-slate-800 mt-2">{{ __('A Platform for Everyone') }}</h2>
-        <p class="text-slate-500 mt-3 max-w-xl mx-auto">{{ __('Choose your perspective and discover how PlayTest ID delivers real value.') }}</p>
+        <span class="text-brand-600 dark:text-brand-400 font-semibold text-sm uppercase tracking-widest">{{ __('Benefits') }}</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-slate-800 dark:text-white mt-2">{{ __('A Platform for Everyone') }}</h2>
+        <p class="text-slate-500 dark:text-slate-400 mt-3 max-w-xl mx-auto">{{ __('Choose your perspective and discover how PlayTest ID delivers real value.') }}</p>
       </div>
 
       <!-- ── Tab Switcher ── -->
       <div class="flex justify-center mb-10 reveal">
-        <div class="inline-flex bg-slate-100 p-1.5 rounded-2xl gap-1">
-          <button class="tab-btn active px-6 py-2.5 rounded-xl text-sm font-semibold transition duration-200 hover:bg-white focus:outline-none" data-tab="developer">
+        <div class="inline-flex bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl gap-1">
+          <button class="tab-btn active px-6 py-2.5 rounded-xl text-sm font-semibold transition duration-200 hover:bg-white dark:hover:bg-slate-700 focus:outline-none" data-tab="developer">
             <i class="fa-solid fa-code mr-2 text-brand-500"></i>{{ __('For Developers') }}
           </button>
-          <button class="tab-btn px-6 py-2.5 rounded-xl text-sm font-semibold text-slate-500 transition duration-200 hover:bg-white focus:outline-none" data-tab="tester">
+          <button class="tab-btn px-6 py-2.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-slate-400 transition duration-200 hover:bg-white dark:hover:bg-slate-700 focus:outline-none" data-tab="tester">
             <i class="fa-solid fa-mobile-screen-button mr-2 text-slate-400"></i>{{ __('For Testers') }}
           </button>
         </div>
@@ -549,30 +641,30 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
           <!-- Benefit 1 -->
-          <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
-            <div class="icon-bubble bg-brand-100 mb-4">
-              <i class="fa-solid fa-magnifying-glass text-brand-600 text-xl"></i>
+          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 hover:shadow-lg dark:hover:shadow-slate-900/30 transition duration-300">
+            <div class="icon-bubble bg-brand-100 dark:bg-brand-900/30 mb-4">
+              <i class="fa-solid fa-magnifying-glass text-brand-600 dark:text-brand-400 text-xl"></i>
             </div>
-            <h4 class="font-bold text-slate-800 mb-2">{{ __('Find Testers Easily') }}</h4>
-            <p class="text-slate-500 text-sm leading-relaxed">{{ __('No need to search manually. Our system instantly connects you with 20 verified active testers.') }}</p>
+            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Find Testers Easily') }}</h4>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('No need to search manually. Our system instantly connects you with 20 verified active testers.') }}</p>
           </div>
 
           <!-- Benefit 2 -->
-          <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
-            <div class="icon-bubble bg-green-100 mb-4">
-              <i class="fa-solid fa-calendar-check text-green-600 text-xl"></i>
+          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 hover:shadow-lg dark:hover:shadow-slate-900/30 transition duration-300">
+            <div class="icon-bubble bg-green-100 dark:bg-green-900/30 mb-4">
+              <i class="fa-solid fa-calendar-check text-green-600 dark:text-green-400 text-xl"></i>
             </div>
-            <h4 class="font-bold text-slate-800 mb-2">{{ __('Automatic 14-Day Validation') }}</h4>
-            <p class="text-slate-500 text-sm leading-relaxed">{{ __('A real-time dashboard monitors each tester\'s activity for 14 consecutive days as required by Google Play Console.') }}</p>
+            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Automatic 14-Day Validation') }}</h4>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('A real-time dashboard monitors each tester\'s activity for 14 consecutive days as required by Google Play Console.') }}</p>
           </div>
 
           <!-- Benefit 3 -->
-          <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
-            <div class="icon-bubble bg-red-100 mb-4">
-              <i class="fa-solid fa-shield-halved text-red-500 text-xl"></i>
+          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 hover:shadow-lg dark:hover:shadow-slate-900/30 transition duration-300">
+            <div class="icon-bubble bg-red-100 dark:bg-red-900/30 mb-4">
+              <i class="fa-solid fa-shield-halved text-red-500 dark:text-red-400 text-xl"></i>
             </div>
-            <h4 class="font-bold text-slate-800 mb-2">{{ __('Avoid Google Rejection') }}</h4>
-            <p class="text-slate-500 text-sm leading-relaxed">{{ __('Our structured process ensures all of Google\'s technical requirements are met so your app won\'t be rejected at launch.') }}</p>
+            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Avoid Google Rejection') }}</h4>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Our structured process ensures all of Google\'s technical requirements are met so your app won\'t be rejected at launch.') }}</p>
           </div>
 
         </div>
@@ -582,30 +674,30 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
           <!-- Benefit 1 -->
-          <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
-            <div class="icon-bubble bg-yellow-100 mb-4">
-              <i class="fa-solid fa-star text-yellow-500 text-xl"></i>
+          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 hover:shadow-lg dark:hover:shadow-slate-900/30 transition duration-300">
+            <div class="icon-bubble bg-yellow-100 dark:bg-yellow-900/30 mb-4">
+              <i class="fa-solid fa-star text-yellow-500 dark:text-yellow-400 text-xl"></i>
             </div>
-            <h4 class="font-bold text-slate-800 mb-2">{{ __('Early App Access') }}</h4>
-            <p class="text-slate-500 text-sm leading-relaxed">{{ __('Be among the first to try innovative apps by Indonesian developers before they officially launch to the public.') }}</p>
+            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Early App Access') }}</h4>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Be among the first to try innovative apps by Indonesian developers before they officially launch to the public.') }}</p>
           </div>
 
           <!-- Benefit 2 -->
-          <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
-            <div class="icon-bubble bg-purple-100 mb-4">
-              <i class="fa-solid fa-graduation-cap text-purple-600 text-xl"></i>
+          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 hover:shadow-lg dark:hover:shadow-slate-900/30 transition duration-300">
+            <div class="icon-bubble bg-purple-100 dark:bg-purple-900/30 mb-4">
+              <i class="fa-solid fa-graduation-cap text-purple-600 dark:text-purple-400 text-xl"></i>
             </div>
-            <h4 class="font-bold text-slate-800 mb-2">{{ __('Project Based Learning Experience') }}</h4>
-            <p class="text-slate-500 text-sm leading-relaxed">{{ __('Enhance your QA and software testing skills through real projects — experience you can add directly to your portfolio.') }}</p>
+            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Project Based Learning Experience') }}</h4>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Enhance your QA and software testing skills through real projects — experience you can add directly to your portfolio.') }}</p>
           </div>
 
           <!-- Benefit 3 -->
-          <div class="bg-slate-50 rounded-2xl p-6 hover:shadow-lg transition duration-300">
-            <div class="icon-bubble bg-brand-100 mb-4">
-              <i class="fa-solid fa-people-group text-brand-600 text-xl"></i>
+          <div class="bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 hover:shadow-lg dark:hover:shadow-slate-900/30 transition duration-300">
+            <div class="icon-bubble bg-brand-100 dark:bg-brand-900/30 mb-4">
+              <i class="fa-solid fa-people-group text-brand-600 dark:text-brand-400 text-xl"></i>
             </div>
-            <h4 class="font-bold text-slate-800 mb-2">{{ __('Active Community') }}</h4>
-            <p class="text-slate-500 text-sm leading-relaxed">{{ __('Join thousands of testers and developers in the PlayTest ID community — share knowledge, discuss, and find collaboration opportunities.') }}</p>
+            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Active Community') }}</h4>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Join thousands of testers and developers in the PlayTest ID community — share knowledge, discuss, and find collaboration opportunities.') }}</p>
           </div>
 
         </div>
@@ -618,50 +710,50 @@
   <!-- ════════════════════════════════════════════
      5. PRICING TABLE – Two cards side by side
      ════════════════════════════════════════════ -->
-  <section id="pricing" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50 relative overflow-hidden">
+  <section id="pricing" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
 
     <!-- Decoration -->
-    <div class="absolute inset-0 bg-gradient-to-br from-brand-50/60 via-slate-50 to-slate-50 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-gradient-to-br from-brand-50/60 via-slate-50 to-slate-50 dark:from-brand-950/20 dark:via-slate-950 dark:to-slate-950 pointer-events-none"></div>
 
     <div class="max-w-5xl mx-auto relative">
 
       <div class="text-center mb-14 reveal">
-        <span class="text-brand-600 font-semibold text-sm uppercase tracking-widest">{{ __('Pricing') }}</span>
-        <h2 class="text-3xl sm:text-4xl font-black text-slate-800 mt-2">{{ __('Choose Your Testing Package') }}</h2>
-        <p class="text-slate-500 mt-3 max-w-xl mx-auto">{{ __('A one-time investment to ensure your app successfully passes closed testing and is ready to launch to millions of users.') }}</p>
+        <span class="text-brand-600 dark:text-brand-400 font-semibold text-sm uppercase tracking-widest">{{ __('Pricing') }}</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-slate-800 dark:text-white mt-2">{{ __('Choose Your Testing Package') }}</h2>
+        <p class="text-slate-500 dark:text-slate-400 mt-3 max-w-xl mx-auto">{{ __('A one-time investment to ensure your app successfully passes closed testing and is ready to launch to millions of users.') }}</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
 
         <!-- ── Card 1: Starter ── -->
-        <div class="pricing-card reveal bg-white rounded-2xl p-8 shadow-lg border border-slate-100">
+        <div class="pricing-card reveal bg-white dark:bg-slate-900 rounded-2xl p-8 shadow-lg border border-slate-100 dark:border-slate-800">
 
           <div class="mb-6">
-            <div class="inline-flex items-center gap-2 bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
+            <div class="inline-flex items-center gap-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
               <i class="fa-solid fa-seedling text-green-500"></i> {{ __('Starter Package') }}
             </div>
-            <p class="text-slate-500 text-sm leading-relaxed">{{ __('A basic solution to meet Google Play Closed Testing requirements.') }}</p>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('A basic solution to meet Google Play Closed Testing requirements.') }}</p>
           </div>
 
           <!-- Price -->
-          <div class="mb-6 pb-6 border-b border-slate-100">
+          <div class="mb-6 pb-6 border-b border-slate-100 dark:border-slate-800">
             <div class="flex items-baseline gap-1">
               <span class="text-slate-400 text-sm font-medium">Rp</span>
-              <span class="text-5xl font-black text-slate-800">300</span>
+              <span class="text-5xl font-black text-slate-800 dark:text-white">300</span>
               <span class="text-slate-400 text-lg font-medium">.000</span>
             </div>
             <p class="text-slate-400 text-xs mt-1">{{ __('One-time payment · full 14-day access') }}</p>
           </div>
 
           <!-- Features -->
-          <ul class="check-list text-sm text-slate-600 mb-8 space-y-0">
+          <ul class="check-list text-sm text-slate-600 dark:text-slate-300 mb-8 space-y-0">
             <li><i class="fa-solid fa-circle-check text-green-500"></i><span>{{ __('Access to 20 Active & Verified Testers') }}</span></li>
             <li><i class="fa-solid fa-circle-check text-green-500"></i><span>{{ __('14 Consecutive Days of Full Testing') }}</span></li>
             <li><i class="fa-solid fa-circle-check text-green-500"></i><span>{{ __('Standard Testing Report') }}</span></li>
             <li><i class="fa-solid fa-circle-check text-green-500"></i><span>{{ __('PlayTest ID Community Support') }}</span></li>
           </ul>
 
-          <a href="#" class="block w-full text-center py-3.5 rounded-xl font-bold text-brand-700 border-2 border-brand-600 hover:bg-brand-600 hover:text-white transition duration-300 text-sm">
+          <a href="#" class="block w-full text-center py-3.5 rounded-xl font-bold text-brand-700 dark:text-brand-400 border-2 border-brand-600 dark:border-brand-500 hover:bg-brand-600 hover:text-white transition duration-300 text-sm">
             {{ __('Choose Starter') }}
           </a>
         </div>
@@ -676,7 +768,7 @@
             </span>
           </div>
 
-          <div class="bg-white rounded-2xl p-8 shadow-2xl border-2 border-brand-600 relative overflow-hidden">
+          <div class="bg-white dark:bg-slate-900 rounded-2xl p-8 shadow-2xl border-2 border-brand-600 relative overflow-hidden">
 
             <!-- Corner ribbon glow -->
             <div class="absolute -top-10 -right-10 w-36 h-36 bg-brand-500/10 rounded-full blur-2xl"></div>
@@ -685,21 +777,21 @@
               <div class="inline-flex items-center gap-2 bg-brand-600 text-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
                 <i class="fa-solid fa-gem"></i> {{ __('Pro Package') }}
               </div>
-              <p class="text-slate-500 text-sm leading-relaxed">{{ __('A premium solution for complete optimization before your app goes public.') }}</p>
+              <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('A premium solution for complete optimization before your app goes public.') }}</p>
             </div>
 
             <!-- Price -->
-            <div class="mb-6 pb-6 border-b border-slate-100 relative">
+            <div class="mb-6 pb-6 border-b border-slate-100 dark:border-slate-800 relative">
               <div class="flex items-baseline gap-1">
                 <span class="text-brand-400 text-sm font-medium">Rp</span>
-                <span class="text-5xl font-black text-brand-700">500</span>
+                <span class="text-5xl font-black text-brand-700 dark:text-brand-400">500</span>
                 <span class="text-brand-400 text-lg font-medium">.000</span>
               </div>
               <p class="text-slate-400 text-xs mt-1">{{ __('One-time payment · full priority access') }}</p>
             </div>
 
             <!-- Features -->
-            <ul class="check-list text-sm text-slate-600 mb-8 relative space-y-0">
+            <ul class="check-list text-sm text-slate-600 dark:text-slate-300 mb-8 relative space-y-0">
               <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('All Starter Package Features') }}</span></li>
               <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('In-Depth Bug & UX Report per Tester') }}</span></li>
               <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Priority Queue (Start Faster)') }}</span></li>
@@ -707,7 +799,7 @@
               <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Priority Support via Live Chat') }}</span></li>
             </ul>
 
-            <a href="#" class="relative block w-full text-center py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-brand-600 to-brand-500 shadow-lg shadow-brand-200 hover:shadow-brand-300 hover:from-brand-700 hover:to-brand-600 transition duration-300 text-sm">
+            <a href="#" class="relative block w-full text-center py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-brand-600 to-brand-500 shadow-lg shadow-brand-200 dark:shadow-brand-900/50 hover:shadow-brand-300 hover:from-brand-700 hover:to-brand-600 transition duration-300 text-sm">
               <i class="fa-solid fa-bolt mr-1"></i> {{ __('Choose Pro – Start Now') }}
             </a>
 
@@ -725,7 +817,7 @@
         <p class="text-slate-400 text-sm">
           <i class="fa-solid fa-circle-info text-brand-400 mr-1"></i>
           {{ __('All packages include access to the 14-day real-time monitoring dashboard.') }}
-          <a href="#" class="text-brand-600 font-semibold hover:underline ml-1">{{ __('See full comparison →') }}</a>
+          <a href="#" class="text-brand-600 dark:text-brand-400 font-semibold hover:underline ml-1">{{ __('See full comparison →') }}</a>
         </p>
       </div>
 
@@ -736,53 +828,53 @@
   <!-- ════════════════════════════════════════════
      6. TESTIMONIAL (bonus) – Social proof
      ════════════════════════════════════════════ -->
-  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900">
     <div class="max-w-6xl mx-auto">
 
       <div class="text-center mb-10 reveal">
-        <span class="text-brand-600 font-semibold text-sm uppercase tracking-widest">{{ __('Testimonials') }}</span>
-        <h2 class="text-2xl sm:text-3xl font-black text-slate-800 mt-2">{{ __('Trusted by Indonesian Developers & Testers') }}</h2>
+        <span class="text-brand-600 dark:text-brand-400 font-semibold text-sm uppercase tracking-widest">{{ __('Testimonials') }}</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-800 dark:text-white mt-2">{{ __('Trusted by Indonesian Developers & Testers') }}</h2>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-        <div class="reveal bg-slate-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300">
+        <div class="reveal bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 shadow-sm hover:shadow-md dark:hover:shadow-slate-900/30 transition duration-300">
           <div class="flex gap-1 text-yellow-400 mb-3 text-sm">
             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           </div>
-          <p class="text-slate-600 text-sm leading-relaxed mb-4">"{{ __('I had tried other platforms and failed. With PlayTest ID, my app passed in 14 days and is now live on the Play Store!') }}"</p>
+          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">"{{ __('I had tried other platforms and failed. With PlayTest ID, my app passed in 14 days and is now live on the Play Store!') }}"</p>
           <div class="flex items-center gap-3">
-            <div class="w-9 h-9 bg-brand-200 rounded-full flex items-center justify-center font-bold text-brand-700 text-sm">RD</div>
+            <div class="w-9 h-9 bg-brand-200 dark:bg-brand-900/50 rounded-full flex items-center justify-center font-bold text-brand-700 dark:text-brand-300 text-sm">RD</div>
             <div>
-              <p class="font-semibold text-slate-800 text-sm">Rizky D.</p>
+              <p class="font-semibold text-slate-800 dark:text-white text-sm">Rizky D.</p>
               <p class="text-slate-400 text-xs">Developer – Jakarta</p>
             </div>
           </div>
         </div>
 
-        <div class="reveal bg-slate-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300" style="transition-delay:0.1s;">
+        <div class="reveal bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 shadow-sm hover:shadow-md dark:hover:shadow-slate-900/30 transition duration-300" style="transition-delay:0.1s;">
           <div class="flex gap-1 text-yellow-400 mb-3 text-sm">
             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           </div>
-          <p class="text-slate-600 text-sm leading-relaxed mb-4">"{{ __('As a tester, I gained real QA experience and was able to add it to my CV. The PlayTest ID community is incredibly supportive!') }}"</p>
+          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">"{{ __('As a tester, I gained real QA experience and was able to add it to my CV. The PlayTest ID community is incredibly supportive!') }}"</p>
           <div class="flex items-center gap-3">
-            <div class="w-9 h-9 bg-green-200 rounded-full flex items-center justify-center font-bold text-green-700 text-sm">AN</div>
+            <div class="w-9 h-9 bg-green-200 dark:bg-green-900/50 rounded-full flex items-center justify-center font-bold text-green-700 dark:text-green-300 text-sm">AN</div>
             <div>
-              <p class="font-semibold text-slate-800 text-sm">Ari N.</p>
+              <p class="font-semibold text-slate-800 dark:text-white text-sm">Ari N.</p>
               <p class="text-slate-400 text-xs">Tester – Surabaya</p>
             </div>
           </div>
         </div>
 
-        <div class="reveal bg-slate-50 rounded-2xl p-6 shadow-sm hover:shadow-md transition duration-300" style="transition-delay:0.2s;">
+        <div class="reveal bg-slate-50 dark:bg-slate-800/50 rounded-2xl p-6 shadow-sm hover:shadow-md dark:hover:shadow-slate-900/30 transition duration-300" style="transition-delay:0.2s;">
           <div class="flex gap-1 text-yellow-400 mb-3 text-sm">
             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           </div>
-          <p class="text-slate-600 text-sm leading-relaxed mb-4">"{{ __('The monitoring dashboard is incredibly helpful. I can track the 14-day progress in real-time. The Pro package is absolutely worth it!') }}"</p>
+          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">"{{ __('The monitoring dashboard is incredibly helpful. I can track the 14-day progress in real-time. The Pro package is absolutely worth it!') }}"</p>
           <div class="flex items-center gap-3">
-            <div class="w-9 h-9 bg-purple-200 rounded-full flex items-center justify-center font-bold text-purple-700 text-sm">FH</div>
+            <div class="w-9 h-9 bg-purple-200 dark:bg-purple-900/50 rounded-full flex items-center justify-center font-bold text-purple-700 dark:text-purple-300 text-sm">FH</div>
             <div>
-              <p class="font-semibold text-slate-800 text-sm">Fajar H.</p>
+              <p class="font-semibold text-slate-800 dark:text-white text-sm">Fajar H.</p>
               <p class="text-slate-400 text-xs">Developer – Bandung</p>
             </div>
           </div>
@@ -844,10 +936,10 @@
   <!-- ════════════════════════════════════════════
      8. FOOTER
      ════════════════════════════════════════════ -->
-  <footer class="bg-slate-900 text-slate-400 py-12 px-4 sm:px-6 lg:px-8">
+  <footer class="bg-slate-900 dark:bg-slate-950 text-slate-400 py-12 px-4 sm:px-6 lg:px-8 border-t border-transparent dark:border-slate-800">
     <div class="max-w-7xl mx-auto">
 
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-10 border-b border-slate-800">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-10 border-b border-slate-800 dark:border-slate-800">
 
         <!-- Brand -->
         <div class="md:col-span-2">
@@ -911,11 +1003,11 @@
      ════════════════════════════════════════════ -->
   <div id="authModal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4">
     <!-- Backdrop -->
-    <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity" onclick="closeAuthModal()"></div>
+    <div class="absolute inset-0 bg-slate-900/40 dark:bg-black/60 backdrop-blur-sm transition-opacity" onclick="closeAuthModal()"></div>
 
     <!-- Modal Content -->
-    <div class="bg-white rounded-3xl w-full max-w-md relative z-10 shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300" id="authModalContent">
-      <button onclick="closeAuthModal()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 hover:text-slate-800 transition">
+    <div class="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-md relative z-10 shadow-2xl overflow-hidden transform scale-95 opacity-0 transition-all duration-300 border border-transparent dark:border-slate-800" id="authModalContent">
+      <button onclick="closeAuthModal()" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-800 dark:hover:text-white transition">
         <i class="fa-solid fa-xmark"></i>
       </button>
       <div class="p-8">
@@ -928,26 +1020,26 @@
         </div>
         <div class="space-y-4">
           <!-- Developer -->
-          <a id="btnAuthDeveloper" href="#" class="group flex items-center p-4 border-2 border-slate-100 rounded-2xl hover:border-brand-500 hover:bg-brand-50 transition duration-300">
-            <div class="w-12 h-12 bg-slate-100 group-hover:bg-brand-100 rounded-xl flex items-center justify-center transition duration-300">
-              <i class="fa-solid fa-code text-slate-500 group-hover:text-brand-600"></i>
+          <a id="btnAuthDeveloper" href="#" class="group flex items-center p-4 border-2 border-slate-100 dark:border-slate-800 rounded-2xl hover:border-brand-500 hover:bg-brand-50 dark:hover:bg-brand-950 transition duration-300">
+            <div class="w-12 h-12 bg-slate-100 dark:bg-slate-800 group-hover:bg-brand-100 dark:group-hover:bg-brand-900/30 rounded-xl flex items-center justify-center transition duration-300">
+              <i class="fa-solid fa-code text-slate-500 dark:text-slate-400 group-hover:text-brand-600 dark:group-hover:text-brand-400"></i>
             </div>
             <div class="ml-4 flex-1">
-              <h4 class="font-bold text-slate-800 group-hover:text-brand-700 transition">{{ __('Developer') }}</h4>
-              <p class="text-xs text-slate-500 mt-0.5">{{ __('App owner who needs testers') }}</p>
+              <h4 class="font-bold text-slate-800 dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-400 transition">{{ __('Developer') }}</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ __('App owner who needs testers') }}</p>
             </div>
-            <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-brand-500 transition"></i>
+            <i class="fa-solid fa-chevron-right text-slate-300 dark:text-slate-600 group-hover:text-brand-500 transition"></i>
           </a>
           <!-- Tester -->
-          <a id="btnAuthTester" href="#" class="group flex items-center p-4 border-2 border-slate-100 rounded-2xl hover:border-green-500 hover:bg-green-50 transition duration-300">
-            <div class="w-12 h-12 bg-slate-100 group-hover:bg-green-100 rounded-xl flex items-center justify-center transition duration-300">
-              <i class="fa-solid fa-mobile-screen-button text-slate-500 group-hover:text-green-600"></i>
+          <a id="btnAuthTester" href="#" class="group flex items-center p-4 border-2 border-slate-100 dark:border-slate-800 rounded-2xl hover:border-green-500 hover:bg-green-50 dark:hover:bg-green-950 transition duration-300">
+            <div class="w-12 h-12 bg-slate-100 dark:bg-slate-800 group-hover:bg-green-100 dark:group-hover:bg-green-900/30 rounded-xl flex items-center justify-center transition duration-300">
+              <i class="fa-solid fa-mobile-screen-button text-slate-500 dark:text-slate-400 group-hover:text-green-600 dark:group-hover:text-green-400"></i>
             </div>
             <div class="ml-4 flex-1">
-              <h4 class="font-bold text-slate-800 group-hover:text-green-700 transition">{{ __('Tester') }}</h4>
-              <p class="text-xs text-slate-500 mt-0.5">{{ __('App tester for Google Play') }}</p>
+              <h4 class="font-bold text-slate-800 dark:text-white group-hover:text-green-700 dark:group-hover:text-green-400 transition">{{ __('Tester') }}</h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ __('App tester for Google Play') }}</p>
             </div>
-            <i class="fa-solid fa-chevron-right text-slate-300 group-hover:text-green-500 transition"></i>
+            <i class="fa-solid fa-chevron-right text-slate-300 dark:text-slate-600 group-hover:text-green-500 transition"></i>
           </a>
         </div>
       </div>
@@ -1010,6 +1102,22 @@
         modal.classList.add('hidden');
         modal.classList.remove('flex');
       }, 300);
+    }
+  </script>
+
+  <!-- ════════════════════════════════════════════
+     THEME TOGGLE FUNCTION
+     ════════════════════════════════════════════ -->
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.setItem('pt-theme', 'light');
+      } else {
+        html.classList.add('dark');
+        localStorage.setItem('pt-theme', 'dark');
+      }
     }
   </script>
 

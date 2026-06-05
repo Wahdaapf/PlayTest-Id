@@ -989,7 +989,37 @@
             margin-bottom: 10px;
             box-shadow: 0 10px 25px -5px rgba(20, 83, 45, 0.3);
         }
+    
+        /* ══ DARK MODE OVERRIDES ══ */
+        .dark body, .dark .fi-main, .dark .fi-simple-main { background-color: #0f172a !important; color: #f8fafc !important; }
+        .dark .mw-stat, .dark .mw-filter-bar, .dark .mw-table-wrap, .dark .mw-modal-box, .dark .mw-detail-panel, .dark .bg-white { background: #1e293b !important; border-color: #334155 !important; }
+        .dark .mw-stat-value, .dark .mw-sora, .dark .mw-modal-title, .dark .mw-detail-val, .dark .text-slate-900, .dark .text-slate-800, .dark .text-slate-700, .dark .mw-td-name, .dark .mw-td-nom, .dark .mw-td-point { color: #f1f5f9 !important; }
+        .dark .mw-stat-label, .dark .mw-table th, .dark .text-slate-500, .dark .text-slate-600, .dark .mw-td-metode, .dark .mw-td-akun, .dark .mw-td-date, .dark .mw-td-id { color: #94a3b8 !important; }
+        .dark .mw-table thead tr { background: #0f172a !important; border-bottom-color: #334155 !important; }
+        .dark .mw-table td { border-bottom-color: #1e293b !important; }
+        .dark .mw-table tbody tr:hover { background: #0f172a !important; }
+        .dark .mw-detail-header, .dark .mw-detail-footer { background: rgba(15, 23, 42, 0.9) !important; border-color: #334155 !important; }
+        .dark .mw-detail-row { border-bottom-color: #334155 !important; }
+        .dark .mw-detail-row:hover { background: #0f172a !important; }
+        .dark .mw-pagi { background: #1e293b !important; border-color: #334155 !important; color: #cbd5e1 !important; }
+        .dark .mw-pagi-btn { background: #0f172a !important; border-color: #334155 !important; color: #cbd5e1 !important; }
+        .dark .mw-pagi-btn:hover { background: #334155 !important; border-color: #475569 !important; }
+        .dark .mw-pagi-btn.active { background: #2563eb !important; color: #fff !important; border-color: #2563eb !important; }
+        .dark .mw-input, .dark .mw-select { background: #0f172a !important; border-color: #334155 !important; color: #f1f5f9 !important; }
+        .dark .mw-btn-secondary, .dark .mw-btn-ghost, .dark .mw-btn-icon { background: #0f172a !important; border-color: #334155 !important; color: #cbd5e1 !important; }
+        .dark .mw-btn-secondary:hover, .dark .mw-btn-ghost:hover, .dark .mw-btn-icon:hover { background: #334155 !important; color: #f1f5f9 !important; }
+        .dark .mw-btn-export { background: #064e3b !important; border-color: #059669 !important; color: #34d399 !important; }
+        .dark .mw-btn-export:hover { background: #065f46 !important; color: #6ee7b7 !important; }
+        .dark .mw-detail-section { color: #64748b !important; }
+        .dark .bg-slate-50, .dark .bg-slate-100 { background-color: #0f172a !important; border-color: #334155 !important; }
+        .dark .mw-chart-bar-tooltip { background: #fff !important; color: #0f172a !important; }
+        .dark .mw-badge-pending { background: #422006 !important; color: #fef08a !important; }
+        .dark .mw-badge-success { background: #064e3b !important; color: #6ee7b7 !important; }
+        .dark .mw-badge-rejected { background: #450a0a !important; color: #fca5a5 !important; }
+        .dark .mw-action-detail { background: #1e3a8a !important; color: #93c5fd !important; }
+        .dark .mw-action-detail:hover { background: #1e40af !important; }
     </style>
+
     @endpush
 
     <div class="space-y-5" x-data="withdrawAdmin()" x-init="initChart()" @data-updated.window="tutupDetail()">
@@ -1351,125 +1381,6 @@
             </div>
         </div>
 
-        {{-- ══ APPROVE CONFIRMATION MODAL ══ --}}
-        @if($pendingApproveId)
-        <template x-teleport="body">
-            <div class="mw-modal-overlay" x-data="{ open: true }" x-show="open" x-cloak
-                x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                @click.self="open = false; $wire.cancelAction()">
-                <div class="mw-modal-box"
-                    x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="opacity-0 scale-90 translate-y-8" x-transition:enter-end="opacity-100 scale-100 translate-y-0">
-                    <div class="mw-modal-header">
-                        <h3 class="mw-sora mw-modal-title">
-                            <span class="material-symbols-outlined mw-modal-title-icon success">verified</span>
-                            Konfirmasi Persetujuan
-                        </h3>
-                        <button @click="open = false; $wire.cancelAction()" class="mw-btn-icon">
-                            <span class="material-symbols-outlined">close</span>
-                        </button>
-                    </div>
-                    <div class="mw-modal-body">
-                        <div class="mw-alert mw-alert-success">
-                            <span class="material-symbols-outlined mw-alert-icon success">info</span>
-                            <div>
-                                <p class="mw-alert-title success">Apakah Anda yakin?</p>
-                                <p class="mw-alert-text success">Anda akan menyetujui withdrawal <strong>#{{ $pendingApproveId }}</strong>. Aksi ini tidak dapat dibatalkan. Pastikan Anda sudah mentransfer dana ke tester.</p>
-                            </div>
-                        </div>
-
-                        <div class="mb-2">
-                            <label class="mw-upload-label">
-                                <span class="material-symbols-outlined text-[1.1rem]">upload_file</span>
-                                Upload Bukti Transfer <span class="text-red-500">*</span>
-                            </label>
-
-                            @if($previewUrl)
-                            <div class="mw-upload-preview animate-fade-in-up">
-                                <img src="{{ $previewUrl }}" alt="Preview Bukti Transfer">
-                            </div>
-                            @endif
-
-                            <div class="mw-upload-area {{ $previewUrl ? 'has-file' : '' }}">
-                                <input type="file" wire:model="buktiTransfer" accept="image/*" class="mw-upload-input">
-                                <div wire:loading.remove wire:target="buktiTransfer">
-                                    @if($previewUrl)
-                                    <div>
-                                        <span class="material-symbols-outlined text-[1.5rem] text-green-600">check_circle</span>
-                                        <p class="text-[.85rem] text-green-700 mt-1 font-semibold">File berhasil dipilih</p>
-                                        <p class="text-[.75rem] text-slate-500 mt-1">Klik atau seret untuk mengganti</p>
-                                    </div>
-                                    @else
-                                    <div>
-                                        <span class="material-symbols-outlined text-[2rem] text-slate-400 group-hover:text-blue-500 transition-colors">cloud_upload</span>
-                                        <p class="text-[.85rem] text-slate-500 mt-2 font-medium">Klik atau seret gambar bukti transfer</p>
-                                        <p class="text-[.75rem] text-slate-400 mt-1">JPG, PNG, max 2MB</p>
-                                    </div>
-                                    @endif
-                                </div>
-                                <div wire:loading wire:target="buktiTransfer">
-                                    <span class="material-symbols-outlined text-[2rem] text-blue-600 animate-spin">progress_activity</span>
-                                    <p class="text-[.85rem] text-blue-600 mt-2 font-medium">Mengupload...</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mw-modal-footer">
-                        <button class="mw-btn mw-btn-secondary" @click="open = false; $wire.cancelAction()">Batal</button>
-                        <button class="mw-btn mw-btn-primary" wire:click="approveWithdraw" wire:loading.attr="disabled" wire:target="approveWithdraw">
-                            <span wire:loading.remove wire:target="approveWithdraw">Ya, Setujui</span>
-                            <span wire:loading wire:target="approveWithdraw">Memproses...</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </template>
-        @endif
-
-        {{-- ══ REJECT CONFIRMATION MODAL ══ --}}
-        @if($pendingRejectId)
-        <template x-teleport="body">
-            <div class="mw-modal-overlay" x-data="{ open: true }" x-show="open" x-cloak
-                x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                @click.self="open = false; $wire.cancelAction()">
-                <div class="mw-modal-box"
-                    x-transition:enter="transition ease-out duration-300"
-                    x-transition:enter-start="opacity-0 scale-90 translate-y-8" x-transition:enter-end="opacity-100 scale-100 translate-y-0">
-                    <div class="mw-modal-header">
-                        <h3 class="mw-sora mw-modal-title">
-                            <span class="material-symbols-outlined mw-modal-title-icon danger">warning</span>
-                            Konfirmasi Penolakan
-                        </h3>
-                        <button @click="open = false; $wire.cancelAction()" class="mw-btn-icon">
-                            <span class="material-symbols-outlined">close</span>
-                        </button>
-                    </div>
-                    <div class="mw-modal-body">
-                        <div class="mw-alert mw-alert-danger">
-                            <span class="material-symbols-outlined mw-alert-icon danger">info</span>
-                            <div>
-                                <p class="mw-alert-title danger">Apakah Anda yakin?</p>
-                                <p class="mw-alert-text danger">Anda akan menolak withdrawal <strong>#{{ $pendingRejectId }}</strong>. Point akan dikembalikan ke saldo tester.</p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <label class="block text-[.85rem] font-semibold text-slate-700 mb-2">Catatan (opsional)</label>
-                            <textarea wire:model="rejectCatatan" rows="3" class="mw-input w-full resize-none" placeholder="Alasan penolakan..."></textarea>
-                        </div>
-                    </div>
-                    <div class="mw-modal-footer">
-                        <button class="mw-btn mw-btn-secondary" @click="open = false; $wire.cancelAction()">Batal</button>
-                        <button class="mw-btn mw-btn-danger" wire:click="rejectWithdraw" wire:loading.attr="disabled" wire:target="rejectWithdraw">
-                            <span wire:loading.remove wire:target="rejectWithdraw">Ya, Tolak</span>
-                            <span wire:loading wire:target="rejectWithdraw">Memproses...</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </template>
-        @endif
-
         {{-- ══ DETAIL SLIDE-OUT MODAL ══ --}}
         <div class="mw-detail-bg" x-show="modalTerbuka" x-cloak style="display:none"
             x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
@@ -1553,7 +1464,7 @@
                 <div class="mw-detail-footer">
                     <template x-if="detail && detail.status === 'pending'">
                         <div class="flex flex-col gap-2 w-full">
-                            <template x-if="detail.xendit_payout_id">
+                            
                                 <button class="mw-btn w-full mw-btn-primary"
                                         wire:click="syncWithdrawStatus(detail.id)"
                                         wire:loading.attr="disabled">
@@ -1562,13 +1473,8 @@
                                     <span wire:loading.remove wire:target="syncWithdrawStatus">Sync Xendit Status</span>
                                     <span wire:loading wire:target="syncWithdrawStatus">Synchronizing...</span>
                                 </button>
-                            </template>
-                            <template x-if="!detail.xendit_payout_id">
-                                <div class="flex gap-2 w-full">
-                                    <button class="mw-btn flex-1 mw-btn-primary" @click="$wire.confirmApprove(detail.id); tutupDetail()">✓ Setujui</button>
-                                    <button class="mw-btn flex-1 mw-btn-ghost-danger" @click="$wire.confirmReject(detail.id); tutupDetail()">✗ Tolak</button>
-                                </div>
-                            </template>
+                            
+                            
                         </div>
                     </template>
                     <template x-if="detail && detail.status === 'success' && detail.image">

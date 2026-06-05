@@ -40,10 +40,23 @@ class GoogleController extends Controller
             $user = User::where('email', $googleUser->getEmail())->first();
 
             if ($user) {
-                // Admin panel: only allow if user already has admin role
+                // ── Role-vs-Panel validation ──────────────────────────
+                // Admin panel: only admin role allowed
                 if ($panel === 'admin' && $user->role !== UserRole::admin) {
                     session()->forget('google_auth_panel');
-                    return redirect($loginUrl)->with('error', 'This account does not have admin access.');
+                    return redirect($loginUrl)->with('error', 'Akun ini tidak memiliki akses admin.');
+                }
+
+                // Developer panel: only developer (and admin) allowed
+                if ($panel === 'developer' && $user->role !== UserRole::developer && $user->role !== UserRole::admin) {
+                    session()->forget('google_auth_panel');
+                    return redirect($loginUrl)->with('error', 'Akun ini terdaftar sebagai tester. Silakan login melalui halaman tester.');
+                }
+
+                // Tester panel: only tester (and admin) allowed
+                if ($panel === 'tester' && $user->role !== UserRole::tester && $user->role !== UserRole::admin) {
+                    session()->forget('google_auth_panel');
+                    return redirect($loginUrl)->with('error', 'Akun ini terdaftar sebagai developer. Silakan login melalui halaman developer.');
                 }
 
                 // Existing user — link Google ID if not already linked
@@ -56,7 +69,7 @@ class GoogleController extends Controller
                 // Admin panel: do NOT allow creating new accounts via Google
                 if ($panel === 'admin') {
                     session()->forget('google_auth_panel');
-                    return redirect($loginUrl)->with('error', 'Admin account not registered. Please contact an administrator.');
+                    return redirect($loginUrl)->with('error', 'Akun admin tidak terdaftar. Hubungi administrator.');
                 }
 
                 // New user — create account with Google info (tester/developer only)
