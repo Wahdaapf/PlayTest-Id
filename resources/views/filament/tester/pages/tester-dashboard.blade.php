@@ -55,9 +55,6 @@
    APP LIST ITEMS  
 ══════════════════════════════════════ */  
 .tsr-app-item {  
-    display: flex;  
-    align-items: center;  
-    gap: 1rem;  
     padding: 1rem 1.25rem;  
     border-bottom: 1px solid #f1f5f9;  
     transition: background 0.15s ease;  
@@ -312,12 +309,12 @@
              APLIKASI TERSEDIA  
         ══════════════════════════════════════ --}}  
         <div data-design-id="available-section" class="mb-4">  
-            <div class="flex items-center justify-between mb-4">  
-                <div>  
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">  
+                <div class="w-full md:w-auto">  
                     <h2 class="text-base font-bold font-heading" style="color:#1e293b;">Aplikasi Tersedia untuk Diuji</h2>  
                     <p class="text-xs mt-0.5" style="color:#94a3b8;">{{ count($aplikasiList) }} slot terbuka • Lamar sekarang</p>  
                 </div>  
-                <div class="flex items-center gap-2">  
+                <div class="flex items-center gap-2 flex-wrap w-full md:w-auto mt-1 md:mt-0">  
                     <button class="tsr-filter-active" x-on:click="setFilter('semua')" :class="filter === 'semua' ? 'tsr-filter-active' : 'tsr-filter-inactive'">Semua</button>  
                     <button class="tsr-filter-inactive" x-on:click="setFilter('functional')" :class="filter === 'functional' ? 'tsr-filter-active' : 'tsr-filter-inactive'">Functional</button>  
                     <button class="tsr-filter-inactive" x-on:click="setFilter('ux')" :class="filter === 'ux' ? 'tsr-filter-active' : 'tsr-filter-inactive'">UX</button>  
@@ -327,71 +324,79 @@
             {{-- List card --}}  
             <div class="bg-white rounded-2xl shadow-sm" style="border:1px solid #e2e8f0;">  
                 @foreach($aplikasiList as $app)  
-                <div data-design-id="app-item-{{ $loop->iteration }}" class="tsr-app-item flex-col sm:flex-row items-start sm:items-center">  
+                <div data-design-id="app-item-{{ $loop->iteration }}" class="tsr-app-item flex flex-col md:flex-row md:items-center justify-between gap-4 p-4 border-b border-slate-100 last:border-none hover:bg-slate-50 transition-colors">  
   
-                    <div class="flex items-center gap-4 w-full sm:w-auto">
+                    <div class="flex items-center gap-4 w-full md:w-auto">  
                         {{-- Icon / Logo --}}  
-                        @if($app['logo'])
-                            <img src="/storage/{{ $app['logo'] }}" alt="Logo" class="w-12 h-12 rounded-2xl object-cover shadow-sm flex-shrink-0">
-                        @else
+                        @if($app['logo'])  
+                            <img src="/storage/{{ $app['logo'] }}" alt="Logo" class="w-12 h-12 rounded-2xl object-cover shadow-sm flex-shrink-0">  
+                        @else  
                             <div class="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"  
                                  style="background:{{ $app['gradient'] }};">  
                                 <span class="text-white font-bold text-base">{{ $app['inisial'] }}</span>  
                             </div>  
-                        @endif
-      
+                        @endif  
+        
                         {{-- Info --}}  
                         <div class="flex-1 min-w-0">  
-                            <div class="flex items-center gap-2 mb-0.5">  
-                                <p class="text-sm font-bold font-heading truncate" style="color:#1e293b;">{{ $app['nama'] }}</p>  
+                            <div class="flex items-center gap-2 mb-0.5 flex-wrap">  
+                                <p class="text-sm font-bold font-heading truncate max-w-[150px] sm:max-w-none" style="color:#1e293b;">{{ $app['nama'] }}</p>  
                                 <span class="text-[10px] font-medium px-2 py-0.5 rounded-md flex-shrink-0"  
                                       style="background:{{ $app['tipeBg'] }};color:{{ $app['tipeColor'] }};">  
                                     {{ $app['tipe'] }}  
                                 </span>  
                             </div>  
-                            <p class="text-xs truncate" style="color:#64748b;">{{ $app['deskripsi'] }}</p>  
+                            <p class="text-xs truncate text-slate-500" style="color:#64748b; max-width: 280px; overflow: hidden; text-overflow: ellipsis;">{{ $app['deskripsi'] }}</p>  
                         </div>  
-                    </div>
-
-                    {{-- Meta --}}  
-                    <div class="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto mt-4 sm:mt-0 pt-3 sm:pt-0 border-t sm:border-none border-slate-100">  
+                    </div>  
+  
+                    {{-- Meta & Actions (Sejajar ke samping di mobile) --}}  
+                    <div class="flex flex-row items-center justify-between md:justify-end gap-2 sm:gap-4 w-full md:w-auto mt-2 md:mt-0 pt-3 md:pt-0 border-t md:border-none border-slate-100">  
+                        
+                        {{-- Durasi --}}
                         <div class="text-center hidden lg:block">  
                             <p class="text-xs font-bold font-mono-num" style="color:#1e293b;">{{ $app['durasi'] }}</p>  
                             <p class="text-xs" style="color:#94a3b8;">Durasi</p>  
                         </div>  
-                        <div class="text-center">  
+                        
+                        {{-- Tester --}}
+                        <div class="text-center flex-shrink-0">  
                             <p class="text-xs font-bold font-mono-num" style="color:#1e293b;">  
                                 {{ $app['testerCur'] }}/{{ $app['testerMax'] }}  
                             </p>  
                             <p class="text-xs" style="color:#94a3b8;">Tester</p>  
                         </div>  
-                        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl" style="background:#f0fdf4;">  
+                        
+                        {{-- Points --}}
+                        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl flex-shrink-0" style="background:#f0fdf4;">  
                             <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20" style="color:#10b981;">  
                                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>  
                             </svg>  
-                            <span class="text-xs font-bold font-mono-num" style="color:#16a34a;">+{{ $app['reward'] }} pts</span>  
+                            <span class="text-xs font-bold font-mono-num text-emerald-600" style="color:#16a34a;">+{{ $app['reward'] }} pts</span>  
                         </div>  
-                        @php
-                            $isRestricted = $app['isTrusted'] && ($userBadgeCount <= 5);
-                        @endphp
-                        <div class="flex items-center gap-2">
-                            <a href="/tester/misi-detail?misi_id={{ $app['id'] }}" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors flex items-center gap-1.5" style="text-decoration:none;">
-                                Detail
-                            </a>
-                            <button 
-                                @if(!$isRestricted) 
-                                    wire:click="applyMisi('{{ $app['id'] }}')" 
-                                @endif
-                                @disabled($isRestricted)
-                                wire:loading.attr="disabled"
-                                class="tsr-btn-apply !px-3 font-bold"
-                                @if($isRestricted) title="Misi ini membutuhkan minimal 6 badge" @endif
-                            >
-                                <span wire:loading.remove wire:target="applyMisi('{{ $app['id'] }}')">
-                                    {{ $isRestricted ? 'Locked' : 'Apply' }}
-                                </span>
-                                <span wire:loading wire:target="applyMisi('{{ $app['id'] }}')">...</span>
-                            </button>
+
+                        {{-- Actions (Detail & Apply) --}}
+                        @php  
+                            $isRestricted = $app['isTrusted'] && ($userBadgeCount <= 5);  
+                        @endphp  
+                        <div class="flex items-center gap-2 flex-shrink-0 ml-auto md:ml-0">  
+                            <a href="/tester/misi-detail?misi_id={{ $app['id'] }}" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors flex items-center gap-1.5" style="text-decoration:none;">  
+                                Detail  
+                            </a>  
+                            <button   
+                                @if(!$isRestricted)   
+                                    wire:click="applyMisi('{{ $app['id'] }}')"   
+                                @endif  
+                                @disabled($isRestricted)  
+                                wire:loading.attr="disabled"  
+                                class="tsr-btn-apply !px-3 !py-1.5 text-xs font-bold"  
+                                @if($isRestricted) title="Misi ini membutuhkan minimal 6 badge" @endif  
+                            >  
+                                <span wire:loading.remove wire:target="applyMisi('{{ $app['id'] }}')">  
+                                    {{ $isRestricted ? 'Locked' : 'Apply' }}  
+                                </span>  
+                                <span wire:loading wire:target="applyMisi('{{ $app['id'] }}')">...</span>  
+                            </button>  
                         </div>  
                     </div>  
                 </div>  
