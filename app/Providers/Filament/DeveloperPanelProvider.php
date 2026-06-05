@@ -20,8 +20,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
-use Hammadzafar05\MobileBottomNav\MobileBottomNav;
-use Hammadzafar05\MobileBottomNav\MobileBottomNavItem;
+
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -87,25 +86,7 @@ class DeveloperPanelProvider extends PanelProvider
                     ->isActiveWhen(fn() => request()->routeIs('filament.developer.pages.tips-bantuan'))
                     ->sort(3),
             ])
-            ->plugins([
-                MobileBottomNav::make()
-                    ->items([
-                        MobileBottomNavItem::make('Home')
-                            ->icon('heroicon-o-home')
-                            ->activeIcon('heroicon-s-home')
-                            ->url('/developer')
-                            ->isActive(fn() => request()->is('developer')),
-                        MobileBottomNavItem::make('Inbox')
-                            ->icon('heroicon-o-inbox')
-                            ->url('/developer/inbox')
-                            ->badge(5, 'danger'),
-                        MobileBottomNavItem::make('Profile')
-                            ->icon('heroicon-o-user')
-                            ->activeIcon('heroicon-s-user')
-                            ->url(fn() => ProfileDeveloper::getUrl())
-                            ->isActive(fn() => request()->routeIs('filament.developer.pages.profile-developer')),
-                    ]),
-            ])
+            ->plugins([])
 
             ->renderHook(
                 'panels::head.end',
