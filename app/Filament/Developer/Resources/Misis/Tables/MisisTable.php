@@ -52,7 +52,12 @@ class MisisTable
                 TextColumn::make('paket.name')
                     ->label('Paket')
                     ->badge()
-                    ->color('primary')
+                    ->color(fn ($state): string => match (true) {
+                        str_contains(strtolower($state ?? ''), 'premium') => 'success',
+                        str_contains(strtolower($state ?? ''), 'basic') => 'info',
+                        str_contains(strtolower($state ?? ''), 'gratis') => 'gray',
+                        default => 'warning',
+                    })
                     ->default('-'),
 
                 TextColumn::make('kapasitas')
