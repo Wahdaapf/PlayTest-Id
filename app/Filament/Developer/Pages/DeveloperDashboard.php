@@ -68,7 +68,7 @@ class DeveloperDashboard extends Page
         // ── 3. Mapping kampanyeList (14-Day Progress Tracker) ──
         $kampanyeList = $misiList->whereIn('status', ['open', 'progress', 'selesai'])->take(3)->map(function ($m) {
             // Hitung hari aktif (asumsi 14 hari)
-            $diff = $m->created_at->diffInDays(now());
+            $diff = (int) $m->created_at->diffInDays(now());
             $hariAktif = min($diff + 1, 14); 
 
             $statusUI = match($m->status) {
