@@ -90,11 +90,12 @@ class MisisTable
             ])
             ->filters([])
             ->recordActions([
-                \Filament\Actions\Action::make('mulai_misi')
+                 \Filament\Actions\Action::make('mulai_misi')
                     ->label('Mulai Misi')
                     ->icon('heroicon-o-play')
                     ->color('success')
-                    ->button()
+                    ->iconButton()
+                    ->tooltip('Mulai Misi')
                     ->requiresConfirmation()
                     ->modalHeading('Mulai Misi')
                     ->modalDescription('Apakah Anda yakin ingin memulai misi ini? Sistem akan membuatkan sub-misi secara otomatis untuk para tester.')
@@ -157,13 +158,17 @@ class MisisTable
                     ->label('Kelola Tester')
                     ->icon('heroicon-o-users')
                     ->color('info')
-                    ->button()
+                    ->iconButton()
+                    ->tooltip('Kelola Tester')
                     ->visible(fn (\App\Models\Misi $record): bool => 
                         in_array($record->status, ['open', 'closed'])
                     )
                     ->url(fn (\App\Models\Misi $record): string => \App\Filament\Developer\Resources\Misis\MisiResource::getUrl('kelola-tester', ['record' => $record])),
-                EditAction::make(),
+                EditAction::make()
+                    ->iconButton()
+                    ->tooltip('Edit'),
             ])
+            ->actionsColumnLabel('Aksi')
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),

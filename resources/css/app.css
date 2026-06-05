@@ -102,3 +102,9 @@ html.dark .tk-stat-icon.tk-bg-green, html.dark .mw-stat-icon.mw-bg-green, html.d
 html.dark .mw-upload-area { background: #0f172a !important; border-color: #334155 !important; }
 html.dark .mw-upload-area.has-file { background: rgba(34, 197, 94, 0.1) !important; border-color: rgba(34, 197, 94, 0.3) !important; }
 html.dark .mw-upload-preview { background: #0f172a !important; border-color: #334155 !important; }
+
+/* Menghilangkan paksaan uppercase pada header tabel Filament */
+.fi-ta-header-cell,
+.fi-ta-header-cell * {
+    text-transform: capitalize !important;
+}
