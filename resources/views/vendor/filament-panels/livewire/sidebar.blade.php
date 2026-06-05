@@ -21,10 +21,40 @@
     >
         {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::SIDEBAR_START) }}
 
-        <div class="fi-sidebar-header-ctn">
+        <div class="fi-sidebar-header-ctn" style="position: relative;">
             <header
                 class="fi-sidebar-header"
             >
+                {{-- Mobile Close Button --}}
+                <button
+                    x-on:click="$store.sidebar.close()"
+                    class="fi-sidebar-close-btn lg:hidden"
+                    style="
+                        position: absolute;
+                        top: 12px;
+                        right: 12px;
+                        z-index: 50;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 32px;
+                        height: 32px;
+                        border-radius: 8px;
+                        border: none;
+                        background: rgba(255, 255, 255, 0.1);
+                        color: rgba(255, 255, 255, 0.7);
+                        cursor: pointer;
+                        transition: all 0.2s ease;
+                    "
+                    onmouseover="this.style.background='rgba(255,255,255,0.2)';this.style.color='#fff'"
+                    onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.color='rgba(255,255,255,0.7)'"
+                    title="Tutup Sidebar"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 18px; height: 18px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
                 @if ((! $hasTopbar) && $isSidebarCollapsibleOnDesktop)
                     <x-filament::icon-button
                         color="gray"
