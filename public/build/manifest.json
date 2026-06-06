@@ -1,0 +1,35 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-DgQ9MSkm.css",
+    "name": "app",
+    "names": [
+      "app.css"
+    ],
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/css/filament-sidebar.css": {
+    "file": "assets/filament-sidebar-DrIuKJes.css",
+    "name": "filament-sidebar",
+    "names": [
+      "filament-sidebar.css"
+    ],
+    "src": "resources/css/filament-sidebar.css",
+    "isEntry": true
+  },
+  "resources/css/filament-topbar.css": {
+    "file": "assets/filament-topbar-B16PnOye.css",
+    "name": "filament-topbar",
+    "names": [
+      "filament-topbar.css"
+    ],
+    "src": "resources/css/filament-topbar.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-Bhbv_g18.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}
