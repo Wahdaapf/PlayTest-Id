@@ -350,18 +350,18 @@
 
         <!-- Desktop Menu -->
         <ul class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600 dark:text-slate-400">
-          <li><a href="#how-it-works" class="hover:text-brand-600 dark:hover:text-brand-400 transition duration-200">{{ __('How It Works') }}</a></li>
-          <li><a href="#benefits" class="hover:text-brand-600 dark:hover:text-brand-400 transition duration-200">{{ __('Benefits') }}</a></li>
-          <li><a href="#pricing" class="hover:text-brand-600 dark:hover:text-brand-400 transition duration-200">{{ __('Pricing') }}</a></li>
+          <li><a href="#how-it-works" class="hover:text-brand-600 dark:hover:text-brand-400 transition duration-200">{{ __('Cara Kerja') }}</a></li>
+          <li><a href="#benefits" class="hover:text-brand-600 dark:hover:text-brand-400 transition duration-200">{{ __('Manfaat') }}</a></li>
+          <li><a href="#pricing" class="hover:text-brand-600 dark:hover:text-brand-400 transition duration-200">{{ __('Harga') }}</a></li>
         </ul>
 
         <!-- Desktop CTA -->
         <div class="hidden md:flex items-center gap-3">
           <button onclick="openAuthModal('login')" class="px-4 py-2 text-sm font-semibold text-brand-600 dark:text-brand-400 border-2 border-brand-600 dark:border-brand-500 rounded-xl hover:bg-brand-50 dark:hover:bg-brand-950 transition duration-200">
-            {{ __('Login') }}
+            {{ __('Masuk') }}
           </button>
           <button onclick="openAuthModal('register')" class="px-4 py-2 text-sm font-semibold text-white bg-brand-600 rounded-xl shadow-md hover:bg-brand-700 transition duration-200">
-            {{ __('Register') }}
+            {{ __('Daftar') }}
           </button>
 
           <!-- Theme Toggle -->
@@ -399,12 +399,12 @@
       <!-- Mobile Menu (collapsible, jQuery controlled) -->
       <div id="mobile-menu" class="md:hidden border-t border-slate-100 dark:border-slate-800">
         <ul class="flex flex-col py-4 gap-1 text-sm font-medium text-slate-700 dark:text-slate-300">
-          <li><a href="#how-it-works" class="block px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">{{ __('How It Works') }}</a></li>
-          <li><a href="#benefits" class="block px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">{{ __('Benefits') }}</a></li>
-          <li><a href="#pricing" class="block px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">{{ __('Pricing') }}</a></li>
+          <li><a href="#how-it-works" class="block px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">{{ __('Cara Kerja') }}</a></li>
+          <li><a href="#benefits" class="block px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">{{ __('Manfaat') }}</a></li>
+          <li><a href="#pricing" class="block px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">{{ __('Harga') }}</a></li>
           <li class="border-t border-slate-100 dark:border-slate-800 mt-2 pt-3 flex gap-2">
-            <button onclick="openAuthModal('login')" class="flex-1 text-center px-4 py-2 font-semibold text-brand-600 dark:text-brand-400 border-2 border-brand-600 dark:border-brand-500 rounded-xl hover:bg-brand-50 dark:hover:bg-brand-950 transition">{{ __('Login') }}</button>
-            <button onclick="openAuthModal('register')" class="flex-1 text-center px-4 py-2 font-semibold text-white bg-brand-600 rounded-xl shadow hover:bg-brand-700 transition">{{ __('Register') }}</button>
+            <button onclick="openAuthModal('login')" class="flex-1 text-center px-4 py-2 font-semibold text-brand-600 dark:text-brand-400 border-2 border-brand-600 dark:border-brand-500 rounded-xl hover:bg-brand-50 dark:hover:bg-brand-950 transition">{{ __('Masuk') }}</button>
+            <button onclick="openAuthModal('register')" class="flex-1 text-center px-4 py-2 font-semibold text-white bg-brand-600 rounded-xl shadow hover:bg-brand-700 transition">{{ __('Daftar') }}</button>
           </li>
           <li class="mt-2 flex justify-center gap-4">
             <a href="{{ url('/en') }}" class="text-xs font-bold {{ App::getLocale() == 'en' ? 'text-brand-600 underline' : 'text-slate-400' }}">English (EN)</a>
@@ -433,30 +433,30 @@
         <!-- Badge -->
         <div class="inline-flex items-center gap-2 bg-white/10 border border-white/25 text-white text-xs font-semibold px-4 py-2 rounded-full">
           <span class="w-2 h-2 bg-green-400 rounded-full animate-pulseDot"></span>
-          {{ __("Indonesia's #1 Closed Testing Platform") }}
+          {{ __("Platform Closed Testing #1 di Indonesia") }}
         </div>
 
         <!-- Headline -->
         <h1 class="text-4xl sm:text-5xl lg:text-5xl font-black leading-tight tracking-tight">
-          {{ __('Pass the 14-Day') }}<br />
+          {{ __('Lulus Uji Coba 14 Hari') }}<br />
           <span class="text-brand-200">{{ __('Closed Testing') }}</span><br />
-          {{ __('on Google Play Hassle-Free') }}
+          {{ __('di Google Play Tanpa Ribet') }}
         </h1>
 
         <!-- Sub-headline -->
         <p class="text-lg text-blue-100 leading-relaxed max-w-lg">
-          {{ __('PlayTest ID is a collaboration platform between') }} <strong class="text-white">Developers</strong> {{ __('who need active testers and') }} <strong class="text-white">Testers</strong> {{ __('who want to contribute while learning — built on the concept of') }} <em>{{ __('Project Based Learning') }}</em>.
+          {{ __('PlayTest ID adalah platform kolaborasi antara') }} <strong class="text-white">Developers</strong> {{ __('yang membutuhkan tester aktif dan') }} <strong class="text-white">Testers</strong> {{ __('yang ingin berkontribusi sambil belajar — dibangun di atas konsep') }} <em>{{ __('Project Based Learning') }}</em>.
         </p>
 
         <!-- Dual CTA -->
         <div class="flex flex-col sm:flex-row gap-3 pt-2">
           <button onclick="window.location.href='{{ route('filament.developer.auth.login') }}'" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-brand-700 font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:bg-brand-50 transition duration-300 text-sm">
             <i class="fa-solid fa-rocket"></i>
-            {{ __('I Need Testers') }}
+            {{ __('Saya Butuh Tester') }}
           </button>
           <button onclick="window.location.href='{{ route('filament.tester.auth.login') }}'" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white/10 border border-white/40 text-white font-semibold rounded-2xl hover:bg-white/20 transition duration-300 text-sm backdrop-blur-sm">
             <i class="fa-solid fa-hand-pointer"></i>
-            {{ __('I Want to Be a Tester') }}
+            {{ __('Saya Ingin Jadi Tester') }}
           </button>
         </div>
 
@@ -464,17 +464,17 @@
         <div class="flex gap-8 pt-4 border-t border-white/20">
           <div>
             <p class="text-3xl font-black">1,200+</p>
-            <p class="text-blue-200 text-xs font-medium mt-0.5">{{ __('Active Testers') }}</p>
+            <p class="text-blue-200 text-xs font-medium mt-0.5">{{ __('Tester Aktif') }}</p>
           </div>
           <div class="w-px bg-white/20"></div>
           <div>
             <p class="text-3xl font-black">340+</p>
-            <p class="text-blue-200 text-xs font-medium mt-0.5">{{ __('Apps Passed Testing') }}</p>
+            <p class="text-blue-200 text-xs font-medium mt-0.5">{{ __('Aplikasi Lulus Uji') }}</p>
           </div>
           <div class="w-px bg-white/20"></div>
           <div>
             <p class="text-3xl font-black">98%</p>
-            <p class="text-blue-200 text-xs font-medium mt-0.5">{{ __('Success Rate') }}</p>
+            <p class="text-blue-200 text-xs font-medium mt-0.5">{{ __('Tingkat Keberhasilan') }}</p>
           </div>
         </div>
       </div>
@@ -486,7 +486,7 @@
           <!-- Card header -->
           <div class="flex items-center justify-between mb-5">
             <div>
-              <p class="text-xs text-blue-200 font-medium uppercase tracking-widest">{{ __('Active Campaign') }}</p>
+              <p class="text-xs text-blue-200 font-medium uppercase tracking-widest">{{ __('Kampanye Aktif') }}</p>
               <p class="text-lg font-bold mt-0.5">{{ __('MyApp – Closed Testing') }}</p>
             </div>
             <div class="w-10 h-10 bg-green-400/20 rounded-xl flex items-center justify-center">
@@ -497,19 +497,19 @@
           <!-- 14 Days Progress -->
           <div class="bg-white/10 rounded-2xl p-4 mb-4">
             <div class="flex justify-between text-xs font-semibold mb-2">
-              <span class="text-blue-100">{{ __('14 Days Progress') }}</span>
-              <span class="text-white">{{ __('Day') }} 9 / 14</span>
+              <span class="text-blue-100">{{ __('Progres 14 Hari') }}</span>
+              <span class="text-white">{{ __('Hari') }} 9 / 14</span>
             </div>
             <div class="w-full h-3 bg-white/20 rounded-full overflow-hidden">
               <div class="h-3 bg-gradient-to-r from-green-400 to-emerald-300 rounded-full progress-fill" style="--fill: 64%;"></div>
             </div>
-            <p class="text-xs text-blue-200 mt-2">{{ __('64% complete · estimated to pass in') }} <strong class="text-white">5 {{ __('more days') }}</strong></p>
+            <p class="text-xs text-blue-200 mt-2">{{ __('64% selesai · diperkirakan lulus dalam') }} <strong class="text-white">5 {{ __('hari lagi') }}</strong></p>
           </div>
 
           <!-- Tester count -->
           <div class="bg-white/10 rounded-2xl p-4 mb-4">
             <div class="flex items-center justify-between mb-3">
-              <span class="text-xs text-blue-100 font-semibold uppercase tracking-widest">{{ __('Active Testers') }}</span>
+              <span class="text-xs text-blue-100 font-semibold uppercase tracking-widest">{{ __('Tester Aktif') }}</span>
               <span class="text-green-400 font-black text-xl">20 / 20</span>
             </div>
             <!-- Avatar row -->
@@ -521,13 +521,13 @@
                 <div class="w-7 h-7 rounded-full bg-purple-400  border-2 border-white/30 flex items-center justify-center text-xs font-bold">D</div>
                 <div class="w-7 h-7 rounded-full bg-blue-300    border-2 border-white/30 flex items-center justify-center text-xs font-bold">+16</div>
               </div>
-              <span class="ml-3 text-xs text-blue-200">{{ __("All testers meet Google's requirements") }}</span>
+              <span class="ml-3 text-xs text-blue-200">{{ __("Semua tester memenuhi syarat Google") }}</span>
             </div>
           </div>
 
           <!-- Daily chart mini -->
           <div class="bg-white/10 rounded-2xl p-4">
-            <p class="text-xs text-blue-100 font-semibold uppercase tracking-widest mb-3">{{ __('Daily Activity') }}</p>
+            <p class="text-xs text-blue-100 font-semibold uppercase tracking-widest mb-3">{{ __('Aktivitas Harian') }}</p>
             <div class="flex items-end gap-1.5 h-14">
               <!-- 14 bar mini chart – all active -->
               <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:60%;" title="Day 1"></div>
@@ -546,7 +546,7 @@
               <div class="flex-1 bg-white/20   rounded-t-sm" style="height:20%;"></div>
             </div>
             <div class="flex justify-between text-xs text-blue-300 mt-2 font-medium">
-              <span>{{ __('Day') }} 1</span><span>{{ __('Day') }} 9 ← {{ __('You are here') }}</span><span>{{ __('Day') }} 14</span>
+              <span>{{ __('Hari') }} 1</span><span>{{ __('Hari') }} 9 ← {{ __('Anda di sini') }}</span><span>{{ __('Hari') }} 14</span>
             </div>
           </div>
 
@@ -570,9 +570,9 @@
     <div class="max-w-7xl mx-auto">
 
       <div class="text-center mb-14 reveal">
-        <span class="text-brand-600 font-semibold text-sm uppercase tracking-widest">{{ __('How It Works') }}</span>
-        <h2 class="text-3xl sm:text-4xl font-black text-slate-800 dark:text-white mt-2">{{ __('Three Simple Steps') }}</h2>
-        <p class="text-slate-500 dark:text-slate-400 mt-3 max-w-xl mx-auto">{{ __('A simple, transparent, and fully monitored process to ensure your app successfully passes closed testing.') }}</p>
+        <span class="text-brand-600 font-semibold text-sm uppercase tracking-widest">{{ __('Cara Kerja') }}</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-slate-800 dark:text-white mt-2">{{ __('Tiga Langkah Mudah') }}</h2>
+        <p class="text-slate-500 dark:text-slate-400 mt-3 max-w-xl mx-auto">{{ __('Proses yang sederhana, transparan, dan terpantau sepenuhnya untuk memastikan aplikasi Anda lulus closed testing dengan sukses.') }}</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -583,8 +583,8 @@
           <div class="w-16 h-16 bg-brand-100 dark:bg-brand-900/30 rounded-2xl flex items-center justify-center mx-auto mb-5">
             <i class="fa-solid fa-upload text-brand-600 dark:text-brand-400 text-2xl"></i>
           </div>
-          <h3 class="font-bold text-lg text-slate-800 dark:text-white mb-2">{{ __('Register & Upload Your App') }}</h3>
-          <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Developers sign up, choose a package, and submit their Google Play app link for closed testing.') }}</p>
+          <h3 class="font-bold text-lg text-slate-800 dark:text-white mb-2">{{ __('Daftar & Unggah Aplikasi') }}</h3>
+          <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Developer mendaftar, memilih paket, dan mengirimkan tautan aplikasi Google Play untuk closed testing.') }}</p>
         </div>
 
         <!-- Step 2 -->
@@ -593,7 +593,7 @@
           <div class="w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-2xl flex items-center justify-center mx-auto mb-5">
             <i class="fa-solid fa-users text-green-600 dark:text-green-400 text-2xl"></i>
           </div>
-          <h3 class="font-bold text-lg text-slate-800 dark:text-white mb-2">{{ __('20 Testers Join') }}</h3>
+          <h3 class="font-bold text-lg text-slate-800 dark:text-white mb-2">{{ __('20 Tester Bergabung') }}</h3>
           <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Our platform automatically connects 20 verified active testers to your app\'s testing session.') }}</p>
         </div>
 
@@ -603,8 +603,8 @@
           <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900/30 rounded-2xl flex items-center justify-center mx-auto mb-5">
             <i class="fa-solid fa-trophy text-purple-600 dark:text-purple-400 text-2xl"></i>
           </div>
-          <h3 class="font-bold text-lg text-slate-800 dark:text-white mb-2">{{ __('Pass & Release to Play Store') }}</h3>
-          <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('After 14 consecutive days with 20 active testers, your app is ready to launch on Google Play Store.') }}</p>
+          <h3 class="font-bold text-lg text-slate-800 dark:text-white mb-2">{{ __('Lulus & Rilis ke Play Store') }}</h3>
+          <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Setelah 14 hari berturut-turut dengan 20 tester aktif, aplikasi Anda siap diluncurkan di Google Play Store.') }}</p>
         </div>
 
       </div>
@@ -619,19 +619,19 @@
     <div class="max-w-5xl mx-auto">
 
       <div class="text-center mb-10 reveal">
-        <span class="text-brand-600 dark:text-brand-400 font-semibold text-sm uppercase tracking-widest">{{ __('Benefits') }}</span>
-        <h2 class="text-3xl sm:text-4xl font-black text-slate-800 dark:text-white mt-2">{{ __('A Platform for Everyone') }}</h2>
-        <p class="text-slate-500 dark:text-slate-400 mt-3 max-w-xl mx-auto">{{ __('Choose your perspective and discover how PlayTest ID delivers real value.') }}</p>
+        <span class="text-brand-600 dark:text-brand-400 font-semibold text-sm uppercase tracking-widest">{{ __('Manfaat') }}</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-slate-800 dark:text-white mt-2">{{ __('Platform untuk Semua Orang') }}</h2>
+        <p class="text-slate-500 dark:text-slate-400 mt-3 max-w-xl mx-auto">{{ __('Pilih perspektif Anda dan temukan bagaimana PlayTest ID memberikan nilai nyata.') }}</p>
       </div>
 
       <!-- ── Tab Switcher ── -->
       <div class="flex justify-center mb-10 reveal">
         <div class="inline-flex bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl gap-1">
           <button class="tab-btn active px-6 py-2.5 rounded-xl text-sm font-semibold transition duration-200 hover:bg-white dark:hover:bg-slate-700 focus:outline-none" data-tab="developer">
-            <i class="fa-solid fa-code mr-2 text-brand-500"></i>{{ __('For Developers') }}
+            <i class="fa-solid fa-code mr-2 text-brand-500"></i>{{ __('Untuk Developer') }}
           </button>
           <button class="tab-btn px-6 py-2.5 rounded-xl text-sm font-semibold text-slate-500 dark:text-slate-400 transition duration-200 hover:bg-white dark:hover:bg-slate-700 focus:outline-none" data-tab="tester">
-            <i class="fa-solid fa-mobile-screen-button mr-2 text-slate-400"></i>{{ __('For Testers') }}
+            <i class="fa-solid fa-mobile-screen-button mr-2 text-slate-400"></i>{{ __('Untuk Tester') }}
           </button>
         </div>
       </div>
@@ -645,8 +645,8 @@
             <div class="icon-bubble bg-brand-100 dark:bg-brand-900/30 mb-4">
               <i class="fa-solid fa-magnifying-glass text-brand-600 dark:text-brand-400 text-xl"></i>
             </div>
-            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Find Testers Easily') }}</h4>
-            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('No need to search manually. Our system instantly connects you with 20 verified active testers.') }}</p>
+            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Cari Tester dengan Mudah') }}</h4>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Tidak perlu mencari manual. Sistem kami secara instan menghubungkan Anda dengan 20 tester aktif terverifikasi.') }}</p>
           </div>
 
           <!-- Benefit 2 -->
@@ -654,7 +654,7 @@
             <div class="icon-bubble bg-green-100 dark:bg-green-900/30 mb-4">
               <i class="fa-solid fa-calendar-check text-green-600 dark:text-green-400 text-xl"></i>
             </div>
-            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Automatic 14-Day Validation') }}</h4>
+            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Validasi 14 Hari Otomatis') }}</h4>
             <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('A real-time dashboard monitors each tester\'s activity for 14 consecutive days as required by Google Play Console.') }}</p>
           </div>
 
@@ -663,7 +663,7 @@
             <div class="icon-bubble bg-red-100 dark:bg-red-900/30 mb-4">
               <i class="fa-solid fa-shield-halved text-red-500 dark:text-red-400 text-xl"></i>
             </div>
-            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Avoid Google Rejection') }}</h4>
+            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Hindari Penolakan Google') }}</h4>
             <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Our structured process ensures all of Google\'s technical requirements are met so your app won\'t be rejected at launch.') }}</p>
           </div>
 
@@ -678,8 +678,8 @@
             <div class="icon-bubble bg-yellow-100 dark:bg-yellow-900/30 mb-4">
               <i class="fa-solid fa-star text-yellow-500 dark:text-yellow-400 text-xl"></i>
             </div>
-            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Early App Access') }}</h4>
-            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Be among the first to try innovative apps by Indonesian developers before they officially launch to the public.') }}</p>
+            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Akses Awal Aplikasi') }}</h4>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Jadilah yang pertama mencoba aplikasi inovatif dari developer Indonesia sebelum resmi diluncurkan ke publik.') }}</p>
           </div>
 
           <!-- Benefit 2 -->
@@ -687,8 +687,8 @@
             <div class="icon-bubble bg-purple-100 dark:bg-purple-900/30 mb-4">
               <i class="fa-solid fa-graduation-cap text-purple-600 dark:text-purple-400 text-xl"></i>
             </div>
-            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Project Based Learning Experience') }}</h4>
-            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Enhance your QA and software testing skills through real projects — experience you can add directly to your portfolio.') }}</p>
+            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Pengalaman Belajar Berbasis Proyek') }}</h4>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Tingkatkan keterampilan QA dan pengujian perangkat lunak Anda melalui proyek nyata — pengalaman yang dapat Anda tambahkan langsung ke portofolio.') }}</p>
           </div>
 
           <!-- Benefit 3 -->
@@ -696,8 +696,8 @@
             <div class="icon-bubble bg-brand-100 dark:bg-brand-900/30 mb-4">
               <i class="fa-solid fa-people-group text-brand-600 dark:text-brand-400 text-xl"></i>
             </div>
-            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Active Community') }}</h4>
-            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Join thousands of testers and developers in the PlayTest ID community — share knowledge, discuss, and find collaboration opportunities.') }}</p>
+            <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Komunitas Aktif') }}</h4>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Bergabunglah dengan ribuan tester dan developer di komunitas PlayTest ID — berbagi pengetahuan, berdiskusi, dan temukan peluang kolaborasi.') }}</p>
           </div>
 
         </div>
@@ -718,9 +718,9 @@
     <div class="max-w-5xl mx-auto relative">
 
       <div class="text-center mb-14 reveal">
-        <span class="text-brand-600 dark:text-brand-400 font-semibold text-sm uppercase tracking-widest">{{ __('Pricing') }}</span>
-        <h2 class="text-3xl sm:text-4xl font-black text-slate-800 dark:text-white mt-2">{{ __('Choose Your Testing Package') }}</h2>
-        <p class="text-slate-500 dark:text-slate-400 mt-3 max-w-xl mx-auto">{{ __('A one-time investment to ensure your app successfully passes closed testing and is ready to launch to millions of users.') }}</p>
+        <span class="text-brand-600 dark:text-brand-400 font-semibold text-sm uppercase tracking-widest">{{ __('Harga') }}</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-slate-800 dark:text-white mt-2">{{ __('Pilih Paket Pengujian Anda') }}</h2>
+        <p class="text-slate-500 dark:text-slate-400 mt-3 max-w-xl mx-auto">{{ __('Investasi sekali bayar untuk memastikan aplikasi Anda lulus closed testing dengan sukses dan siap diluncurkan ke jutaan pengguna.') }}</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -730,9 +730,9 @@
 
           <div class="mb-6">
             <div class="inline-flex items-center gap-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
-              <i class="fa-solid fa-seedling text-green-500"></i> {{ __('Starter Package') }}
+              <i class="fa-solid fa-seedling text-green-500"></i> {{ __('Paket Starter') }}
             </div>
-            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('A basic solution to meet Google Play Closed Testing requirements.') }}</p>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Solusi dasar untuk memenuhi persyaratan Google Play Closed Testing.') }}</p>
           </div>
 
           <!-- Price -->
@@ -742,19 +742,19 @@
               <span class="text-5xl font-black text-slate-800 dark:text-white">300</span>
               <span class="text-slate-400 text-lg font-medium">.000</span>
             </div>
-            <p class="text-slate-400 text-xs mt-1">{{ __('One-time payment · full 14-day access') }}</p>
+            <p class="text-slate-400 text-xs mt-1">{{ __('Sekali bayar · akses penuh 14 hari') }}</p>
           </div>
 
           <!-- Features -->
           <ul class="check-list text-sm text-slate-600 dark:text-slate-300 mb-8 space-y-0">
-            <li><i class="fa-solid fa-circle-check text-green-500"></i><span>{{ __('Access to 20 Active & Verified Testers') }}</span></li>
-            <li><i class="fa-solid fa-circle-check text-green-500"></i><span>{{ __('14 Consecutive Days of Full Testing') }}</span></li>
-            <li><i class="fa-solid fa-circle-check text-green-500"></i><span>{{ __('Standard Testing Report') }}</span></li>
-            <li><i class="fa-solid fa-circle-check text-green-500"></i><span>{{ __('PlayTest ID Community Support') }}</span></li>
+            <li><i class="fa-solid fa-circle-check text-green-500"></i><span>{{ __('Akses ke 20 Tester Aktif & Terverifikasi') }}</span></li>
+            <li><i class="fa-solid fa-circle-check text-green-500"></i><span>{{ __('14 Hari Pengujian Penuh Berturut-turut') }}</span></li>
+            <li><i class="fa-solid fa-circle-check text-green-500"></i><span>{{ __('Laporan Pengujian Standar') }}</span></li>
+            <li><i class="fa-solid fa-circle-check text-green-500"></i><span>{{ __('Dukungan Komunitas PlayTest ID') }}</span></li>
           </ul>
 
           <a href="#" class="block w-full text-center py-3.5 rounded-xl font-bold text-brand-700 dark:text-brand-400 border-2 border-brand-600 dark:border-brand-500 hover:bg-brand-600 hover:text-white transition duration-300 text-sm">
-            {{ __('Choose Starter') }}
+            {{ __('Pilih Starter') }}
           </a>
         </div>
 
@@ -764,7 +764,7 @@
           <!-- Popular badge floating above card -->
           <div class="flex justify-center mb-3">
             <span class="badge-popular">
-              <i class="fa-solid fa-fire mr-1"></i> {{ __('Most Popular') }}
+              <i class="fa-solid fa-fire mr-1"></i> {{ __('Paling Populer') }}
             </span>
           </div>
 
@@ -775,9 +775,9 @@
 
             <div class="mb-6 relative">
               <div class="inline-flex items-center gap-2 bg-brand-600 text-white text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
-                <i class="fa-solid fa-gem"></i> {{ __('Pro Package') }}
+                <i class="fa-solid fa-gem"></i> {{ __('Paket Pro') }}
               </div>
-              <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('A premium solution for complete optimization before your app goes public.') }}</p>
+              <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Solusi premium untuk optimasi lengkap sebelum aplikasi Anda dipublikasikan.') }}</p>
             </div>
 
             <!-- Price -->
@@ -787,24 +787,24 @@
                 <span class="text-5xl font-black text-brand-700 dark:text-brand-400">500</span>
                 <span class="text-brand-400 text-lg font-medium">.000</span>
               </div>
-              <p class="text-slate-400 text-xs mt-1">{{ __('One-time payment · full priority access') }}</p>
+              <p class="text-slate-400 text-xs mt-1">{{ __('Sekali bayar · akses prioritas penuh') }}</p>
             </div>
 
             <!-- Features -->
             <ul class="check-list text-sm text-slate-600 dark:text-slate-300 mb-8 relative space-y-0">
-              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('All Starter Package Features') }}</span></li>
-              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('In-Depth Bug & UX Report per Tester') }}</span></li>
-              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Priority Queue (Start Faster)') }}</span></li>
-              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Comprehensive Review from Each Tester') }}</span></li>
-              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Priority Support via Live Chat') }}</span></li>
+              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Semua Fitur Paket Starter') }}</span></li>
+              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Laporan Bug & UX Mendalam per Tester') }}</span></li>
+              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Antrean Prioritas (Mulai Lebih Cepat)') }}</span></li>
+              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Review Komprehensif dari Setiap Tester') }}</span></li>
+              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Dukungan Prioritas via Live Chat') }}</span></li>
             </ul>
 
             <a href="#" class="relative block w-full text-center py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-brand-600 to-brand-500 shadow-lg shadow-brand-200 dark:shadow-brand-900/50 hover:shadow-brand-300 hover:from-brand-700 hover:to-brand-600 transition duration-300 text-sm">
-              <i class="fa-solid fa-bolt mr-1"></i> {{ __('Choose Pro – Start Now') }}
+              <i class="fa-solid fa-bolt mr-1"></i> {{ __('Pilih Pro – Mulai Sekarang') }}
             </a>
 
             <p class="text-center text-xs text-slate-400 mt-3">
-              <i class="fa-solid fa-lock text-xs mr-1"></i>{{ __('Secure payment · 7-day guarantee') }}
+              <i class="fa-solid fa-lock text-xs mr-1"></i>{{ __('Pembayaran aman · garansi 7 hari') }}
             </p>
 
           </div>
@@ -816,8 +816,8 @@
       <div class="mt-10 text-center reveal">
         <p class="text-slate-400 text-sm">
           <i class="fa-solid fa-circle-info text-brand-400 mr-1"></i>
-          {{ __('All packages include access to the 14-day real-time monitoring dashboard.') }}
-          <a href="#" class="text-brand-600 dark:text-brand-400 font-semibold hover:underline ml-1">{{ __('See full comparison →') }}</a>
+          {{ __('Semua paket termasuk akses ke dasbor pemantauan real-time 14 hari.') }}
+          <a href="#" class="text-brand-600 dark:text-brand-400 font-semibold hover:underline ml-1">{{ __('Lihat perbandingan lengkap →') }}</a>
         </p>
       </div>
 
@@ -832,8 +832,8 @@
     <div class="max-w-6xl mx-auto">
 
       <div class="text-center mb-10 reveal">
-        <span class="text-brand-600 dark:text-brand-400 font-semibold text-sm uppercase tracking-widest">{{ __('Testimonials') }}</span>
-        <h2 class="text-2xl sm:text-3xl font-black text-slate-800 dark:text-white mt-2">{{ __('Trusted by Indonesian Developers & Testers') }}</h2>
+        <span class="text-brand-600 dark:text-brand-400 font-semibold text-sm uppercase tracking-widest">{{ __('Testimoni') }}</span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-800 dark:text-white mt-2">{{ __('Dipercaya oleh Developer & Tester Indonesia') }}</h2>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -842,7 +842,7 @@
           <div class="flex gap-1 text-yellow-400 mb-3 text-sm">
             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           </div>
-          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">"{{ __('I had tried other platforms and failed. With PlayTest ID, my app passed in 14 days and is now live on the Play Store!') }}"</p>
+          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">"{{ __('Saya pernah mencoba platform lain dan gagal. Dengan PlayTest ID, aplikasi saya lulus dalam 14 hari dan sekarang sudah live di Play Store!') }}"</p>
           <div class="flex items-center gap-3">
             <div class="w-9 h-9 bg-brand-200 dark:bg-brand-900/50 rounded-full flex items-center justify-center font-bold text-brand-700 dark:text-brand-300 text-sm">RD</div>
             <div>
@@ -856,7 +856,7 @@
           <div class="flex gap-1 text-yellow-400 mb-3 text-sm">
             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           </div>
-          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">"{{ __('As a tester, I gained real QA experience and was able to add it to my CV. The PlayTest ID community is incredibly supportive!') }}"</p>
+          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">"{{ __('Sebagai tester, saya mendapatkan pengalaman QA nyata dan bisa menambahkannya ke CV saya. Komunitas PlayTest ID sangat mendukung!') }}"</p>
           <div class="flex items-center gap-3">
             <div class="w-9 h-9 bg-green-200 dark:bg-green-900/50 rounded-full flex items-center justify-center font-bold text-green-700 dark:text-green-300 text-sm">AN</div>
             <div>
@@ -870,7 +870,7 @@
           <div class="flex gap-1 text-yellow-400 mb-3 text-sm">
             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           </div>
-          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">"{{ __('The monitoring dashboard is incredibly helpful. I can track the 14-day progress in real-time. The Pro package is absolutely worth it!') }}"</p>
+          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">"{{ __('Dasbor pemantauannya sangat membantu. Saya bisa melacak progres 14 hari secara real-time. Paket Pro sangat layak!') }}"</p>
           <div class="flex items-center gap-3">
             <div class="w-9 h-9 bg-purple-200 dark:bg-purple-900/50 rounded-full flex items-center justify-center font-bold text-purple-700 dark:text-purple-300 text-sm">FH</div>
             <div>
@@ -896,36 +896,36 @@
     <div class="max-w-3xl mx-auto text-center relative reveal">
 
       <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white text-xs font-semibold px-4 py-2 rounded-full mb-6">
-        <i class="fa-solid fa-rocket"></i> {{ __('Start your journey today') }}
+        <i class="fa-solid fa-rocket"></i> {{ __('Mulai perjalanan Anda hari ini') }}
       </div>
 
       <h2 class="text-3xl sm:text-4xl font-black text-white leading-tight mb-4">
-        {{ __('Ready to Launch Your App on the Play Store?') }}
+        {{ __('Siap Meluncurkan Aplikasi Anda di Play Store?') }}
       </h2>
 
       <p class="text-blue-100 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
-        {{ __('Or do you want to start helping other developers while building your QA experience? Join') }} <strong class="text-white">PlayTest ID</strong> {{ __('now and become part of Indonesia\'s best testing ecosystem.') }}
+        {{ __('Atau Anda ingin mulai membantu developer lain sambil membangun pengalaman QA Anda? Bergabunglah dengan') }} <strong class="text-white">PlayTest ID</strong> {{ __('now and become part of Indonesia\'s best testing ecosystem.') }}
       </p>
 
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <button onclick="window.location.href='{{ route('filament.developer.auth.register') }}'" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-brand-700 font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition duration-300">
-          <i class="fa-solid fa-rocket"></i> {{ __('Start as a Developer') }}
+          <i class="fa-solid fa-rocket"></i> {{ __('Mulai sebagai Developer') }}
         </button>
         <button onclick="window.location.href='{{ route('filament.tester.auth.register') }}'" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white/10 border border-white/30 text-white font-semibold rounded-2xl hover:bg-white/20 transition duration-300 backdrop-blur-sm">
-          <i class="fa-solid fa-hand-pointer"></i> {{ __('Register as a Tester') }}
+          <i class="fa-solid fa-hand-pointer"></i> {{ __('Daftar sebagai Tester') }}
         </button>
       </div>
 
       <!-- Trust indicators -->
       <div class="flex justify-center gap-8 mt-10 flex-wrap">
         <div class="flex items-center gap-2 text-blue-200 text-xs font-medium">
-          <i class="fa-solid fa-shield-halved text-green-400"></i> {{ __('Secure Payment') }}
+          <i class="fa-solid fa-shield-halved text-green-400"></i> {{ __('Pembayaran Aman') }}
         </div>
         <div class="flex items-center gap-2 text-blue-200 text-xs font-medium">
-          <i class="fa-solid fa-rotate-left text-yellow-400"></i> {{ __('7-Day Guarantee') }}
+          <i class="fa-solid fa-rotate-left text-yellow-400"></i> {{ __('Garansi 7 Hari') }}
         </div>
         <div class="flex items-center gap-2 text-blue-200 text-xs font-medium">
-          <i class="fa-solid fa-headset text-blue-300"></i> {{ __('24/7 Support') }}
+          <i class="fa-solid fa-headset text-blue-300"></i> {{ __('Dukungan 24/7') }}
         </div>
       </div>
 
@@ -946,7 +946,7 @@
           <div class="flex items-center mb-4">
             <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-12 w-auto object-contain" />
           </div>
-          <p class="text-sm leading-relaxed max-w-xs">{{ __('A collaboration platform for Indonesian Developers and Testers based on Project Based Learning to fulfill Google Play Closed Testing requirements.') }}</p>
+          <p class="text-sm leading-relaxed max-w-xs">{{ __('Platform kolaborasi untuk Developer dan Tester Indonesia berbasis Project Based Learning untuk memenuhi persyaratan Google Play Closed Testing.') }}</p>
           <div class="flex gap-3 mt-5">
             <a href="#" class="w-9 h-9 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-brand-600 transition duration-200" aria-label="Instagram">
               <i class="fa-brands fa-instagram text-sm"></i>
@@ -967,22 +967,22 @@
         <div>
           <h5 class="text-white font-bold text-sm mb-4">{{ __('Platform') }}</h5>
           <ul class="space-y-2.5 text-sm">
-            <li><a href="#how-it-works" class="hover:text-white transition">{{ __('How It Works') }}</a></li>
-            <li><a href="#benefits" class="hover:text-white transition">{{ __('Benefits') }}</a></li>
-            <li><a href="#pricing" class="hover:text-white transition">{{ __('Pricing') }}</a></li>
-            <li><a href="#" class="hover:text-white transition">{{ __('Dashboard') }}</a></li>
+            <li><a href="#how-it-works" class="hover:text-white transition">{{ __('Cara Kerja') }}</a></li>
+            <li><a href="#benefits" class="hover:text-white transition">{{ __('Manfaat') }}</a></li>
+            <li><a href="#pricing" class="hover:text-white transition">{{ __('Harga') }}</a></li>
+            <li><a href="#" class="hover:text-white transition">{{ __('Dasbor') }}</a></li>
             <li><a href="#" class="hover:text-white transition">{{ __('Blog') }}</a></li>
           </ul>
         </div>
 
         <!-- Legal links -->
         <div>
-          <h5 class="text-white font-bold text-sm mb-4">{{ __('Legal & Support') }}</h5>
+          <h5 class="text-white font-bold text-sm mb-4">{{ __('Legal & Dukungan') }}</h5>
           <ul class="space-y-2.5 text-sm">
-            <li><a href="#" class="hover:text-white transition">{{ __('Privacy Policy') }}</a></li>
-            <li><a href="#" class="hover:text-white transition">{{ __('Terms & Conditions') }}</a></li>
+            <li><a href="#" class="hover:text-white transition">{{ __('Kebijakan Privasi') }}</a></li>
+            <li><a href="#" class="hover:text-white transition">{{ __('Syarat & Ketentuan') }}</a></li>
             <li><a href="#" class="hover:text-white transition">{{ __('FAQ') }}</a></li>
-            <li><a href="#" class="hover:text-white transition">{{ __('Contact Us') }}</a></li>
+            <li><a href="#" class="hover:text-white transition">{{ __('Hubungi Kami') }}</a></li>
           </ul>
         </div>
 
@@ -990,8 +990,8 @@
 
       <!-- Bottom bar -->
       <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
-        <p>© 2026 <span class="text-slate-400 font-semibold">PlayTest ID</span>. {{ __('All rights reserved.') }}</p>
-        <p>{{ __('Made with') }} <i class="fa-solid fa-heart text-red-500 mx-1"></i> {{ __('for Indonesian Developers & Testers.') }}</p>
+        <p>© 2026 <span class="text-slate-400 font-semibold">PlayTest ID</span>. {{ __('Hak cipta dilindungi undang-undang.') }}</p>
+        <p>{{ __('Dibuat dengan') }} <i class="fa-solid fa-heart text-red-500 mx-1"></i> {{ __('untuk Developer & Tester Indonesia.') }}</p>
       </div>
 
     </div>
@@ -1015,8 +1015,8 @@
           <div class="w-12 h-12 bg-brand-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <i id="authModalIcon" class="fa-solid fa-user-lock text-brand-600 text-xl"></i>
           </div>
-          <h3 id="authModalTitle" class="text-2xl font-black text-slate-800">{{ __('Choose Account') }}</h3>
-          <p id="authModalDesc" class="text-slate-500 text-sm mt-2">{{ __('Please select your role to continue.') }}</p>
+          <h3 id="authModalTitle" class="text-2xl font-black text-slate-800">{{ __('Pilih Akun') }}</h3>
+          <p id="authModalDesc" class="text-slate-500 text-sm mt-2">{{ __('Silakan pilih peran Anda untuk melanjutkan.') }}</p>
         </div>
         <div class="space-y-4">
           <!-- Developer -->
@@ -1026,7 +1026,7 @@
             </div>
             <div class="ml-4 flex-1">
               <h4 class="font-bold text-slate-800 dark:text-white group-hover:text-brand-700 dark:group-hover:text-brand-400 transition">{{ __('Developer') }}</h4>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ __('App owner who needs testers') }}</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ __('Pemilik aplikasi yang butuh tester') }}</p>
             </div>
             <i class="fa-solid fa-chevron-right text-slate-300 dark:text-slate-600 group-hover:text-brand-500 transition"></i>
           </a>
@@ -1037,7 +1037,7 @@
             </div>
             <div class="ml-4 flex-1">
               <h4 class="font-bold text-slate-800 dark:text-white group-hover:text-green-700 dark:group-hover:text-green-400 transition">{{ __('Tester') }}</h4>
-              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ __('App tester for Google Play') }}</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ __('Penguji aplikasi untuk Google Play') }}</p>
             </div>
             <i class="fa-solid fa-chevron-right text-slate-300 dark:text-slate-600 group-hover:text-green-500 transition"></i>
           </a>
@@ -1072,14 +1072,14 @@
       document.getElementById('mobile-menu').classList.remove('open');
 
       if (type === 'login') {
-        title.innerText = '{{ __("Login As") }}';
-        desc.innerText = '{{ __("Choose an account to access your dashboard.") }}';
+        title.innerText = '{{ __("Masuk Sebagai") }}';
+        desc.innerText = '{{ __("Pilih akun untuk mengakses dasbor Anda.") }}';
         icon.className = 'fa-solid fa-right-to-bracket text-brand-600 text-xl';
         btnDev.href = authRoutes.login.developer;
         btnTester.href = authRoutes.login.tester;
       } else {
-        title.innerText = '{{ __("Register As") }}';
-        desc.innerText = '{{ __("Choose the role that matches your purpose.") }}';
+        title.innerText = '{{ __("Daftar Sebagai") }}';
+        desc.innerText = '{{ __("Pilih peran yang sesuai dengan tujuan Anda.") }}';
         icon.className = 'fa-solid fa-user-plus text-brand-600 text-xl';
         btnDev.href = authRoutes.register.developer;
         btnTester.href = authRoutes.register.tester;
