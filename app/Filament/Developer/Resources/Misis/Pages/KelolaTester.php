@@ -72,6 +72,7 @@ class KelolaTester extends Page implements HasTable
                     // 2. Ambil semua tester yang sudah accepted
                     $acceptedTesters = \App\Models\MisiAnggota::where('id_misi', $this->record->id)
                         ->where('status', 'accepted')
+                        ->with('user')
                         ->get();
 
                     // 3. Buat 14 sub misi untuk setiap tester yang accepted
@@ -103,6 +104,23 @@ class KelolaTester extends Page implements HasTable
                     \App\Models\MisiAnggota::where('id_misi', $this->record->id)
                         ->where('status', 'accepted')
                         ->update(['status' => 'progress']);
+
+                    // Kirim email notifikasi ke tester bahwa misi dimulai
+                    foreach ($acceptedTesters as $tester) {
+                        if ($tester->user && $tester->user->email) {
+                            try {
+                                \Illuminate\Support\Facades\Mail::to($tester->user->email)->send(new \App\Mail\ContactMail(
+                                    'Pengujian Aplikasi Dimulai — PlayTest ID',
+                                    'Misi Pengujian Dimulai!',
+                                    "Halo {$tester->user->name},\n\nMisi pengujian untuk aplikasi \"" . $this->record->nama_aplikasi . "\" telah resmi dimulai oleh developer.\nSilakan mulai mengunduh aplikasi dan selesaikan tugas harian Anda selama 14 hari kedepan.",
+                                    'Lihat Misi Saya',
+                                    url('/tester/misi-saya')
+                                ));
+                            } catch (\Exception $e) {
+                                \Illuminate\Support\Facades\Log::error('Gagal mengirim email misi dimulai ke ' . $tester->user->email . ': ' . $e->getMessage());
+                            }
+                        }
+                    }
 
                     \Filament\Notifications\Notification::make()
                         ->title('Misi Berhasil Dimulai')
@@ -166,6 +184,23 @@ class KelolaTester extends Page implements HasTable
                         if ($record->misi) {
                             $record->misi->decrement('kapasitas');
                             $record->misi->update(['status' => 'open']);
+                        }
+
+                        // Kirim email notifikasi bahwa pendaftaran ditolak
+                        $user = $record->user;
+                        $misi = $record->misi;
+                        if ($user && $user->email && $misi) {
+                            try {
+                                \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\ContactMail(
+                                    'Pendaftaran Pengujian Ditolak — PlayTest ID',
+                                    'Pendaftaran Ditolak',
+                                    "Halo {$user->name},\n\nMohon maaf, pendaftaran Anda untuk mengikuti pengujian aplikasi \"" . $misi->nama_aplikasi . "\" belum diterima oleh developer saat ini.",
+                                    'Cari Misi Lain',
+                                    url('/tester')
+                                ));
+                            } catch (\Exception $e) {
+                                \Illuminate\Support\Facades\Log::error('Gagal mengirim email pendaftaran ditolak ke ' . $user->email . ': ' . $e->getMessage());
+                            }
                         }
 
                         \Filament\Notifications\Notification::make()

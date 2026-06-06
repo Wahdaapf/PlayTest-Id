@@ -35,8 +35,14 @@ class TesterDashboard extends Page
             return;
         }
 
-        // Status always accepted when applying
-        $status = 'accepted';
+        // Tentukan status pendaftaran:
+        // - trusted_badge = false → siapapun bisa apply dan langsung accepted
+        // - trusted_badge = true  → hanya tester badge > 5 yang bisa apply (dicegah di UI), status pending
+        if ($misi->paket && $misi->paket->trusted_badge) {
+            $status = 'pending'; // Menunggu acc manual developer
+        } else {
+            $status = 'accepted'; // Langsung diterima untuk misi biasa
+        }
 
         MisiAnggota::create([
             'id_misi' => $misiId,
@@ -53,11 +59,19 @@ class TesterDashboard extends Page
             $misi->update(['status' => 'closed']);
         }
 
-        Notification::make()
-            ->title('Berhasil!')
-            ->success()
-            ->body('Anda telah berhasil bergabung dengan misi ini.')
-            ->send();
+        if ($misi->paket && $misi->paket->trusted_badge) {
+            Notification::make()
+                ->title('Pendaftaran Berhasil Dikirim! ⏳')
+                ->success()
+                ->body('Pendaftaran Anda sedang menunggu persetujuan dari developer. Anda akan diberitahu saat diterima.')
+                ->send();
+        } else {
+            Notification::make()
+                ->title('Berhasil Bergabung! 🎉')
+                ->success()
+                ->body('Anda telah langsung diterima di misi ini. Silakan tunggu developer memulai misi.')
+                ->send();
+        }
     }
   
     public function getViewData(): array  
@@ -177,12 +191,14 @@ class TesterDashboard extends Page
                 ];
             })->toArray();
 
+        $userBadgeCount = $balance->badge ?? 0;
+
         return [
             // ── Profil Tester ──────────────────────────────────  
-            'namaTester'    => $user->name,  
-            'inisialTester' => strtoupper(substr($user->name, 0, 2)),  
-            'tierTester'    => $balance->badge ?? 'Novice Tester',  
-            'userBadgeCount' => $balance->badge ?? 0,  
+            'namaTester'     => $user->name,  
+            'inisialTester'  => strtoupper(substr($user->name, 0, 2)),  
+            'tierTester'     => $balance->badge ?? 'Novice Tester',  
+            'userBadgeCount' => $userBadgeCount,  
   
             // ── Poin & Statistik ───────────────────────────────  
             'totalPoin'    => $totalPoin,  

@@ -116,9 +116,10 @@ class MisisTable
                                 ->update(['status' => 'accepted']);
                         }
 
-                        // 2. Ambil semua tester yang sudah accepted
+                        // 2. Ambil semua tester yang sudah accepted (beserta relasi user untuk email)
                         $acceptedTesters = \App\Models\MisiAnggota::where('id_misi', $record->id)
                             ->where('status', 'accepted')
+                            ->with('user')
                             ->get();
 
                         // 3. Buat 14 sub misi untuk setiap tester yang accepted
@@ -146,6 +147,28 @@ class MisisTable
                             'status' => 'running',
                             'link_aplikasi' => $data['link_aplikasi'],
                         ]);
+
+                        // 5. Ubah status tester accepted menjadi progress
+                        \App\Models\MisiAnggota::where('id_misi', $record->id)
+                            ->where('status', 'accepted')
+                            ->update(['status' => 'progress']);
+
+                        // 6. Kirim email notifikasi ke seluruh tester bahwa misi dimulai
+                        foreach ($acceptedTesters as $tester) {
+                            if ($tester->user && $tester->user->email) {
+                                try {
+                                    \Illuminate\Support\Facades\Mail::to($tester->user->email)->send(new \App\Mail\ContactMail(
+                                        'Pengujian Aplikasi Dimulai — PlayTest ID',
+                                        'Misi Pengujian Dimulai!',
+                                        "Halo {$tester->user->name},\n\nMisi pengujian untuk aplikasi \"{$record->nama_aplikasi}\" telah resmi dimulai oleh developer.\nSilakan mulai mengunduh aplikasi dan selesaikan tugas harian Anda selama 14 hari ke depan.",
+                                        'Lihat Misi Saya',
+                                        url('/tester/misi-saya')
+                                    ));
+                                } catch (\Exception $e) {
+                                    \Illuminate\Support\Facades\Log::error('Gagal mengirim email misi dimulai ke ' . $tester->user->email . ': ' . $e->getMessage());
+                                }
+                            }
+                        }
 
                         \Filament\Notifications\Notification::make()
                             ->title('Misi Berhasil Dimulai')

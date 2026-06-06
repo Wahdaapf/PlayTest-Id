@@ -249,6 +249,7 @@ class PantauProgress extends Page
         // Ambil semua anggota yang masih aktif (accepted)
         $misiAnggotas = MisiAnggota::where('id_misi', $misi->id)
             ->where('status', 'accepted')
+            ->with('user')
             ->get();
 
         foreach ($misiAnggotas as $ma) {
@@ -274,6 +275,22 @@ class PantauProgress extends Page
                 if ($totalSub < 14) {
                     $ma->update(['status' => 'failed']);
                     
+                    // Kirim email notifikasi bahwa tester gagal karena absen submit tugas
+                    $user = $ma->user;
+                    if ($user && $user->email) {
+                        try {
+                            \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\ContactMail(
+                                'Pengujian Aplikasi Gagal — PlayTest ID',
+                                'Misi Pengujian Gagal',
+                                "Halo {$user->name},\n\nAnda terdeteksi tidak mengirimkan laporan tugas harian pada hari kemarin untuk pengujian aplikasi \"" . $misi->nama_aplikasi . "\".\nSesuai aturan, Anda dinyatakan gagal menyelesaikan pengujian ini.",
+                                'Lihat Riwayat Misi',
+                                url('/tester/misi-saya')
+                            ));
+                        } catch (\Exception $e) {
+                            \Illuminate\Support\Facades\Log::error('Gagal mengirim email tester gagal ke ' . $user->email . ': ' . $e->getMessage());
+                        }
+                    }
+
                     // Kurangi kapasitas misi (tester berkurang)
                     $misi->decrement('kapasitas');
                     
@@ -335,6 +352,7 @@ class PantauProgress extends Page
         // 1. Ambil semua tester yang masih aktif (accepted/progress)
         $testers = MisiAnggota::where('id_misi', $misi->id)
             ->whereIn('status', ['accepted', 'progress'])
+            ->with('user')
             ->get();
 
         foreach ($testers as $ma) {
@@ -346,6 +364,22 @@ class PantauProgress extends Page
 
             // 3. Update status anggota menjadi selesai
             $ma->update(['status' => 'selesai']);
+
+            // Kirim email notifikasi bahwa misi telah diselesaikan oleh developer dan poin dicairkan
+            $user = $ma->user;
+            if ($user && $user->email) {
+                try {
+                    \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\ContactMail(
+                        'Pengujian Aplikasi Selesai — PlayTest ID',
+                        'Misi Pengujian Selesai!',
+                        "Halo {$user->name},\n\nDeveloper telah menyatakan pengujian aplikasi \"" . $misi->nama_aplikasi . "\" selesai.\nPoin dan badge hasil pengujian Anda telah dicairkan ke saldo Anda. Terima kasih atas kontribusi Anda!",
+                        'Lihat Dompet Saya',
+                        url('/tester/dompet')
+                    ));
+                } catch (\Exception $e) {
+                    \Illuminate\Support\Facades\Log::error('Gagal mengirim email misi diselesaikan ke ' . $user->email . ': ' . $e->getMessage());
+                }
+            }
 
             // 4. Cairkan poin & Tambah badge
             if ($misi->point > 0) {

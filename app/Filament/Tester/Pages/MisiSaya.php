@@ -307,6 +307,23 @@ class MisiSaya extends Page implements HasForms
 
                 if ($totalSub < 14) {
                     $ma->update(['status' => 'failed']);
+
+                    // Kirim email notifikasi bahwa tester gagal karena absen submit tugas
+                    $user = Auth::user();
+                    if ($user && $user->email) {
+                        try {
+                            \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\ContactMail(
+                                'Pengujian Aplikasi Gagal — PlayTest ID',
+                                'Misi Pengujian Gagal',
+                                "Halo {$user->name},\n\nAnda terdeteksi tidak mengirimkan laporan tugas harian pada hari kemarin untuk pengujian aplikasi \"" . $misi->nama_aplikasi . "\".\nSesuai aturan, Anda dinyatakan gagal menyelesaikan pengujian ini.",
+                                'Lihat Riwayat Misi',
+                                url('/tester/misi-saya')
+                            ));
+                        } catch (\Exception $e) {
+                            \Illuminate\Support\Facades\Log::error('Gagal mengirim email tester gagal ke ' . $user->email . ': ' . $e->getMessage());
+                        }
+                    }
+
                     $misi->decrement('kapasitas');
                     if ($misi->status === 'closed') {
                         $misi->update(['status' => 'open']);
