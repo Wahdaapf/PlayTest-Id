@@ -24,4 +24,16 @@ class MisiAnggota extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
+
+    public function userBalance(): \Illuminate\Database\Eloquent\Relations\HasOneThrough
+    {
+        return $this->hasOneThrough(
+            UserBalance::class,
+            User::class,
+            'id',        // FK on users
+            'id_user',   // FK on user_balance
+            'id_user',   // local key on misi_anggota
+            'id'         // local key on users
+        );
+    }
 }

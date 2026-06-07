@@ -54,6 +54,7 @@ class KelolaTester extends Page implements HasTable
                 ->label('Input Link Aplikasi')
                 ->icon('heroicon-o-link')
                 ->color('success')
+                ->hidden(fn () => in_array($this->record->status, ['open', 'closed']))
                 ->form([
                     \Filament\Forms\Components\TextInput::make('link_aplikasi')
                         ->label('Link Aplikasi (Misal: Google Play URL)')
@@ -150,6 +151,10 @@ class KelolaTester extends Page implements HasTable
                         'selesai' => 'success',
                         default => 'gray',
                     }),
+
+                \Filament\Tables\Columns\ViewColumn::make('badge')
+                    ->label('Badge')
+                    ->view('filament.developer.resources.misis.columns.badge-column'),
 
                 TextColumn::make('created_at')
                     ->label('Bergabung Pada')

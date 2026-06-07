@@ -183,9 +183,6 @@ class MisisTable
                     ->color('info')
                     ->iconButton()
                     ->tooltip('Kelola Tester')
-                    ->visible(fn (\App\Models\Misi $record): bool => 
-                        in_array($record->status, ['open', 'closed'])
-                    )
                     ->url(fn (\App\Models\Misi $record): string => \App\Filament\Developer\Resources\Misis\MisiResource::getUrl('kelola-tester', ['record' => $record])),
                 EditAction::make()
                     ->iconButton()
