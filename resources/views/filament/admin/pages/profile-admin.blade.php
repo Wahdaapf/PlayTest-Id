@@ -314,7 +314,7 @@
               <span class="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full"
                     style="background:rgba(255,255,255,0.12);color:#dbeafe;border:1px solid rgba(255,255,255,.15);">
                 <span class="w-1.5 h-1.5 rounded-full inline-block prof-status-dot" style="background:#34d399;"></span>
-                Bergabung {{ Auth::user()->created_at->format('M Y') }}
+                {{ __('Bergabung') }} {{ Auth::user()->created_at->format('M Y') }}
               </span>
               <span class="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full"
                     style="background:rgba(255,255,255,0.12);color:#dbeafe;border:1px solid rgba(255,255,255,.15);">
@@ -328,15 +328,15 @@
         <div class="flex items-center gap-3 flex-wrap">
           <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px]">
             <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ \App\Models\User::count() }}">0</p>
-            <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">Total User</p>
+            <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">{{ __('Total Pengguna') }}</p>
           </div>
           <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px]">
             <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ \App\Models\Misi::count() }}">0</p>
-            <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">Kampanye</p>
+            <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">{{ __('Kampanye') }}</p>
           </div>
           <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px]">
             <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ \App\Models\Pembayaran::where('status','accepted')->count() }}">0</p>
-            <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">Transaksi</p>
+            <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">{{ __('Transaksi') }}</p>
           </div>
         </div>
       </div>
@@ -346,10 +346,10 @@
            style="border-top:1px solid rgba(255,255,255,0.15);">
         @php
           $mini = [
-            ['label'=>'Developer','val'=>\App\Models\User::where('role',\App\Enums\UserRole::developer)->count(),'color'=>'#60a5fa'],
-            ['label'=>'Tester','val'=>\App\Models\User::where('role',\App\Enums\UserRole::tester)->count(),'color'=>'#a78bfa'],
-            ['label'=>'Misi Aktif','val'=>\App\Models\Misi::whereIn('status',['open','progress'])->count(),'color'=>'#34d399'],
-            ['label'=>'Pending','val'=>\App\Models\Pembayaran::where('status','waiting')->count(),'color'=>'#fbbf24'],
+            ['label'=>__('Developer'),'val'=>\App\Models\User::where('role',\App\Enums\UserRole::developer)->count(),'color'=>'#60a5fa'],
+            ['label'=>__('Admin'),'val'=>\App\Models\User::where('role',\App\Enums\UserRole::admin)->count(),'color'=>'#f472b6'],
+            ['label'=>__('Tester'),'val'=>\App\Models\User::where('role',\App\Enums\UserRole::tester)->count(),'color'=>'#a78bfa'],
+            ['label'=>__('Misi Aktif'),'val'=>\App\Models\Misi::whereIn('status',['open','progress'])->count(),'color'=>'#34d399'],
           ];
         @endphp
         @foreach($mini as $m)
@@ -388,8 +388,8 @@
           </svg>
         </div>
         <div class="relative">
-          <h2 class="font-bold text-slate-800 text-base">Edit Profil</h2>
-          <p class="text-slate-400 text-xs">Perbarui informasi akun & keamanan Anda</p>
+          <h2 class="font-bold text-slate-800 text-base">{{ __('Edit Profil') }}</h2>
+          <p class="text-slate-400 text-xs">{{ __('Perbarui informasi akun & keamanan Anda') }}</p>
         </div>
       </div>
 
@@ -402,7 +402,7 @@
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
               </svg>
-              Simpan Perubahan
+              {{ __('Simpan Perubahan') }}
             </button>
           </div>
         </form>
