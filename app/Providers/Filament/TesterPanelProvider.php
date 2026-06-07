@@ -70,7 +70,7 @@ class TesterPanelProvider extends PanelProvider
 
                             NavigationItem::make('Misi Saya')
                                 ->icon('heroicon-o-clipboard-document-check')
-                                ->badge(3)
+                                ->badge(fn() => MisiSaya::getNavigationBadge())
                                 ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.misi-saya'))
                                 ->url(fn() => MisiSaya::getUrl()),
 
