@@ -10,11 +10,21 @@ use Illuminate\Support\Facades\Auth;
 class DeveloperDashboard extends Page  
 {  
     protected static string | \BackedEnum | null $navigationIcon  = 'heroicon-o-squares-2x2';  
-    protected static ?string $navigationLabel = 'Overview';  
+    public static function getNavigationLabel(): string
+    {
+        return __('Dasbor');
+    }
+
+    public function getTitle(): string | \Illuminate\Contracts\Support\Htmlable
+    {
+        return __('Dasbor Developer');
+    }
+
+    protected static ?string $navigationLabel = 'Dasbor';  
     protected static string | \UnitEnum | null $navigationGroup = 'MAIN';  
     protected static ?int    $navigationSort  = 1;  
     protected static ?string $slug            = '/';  
-    protected static ?string $title           = 'Developer Dashboard';  
+    protected static ?string $title           = 'Dasbor Developer';  
   
     public function getHeading(): string  
     {  
@@ -45,10 +55,10 @@ class DeveloperDashboard extends Page
             
             // Mapping status internal ke label UI
             $statusUI = match($m->status) {
-                'pending' => ['status' => 'pending', 'label' => 'PENDING', 'warna' => 'amber'],
-                'rejected' => ['status' => 'pending', 'label' => 'REJECTED', 'warna' => 'red'],
-                'selesai' => ['status' => 'selesai', 'label' => 'COMPLETED', 'warna' => 'purple'],
-                default    => ['status' => 'progress', 'label' => 'IN PROGRESS', 'warna' => 'blue'],
+                'pending' => ['status' => 'pending', 'label' => __('PENDING'), 'warna' => 'amber'],
+                'rejected' => ['status' => 'pending', 'label' => __('DITOLAK'), 'warna' => 'red'],
+                'selesai' => ['status' => 'selesai', 'label' => __('SELESAI'), 'warna' => 'purple'],
+                default    => ['status' => 'progress', 'label' => __('DIPROSES'), 'warna' => 'blue'],
             };
 
             return [
@@ -99,15 +109,15 @@ class DeveloperDashboard extends Page
         return [
             'statAktif'    => $statAktif,
             'statAktifPercent' => $statAktifPercent,
-            'statAktifNote'    => "$statAktif dari $maxMisi slot aktif terpakai",
+            'statAktifNote'    => __(':count dari :total kapasitas aktif terpakai', ['count' => $statAktif, 'total' => $maxMisi]),
             
             'statSelesai'  => $statSelesai,
             'statSelesaiPercent' => $statSelesaiPercent,
-            'statSelesaiNote'    => "$statSelesai dari " . $misiList->count() . " kampanye selesai",
+            'statSelesaiNote'    => __(':count dari :total kampanye selesai', ['count' => $statSelesai, 'total' => $misiList->count()]),
             
             'statTester'   => $statTester,
             'statTesterPercent' => $statTesterPercent,
-            'statTesterNote'    => "$statTester dari $totalKapasitas slot tester terisi",
+            'statTesterNote'    => __(':count dari :total kapasitas tester terisi', ['count' => $statTester, 'total' => $totalKapasitas]),
 
             'aplikasiList' => $aplikasiList,
             'kampanyeList' => $kampanyeList,

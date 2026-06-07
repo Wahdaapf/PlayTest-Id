@@ -12,8 +12,18 @@ use Carbon\Carbon;
 class PantauProgress extends Page
 {
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-chart-bar';
-    protected static ?string $navigationLabel = 'Pantau Progress';
-    protected static ?string $title = 'Pantau Progress Tester';
+    public static function getNavigationLabel(): string
+    {
+        return __('Pantau Progres');
+    }
+
+    public function getTitle(): string | \Illuminate\Contracts\Support\Htmlable
+    {
+        return __('Pantau Progres Tester');
+    }
+
+    protected static ?string $navigationLabel = 'Pantau Progres';
+    protected static ?string $title = 'Pantau Progres Tester';
     protected static ?string $slug = 'pantau-progress';
     protected static bool $shouldRegisterNavigation = false; 
 

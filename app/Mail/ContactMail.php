@@ -46,7 +46,7 @@ class ContactMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.notification',
+            view: 'vendor.filament-panels.emails.auth.notification',
             with: [
                 'subject'     => $this->subjectText,
                 'title'       => $this->title,

@@ -87,12 +87,8 @@ class GoogleController extends Controller
             // Clean up session
             session()->forget('google_auth_panel');
 
-            // Redirect based on role (using enum comparison)
-            return match ($user->role) {
-                UserRole::admin     => redirect()->intended('/admin'),
-                UserRole::developer => redirect()->intended('/developer'),
-                default             => redirect()->intended('/tester'),
-            };
+            // Redirect based on the panel they logged in from
+            return redirect()->intended("/{$panel}");
         } catch (\Exception $e) {
             Log::error('Google OAuth login failed', [
                 'error' => $e->getMessage(),
