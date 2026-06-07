@@ -14,8 +14,12 @@
     $hasTenancy = filament()->hasTenancy();
 
     $hour = (int) now()->format('H');
-    $greeting = $hour < 2 ? 'Selamat Malam' : ($hour < 11 ? 'Selamat Pagi' : ($hour < 15 ? 'Selamat Siang' : ($hour < 19 ? 'Selamat Sore' : 'Selamat Malam' )));
-        $userName=filament()->auth()->check() ? (filament()->auth()->user()->name ?? 'Admin') : 'Admin';
+    if (\Illuminate\Support\Facades\App::getLocale() === 'en') {
+        $greeting = $hour < 4 ? 'Good Night' : ($hour < 12 ? 'Good Morning' : ($hour < 17 ? 'Good Afternoon' : ($hour < 21 ? 'Good Evening' : 'Good Night')));
+    } else {
+        $greeting = $hour < 2 ? 'Selamat Malam' : ($hour < 11 ? 'Selamat Pagi' : ($hour < 15 ? 'Selamat Siang' : ($hour < 19 ? 'Selamat Sore' : 'Selamat Malam')));
+    }
+    $userName = filament()->auth()->check() ? (filament()->auth()->user()->name ?? 'Admin') : 'Admin';
         @endphp
 
         <nav class="fi-topbar"
@@ -366,24 +370,24 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
                         </svg>
                     </div>
-                    <h3 class="logout-modal-title">Konfirmasi Logout</h3>
-                    <p class="logout-modal-desc">Apakah Anda yakin ingin keluar dari akun ini?</p>
+                    <h3 class="logout-modal-title">{{ __('Konfirmasi Logout') }}</h3>
+                    <p class="logout-modal-desc">{{ __('Apakah Anda yakin ingin keluar dari akun ini?') }}</p>
                 </div>
 
                 <div class="logout-modal-actions">
                     <button type="button" class="logout-modal-btn logout-modal-btn--cancel" @click="showLogoutModal = false">
-                        Batal
+                        {{ __('Batal') }}
                     </button>
                     <form method="POST" action="{{ filament()->getLogoutUrl() }}"
                         x-ref="logoutForm"
                         @submit.prevent="
                               showLogoutModal = false;
-                              window.dispatchEvent(new CustomEvent('show-logout-toast', { detail: { message: 'Berhasil logout. Sampai jumpa kembali!', type: 'success' } }));
+                              window.dispatchEvent(new CustomEvent('show-logout-toast', { detail: { message: '{{ __('Berhasil logout. Sampai jumpa kembali!') }}', type: 'success' } }));
                               setTimeout(() => $refs.logoutForm.submit(), 900);
                           ">
                         @csrf
                         <button type="submit" class="logout-modal-btn logout-modal-btn--confirm" style="width:100%">
-                            Ya, Logout
+                            {{ __('Ya, Logout') }}
                         </button>
                     </form>
                 </div>
@@ -396,7 +400,7 @@
 <div x-data="{ toasts: [] }"
     x-on:show-logout-toast.window="
         const id = Date.now();
-        toasts.push({ id, message: $event.detail.message || 'Logout berhasil', type: $event.detail.type || 'info' });
+        toasts.push({ id, message: $event.detail.message || '{{ __('Logout berhasil') }}', type: $event.detail.type || 'info' });
         setTimeout(() => { toasts = toasts.filter(t => t.id !== id); }, 2400);
      ">
     <template x-teleport="body">

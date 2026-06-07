@@ -12,9 +12,17 @@ use Illuminate\Support\Carbon;
 class AdminDashboard extends Page
 {
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-squares-2x2';
-    protected static ?string $navigationLabel = 'Dashboard';
-    protected static ?string $title = 'Dashboard Overview';
     protected static ?int $navigationSort = 1;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Dashboard');
+    }
+
+    public function getTitle(): string|\Illuminate\Contracts\Support\Htmlable
+    {
+        return __('Ikhtisar Dasbor');
+    }
     protected string $view = 'filament.admin.pages.admin-dashboard';
 
     public function getViewData(): array
@@ -80,9 +88,9 @@ class AdminDashboard extends Page
         // ── 3. Pendaftaran Terbaru (Recent Users) ─────────────
         $pendaftaranList = User::latest()->take(8)->get()->map(function ($u) {
             $roleLabel = match ($u->role) {
-                UserRole::developer => 'Developer',
-                UserRole::tester => 'Tester',
-                UserRole::admin => 'Admin',
+                UserRole::developer => __('Developer'),
+                UserRole::tester => __('Tester'),
+                UserRole::admin => __('Admin'),
             };
 
             return [
@@ -92,7 +100,7 @@ class AdminDashboard extends Page
                 'role' => $roleLabel,
                 'tanggal' => $u->created_at->format('d M Y'),
                 'timestamp' => $u->created_at->timestamp,
-                'status' => 'Aktif', // Asumsi default aktif jika terdaftar
+                'status' => __('Aktif'), // Asumsi default aktif jika terdaftar
             ];
         })->toArray();
 
@@ -105,9 +113,9 @@ class AdminDashboard extends Page
             $hariAktif = min($diff + 1, 14);
 
             $statusLabel = match ($m->status) {
-                'pending' => 'Ditinjau',
-                'selesai' => 'Selesai',
-                default => 'Aktif',
+                'pending' => __('Ditinjau'),
+                'selesai' => __('Selesai'),
+                default => __('Aktif'),
             };
 
             return [

@@ -201,7 +201,7 @@
         <div>  
                      
             <p class="text-sm mt-0.5" style="color:#64748b;">  
-                Ringkasan platform PlayTest ID — data diperbarui {{ now()->diffForHumans() }}  
+                {{ __('Ringkasan platform PlayTest ID — data diperbarui') }} {{ now()->diffForHumans() }}  
             </p>  
         </div>  
         <div class="flex items-center gap-3">  
@@ -210,15 +210,14 @@
             <div class="relative" x-data="{ openExport: false }" @click.outside="openExport = false">
                 <button
                     @click="openExport = !openExport"
-                    class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium"
-                    style="background:#ffffff;border:1px solid #e2e8f0;color:#64748b;transition:all 0.15s;"
-                    :style="openExport ? 'border-color:#2563eb;color:#2563eb;background:#eff6ff;' : ''"
+                    class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-150"
+                    :class="openExport ? 'border-blue-600 text-blue-600 bg-blue-50 border' : 'bg-white border border-slate-200 text-slate-500'"
                     id="export-dropdown-btn"
                 >
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                         <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
                     </svg>
-                    Export
+                    {{ __('Ekspor') }}
                     <svg class="w-3 h-3 transition-transform duration-200" :class="openExport ? 'rotate-180' : ''"
                          fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                         <path d="M19 9l-7 7-7-7"/>
@@ -237,7 +236,7 @@
                     class="adm-export-dropdown"
                     style="display:none;"
                 >
-                    <div class="adm-export-dropdown-header">Pilih Format Export</div>
+                    <div class="adm-export-dropdown-header">{{ __('Pilih Format Ekspor') }}</div>
 
                     {{-- Export Pengguna CSV --}}
                     <a href="{{ route('admin.export.pengguna') }}" class="adm-export-item" @click="openExport=false" id="export-pengguna">
@@ -248,8 +247,8 @@
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <div class="adm-export-item-label">Export Pengguna</div>
-                            <div class="adm-export-item-sub">Semua user — .csv</div>
+                            <div class="adm-export-item-label">{{ __('Ekspor Pengguna') }}</div>
+                            <div class="adm-export-item-sub">{{ __('Semua pengguna — .csv') }}</div>
                         </div>
                         <span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:9999px;background:#eff6ff;color:#2563eb;">CSV</span>
                     </a>
@@ -262,8 +261,8 @@
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <div class="adm-export-item-label">Export Kampanye</div>
-                            <div class="adm-export-item-sub">Semua misi & status — .csv</div>
+                            <div class="adm-export-item-label">{{ __('Ekspor Kampanye') }}</div>
+                            <div class="adm-export-item-sub">{{ __('Semua misi & status — .csv') }}</div>
                         </div>
                         <span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:9999px;background:#fffbeb;color:#d97706;">CSV</span>
                     </a>
@@ -276,8 +275,8 @@
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <div class="adm-export-item-label">Export Pendapatan</div>
-                            <div class="adm-export-item-sub">Riwayat transaksi — .csv</div>
+                            <div class="adm-export-item-label">{{ __('Ekspor Pendapatan') }}</div>
+                            <div class="adm-export-item-sub">{{ __('Riwayat transaksi — .csv') }}</div>
                         </div>
                         <span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:9999px;background:#f0fdf4;color:#16a34a;">CSV</span>
                     </a>
@@ -290,8 +289,8 @@
                             </svg>
                         </div>
                         <div class="flex-1">
-                            <div class="adm-export-item-label">Laporan Lengkap</div>
-                            <div class="adm-export-item-sub">Ringkasan dashboard — PDF</div>
+                            <div class="adm-export-item-label">{{ __('Laporan Lengkap') }}</div>
+                            <div class="adm-export-item-sub">{{ __('Ringkasan dashboard — PDF') }}</div>
                         </div>
                         <span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:9999px;background:#fef2f2;color:#dc2626;">PDF</span>
                     </a>
@@ -305,7 +304,7 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">  
                     <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>  
                 </svg>  
-                Refresh Data  
+                {{ __('Perbarui Data') }}  
             </button>  
         </div>  
     </div>  
@@ -327,9 +326,9 @@
                         </svg>  
                     </div>  
                     <div class="flex-1 min-w-0">  
-                        <p class="text-xs font-medium uppercase tracking-wider" style="color:#94a3b8;">Developer</p>  
+                        <p class="text-xs font-medium uppercase tracking-wider" style="color:#94a3b8;">{{ __('Developer') }}</p>  
                         <p class="text-2xl font-bold mt-0.5 leading-none font-mono-data" style="color:#1e293b;">{{ $statDeveloper }}</p>  
-                        <p class="text-xs font-medium mt-1" style="color:#10b981;">{{ $devBulanIni }} bulan ini</p>  
+                        <p class="text-xs font-medium mt-1" style="color:#10b981;">{{ $devBulanIni }} {{ __('bulan ini') }}</p>  
                     </div>  
                 </div>  
                 <div class="adm-progress-track mt-3">  
@@ -347,9 +346,9 @@
                         </svg>  
                     </div>  
                     <div class="flex-1 min-w-0">  
-                        <p class="text-xs font-medium uppercase tracking-wider" style="color:#94a3b8;">Tester</p>  
+                        <p class="text-xs font-medium uppercase tracking-wider" style="color:#94a3b8;">{{ __('Tester') }}</p>  
                         <p class="text-2xl font-bold mt-0.5 leading-none font-mono-data" style="color:#1e293b;">{{ $statTester }}</p>  
-                        <p class="text-xs font-medium mt-1" style="color:#10b981;">{{ $testerBulanIni }} bulan ini</p>  
+                        <p class="text-xs font-medium mt-1" style="color:#10b981;">{{ $testerBulanIni }} {{ __('bulan ini') }}</p>  
                     </div>  
                 </div>  
                 <div class="adm-progress-track mt-3">  
@@ -366,9 +365,9 @@
                         </svg>  
                     </div>  
                     <div class="flex-1 min-w-0">  
-                        <p class="text-xs font-medium uppercase tracking-wider" style="color:#94a3b8;">Aktif</p>  
+                        <p class="text-xs font-medium uppercase tracking-wider" style="color:#94a3b8;">{{ __('Aktif') }}</p>  
                         <p class="text-2xl font-bold mt-0.5 leading-none font-mono-data" style="color:#1e293b;">{{ $statAktif }}</p>  
-                        <p class="text-xs font-medium mt-1" style="color:#f59e0b;">{{ $aktifMingguIni }} minggu ini</p>  
+                        <p class="text-xs font-medium mt-1" style="color:#f59e0b;">{{ $aktifMingguIni }} {{ __('minggu ini') }}</p>  
                     </div>  
                 </div>  
                 <div class="adm-progress-track mt-3">  
@@ -385,9 +384,9 @@
                         </svg>  
                     </div>  
                     <div class="flex-1 min-w-0">  
-                        <p class="text-xs font-medium uppercase tracking-wider" style="color:#94a3b8;">Selesai</p>  
+                        <p class="text-xs font-medium uppercase tracking-wider" style="color:#94a3b8;">{{ __('Selesai') }}</p>  
                         <p class="text-2xl font-bold mt-0.5 leading-none font-mono-data" style="color:#1e293b;">{{ $statSelesai }}</p>  
-                        <p class="text-xs font-medium mt-1" style="color:#8b5cf6;">Total campaign</p>  
+                        <p class="text-xs font-medium mt-1" style="color:#8b5cf6;">{{ __('Total kampanye') }}</p>  
                     </div>  
                 </div>  
                 <div class="adm-progress-track">  
@@ -404,9 +403,9 @@
                         </svg>  
                     </div>  
                     <div class="flex-1 min-w-0">  
-                        <p class="text-xs font-medium uppercase tracking-wider" style="color:#94a3b8;">Pendapatan</p>  
+                        <p class="text-xs font-medium uppercase tracking-wider" style="color:#94a3b8;">{{ __('Pendapatan') }}</p>  
                         <p class="text-xl font-bold mt-0.5 leading-none font-mono-data" style="color:#1e293b;">Rp {{ $statPendapatan }}</p>  
-                        <p class="text-xs font-medium mt-1" style="color:#10b981;">{{ $statGrowthPendapatan }} vs bln lalu</p>  
+                        <p class="text-xs font-medium mt-1" style="color:#10b981;">{{ $statGrowthPendapatan }} {{ __('vs bulan lalu') }}</p>  
                     </div>  
                 </div>  
                 <div class="adm-progress-track mt-3">  
@@ -423,9 +422,9 @@
                         </svg>  
                     </div>  
                     <div class="flex-1 min-w-0">  
-                        <p class="text-xs font-medium uppercase tracking-wider" style="color:#94a3b8;">Pending</p>  
+                        <p class="text-xs font-medium uppercase tracking-wider" style="color:#94a3b8;">{{ __('Tertunda') }}</p>  
                         <p class="text-2xl font-bold mt-0.5 leading-none font-mono-data" style="color:#ef4444;">{{ $statPending }}</p>  
-                        <p class="text-xs font-medium mt-1" style="color:#ef4444;">Perlu review</p>  
+                        <p class="text-xs font-medium mt-1" style="color:#ef4444;">{{ __('Perlu ditinjau') }}</p>  
                     </div>  
                 </div>  
                 <div class="adm-progress-track">  
@@ -445,17 +444,17 @@
             <div data-design-id="chart-card" class="adm-panel lg:col-span-2">  
                 <div class="adm-panel-header">  
                     <div>  
-                        <h2 class="text-sm font-semibold font-sora" style="color:#1e293b;">Aktivitas Mingguan</h2>  
-                        <p class="text-xs mt-0.5" style="color:#94a3b8;">Registrasi Developer vs Tester (7 hari terakhir)</p>  
+                        <h2 class="text-sm font-semibold font-sora" style="color:#1e293b;">{{ __('Aktivitas Mingguan') }}</h2>  
+                        <p class="text-xs mt-0.5" style="color:#94a3b8;">{{ __('Registrasi Developer vs Tester (7 hari terakhir)') }}</p>  
                     </div>  
                     <div class="flex items-center gap-4 text-xs">  
                         <div class="flex items-center gap-1.5">  
                             <div class="w-2.5 h-2.5 rounded-full" style="background:#2563eb;"></div>  
-                            <span style="color:#64748b;">Developer</span>  
+                            <span style="color:#64748b;">{{ __('Developer') }}</span>  
                         </div>  
                         <div class="flex items-center gap-1.5">  
                             <div class="w-2.5 h-2.5 rounded-full" style="background:#10b981;"></div>  
-                            <span style="color:#64748b;">Tester</span>  
+                            <span style="color:#64748b;">{{ __('Tester') }}</span>  
                         </div>  
                     </div>  
                 </div>  
@@ -489,19 +488,19 @@
                     <div class="flex items-center justify-between mt-4 pt-4" style="border-top:1px solid #f1f5f9;">  
                         <div class="text-center">  
                             <p class="text-sm font-bold font-mono-data" style="color:#2563eb;">{{ $statDevMingguIni }}</p>  
-                            <p class="text-xs" style="color:#94a3b8;">Dev minggu ini</p>  
+                            <p class="text-xs" style="color:#94a3b8;">{{ __('Developer minggu ini') }}</p>  
                         </div>  
                         <div class="text-center">  
                             <p class="text-sm font-bold font-mono-data" style="color:#10b981;">{{ $statTesterMingguIni }}</p>  
-                            <p class="text-xs" style="color:#94a3b8;">Tester minggu ini</p>  
+                            <p class="text-xs" style="color:#94a3b8;">{{ __('Tester minggu ini') }}</p>  
                         </div>  
                         <div class="text-center">  
                             <p class="text-sm font-bold font-mono-data" style="color:#1e293b;">{{ $statRasio }}</p>  
-                            <p class="text-xs" style="color:#94a3b8;">Rasio Dev:Tester</p>  
+                            <p class="text-xs" style="color:#94a3b8;">{{ __('Rasio Dev:Tester') }}</p>  
                         </div>  
                         <div class="text-center">  
                             <p class="text-sm font-bold font-mono-data" style="color:#f59e0b;">{{ $statHariAktif }}</p>  
-                            <p class="text-xs" style="color:#94a3b8;">Hari paling aktif</p>  
+                            <p class="text-xs" style="color:#94a3b8;">{{ __('Hari paling aktif') }}</p>  
                         </div>  
                     </div>  
                 </div>  
@@ -512,8 +511,8 @@
             <div data-design-id="quick-actions-card" class="adm-panel">  
                 <div class="adm-panel-header">  
                     <div>  
-                        <h2 class="text-sm font-semibold font-sora" style="color:#1e293b;">Quick Actions</h2>  
-                        <p class="text-xs mt-0.5" style="color:#94a3b8;">Aksi admin cepat</p>  
+                        <h2 class="text-sm font-semibold font-sora" style="color:#1e293b;">{{ __('Aksi Cepat') }}</h2>  
+                        <p class="text-xs mt-0.5" style="color:#94a3b8;">{{ __('Aksi admin cepat') }}</p>  
                     </div>  
                     <div class="w-6 h-6 rounded-full flex items-center justify-center" style="background:#fffbeb;">  
                         <span style="color:#f59e0b;font-size:12px;">⚡</span>  
@@ -530,8 +529,8 @@
                             </svg>  
                         </div>  
                         <div class="flex-1">  
-                            <p class="text-sm font-semibold" style="color:#b45309;">Approve Pendaftaran</p>  
-                            <p class="text-xs" style="color:#d97706;">{{ $statPending }} menunggu review</p>  
+                            <p class="text-sm font-semibold" style="color:#b45309;">{{ __('Setujui Pendaftaran') }}</p>  
+                            <p class="text-xs" style="color:#d97706;">{{ $statPending }} {{ __('menunggu persetujuan') }}</p>  
                         </div>  
                         <svg class="w-4 h-4 flex-shrink-0" style="color:#d97706;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">  
                             <path d="M9 18l6-6-6-6"/>  
@@ -546,8 +545,8 @@
                             </svg>  
                         </div>  
                         <div class="flex-1">  
-                            <p class="text-sm font-semibold" style="color:#1d4ed8;">Export Data</p>  
-                            <p class="text-xs" style="color:#3b82f6;">CSV / Excel format</p>  
+                            <p class="text-sm font-semibold" style="color:#1d4ed8;">{{ __('Ekspor Data') }}</p>  
+                            <p class="text-xs" style="color:#3b82f6;">{{ __('Format CSV / Excel') }}</p>  
                         </div>  
                         <svg class="w-4 h-4 flex-shrink-0" style="color:#3b82f6;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">  
                             <path d="M9 18l6-6-6-6"/>  
@@ -562,8 +561,8 @@
                             </svg>  
                         </div>  
                         <div class="flex-1">  
-                            <p class="text-sm font-semibold" style="color:#6d28d9;">Broadcast Notif</p>  
-                            <p class="text-xs" style="color:#7c3aed;">Kirim ke semua user</p>  
+                            <p class="text-sm font-semibold" style="color:#6d28d9;">{{ __('Kirim Notifikasi') }}</p>  
+                            <p class="text-xs" style="color:#7c3aed;">{{ __('Kirim ke semua pengguna') }}</p>  
                         </div>  
                         <svg class="w-4 h-4 flex-shrink-0" style="color:#7c3aed;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">  
                             <path d="M9 18l6-6-6-6"/>  
@@ -579,8 +578,8 @@
                             </svg>  
                         </div>  
                         <div class="flex-1">  
-                            <p class="text-sm font-semibold" style="color:#15803d;">Manajemen Pengguna</p>  
-                            <p class="text-xs" style="color:#16a34a;">Kelola akun user</p>  
+                            <p class="text-sm font-semibold" style="color:#15803d;">{{ __('Manajemen Pengguna') }}</p>  
+                            <p class="text-xs" style="color:#16a34a;">{{ __('Kelola akun pengguna') }}</p>  
                         </div>  
                         <svg class="w-4 h-4 flex-shrink-0" style="color:#16a34a;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">  
                             <path d="M9 18l6-6-6-6"/>  
@@ -602,12 +601,12 @@
             <div data-design-id="table-card" class="adm-panel lg:col-span-2">  
                 <div class="adm-panel-header">  
                     <div>  
-                        <h2 class="text-sm font-semibold font-sora" style="color:#1e293b;">Pendaftaran Terbaru</h2>  
-                        <p class="text-xs mt-0.5" style="color:#94a3b8;">{{ count($pendaftaranList) }} pendaftar terakhir platform</p>  
+                        <h2 class="text-sm font-semibold font-sora" style="color:#1e293b;">{{ __('Pendaftaran Terbaru') }}</h2>  
+                        <p class="text-xs mt-0.5" style="color:#94a3b8;">{{ count($pendaftaranList) }} {{ __('pendaftar terakhir platform') }}</p>  
                     </div>  
                     <button class="text-xs font-semibold px-3 py-1.5 rounded-xl"  
                             style="color:#2563eb;border:1px solid #bfdbfe;background:#eff6ff;">  
-                        Lihat Semua  
+                        {{ __('Lihat Semua') }}  
                     </button>  
                 </div>  
   
@@ -617,34 +616,34 @@
                             <tr>  
                                 <th>
                                     <button class="adm-sort-btn" :class="sortCol==='nama'?'active':''" @click="setSort('nama')">
-                                        Nama
+                                        {{ __('Nama') }}
                                         <span class="material-symbols-outlined adm-sort-icon"
                                               x-text="sortCol!=='nama' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                                     </button>
                                 </th>
                                 <th>
                                     <button class="adm-sort-btn" :class="sortCol==='role'?'active':''" @click="setSort('role')">
-                                        Role
+                                        {{ __('Peran') }}
                                         <span class="material-symbols-outlined adm-sort-icon"
                                               x-text="sortCol!=='role' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                                     </button>
                                 </th>
                                 <th>
                                     <button class="adm-sort-btn" :class="sortCol==='tanggal'?'active':''" @click="setSort('tanggal')">
-                                        Tanggal
+                                        {{ __('Tanggal') }}
                                         <span class="material-symbols-outlined adm-sort-icon"
                                               x-text="sortCol!=='tanggal' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                                     </button>
                                 </th>
                                 <th>
                                     <button class="adm-sort-btn" :class="sortCol==='status'?'active':''" @click="setSort('status')">
-                                        Status
+                                        {{ __('Status') }}
                                         <span class="material-symbols-outlined adm-sort-icon"
                                               x-text="sortCol!=='status' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                                     </button>
                                 </th>
                                 <th class="text-right">
-                                    <span class="adm-sort-btn" style="cursor:default;pointer-events:none">Aksi</span>
+                                    <span class="adm-sort-btn" style="cursor:default;pointer-events:none">{{ __('Aksi') }}</span>
                                 </th>  
                             </tr>  
                         </thead>  
@@ -722,12 +721,12 @@
             <div data-design-id="kampanye-card" class="adm-panel">  
                 <div class="adm-panel-header">  
                     <div>  
-                        <h2 class="text-sm font-semibold font-sora" style="color:#1e293b;">Kampanye Terbaru</h2>  
-                        <p class="text-xs mt-0.5" style="color:#94a3b8;">{{ count($kampanyeList) }} kampanye aktif</p>  
+                        <h2 class="text-sm font-semibold font-sora" style="color:#1e293b;">{{ __('Kampanye Terbaru') }}</h2>  
+                        <p class="text-xs mt-0.5" style="color:#94a3b8;">{{ count($kampanyeList) }} {{ __('kampanye aktif') }}</p>  
                     </div>  
                     <button class="text-xs font-semibold px-3 py-1.5 rounded-xl"  
                             style="color:#2563eb;border:1px solid #bfdbfe;background:#eff6ff;">  
-                        Semua  
+                        {{ __('Semua') }}  
                     </button>  
                 </div>  
   
@@ -773,7 +772,7 @@
   
                         {{-- Tester progress --}}  
                         <div class="flex items-center justify-between text-xs mb-1">  
-                            <span style="color:#64748b;">Tester</span>  
+                            <span style="color:#64748b;">{{ __('Tester') }}</span>  
                             <span class="font-mono-data font-semibold" style="color:#1e293b;">  
                                 {{ $k['tester'] }}/{{ $k['max'] }}  
                             </span>  
@@ -784,7 +783,7 @@
   
                         {{-- Hari progress --}}  
                         <div class="flex items-center justify-between text-xs mb-1">  
-                            <span style="color:#64748b;">Hari ke-</span>  
+                            <span style="color:#64748b;">{{ __('Hari ke-') }}</span>  
                             <span class="font-mono-data font-semibold" style="color:#1e293b;">  
                                 {{ $k['hari'] }}/{{ $k['maxHari'] }}  
                             </span>  

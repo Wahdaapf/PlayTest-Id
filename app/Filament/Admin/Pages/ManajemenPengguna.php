@@ -7,9 +7,17 @@ use Filament\Pages\Page;
 class ManajemenPengguna extends Page  
 {  
     protected static string | \BackedEnum | null $navigationIcon  = 'heroicon-o-users';  
-    protected static ?string $navigationLabel = 'Pengguna';  
-    protected static ?string $title           = 'Manajemen Pengguna';  
     protected static ?int    $navigationSort  = 2;  
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Pengguna');
+    }
+
+    public function getTitle(): string|\Illuminate\Contracts\Support\Htmlable
+    {
+        return __('Manajemen Pengguna');
+    }
     protected string $view = 'filament.admin.pages.manajemen-pengguna';  
   
     public function getViewData(): array  
@@ -43,9 +51,11 @@ class ManajemenPengguna extends Page
                     'avatarColor'  => $colors[$idx % count($colors)],  
                     'nama'         => $user->name,  
                     'email'        => $user->email,  
-                    'role'         => ucfirst($user->role->value),  
+                    'role'         => __(ucfirst($user->role->value)),  
+                    'raw_role'     => $user->role->value,
                     'tanggal'      => $user->created_at->format('d M Y'),  
-                    'status'       => $user->email_verified_at ? 'Aktif' : 'Pending',  
+                    'status'       => $user->email_verified_at ? __('Aktif') : __('Menunggu'),  
+                    'raw_status'   => $user->email_verified_at ? 'aktif' : 'pending',
                     'kampanye'     => $misiCounts[$user->id] ?? 0,  
                     'phone'        => '-',  
                     'kota'         => '-',  

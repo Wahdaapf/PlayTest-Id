@@ -150,12 +150,12 @@
 {{-- ══ HEADER ══ --}}
 <div class="flex items-center justify-between animate-fade-in-up">
     <div>
-        <h1 class="mp-sora text-xl font-bold text-slate-900">Manajemen Pengguna</h1>
-        <p class="text-sm text-slate-500 mt-0.5">Kelola semua Developer dan Tester yang terdaftar di platform</p>
+        <h1 class="mp-sora text-xl font-bold text-slate-900">{{ __('Manajemen Pengguna') }}</h1>
+        <p class="text-sm text-slate-500 mt-0.5">{{ __('Kelola semua Developer dan Tester yang terdaftar di platform') }}</p>
     </div>
     <a href="{{ route('admin.export.pengguna') }}" class="mp-btn mp-btn-primary">
         <span class="material-symbols-outlined text-[1.1rem]">download</span>
-        Export CSV
+        {{ __('Ekspor CSV') }}
     </a>
 </div>
 
@@ -170,9 +170,9 @@
                 <span class="material-symbols-outlined">group</span>
             </div>
             <div class="flex-1 min-w-0">
-                <div class="mp-stat-label">Total Pengguna</div>
+                <div class="mp-stat-label">{{ __('Total Pengguna') }}</div>
                 <div class="mp-stat-value">{{ $statTotal }}</div>
-                <div class="mp-stat-sub">pengguna terdaftar</div>
+                <div class="mp-stat-sub">{{ __('pengguna terdaftar') }}</div>
             </div>
         </div>
     </div>
@@ -185,9 +185,9 @@
                 <span class="material-symbols-outlined">code</span>
             </div>
             <div>
-                <div class="mp-stat-label">Developer</div>
+                <div class="mp-stat-label">{{ __('Developer') }}</div>
                 <div class="mp-stat-value" style="color:#7c3aed;">{{ $statDeveloper }}</div>
-                <div class="mp-stat-sub">akun developer</div>
+                <div class="mp-stat-sub">{{ __('akun developer') }}</div>
             </div>
         </div>
     </div>
@@ -200,9 +200,9 @@
                 <span class="material-symbols-outlined">verified</span>
             </div>
             <div>
-                <div class="mp-stat-label">Tester</div>
+                <div class="mp-stat-label">{{ __('Tester') }}</div>
                 <div class="mp-stat-value text-green-700">{{ $statTester }}</div>
-                <div class="mp-stat-sub">akun tester</div>
+                <div class="mp-stat-sub">{{ __('akun tester') }}</div>
             </div>
         </div>
     </div>
@@ -215,9 +215,9 @@
                 <span class="material-symbols-outlined">pending_actions</span>
             </div>
             <div class="flex-1 min-w-0">
-                <div class="mp-stat-label">Menunggu Approval</div>
+                <div class="mp-stat-label">{{ __('Menunggu Approval') }}</div>
                 <div class="mp-stat-value text-amber-600">{{ $statPending }}</div>
-                <div class="mp-stat-sub">perlu ditinjau</div>
+                <div class="mp-stat-sub">{{ __('perlu ditinjau') }}</div>
             </div>
         </div>
     </div>
@@ -230,7 +230,7 @@
     <div class="flex items-center justify-between mb-4">
         <div class="mp-sora font-bold text-slate-900 text-base flex items-center gap-2">
             <span class="material-symbols-outlined text-blue-600 text-[1.2rem]">manage_accounts</span>
-            Daftar Pengguna
+            {{ __('Daftar Pengguna') }}
         </div>
     </div>
 
@@ -240,19 +240,19 @@
         <div style="border-bottom:1px solid #e2e8f0;">
             <div class="flex items-center flex-wrap gap-0 px-1">
                 <button class="mp-tab" :class="filterAktif==='semua'    ? 'active' : 'inactive'" @click="setFilter('semua')">
-                    Semua
+                    {{ __('Semua') }}
                     <span class="mp-count-badge" style="background:#f1f5f9;color:#64748b;">{{ $statTotal }}</span>
                 </button>
                 <button class="mp-tab" :class="filterAktif==='developer' ? 'active' : 'inactive'" @click="setFilter('developer')">
-                    Developer
+                    {{ __('Developer') }}
                     <span class="mp-count-badge" style="background:#eff6ff;color:#2563eb;">{{ $statDeveloper }}</span>
                 </button>
                 <button class="mp-tab" :class="filterAktif==='tester'   ? 'active' : 'inactive'" @click="setFilter('tester')">
-                    Tester
+                    {{ __('Tester') }}
                     <span class="mp-count-badge" style="background:#f0fdf4;color:#16a34a;">{{ $statTester }}</span>
                 </button>
                 <button class="mp-tab" :class="filterAktif==='pending'  ? 'active' : 'inactive'" @click="setFilter('pending')">
-                    Pending
+                    {{ __('Tertunda') }}
                     <span class="mp-count-badge" style="background:#fffbeb;color:#b45309;">{{ $statPending }}</span>
                 </button>
             </div>
@@ -262,22 +262,22 @@
         <div class="mp-filter-bar">
             <div class="mp-search-wrap">
                 <span class="material-symbols-outlined mp-search-icon">search</span>
-                <input type="text" placeholder="Cari nama atau email…" class="mp-input mp-search-input" x-model="cariTeks">
+                <input type="text" placeholder="{{ __('Cari nama atau email…') }}" class="mp-input mp-search-input" x-model="cariTeks">
             </div>
             <select class="mp-select" x-model="filterStatus">
-                <option value="">Semua Status</option>
-                <option value="aktif">Aktif</option>
-                <option value="pending">Pending</option>
-                <option value="suspend">Suspend</option>
+                <option value="">{{ __('Semua Status') }}</option>
+                <option value="aktif">{{ __('Aktif') }}</option>
+                <option value="pending">{{ __('Tertunda') }}</option>
+                <option value="suspend">{{ __('Ditangguhkan') }}</option>
             </select>
             <select class="mp-select max-w-[120px]" x-model="perPage">
-                <option value="5">5 Data</option>
-                <option value="10">10 Data</option>
-                <option value="20">20 Data</option>
-                <option value="50">50 Data</option>
-                <option value="1000">Semua</option>
+                <option value="5">{{ __('5 Data') }}</option>
+                <option value="10">{{ __('10 Data') }}</option>
+                <option value="20">{{ __('20 Data') }}</option>
+                <option value="50">{{ __('50 Data') }}</option>
+                <option value="1000">{{ __('Semua') }}</option>
             </select>
-            <button class="mp-btn mp-btn-ghost" @click="resetFilter()">Reset</button>
+            <button class="mp-btn mp-btn-ghost" @click="resetFilter()">{{ __('Reset') }}</button>
         </div>
 
         {{-- Table --}}
@@ -287,56 +287,56 @@
                     <tr>
                         <th style="width:32%;">
                             <button class="mp-sort-btn" :class="sortCol==='nama'?'active':''" @click="setSort('nama')">
-                                Pengguna
+                                {{ __('Pengguna') }}
                                 <span class="material-symbols-outlined mp-sort-icon"
                                       x-text="sortCol!=='nama'     ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="mp-sort-btn" :class="sortCol==='role'?'active':''" @click="setSort('role')">
-                                Role
+                                {{ __('Peran') }}
                                 <span class="material-symbols-outlined mp-sort-icon"
                                       x-text="sortCol!=='role'     ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="mp-sort-btn" :class="sortCol==='tanggal'?'active':''" @click="setSort('tanggal')">
-                                Tanggal Daftar
+                                {{ __('Tanggal Daftar') }}
                                 <span class="material-symbols-outlined mp-sort-icon"
                                       x-text="sortCol!=='tanggal'  ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="mp-sort-btn" :class="sortCol==='status'?'active':''" @click="setSort('status')">
-                                Status
+                                {{ __('Status') }}
                                 <span class="material-symbols-outlined mp-sort-icon"
                                       x-text="sortCol!=='status'   ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th class="text-center">
                             <button class="mp-sort-btn" style="margin:0 auto;" :class="sortCol==='kampanye'?'active':''" @click="setSort('kampanye')">
-                                Kampanye
+                                {{ __('Kampanye') }}
                                 <span class="material-symbols-outlined mp-sort-icon"
                                       x-text="sortCol!=='kampanye' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th class="text-center">
-                            <span class="mp-sort-btn" style="cursor:default;">Aksi</span>
+                            <span class="mp-sort-btn" style="cursor:default;">{{ __('Aksi') }}</span>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($penggunaList as $idx => $user)
                     @php
-                        $dotColor = ['Aktif' => '#10b981', 'Pending' => '#f59e0b', 'Suspend' => '#ef4444'][$user['status']] ?? '#94a3b8';
+                        $dotColor = ['aktif' => '#10b981', 'pending' => '#f59e0b', 'suspend' => '#ef4444'][$user['raw_status'] ?? strtolower($user['status'])] ?? '#94a3b8';
                     @endphp
                     <tr
                         data-id="{{ $idx }}"
                         data-nama="{{ strtolower($user['nama']) }}"
                         data-email="{{ strtolower($user['email']) }}"
-                        data-role="{{ strtolower($user['role']) }}"
+                        data-role="{{ strtolower($user['raw_role'] ?? $user['role']) }}"
                         data-tanggal="{{ strtotime($user['tanggal'] ?? '') ?: 0 }}"
-                        data-status="{{ strtolower($user['status']) }}"
+                        data-status="{{ strtolower($user['raw_status'] ?? $user['status']) }}"
                         data-kampanye="{{ $user['kampanye'] }}"
                         x-show="tampilRow($el)">
 
@@ -358,7 +358,7 @@
 
                         {{-- Role Badge --}}
                         <td>
-                            <span class="mp-badge mp-badge-{{ strtolower($user['role']) }}">
+                            <span class="mp-badge mp-badge-{{ strtolower($user['raw_role'] ?? $user['role']) }}">
                                 {{ $user['role'] }}
                             </span>
                         </td>
@@ -372,7 +372,7 @@
 
                         {{-- Status Badge --}}
                         <td>
-                            <span class="mp-badge mp-badge-{{ strtolower($user['status']) }}">
+                            <span class="mp-badge mp-badge-{{ strtolower($user['raw_status'] ?? $user['status']) }}">
                                 <span class="w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:{{ $dotColor }};"></span>
                                 {{ $user['status'] }}
                             </span>
@@ -393,29 +393,29 @@
                                 {{-- Detail (selalu ada) --}}
                                 <button class="mp-action-btn mp-action-detail" @click="bukaModal({{ $idx }})">
                                     <span class="material-symbols-outlined text-[1rem]" style="color:#64748b;">visibility</span>
-                                    <span class="mp-tooltip">Lihat Detail</span>
+                                    <span class="mp-tooltip">{{ __('Lihat Detail') }}</span>
                                 </button>
 
-                                @if($user['status'] === 'Aktif')
+                                @if(($user['raw_status'] ?? '') === 'aktif')
                                 <button class="mp-action-btn mp-action-danger">
                                     <span class="material-symbols-outlined text-[1rem]" style="color:#ef4444;">block</span>
-                                    <span class="mp-tooltip">Suspend</span>
+                                    <span class="mp-tooltip">{{ __('Tangguhkan') }}</span>
                                 </button>
 
-                                @elseif($user['status'] === 'Pending')
+                                @elseif(($user['raw_status'] ?? '') === 'pending')
                                 <button class="mp-action-btn mp-action-approve">
                                     <span class="material-symbols-outlined text-[1rem]" style="color:#16a34a;">check_circle</span>
-                                    <span class="mp-tooltip">Approve</span>
+                                    <span class="mp-tooltip">{{ __('Setujui') }}</span>
                                 </button>
                                 <button class="mp-action-btn mp-action-danger">
                                     <span class="material-symbols-outlined text-[1rem]" style="color:#ef4444;">cancel</span>
-                                    <span class="mp-tooltip">Tolak</span>
+                                    <span class="mp-tooltip">{{ __('Tolak') }}</span>
                                 </button>
 
-                                @elseif($user['status'] === 'Suspend')
+                                @elseif(($user['raw_status'] ?? '') === 'suspend')
                                 <button class="mp-action-btn mp-action-reactive">
                                     <span class="material-symbols-outlined text-[1rem]" style="color:#2563eb;">restart_alt</span>
-                                    <span class="mp-tooltip">Aktifkan Kembali</span>
+                                    <span class="mp-tooltip">{{ __('Aktifkan Kembali') }}</span>
                                 </button>
                                 @endif
 
@@ -431,19 +431,19 @@
                 <div class="mp-empty-icon">
                     <span class="material-symbols-outlined text-slate-400 text-[1.8rem]">manage_accounts</span>
                 </div>
-                <p class="text-sm font-semibold text-slate-600">Tidak ada pengguna ditemukan</p>
-                <p class="text-xs mt-1 text-slate-400">Coba ubah filter atau kata kunci pencarian</p>
+                <p class="text-sm font-semibold text-slate-600">{{ __('Tidak ada pengguna ditemukan') }}</p>
+                <p class="text-xs mt-1 text-slate-400">{{ __('Coba ubah filter atau kata kunci pencarian') }}</p>
             </div>
         </div>
 
         {{-- Pagination --}}
         <div class="mp-pagi">
             <span>
-                Menampilkan
+                {{ __('Menampilkan') }}
                 <strong class="text-slate-800 mp-mono"
                         x-text="totalItems">
                 </strong>
-                dari <strong class="text-slate-800 mp-mono" x-text="totalItems"></strong> pengguna
+                {{ __('dari') }} <strong class="text-slate-800 mp-mono" x-text="totalItems"></strong> {{ __('pengguna') }}
             </span>
             <div class="flex items-center gap-1.5">
                 <button class="mp-pagi-btn" :disabled="currentPage<=1" @click="currentPage--; applyFilter()">
@@ -515,7 +515,7 @@
         {{-- Body --}}
         <div class="mp-modal-body">
             <div class="mp-detail-row">
-                <span class="mp-detail-label">Role</span>
+                <span class="mp-detail-label">{{ __('Role') }}</span>
                 <span class="mp-detail-value">
                     <span class="mp-badge"
                           :class="pengguna?.role === 'Developer' ? 'mp-badge-developer' : 'mp-badge-tester'"
@@ -523,63 +523,63 @@
                 </span>
             </div>
             <div class="mp-detail-row">
-                <span class="mp-detail-label">Status</span>
+                <span class="mp-detail-label">{{ __('Status') }}</span>
                 <span class="mp-detail-value">
                     <span class="mp-badge"
                           :class="{
-                              'mp-badge-aktif':   pengguna?.status === 'Aktif',
-                              'mp-badge-pending': pengguna?.status === 'Pending',
-                              'mp-badge-suspend': pengguna?.status === 'Suspend'
+                              'mp-badge-aktif':   pengguna?.raw_status === 'aktif',
+                              'mp-badge-pending': pengguna?.raw_status === 'pending',
+                              'mp-badge-suspend': pengguna?.raw_status === 'suspend'
                           }"
                           x-text="pengguna?.status ?? ''"></span>
                 </span>
             </div>
             <div class="mp-detail-row">
-                <span class="mp-detail-label">Tanggal Daftar</span>
+                <span class="mp-detail-label">{{ __('Tanggal Daftar') }}</span>
                 <span class="mp-detail-value mp-mono" x-text="pengguna?.tanggal ?? ''"></span>
             </div>
             <div class="mp-detail-row">
-                <span class="mp-detail-label">Nomor HP</span>
+                <span class="mp-detail-label">{{ __('Nomor HP') }}</span>
                 <span class="mp-detail-value mp-mono" x-text="pengguna?.phone ?? '-'"></span>
             </div>
             <div class="mp-detail-row">
-                <span class="mp-detail-label">Kota</span>
+                <span class="mp-detail-label">{{ __('Kota') }}</span>
                 <span class="mp-detail-value" x-text="pengguna?.kota ?? '-'"></span>
             </div>
             <div class="mp-detail-row">
-                <span class="mp-detail-label">Total Kampanye</span>
+                <span class="mp-detail-label">{{ __('Total Kampanye') }}</span>
                 <span class="mp-detail-value mp-mono font-bold" style="color:#1e293b;" x-text="pengguna?.kampanye ?? 0"></span>
             </div>
         </div>
 
         {{-- Footer Actions --}}
         <div class="mp-modal-footer">
-            <button @click="tutupModal()" class="mp-btn mp-btn-ghost">Tutup</button>
+            <button @click="tutupModal()" class="mp-btn mp-btn-ghost">{{ __('Tutup') }}</button>
 
-            <template x-if="pengguna?.status === 'Pending'">
+            <template x-if="pengguna?.raw_status === 'pending'">
                 <div class="flex gap-2">
                     <button class="mp-btn" style="background:#fff1f2;color:#ef4444;border:1px solid #fecdd3;">
                         <span class="material-symbols-outlined text-[1rem]">cancel</span>
-                        Tolak
+                        {{ __('Tolak') }}
                     </button>
                     <button class="mp-btn" style="background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;box-shadow:0 4px 12px rgba(22,163,74,0.25);">
                         <span class="material-symbols-outlined text-[1rem]">check_circle</span>
-                        Approve
+                        {{ __('Setujui') }}
                     </button>
                 </div>
             </template>
 
-            <template x-if="pengguna?.status === 'Aktif'">
+            <template x-if="pengguna?.raw_status === 'aktif'">
                 <button class="mp-btn" style="background:#fff1f2;color:#ef4444;border:1px solid #fecdd3;">
                     <span class="material-symbols-outlined text-[1rem]">block</span>
-                    Suspend Akun
+                    {{ __('Tangguhkan Akun') }}
                 </button>
             </template>
 
-            <template x-if="pengguna?.status === 'Suspend'">
+            <template x-if="pengguna?.raw_status === 'suspend'">
                 <button class="mp-btn mp-btn-primary">
                     <span class="material-symbols-outlined text-[1rem]">restart_alt</span>
-                    Aktifkan Kembali
+                    {{ __('Aktifkan Kembali') }}
                 </button>
             </template>
         </div>

@@ -66,54 +66,54 @@ class AdminPanelProvider extends PanelProvider
             // ── Sidebar Navigation ────────────────────────────  
             ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
                 return $builder->groups([
-                    NavigationGroup::make('Manajemen Utama')
+                    NavigationGroup::make(__('Manajemen Utama'))
                         ->items([
-                            NavigationItem::make('Dashboard')
+                            NavigationItem::make(__('Dasbor'))
                                 ->icon('heroicon-o-squares-2x2')
                                 ->isActiveWhen(fn() => request()->routeIs('filament.admin.pages.admin-dashboard'))
                                 ->url(fn() => AdminDashboard::getUrl()),
 
-                            NavigationItem::make('Pengguna')
+                            NavigationItem::make(__('Pengguna'))
                                 ->icon('heroicon-o-users')
                                 ->badge(fn() => \App\Models\User::where('role', '!=', \App\Enums\UserRole::admin)->count() ?: null)
                                 ->isActiveWhen(fn() => request()->is('admin/manajemen-pengguna*'))
                                 ->url(fn() => ManajemenPengguna::getUrl()),
 
-                            NavigationItem::make('Kampanye')
+                            NavigationItem::make(__('Kampanye'))
                                 ->icon('heroicon-o-clipboard-document-list')
                                 ->badge(fn() => \App\Models\Misi::count() ?: null)
                                 ->isActiveWhen(fn() => request()->is('admin/manajemen-kampanye*'))
                                 ->url(fn() => ManajemenKampanye::getUrl()),
 
-                            NavigationItem::make('Paket')
+                            NavigationItem::make(__('Paket'))
                                 ->icon('heroicon-o-currency-dollar')
                                 ->url(fn() => ManajemenPaket::getUrl())
                                 ->isActiveWhen(fn() => request()->is('admin/manajemen-paket*')),
                         ]),
 
-                    NavigationGroup::make('Transaksi & Keuangan')
+                    NavigationGroup::make(__('Transaksi & Keuangan'))
                         ->items([
-                            NavigationItem::make('Pembayaran Developer')
+                            NavigationItem::make(__('Pembayaran Developer'))
                                 ->icon('heroicon-o-credit-card')
                                 ->badge(fn() => \App\Models\Pembayaran::where('status', 'pending')->count() ?: null)
                                 ->isActiveWhen(fn() => request()->is('admin/manajemen-pembayaran*'))
                                 ->url(fn() => ManajemenPembayaran::getUrl()),
 
-                            NavigationItem::make('Penarikan Tester')
+                            NavigationItem::make(__('Penarikan Tester'))
                                 ->icon('heroicon-o-banknotes')
                                 ->badge(fn() => \App\Models\Withdraw::where('status', 'pending')->count() ?: null)
                                 ->isActiveWhen(fn() => request()->is('admin/manajemen-withdraw*'))
                                 ->url(fn() => ManajemenWithdraw::getUrl()),
                         ]),
 
-                    NavigationGroup::make('Profil & Bantuan')
+                    NavigationGroup::make(__('Profil & Bantuan'))
                         ->items([
-                            NavigationItem::make('Profil Saya')
+                            NavigationItem::make(__('Profil Saya'))
                                 ->icon('heroicon-o-user-circle')
                                 ->isActiveWhen(fn() => request()->routeIs('filament.admin.pages.profile-admin'))
                                 ->url(fn() => ProfileAdmin::getUrl()),
 
-                            NavigationItem::make('Tips & Bantuan')
+                            NavigationItem::make(__('Tips & Bantuan'))
                                 ->icon('heroicon-o-question-mark-circle')
                                 ->isActiveWhen(fn() => request()->routeIs('filament.admin.pages.tips-bantuan'))
                                 ->url(fn() => TipsBantuan::getUrl()),
@@ -154,6 +154,10 @@ class AdminPanelProvider extends PanelProvider
             ->renderHook(
                 'panels::head.end',
                 fn(): string => Blade::render("@vite(['resources/css/app.css', 'resources/css/filament-sidebar.css', 'resources/css/filament-topbar.css'])"),
+            )
+            ->renderHook(
+                \Filament\View\PanelsRenderHook::USER_MENU_PROFILE_BEFORE,
+                fn(): string => view('filament.components.language-switcher')->render(),
             )
 
             // ── Middleware ────────────────────────────────────  
