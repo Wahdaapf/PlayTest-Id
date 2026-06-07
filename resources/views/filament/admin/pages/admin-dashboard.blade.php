@@ -156,7 +156,38 @@
     border: 1px solid #f1f5f9;  
     transition: background 0.15s;  
 }  
-.adm-kamp-card:hover { background: #f1f5f9; }  
+.adm-kamp-card:hover { background: #f1f5f9; }
+
+/* ══════════════════════════════════════
+   EXPORT DROPDOWN
+══════════════════════════════════════ */
+.adm-export-dropdown {
+    position: absolute; top: calc(100% + 8px); right: 0;
+    background: #ffffff; border: 1px solid #e2e8f0;
+    border-radius: 0.875rem; min-width: 280px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+    overflow: hidden; z-index: 50;
+}
+.adm-export-dropdown-header {
+    padding: 10px 14px 8px;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.7rem; font-weight: 700; color: #94a3b8;
+    text-transform: uppercase; letter-spacing: 0.08em;
+}
+.adm-export-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 16px; width: 100%; text-align: left;
+    background: transparent; border: none; cursor: pointer;
+    transition: background 0.12s ease; text-decoration: none; color: inherit;
+}
+.adm-export-item:hover { background: #f8fafc; }
+.adm-export-item:last-child { border-top: 1px solid #f1f5f9; margin-top: 4px; }
+.adm-export-icon {
+    width: 30px; height: 30px; border-radius: 0.5rem; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+}
+.adm-export-item-label { font-size: 0.8125rem; font-weight: 600; color: #1e293b; }
+.adm-export-item-sub   { font-size: 0.7rem; color: #94a3b8; margin-top: 1px; }
 </style>  
 @endpush  
   
@@ -174,13 +205,100 @@
             </p>  
         </div>  
         <div class="flex items-center gap-3">  
-            <button class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium"  
-                    style="background:#ffffff;border:1px solid #e2e8f0;color:#64748b;">  
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">  
-                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>  
-                </svg>  
-                Export  
-            </button>  
+
+            {{-- ── Export Dropdown ───────────────────────── --}}
+            <div class="relative" x-data="{ openExport: false }" @click.outside="openExport = false">
+                <button
+                    @click="openExport = !openExport"
+                    class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium"
+                    style="background:#ffffff;border:1px solid #e2e8f0;color:#64748b;transition:all 0.15s;"
+                    :style="openExport ? 'border-color:#2563eb;color:#2563eb;background:#eff6ff;' : ''"
+                    id="export-dropdown-btn"
+                >
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                    </svg>
+                    Export
+                    <svg class="w-3 h-3 transition-transform duration-200" :class="openExport ? 'rotate-180' : ''"
+                         fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                        <path d="M19 9l-7 7-7-7"/>
+                    </svg>
+                </button>
+
+                {{-- Dropdown Panel --}}
+                <div
+                    x-show="openExport"
+                    x-transition:enter="transition ease-out duration-150"
+                    x-transition:enter-start="opacity-0 -translate-y-2"
+                    x-transition:enter-end="opacity-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-100"
+                    x-transition:leave-start="opacity-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 -translate-y-2"
+                    class="adm-export-dropdown"
+                    style="display:none;"
+                >
+                    <div class="adm-export-dropdown-header">Pilih Format Export</div>
+
+                    {{-- Export Pengguna CSV --}}
+                    <a href="{{ route('admin.export.pengguna') }}" class="adm-export-item" @click="openExport=false" id="export-pengguna">
+                        <div class="adm-export-icon" style="background:#eff6ff;">
+                            <svg style="width:15px;height:15px;color:#2563eb;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <div class="adm-export-item-label">Export Pengguna</div>
+                            <div class="adm-export-item-sub">Semua user — .csv</div>
+                        </div>
+                        <span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:9999px;background:#eff6ff;color:#2563eb;">CSV</span>
+                    </a>
+
+                    {{-- Export Kampanye CSV --}}
+                    <a href="{{ route('admin.export.kampanye') }}" class="adm-export-item" @click="openExport=false" id="export-kampanye">
+                        <div class="adm-export-icon" style="background:#fffbeb;">
+                            <svg style="width:15px;height:15px;color:#f59e0b;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M3 11l19-9-9 19-2-8-8-2z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <div class="adm-export-item-label">Export Kampanye</div>
+                            <div class="adm-export-item-sub">Semua misi & status — .csv</div>
+                        </div>
+                        <span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:9999px;background:#fffbeb;color:#d97706;">CSV</span>
+                    </a>
+
+                    {{-- Export Pendapatan CSV --}}
+                    <a href="{{ route('admin.export.pendapatan') }}" class="adm-export-item" @click="openExport=false" id="export-pendapatan">
+                        <div class="adm-export-icon" style="background:#f0fdf4;">
+                            <svg style="width:15px;height:15px;color:#10b981;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <div class="adm-export-item-label">Export Pendapatan</div>
+                            <div class="adm-export-item-sub">Riwayat transaksi — .csv</div>
+                        </div>
+                        <span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:9999px;background:#f0fdf4;color:#16a34a;">CSV</span>
+                    </a>
+
+                    {{-- Export Laporan PDF --}}
+                    <a href="{{ route('admin.export.pdf') }}" target="_blank" class="adm-export-item" @click="openExport=false" id="export-pdf">
+                        <div class="adm-export-icon" style="background:#fef2f2;">
+                            <svg style="width:15px;height:15px;color:#ef4444;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <div class="flex-1">
+                            <div class="adm-export-item-label">Laporan Lengkap</div>
+                            <div class="adm-export-item-sub">Ringkasan dashboard — PDF</div>
+                        </div>
+                        <span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:9999px;background:#fef2f2;color:#dc2626;">PDF</span>
+                    </a>
+
+                </div>
+            </div>{{-- end export dropdown --}}
+
             <button class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white"  
                     style="background:#2563eb;box-shadow:0 4px 14px rgba(37,99,235,0.3);"  
                     wire:click="$refresh">  

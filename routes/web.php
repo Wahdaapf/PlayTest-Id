@@ -20,6 +20,16 @@ Route::post('/duitku/callback', [DuitkuController::class, 'callback']);
 Route::get('/duitku/return', [DuitkuController::class, 'return']);
 Route::post('/xendit/callback', [\App\Http\Controllers\XenditController::class, 'payoutCallback']);
 
+// ── Admin Export Routes ──────────────────────────────────────────────────────
+Route::prefix('admin/export')
+    ->middleware(['web', 'auth'])
+    ->group(function () {
+        Route::get('/pengguna',  [\App\Http\Controllers\Admin\ExportController::class, 'exportPengguna'])->name('admin.export.pengguna');
+        Route::get('/kampanye',  [\App\Http\Controllers\Admin\ExportController::class, 'exportKampanye'])->name('admin.export.kampanye');
+        Route::get('/pendapatan',[\App\Http\Controllers\Admin\ExportController::class, 'exportPendapatan'])->name('admin.export.pendapatan');
+        Route::get('/pdf',       [\App\Http\Controllers\Admin\ExportController::class, 'exportPdf'])->name('admin.export.pdf');
+    });
+
 Route::get('/auth/google', [\App\Http\Controllers\Auth\GoogleController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('/auth/google/callback', [\App\Http\Controllers\Auth\GoogleController::class, 'handleGoogleCallback']);
 
