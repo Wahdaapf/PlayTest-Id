@@ -77,7 +77,7 @@ class GoogleController extends Controller
                     'name' => $googleUser->getName() ?? $googleUser->getNickname() ?? 'Google User',
                     'email' => $googleUser->getEmail(),
                     'google_id' => $googleUser->getId(),
-                    'password' => Str::random(32),
+                    'password' => bcrypt(Str::random(32)),
                     'email_verified_at' => now(),
                     'role' => $panel,
                 ]);
