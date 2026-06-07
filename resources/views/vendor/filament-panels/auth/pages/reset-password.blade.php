@@ -550,6 +550,7 @@
             max-width: 400px;
             margin: 0 auto;
             width: 100%;
+            position: relative;
         }
 
         .rp-hero {
@@ -651,12 +652,18 @@
 <x-filament-panels::page.simple>
     <div class="rp-page" id="rp-page">
 
+        {{-- Language Switcher (Fixed top right) --}}
+        <div style="position: fixed; top: 1.5rem; right: 1.5rem; z-index: 50; display: flex; gap: 0.375rem; background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); padding: 0.25rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+            <a href="{{ route('language.switch', 'en') }}" style="text-decoration: none; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 0.375rem; font-size: 0.625rem; font-weight: 900; transition: all 0.2s; color: {{ App::getLocale() == 'en' ? '#ffffff' : '#94a3b8' }}; background-color: {{ App::getLocale() == 'en' ? '#4F46E5' : 'transparent' }};">EN</a>
+            <a href="{{ route('language.switch', 'id') }}" style="text-decoration: none; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 0.375rem; font-size: 0.625rem; font-weight: 900; transition: all 0.2s; color: {{ App::getLocale() == 'id' ? '#ffffff' : '#94a3b8' }}; background-color: {{ App::getLocale() == 'id' ? '#4F46E5' : 'transparent' }};">ID</a>
+        </div>
+
         {{-- MOBILE HEADER --}}
         <div class="rp-mobile-header">
             <div class="rp-mobile-header-logo">
                 <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-10 w-auto object-contain" />
             </div>
-            <p class="rp-mobile-header-tagline">Pass Closed Testing Faster</p>
+            <p class="rp-mobile-header-tagline">{{ __('Lulus Closed Testing Lebih Cepat') }}</p>
         </div>
 
         {{-- LEFT PANEL — HERO (desktop only) --}}
@@ -668,11 +675,11 @@
                     <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-12 w-auto object-contain" />
                 </div>
                 <div class="rp-hero-extended">
-                    <h2 class="rp-hero-title">Create New Password.</h2>
-                    <p class="rp-hero-desc">Choose a strong password to keep your account secure.</p>
+                    <h2 class="rp-hero-title">{{ __('Buat Kata Sandi Baru.') }}</h2>
+                    <p class="rp-hero-desc">{{ __('Pilih kata sandi yang kuat untuk menjaga akun Anda tetap aman.') }}</p>
                 </div>
                 <div class="rp-hero-pills">
-                    @foreach(['✓ 20+ Real Testers', '✓ Real Feedback', '✓ 14-Day Testing', '✓ Google Play Console', '✓ Instant Access'] as $feature)
+                    @foreach([__('✓ 20+ Tester Asli'), __('✓ Ulasan Asli'), __('✓ 14 Hari Pengujian'), __('✓ Google Play Console'), __('✓ Akses Instan')] as $feature)
                     <span class="rp-hero-pill">{{ $feature }}</span>
                     @endforeach
                 </div>
@@ -683,7 +690,7 @@
                         <div class="rp-avatar-initials" style="background: {{ $avatarColors[$i] }}">{{ $initials }}</div>
                         @endforeach
                     </div>
-                    <p class="rp-social-proof">Used by <strong style="color:#111827; font-weight:700;">500+ Developers</strong></p>
+                    <p class="rp-social-proof">{{ __('Digunakan oleh') }} <strong style="color:#111827; font-weight:700;">{{ __('500+ Developer') }}</strong></p>
                 </div>
             </div>
         </div>
@@ -698,10 +705,9 @@
                         </div>
                     </div>
                     <div class="rp-card-header">
-                        <h2 class="rp-card-title">Set New Password</h2>
+                        <h2 class="rp-card-title">{{ __('Atur Kata Sandi Baru') }}</h2>
                         <p class="rp-card-subtitle">
-                            Enter your new password below.<br>
-                            Make sure it's at least 8 characters.
+                            {!! __('Masukkan kata sandi baru Anda di bawah.<br>Pastikan panjangnya minimal 8 karakter.') !!}
                         </p>
                     </div>
                     <div class="rp-form-wrapper">
@@ -709,12 +715,12 @@
                     </div>
                     <a href="{{ filament()->getLoginUrl() }}" class="rp-back-link">
                         <span class="material-symbols-outlined">arrow_back</span>
-                        Back to Sign In
+                        {{ __('Kembali ke Masuk') }}
                     </a>
                 </div>
             </div>
             <div class="rp-mobile-features">
-                @foreach(['✓ 20+ Testers', '✓ 14-Day Test', '✓ Instant Access'] as $feature)
+                @foreach([__('✓ 20+ Tester'), __('✓ Uji 14 Hari'), __('✓ Akses Instan')] as $feature)
                 <span class="rp-mobile-pill">{{ $feature }}</span>
                 @endforeach
             </div>

@@ -5,15 +5,35 @@ use App\Http\Controllers\DuitkuController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Paket;
 
-Route::redirect('/', '/id');
+Route::get('/', function (\Illuminate\Http\Request $request) {
+    $supportedLocales = ['id', 'en'];
+    $selectedLocale = config('app.fallback_locale');
 
-Route::prefix('{locale}')->where(['locale' => 'id|en'])->group(function () {
-    Route::get('/', function ($locale) {
-        App::setLocale($locale);
+    if (\Illuminate\Support\Facades\Session::has('app_locale')) {
+        $selectedLocale = \Illuminate\Support\Facades\Session::get('app_locale');
+    } elseif ($request->hasHeader('Accept-Language')) {
+        $browserLanguage = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+        if (in_array($browserLanguage, $supportedLocales)) {
+            $selectedLocale = $browserLanguage;
+        }
+    }
+    
+    return redirect('/' . $selectedLocale);
+});
+
+Route::prefix('{locale}')->where(['locale' => 'id|en'])->middleware(\App\Http\Middleware\LanguageManagerMiddleware::class)->group(function () {
+    Route::get('/', function () {
         $pakets = Paket::where('aktif', true)->orderBy('price', 'asc')->get();
         return view('welcome', compact('pakets'));
     })->name('welcome');
 });
+
+Route::get('/language/switch/{locale}', function ($locale) {
+    if (in_array($locale, ['id', 'en'])) {
+        \Illuminate\Support\Facades\Session::put('app_locale', $locale);
+    }
+    return back();
+})->name('language.switch');
 
 Route::post('/payment', [DuitkuController::class, 'createTransaction']);
 Route::post('/duitku/callback', [DuitkuController::class, 'callback']);

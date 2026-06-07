@@ -373,9 +373,15 @@
           </button>
 
           <!-- Language Switcher -->
+          @php
+            $currentRoute = Route::currentRouteName();
+            $params = Route::current() ? Route::current()->parameters() : [];
+            $enUrl = $currentRoute ? route($currentRoute, array_merge($params, ['locale' => 'en'])) : url('/en');
+            $idUrl = $currentRoute ? route($currentRoute, array_merge($params, ['locale' => 'id'])) : url('/id');
+          @endphp
           <div class="flex items-center gap-1.5 ml-2 pl-4 border-l border-slate-200 dark:border-slate-700">
-            <a href="{{ url('/en') }}" class="w-8 h-8 flex items-center justify-center rounded-lg text-[10px] font-black transition {{ App::getLocale() == 'en' ? 'bg-brand-600 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-600 dark:hover:text-slate-300' }}">EN</a>
-            <a href="{{ url('/id') }}" class="w-8 h-8 flex items-center justify-center rounded-lg text-[10px] font-black transition {{ App::getLocale() == 'id' ? 'bg-brand-600 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-600 dark:hover:text-slate-300' }}">ID</a>
+            <a href="{{ $enUrl }}" class="w-8 h-8 flex items-center justify-center rounded-lg text-[10px] font-black transition {{ App::getLocale() == 'en' ? 'bg-brand-600 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-600 dark:hover:text-slate-300' }}">EN</a>
+            <a href="{{ $idUrl }}" class="w-8 h-8 flex items-center justify-center rounded-lg text-[10px] font-black transition {{ App::getLocale() == 'id' ? 'bg-brand-600 text-white shadow-sm' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-600 dark:hover:text-slate-300' }}">ID</a>
           </div>
         </div>
 
@@ -407,8 +413,8 @@
             <button onclick="openAuthModal('register')" class="flex-1 text-center px-4 py-2 font-semibold text-white bg-brand-600 rounded-xl shadow hover:bg-brand-700 transition">{{ __('Daftar') }}</button>
           </li>
           <li class="mt-2 flex justify-center gap-4">
-            <a href="{{ url('/en') }}" class="text-xs font-bold {{ App::getLocale() == 'en' ? 'text-brand-600 underline' : 'text-slate-400' }}">English (EN)</a>
-            <a href="{{ url('/id') }}" class="text-xs font-bold {{ App::getLocale() == 'id' ? 'text-brand-600 underline' : 'text-slate-400' }}">Bahasa Indonesia (ID)</a>
+            <a href="{{ $enUrl }}" class="text-xs font-bold {{ App::getLocale() == 'en' ? 'text-brand-600 underline' : 'text-slate-400' }}">English (EN)</a>
+            <a href="{{ $idUrl }}" class="text-xs font-bold {{ App::getLocale() == 'id' ? 'text-brand-600 underline' : 'text-slate-400' }}">Bahasa Indonesia (ID)</a>
           </li>
         </ul>
       </div>

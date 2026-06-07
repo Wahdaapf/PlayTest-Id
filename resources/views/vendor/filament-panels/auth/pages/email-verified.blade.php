@@ -512,6 +512,12 @@
 
 <body>
 
+    {{-- Language Switcher (Fixed top right) --}}
+    <div style="position: fixed; top: 1.5rem; right: 1.5rem; z-index: 50; display: flex; gap: 0.375rem; background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); padding: 0.25rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+        <a href="{{ route('language.switch', 'en') }}" style="text-decoration: none; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 0.375rem; font-size: 0.625rem; font-weight: 900; transition: all 0.2s; color: {{ App::getLocale() == 'en' ? '#ffffff' : '#94a3b8' }}; background-color: {{ App::getLocale() == 'en' ? '#4F46E5' : 'transparent' }};">EN</a>
+        <a href="{{ route('language.switch', 'id') }}" style="text-decoration: none; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 0.375rem; font-size: 0.625rem; font-weight: 900; transition: all 0.2s; color: {{ App::getLocale() == 'id' ? '#ffffff' : '#94a3b8' }}; background-color: {{ App::getLocale() == 'id' ? '#4F46E5' : 'transparent' }};">ID</a>
+    </div>
+
     <!-- Confetti -->
     <div class="confetti-wrap" id="confetti-wrap"></div>
 
@@ -536,12 +542,11 @@
 
         <!-- Headline -->
         <div>
-            <span class="headline-label">&#10003; Verification Successful</span>
+            <span class="headline-label">{!! __('&#10003; Verifikasi Berhasil') !!}</span>
         </div>
-        <h1>Email Verified!</h1>
+        <h1>{{ __('Email Diverifikasi!') }}</h1>
         <p class="subtitle">
-            Your PlayTest ID account is now fully activated.<br>
-            You're ready to start testing apps and earning rewards!
+            {!! __('Akun PlayTest ID Anda sekarang sepenuhnya aktif.<br>Anda siap untuk mulai menguji aplikasi dan mendapatkan hadiah!') !!}
         </p>
 
         <!-- Perks -->
@@ -551,8 +556,8 @@
                     <span class="material-symbols-outlined">assignment</span>
                 </div>
                 <div class="perk-text">
-                    Browse Testing Missions
-                    <span>Find apps that need your feedback</span>
+                    {{ __('Jelajahi Misi Pengujian') }}
+                    <span>{{ __('Temukan aplikasi yang membutuhkan umpan balik Anda') }}</span>
                 </div>
             </div>
             <div class="perk">
@@ -560,8 +565,8 @@
                     <span class="material-symbols-outlined">payments</span>
                 </div>
                 <div class="perk-text">
-                    Earn Points &amp; Rewards
-                    <span>Get paid for every completed test</span>
+                    {{ __('Dapatkan Poin & Hadiah') }}
+                    <span>{{ __('Dapatkan bayaran untuk setiap pengujian yang diselesaikan') }}</span>
                 </div>
             </div>
             <div class="perk">
@@ -569,8 +574,8 @@
                     <span class="material-symbols-outlined">workspace_premium</span>
                 </div>
                 <div class="perk-text">
-                    Build Your Tester Badge
-                    <span>Level up with each test you complete</span>
+                    {{ __('Bangun Lencana Tester Anda') }}
+                    <span>{{ __('Naik level setiap kali Anda menyelesaikan pengujian') }}</span>
                 </div>
             </div>
         </div>
@@ -578,14 +583,14 @@
         <!-- CTA -->
         <a href="{{ $panel ?? '/tester' }}" class="cta-btn" id="dashboard-btn">
             <span class="material-symbols-outlined">rocket_launch</span>
-            Go to Dashboard
+            {{ __('Pergi ke Dasbor') }}
         </a>
 
         <!-- Auto-redirect -->
         <p class="redirect-notice">
-            Redirecting automatically in
+            {{ __('Mengalihkan secara otomatis dalam') }}
             <span class="countdown-wrap">
-                <strong id="countdown">5</strong>s
+                <strong id="countdown">5</strong>{{ __(' dtk') }}
             </span>
         </p>
 
@@ -593,11 +598,11 @@
 
     <!-- Footer (Sekarang dijamin persis di tengah bawah) -->
     <div class="footer">
-        <p>&copy; {{ date('Y') }} PlayTest ID. All rights reserved.</p>
+        <p>{!! __('&copy; :year PlayTest ID. Hak cipta dilindungi undang-undang.', ['year' => date('Y')]) !!}</p>
         <div class="footer-links">
-            <a href="{{ config('app.url') }}">Home</a>
-            <a href="{{ config('app.url') }}/privacy">Privacy</a>
-            <a href="{{ config('app.url') }}/terms">Terms</a>
+            <a href="{{ config('app.url') }}">{{ __('Beranda') }}</a>
+            <a href="{{ config('app.url') }}/privacy">{{ __('Privasi') }}</a>
+            <a href="{{ config('app.url') }}/terms">{{ __('Syarat') }}</a>
         </div>
     </div>
 

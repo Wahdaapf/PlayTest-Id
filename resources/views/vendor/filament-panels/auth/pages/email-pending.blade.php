@@ -232,6 +232,7 @@
             width: 100%;
             max-width: 420px;
             margin: 0 auto;
+            position: relative;
         }
 
         /* ================================================================
@@ -742,12 +743,18 @@
 
     <div class="verify-page" id="verify-page">
 
+        {{-- Language Switcher (Fixed top right) --}}
+        <div style="position: fixed; top: 1.5rem; right: 1.5rem; z-index: 50; display: flex; gap: 0.375rem; background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); padding: 0.25rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+            <a href="{{ route('language.switch', 'en') }}" style="text-decoration: none; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 0.375rem; font-size: 0.625rem; font-weight: 900; transition: all 0.2s; color: {{ App::getLocale() == 'en' ? '#ffffff' : '#94a3b8' }}; background-color: {{ App::getLocale() == 'en' ? '#4F46E5' : 'transparent' }};">EN</a>
+            <a href="{{ route('language.switch', 'id') }}" style="text-decoration: none; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 0.375rem; font-size: 0.625rem; font-weight: 900; transition: all 0.2s; color: {{ App::getLocale() == 'id' ? '#ffffff' : '#94a3b8' }}; background-color: {{ App::getLocale() == 'id' ? '#4F46E5' : 'transparent' }};">ID</a>
+        </div>
+
         {{-- MOBILE HEADER --}}
         <div class="verify-mobile-header">
             <div class="verify-mobile-header-logo">
                 <img src="{{ asset('logo.png') }}" alt="PlayTest ID" style="height: 2.5rem; width: auto; object-fit: contain;" />
             </div>
-            <p class="verify-mobile-header-tagline">Pass Closed Testing Faster</p>
+            <p class="verify-mobile-header-tagline">{{ __('Lulus Closed Testing Lebih Cepat') }}</p>
         </div>
 
         {{-- LEFT HERO PANEL (Desktop) --}}
@@ -765,15 +772,15 @@
                 {{-- Desktop-only extended hero --}}
                 <div class="verify-hero-extended">
                     <h2 class="verify-hero-title">
-                        One Step Away<br>from Testing!
+                        {!! __('Satu Langkah Lagi<br>menuju Pengujian!') !!}
                     </h2>
                     <p class="verify-hero-desc">
-                        We just sent a verification link to your email. Check your inbox and click the link to activate your account.
+                        {{ __('Kami baru saja mengirimkan tautan verifikasi ke email Anda. Periksa kotak masuk dan klik tautan untuk mengaktifkan akun Anda.') }}
                     </p>
                 </div>
 
                 <div class="verify-hero-pills">
-                    @foreach(['✓ 20+ Real Testers', '✓ Real Feedback', '✓ 14-Day Testing', '✓ Google Play Console', '✓ Instant Access'] as $feature)
+                    @foreach([__('✓ 20+ Tester Asli'), __('✓ Ulasan Asli'), __('✓ 14 Hari Pengujian'), __('✓ Google Play Console'), __('✓ Akses Instan')] as $feature)
                     <span class="verify-hero-pill">{{ $feature }}</span>
                     @endforeach
                 </div>
@@ -790,7 +797,7 @@
                         @endforeach
                     </div>
                     <p class="verify-social-proof">
-                        Trusted by <strong style="color:#111827; font-weight:700;">500+ Developers</strong>
+                        {{ __('Dipercaya oleh') }} <strong style="color:#111827; font-weight:700;">{{ __('500+ Developer') }}</strong>
                     </p>
                 </div>
             </div>
@@ -811,9 +818,9 @@
 
                     {{-- Card header --}}
                     <div class="verify-card-header">
-                        <h2 class="verify-card-title">Check Your Inbox!</h2>
+                        <h2 class="verify-card-title">{{ __('Periksa Kotak Masuk Anda!') }}</h2>
                         <p class="verify-card-subtitle">
-                            We've sent a verification link to your email.
+                            {{ __('Kami telah mengirimkan tautan verifikasi ke email Anda.') }}
                         </p>
                     </div>
 
@@ -830,19 +837,19 @@
                         <div class="verify-step">
                             <div class="verify-step-num">1</div>
                             <p class="verify-step-text">
-                                <strong>Open your email</strong> — look for a message from <strong>PlayTest ID</strong>
+                                {!! __('<strong>Buka email Anda</strong> — cari pesan dari <strong>PlayTest ID</strong>') !!}
                             </p>
                         </div>
                         <div class="verify-step">
                             <div class="verify-step-num">2</div>
                             <p class="verify-step-text">
-                                <strong>Click "Verify My Email"</strong> inside the message
+                                {!! __('<strong>Klik "Verifikasi Email Saya"</strong> di dalam pesan') !!}
                             </p>
                         </div>
                         <div class="verify-step">
                             <div class="verify-step-num">3</div>
                             <p class="verify-step-text">
-                                <strong>You're in!</strong> — start exploring missions and earning
+                                {!! __('<strong>Selesai!</strong> — mulai jelajahi misi dan kumpulkan hadiah') !!}
                             </p>
                         </div>
                     </div>
@@ -850,7 +857,7 @@
                     {{-- Flash messages --}}
                     @if(session('resent'))
                     <div class="verify-flash verify-flash-success">
-                        ✓ A new verification email has been sent. Check your inbox!
+                        {{ __('✓ Email verifikasi baru telah dikirim. Periksa kotak masuk Anda!') }}
                     </div>
                     @endif
 
@@ -868,7 +875,7 @@
                             <input type="hidden" name="token" value="{{ $token }}">
                             <button type="submit" class="verify-resend-btn" id="resend-btn">
                                 <span class="material-symbols-outlined" id="resend-icon">refresh</span>
-                                <span id="resend-label">Resend Verification Email</span>
+                                <span id="resend-label">{{ __('Kirim Ulang Email Verifikasi') }}</span>
                             </button>
                         </form>
                     </div>
@@ -878,15 +885,14 @@
                     <div class="verify-spam-note">
                         <span class="material-symbols-outlined">info</span>
                         <p class="verify-spam-note-text">
-                            Can't find the email? Check your <strong>Spam</strong> or <strong>Promotions</strong> folder.
-                            The link expires in <strong>60 minutes</strong>.
+                            {!! __('Tidak menemukan email? Periksa folder <strong>Spam</strong> atau <strong>Promosi</strong> Anda.<br>Tautan berakhir dalam <strong>60 menit</strong>.') !!}
                         </p>
                     </div>
 
                     {{-- Back to login --}}
                     <p class="verify-back-link">
-                        Wrong account?
-                        <a href="/{{ $panel ?? 'tester' }}/login">Log in with another account</a>
+                        {{ __('Akun salah?') }}
+                        <a href="/{{ $panel ?? 'tester' }}/login">{{ __('Masuk dengan akun lain') }}</a>
                     </p>
 
                 </div>
@@ -894,7 +900,7 @@
 
             {{-- Mobile-only feature pills --}}
             <div class="verify-mobile-features">
-                @foreach(['✓ 20+ Testers', '✓ 14-Day Test', '✓ Instant Access'] as $feature)
+                @foreach([__('✓ 20+ Tester'), __('✓ Uji 14 Hari'), __('✓ Akses Instan')] as $feature)
                 <span class="verify-mobile-pill">{{ $feature }}</span>
                 @endforeach
             </div>
@@ -917,7 +923,7 @@
                 if (btn.disabled) return;
                 btn.disabled = true;
                 icon.style.animation = 'verifySpin 0.8s linear infinite';
-                lbl.textContent = 'Sending…';
+                lbl.textContent = '{{ __("Mengirim…") }}';
             });
         }
 
@@ -926,16 +932,16 @@
             icon.textContent = 'schedule';
             icon.style.animation = '';
             let s = Math.max(0, seconds);
-            lbl.textContent = 'Resend available in ' + s + 's';
+            lbl.textContent = '{{ __("Kirim ulang tersedia dalam ") }}' + s + '{{ __(" dtk") }}';
             const interval = setInterval(function() {
                 s--;
                 if (s <= 0) {
                     clearInterval(interval);
                     btn.disabled = false;
                     icon.textContent = 'refresh';
-                    lbl.textContent = 'Resend Verification Email';
+                    lbl.textContent = '{{ __("Kirim Ulang Email Verifikasi") }}';
                 } else {
-                    lbl.textContent = 'Resend available in ' + s + 's';
+                    lbl.textContent = '{{ __("Kirim ulang tersedia dalam ") }}' + s + '{{ __(" dtk") }}';
                 }
             }, 1000);
         }

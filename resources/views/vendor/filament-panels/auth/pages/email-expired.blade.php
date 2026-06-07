@@ -244,6 +244,7 @@
             width: 100%;
             max-width: 440px;
             margin: 0 auto;
+            position: relative;
         }
 
         /* ================================================================
@@ -673,6 +674,12 @@
 
     <div class="verify-page" id="verify-page">
 
+        {{-- Language Switcher (Fixed top right) --}}
+        <div style="position: fixed; top: 1.5rem; right: 1.5rem; z-index: 50; display: flex; gap: 0.375rem; background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); padding: 0.25rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+            <a href="{{ route('language.switch', 'en') }}" style="text-decoration: none; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 0.375rem; font-size: 0.625rem; font-weight: 900; transition: all 0.2s; color: {{ App::getLocale() == 'en' ? '#ffffff' : '#94a3b8' }}; background-color: {{ App::getLocale() == 'en' ? '#4F46E5' : 'transparent' }};">EN</a>
+            <a href="{{ route('language.switch', 'id') }}" style="text-decoration: none; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 0.375rem; font-size: 0.625rem; font-weight: 900; transition: all 0.2s; color: {{ App::getLocale() == 'id' ? '#ffffff' : '#94a3b8' }}; background-color: {{ App::getLocale() == 'id' ? '#4F46E5' : 'transparent' }};">ID</a>
+        </div>
+
         {{-- ======================================================= --}}
         {{-- MOBILE HEADER                                            --}}
         {{-- ======================================================= --}}
@@ -680,7 +687,7 @@
             <div class="verify-mobile-header-logo">
                 <img src="{{ asset('logo.png') }}" alt="PlayTest ID" style="height: 2.5rem; width: auto; object-fit: contain;" />
             </div>
-            <p class="verify-mobile-header-tagline">Pass Closed Testing Faster</p>
+            <p class="verify-mobile-header-tagline">{{ __('Lulus Closed Testing Lebih Cepat') }}</p>
         </div>
 
         {{-- ======================================================= --}}
@@ -697,15 +704,14 @@
                 </div>
 
                 <h2 class="verify-hero-title">
-                    No Worries,<br>Try Again!
+                    {!! __('Jangan Khawatir,<br>Coba Lagi!') !!}
                 </h2>
                 <p class="verify-hero-desc">
-                    Verification links expire after 60 minutes for security.
-                    Simply register again and we'll send you a fresh link instantly.
+                    {{ __('Tautan verifikasi kedaluwarsa setelah 60 menit untuk keamanan. Cukup daftar lagi dan kami akan segera mengirimkan tautan baru.') }}
                 </p>
 
                 <div class="verify-hero-pills">
-                    @foreach(['✓ 20+ Real Testers', '✓ Real Feedback', '✓ 14-Day Testing', '✓ Google Play Console', '✓ Instant Access'] as $feature)
+                    @foreach([__('✓ 20+ Tester Asli'), __('✓ Ulasan Asli'), __('✓ 14 Hari Pengujian'), __('✓ Google Play Console'), __('✓ Akses Instan')] as $feature)
                     <span class="verify-hero-pill">{!! $feature !!}</span>
                     @endforeach
                 </div>
@@ -722,7 +728,7 @@
                         @endforeach
                     </div>
                     <p class="verify-social-proof">
-                        Trusted by <strong style="color:#111827; font-weight:700;">500+ Developers</strong>
+                        {{ __('Dipercaya oleh') }} <strong style="color:#111827; font-weight:700;">{{ __('500+ Developer') }}</strong>
                     </p>
                 </div>
             </div>
@@ -745,11 +751,10 @@
 
                     {{-- Card header --}}
                     <div class="verify-card-header">
-                        <span class="verify-card-label">&#9888; Link Expired</span>
-                        <h2 class="verify-card-title">Verification Link<br>Has Expired</h2>
+                        <span class="verify-card-label">{!! __('&#9888; Tautan Kedaluwarsa') !!}</span>
+                        <h2 class="verify-card-title">{!! __('Tautan Verifikasi<br>Telah Kedaluwarsa') !!}</h2>
                         <p class="verify-card-subtitle">
-                            This verification link is no longer valid.
-                            Register again to get a fresh link sent to your inbox.
+                            {{ __('Tautan verifikasi ini tidak lagi valid. Daftar lagi untuk mendapatkan tautan baru yang dikirim ke kotak masuk Anda.') }}
                         </p>
                     </div>
 
@@ -757,12 +762,12 @@
                     <div class="verify-reason-box">
                         <p class="verify-reason-title">
                             <span class="material-symbols-outlined">help</span>
-                            Why did this happen?
+                            {{ __('Mengapa ini terjadi?') }}
                         </p>
                         <ul class="verify-reason-list">
-                            <li>The link expired after <strong>60 minutes</strong></li>
-                            <li>The link was already used to verify this account</li>
-                            <li>The link was opened in a different browser or device</li>
+                            <li>{!! __('Tautan kedaluwarsa setelah <strong>60 menit</strong>') !!}</li>
+                            <li>{{ __('Tautan sudah digunakan untuk memverifikasi akun ini') }}</li>
+                            <li>{{ __('Tautan dibuka di browser atau perangkat yang berbeda') }}</li>
                         </ul>
                     </div>
 
@@ -770,7 +775,7 @@
                     <div class="verify-form-wrapper">
                         <a href="/{{ $panel ?? 'tester' }}/register" class="verify-register-btn">
                             <span class="material-symbols-outlined">person_add</span>
-                            Register Again
+                            {{ __('Daftar Lagi') }}
                         </a>
                     </div>
 
@@ -778,15 +783,14 @@
                     <div class="verify-spam-note">
                         <span class="material-symbols-outlined">info</span>
                         <p class="verify-spam-note-text">
-                            Your previous registration was not saved. Re-registering with
-                            the same email is completely fine — just complete the verification this time!
+                            {{ __('Pendaftaran Anda sebelumnya tidak disimpan. Mendaftar ulang dengan email yang sama sama sekali tidak masalah — selesaikan saja verifikasinya kali ini!') }}
                         </p>
                     </div>
 
                     {{-- Back to login --}}
                     <p class="verify-back-link">
-                        Already have an account?
-                        <a href="/{{ $panel ?? 'tester' }}/login">Log in here</a>
+                        {{ __('Sudah punya akun?') }}
+                        <a href="/{{ $panel ?? 'tester' }}/login">{{ __('Masuk di sini') }}</a>
                     </p>
 
                 </div>
@@ -794,7 +798,7 @@
 
             {{-- Mobile-only feature pills --}}
             <div class="verify-mobile-features">
-                @foreach(['&#10003; 20+ Testers', '&#10003; 14-Day Test', '&#10003; Instant Access'] as $feature)
+                @foreach([__('✓ 20+ Tester'), __('✓ Uji 14 Hari'), __('✓ Akses Instan')] as $feature)
                 <span class="verify-mobile-pill">{!! $feature !!}</span>
                 @endforeach
             </div>

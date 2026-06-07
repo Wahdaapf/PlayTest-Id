@@ -128,6 +128,7 @@ class TesterPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                \App\Http\Middleware\LanguageManagerMiddleware::class,
             ])
             ->authMiddleware([
                 Authenticate::class,

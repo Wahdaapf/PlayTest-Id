@@ -16,6 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
             '/duitku/callback',
             '/xendit/callback',
         ]);
+        
+        $middleware->alias([
+            'lang' => \App\Http\Middleware\LanguageManagerMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

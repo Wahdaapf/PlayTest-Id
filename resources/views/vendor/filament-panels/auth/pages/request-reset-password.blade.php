@@ -667,6 +667,7 @@
             max-width: 400px;
             margin: 0 auto;
             width: 100%;
+            position: relative;
         }
 
         /* Left hero panel */
@@ -790,6 +791,12 @@
 <x-filament-panels::page.simple>
     <div class="fp-page" id="fp-page">
 
+        {{-- Language Switcher (Fixed top right) --}}
+        <div style="position: fixed; top: 1.5rem; right: 1.5rem; z-index: 50; display: flex; gap: 0.375rem; background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); padding: 0.25rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+            <a href="{{ route('language.switch', 'en') }}" style="text-decoration: none; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 0.375rem; font-size: 0.625rem; font-weight: 900; transition: all 0.2s; color: {{ App::getLocale() == 'en' ? '#ffffff' : '#94a3b8' }}; background-color: {{ App::getLocale() == 'en' ? '#4F46E5' : 'transparent' }};">EN</a>
+            <a href="{{ route('language.switch', 'id') }}" style="text-decoration: none; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 0.375rem; font-size: 0.625rem; font-weight: 900; transition: all 0.2s; color: {{ App::getLocale() == 'id' ? '#ffffff' : '#94a3b8' }}; background-color: {{ App::getLocale() == 'id' ? '#4F46E5' : 'transparent' }};">ID</a>
+        </div>
+
         {{-- ======================================================= --}}
         {{-- MOBILE HEADER — branding shown only on mobile           --}}
         {{-- ======================================================= --}}
@@ -797,7 +804,7 @@
             <div class="fp-mobile-header-logo">
                 <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-10 w-auto object-contain" />
             </div>
-            <p class="fp-mobile-header-tagline">Pass Closed Testing Faster</p>
+            <p class="fp-mobile-header-tagline">{{ __('Lulus Closed Testing Lebih Cepat') }}</p>
         </div>
 
         {{-- ======================================================= --}}
@@ -816,15 +823,15 @@
                 {{-- Desktop-only extended hero --}}
                 <div class="fp-hero-extended">
                     <h2 class="fp-hero-title">
-                        Recover Your Account.
+                        {{ __('Pulihkan Akun Anda.') }}
                     </h2>
                     <p class="fp-hero-desc">
-                        No worries — it happens.
+                        {{ __('Jangan khawatir — hal ini biasa terjadi.') }}
                     </p>
                 </div>
 
                 <div class="fp-hero-pills">
-                    @foreach(['✓ 20+ Real Testers', '✓ Real Feedback', '✓ 14-Day Testing', '✓ Google Play Console', '✓ Instant Access'] as $feature)
+                    @foreach([__('✓ 20+ Tester Asli'), __('✓ Ulasan Asli'), __('✓ 14 Hari Pengujian'), __('✓ Google Play Console'), __('✓ Akses Instan')] as $feature)
                     <span class="fp-hero-pill">{{ $feature }}</span>
                     @endforeach
                 </div>
@@ -843,7 +850,7 @@
                         @endforeach
                     </div>
                     <p class="fp-social-proof">
-                        Used by <strong style="color:#111827; font-weight:700;">500+ Developers</strong>
+                        {{ __('Digunakan oleh') }} <strong style="color:#111827; font-weight:700;">{{ __('500+ Developer') }}</strong>
                     </p>
                 </div>
             </div>
@@ -868,10 +875,9 @@
 
                         {{-- Card header --}}
                         <div class="fp-card-header">
-                            <h2 class="fp-card-title">Forgot Password?</h2>
+                            <h2 class="fp-card-title">{{ __('Lupa Kata Sandi?') }}</h2>
                             <p class="fp-card-subtitle">
-                                Enter the email address linked to your account<br>
-                                and we'll send you a reset link.
+                                {!! __('Masukkan alamat email yang tertaut ke akun Anda<br>dan kami akan mengirimkan tautan reset.') !!}
                             </p>
                         </div>
 
@@ -883,7 +889,7 @@
                         {{-- Back to login --}}
                         <a href="{{ filament()->getLoginUrl() }}" class="fp-back-link">
                             <span class="material-symbols-outlined">arrow_back</span>
-                            Back to Sign In
+                            {{ __('Kembali ke Masuk') }}
                         </a>
 
                     </div>
@@ -899,27 +905,26 @@
                                 <span class="material-symbols-outlined">mark_email_read</span>
                             </div>
 
-                            <h2 class="fp-success-title">Check Your Inbox</h2>
+                            <h2 class="fp-success-title">{{ __('Periksa Kotak Masuk Anda') }}</h2>
                             <p class="fp-success-desc">
-                                We've sent a password reset link to<br>
-                                <span class="fp-success-email-highlight" id="fp-sent-email">your email address</span>.
+                                {!! __('Kami telah mengirim tautan reset kata sandi ke<br><span class="fp-success-email-highlight" id="fp-sent-email">alamat email Anda</span>.') !!}
                             </p>
                             <p class="fp-success-hint">
-                                Didn't receive it? Check your spam folder.
+                                {{ __('Belum menerimanya? Periksa folder spam Anda.') }}
                             </p>
 
                             <hr class="fp-success-divider">
 
                             <div class="fp-resend-row">
-                                <span>Didn't get the email?</span>
-                                <a class="fp-resend-link" id="fp-resend-btn" href="#">Resend</a>
+                                <span>{{ __('Tidak mendapatkan email?') }}</span>
+                                <a class="fp-resend-link" id="fp-resend-btn" href="#">{{ __('Kirim Ulang') }}</a>
                             </div>
 
                         </div>
 
                         <a href="{{ filament()->getLoginUrl() }}" class="fp-back-link" style="margin-top: 1.5rem;">
                             <span class="material-symbols-outlined">arrow_back</span>
-                            Back to Sign In
+                            {{ __('Kembali ke Masuk') }}
                         </a>
                     </div>
 
@@ -928,7 +933,7 @@
 
             {{-- Mobile-only feature pills --}}
             <div class="fp-mobile-features">
-                @foreach(['✓ 20+ Testers', '✓ 14-Day Test', '✓ Instant Access'] as $feature)
+                @foreach([__('✓ 20+ Tester'), __('✓ Uji 14 Hari'), __('✓ Akses Instan')] as $feature)
                 <span class="fp-mobile-pill">{{ $feature }}</span>
                 @endforeach
             </div>

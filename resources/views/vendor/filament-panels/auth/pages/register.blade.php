@@ -596,6 +596,7 @@
             max-width: 400px;
             margin: 0 auto;
             width: 100%;
+            position: relative;
         }
 
         /* Left hero panel */
@@ -718,6 +719,12 @@
 <x-filament-panels::page.simple>
     <div class="login-page" id="login-page">
 
+        {{-- Language Switcher (Fixed top right) --}}
+        <div style="position: fixed; top: 1.5rem; right: 1.5rem; z-index: 50; display: flex; gap: 0.375rem; background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); padding: 0.25rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+            <a href="{{ route('language.switch', 'en') }}" style="text-decoration: none; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 0.375rem; font-size: 0.625rem; font-weight: 900; transition: all 0.2s; color: {{ App::getLocale() == 'en' ? '#ffffff' : '#94a3b8' }}; background-color: {{ App::getLocale() == 'en' ? '#4F46E5' : 'transparent' }};">EN</a>
+            <a href="{{ route('language.switch', 'id') }}" style="text-decoration: none; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 0.375rem; font-size: 0.625rem; font-weight: 900; transition: all 0.2s; color: {{ App::getLocale() == 'id' ? '#ffffff' : '#94a3b8' }}; background-color: {{ App::getLocale() == 'id' ? '#4F46E5' : 'transparent' }};">ID</a>
+        </div>
+
         {{-- ======================================================= --}}
         {{-- MOBILE HEADER — branding shown only on mobile           --}}
         {{-- ======================================================= --}}
@@ -725,7 +732,7 @@
             <div class="login-mobile-header-logo">
                 <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-10 w-auto object-contain" />
             </div>
-            <p class="login-mobile-header-tagline">Pass Closed Testing Faster</p>
+            <p class="login-mobile-header-tagline">{{ __('Lulus Closed Testing Lebih Cepat') }}</p>
         </div>
 
         {{-- ======================================================= --}}
@@ -745,14 +752,14 @@
                 {{-- Desktop-only extended hero --}}
                 <div class="login-hero-extended">
                     <h2 class="login-hero-title">
-                        Pass Closed Testing Faster.
+                        {{ __('Lulus Closed Testing Lebih Cepat.') }}
                     </h2>
                     <p class="login-hero-desc">
-                        Meet Google Play's 20-tester requirement for 14 days without the headache.
+                        {{ __('Penuhi syarat 20 tester selama 14 hari dari Google Play tanpa pusing.') }}
                     </p>
                 </div>
                 <div class="login-hero-pills">
-                    @foreach(['✓ 20+ Real Testers', '✓ Real Feedback', '✓ 14-Day Testing', '✓ Google Play Console', '✓ Instant Access'] as $feature)
+                    @foreach([__('✓ 20+ Tester Asli'), __('✓ Ulasan Asli'), __('✓ 14 Hari Pengujian'), __('✓ Google Play Console'), __('✓ Akses Instan')] as $feature)
                     <span class="login-hero-pill">{{ $feature }}</span>
                     @endforeach
                 </div>
@@ -770,7 +777,7 @@
                         @endforeach
                     </div>
                     <p class="login-social-proof">
-                        Used by <strong style="color:#111827; font-weight:700;">500+ Developers</strong>
+                        {{ __('Digunakan oleh') }} <strong style="color:#111827; font-weight:700;">{{ __('500+ Developer') }}</strong>
                     </p>
                 </div>
             </div>
@@ -792,8 +799,8 @@
 
                     {{-- Card header --}}
                     <div class="login-card-header">
-                        <h2 class="login-card-title">Welcome {{ str(filament()->getCurrentPanel()->getId())->title() }}!</h2>
-                        <p class="login-card-subtitle">Please enter your details to create an account.</p>
+                        <h2 class="login-card-title">{{ __('Selamat Datang di :panel!', ['panel' => str(filament()->getCurrentPanel()->getId())->title()]) }}</h2>
+                        <p class="login-card-subtitle">{{ __('Silakan masukkan detail Anda untuk membuat akun.') }}</p>
                     </div>
 
                     {{-- Form Filament otomatis di-render di sini --}}

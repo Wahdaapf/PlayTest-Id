@@ -897,6 +897,12 @@
 <x-filament-panels::page.simple>
     <div class="login-page" id="login-page">
 
+        {{-- Language Switcher (Fixed top right) --}}
+        <div style="position: fixed; top: 1.5rem; right: 1.5rem; z-index: 50; display: flex; gap: 0.375rem; background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); padding: 0.25rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
+            <a href="{{ route('language.switch', 'en') }}" style="text-decoration: none; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 0.375rem; font-size: 0.625rem; font-weight: 900; transition: all 0.2s; color: {{ App::getLocale() == 'en' ? '#ffffff' : '#94a3b8' }}; background-color: {{ App::getLocale() == 'en' ? '#4F46E5' : 'transparent' }};">EN</a>
+            <a href="{{ route('language.switch', 'id') }}" style="text-decoration: none; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 0.375rem; font-size: 0.625rem; font-weight: 900; transition: all 0.2s; color: {{ App::getLocale() == 'id' ? '#ffffff' : '#94a3b8' }}; background-color: {{ App::getLocale() == 'id' ? '#4F46E5' : 'transparent' }};">ID</a>
+        </div>
+
         {{-- ======================================================= --}}
         {{-- MOBILE HEADER — branding shown only on mobile           --}}
         {{-- ======================================================= --}}
@@ -904,7 +910,7 @@
             <div class="login-mobile-header-logo">
                 <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-10 w-auto object-contain" />
             </div>
-            <p class="login-mobile-header-tagline">Pass Closed Testing Faster</p>
+            <p class="login-mobile-header-tagline">{{ __('Lulus Closed Testing Lebih Cepat') }}</p>
         </div>
 
         {{-- ======================================================= --}}
@@ -924,15 +930,15 @@
                 {{-- Desktop-only extended hero --}}
                 <div class="login-hero-extended">
                     <h2 class="login-hero-title">
-                        Pass Closed Testing Faster.
+                        {{ __('Lulus Closed Testing Lebih Cepat.') }}
                     </h2>
                     <p class="login-hero-desc">
-                        Meet Google Play's 20-tester requirement for 14 days without the headache.
+                        {{ __('Penuhi syarat 20 tester selama 14 hari dari Google Play tanpa pusing.') }}
                     </p>
                 </div>
                 <div class="login-hero-pills">
-                    @foreach(['✓ 20+ Real Testers', '✓ Real Feedback', '✓ 14-Day Testing', '✓ Google Play Console', '✓ Instant Access'] as $feature)
-                    <span class="login-hero-pill">{{ $feature }}</span>
+                    @foreach(['✓ 20+ Tester Asli', '✓ Ulasan Asli', '✓ 14 Hari Pengujian', '✓ Google Play Console', '✓ Akses Instan'] as $feature)
+                    <span class="login-hero-pill">{{ __($feature) }}</span>
                     @endforeach
                 </div>
                 {{-- Desktop-only social proof footer --}}
@@ -949,7 +955,7 @@
                         @endforeach
                     </div>
                     <p class="login-social-proof">
-                        Used by <strong style="color:#111827; font-weight:700;">500+ Developers</strong>
+                        {{ __('Digunakan oleh') }} <strong style="color:#111827; font-weight:700;">{{ __('500+ Developer') }}</strong>
                     </p>
                 </div>
             </div>
@@ -971,8 +977,8 @@
 
                     {{-- Card header --}}
                     <div class="login-card-header">
-                        <h2 class="login-card-title">Welcome Back {{ str(filament()->getCurrentPanel()->getId())->title() }}!</h2>
-                        <p class="login-card-subtitle">Please enter your details to sign in.</p>
+                        <h2 class="login-card-title">{{ __('Selamat Datang Kembali :panel!', ['panel' => str(filament()->getCurrentPanel()->getId())->title()]) }}</h2>
+                        <p class="login-card-subtitle">{{ __('Silakan masukkan detail Anda untuk masuk.') }}</p>
                     </div>
 
                     {{-- Google Sign-In Button --}}
@@ -986,14 +992,14 @@
                                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
                                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
                             </svg>
-                            Sign in with Google
+                            {{ __('Masuk dengan Google') }}
                         </a>
                     </div>
 
                     {{-- Divider --}}
                     <div class="login-divider">
                         <div class="login-divider-line"></div>
-                        <span class="login-divider-text">or sign in with email</span>
+                        <span class="login-divider-text">{{ __('atau masuk dengan email') }}</span>
                         <div class="login-divider-line"></div>
                     </div>
 
@@ -1005,8 +1011,8 @@
                     {{-- Registration link --}}
                     @if (filament()->hasRegistration())
                     <p class="login-register-link">
-                        Don't have an account?
-                        <a href="{{ filament()->getRegistrationUrl() }}">Sign Up</a>
+                        {{ __('Belum punya akun?') }}
+                        <a href="{{ filament()->getRegistrationUrl() }}">{{ __('Daftar') }}</a>
                     </p>
                     @endif
 
@@ -1015,8 +1021,8 @@
 
             {{-- Mobile-only feature pills --}}
             <div class="login-mobile-features">
-                @foreach(['✓ 20+ Testers', '✓ 14-Day Test', '✓ Instant Access'] as $feature)
-                <span class="login-mobile-pill">{{ $feature }}</span>
+                @foreach(['✓ 20+ Tester', '✓ Uji 14 Hari', '✓ Akses Instan'] as $feature)
+                <span class="login-mobile-pill">{{ __($feature) }}</span>
                 @endforeach
             </div>
         </div>
