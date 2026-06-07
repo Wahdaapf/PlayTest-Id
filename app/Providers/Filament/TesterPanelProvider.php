@@ -11,6 +11,7 @@ use App\Filament\Tester\Pages\ProfileTester;
 use App\Filament\Tester\Pages\Dompet;
 use App\Filament\Tester\Pages\MisiSaya;
 use App\Filament\Tester\Pages\HistoryMisi;
+use App\Filament\Tester\Pages\TipsBantuanTester;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -96,7 +97,8 @@ class TesterPanelProvider extends PanelProvider
 
                             NavigationItem::make('Tips & Bantuan')
                                 ->icon('heroicon-o-question-mark-circle')
-                                ->url('#'),
+                                ->url(fn() => TipsBantuanTester::getUrl())
+                                ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.tips-bantuan')),
                         ]),
                 ]);
             })
@@ -107,6 +109,7 @@ class TesterPanelProvider extends PanelProvider
                 ProfileTester::class,
                 Dompet::class,
                 HistoryMisi::class,
+                TipsBantuanTester::class,
             ])
             ->discoverPages(
                 in: app_path('Filament/Tester/Pages'),

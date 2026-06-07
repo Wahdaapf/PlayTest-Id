@@ -231,40 +231,6 @@
     animation: tb-pulse-ring 2s infinite;
   }
 
-  /* Stat pills in hero */
-  .tb-hero-stats {
-    display: flex; gap: 12px; flex-wrap: wrap;
-    position: relative; z-index: 10;
-    margin-top: 1.25rem;
-    padding-top: 1.25rem;
-    border-top: 1px solid rgba(255,255,255,.15);
-  }
-  .tb-stat-pill {
-    background: rgba(255,255,255,.08);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,.15);
-    border-radius: 1rem;
-    padding: 10px 20px;
-    text-align: center;
-    min-width: 100px;
-    transition: all .3s cubic-bezier(.4,0,.2,1);
-    position: relative;
-    overflow: hidden;
-  }
-  .tb-stat-pill:hover {
-    background: rgba(255,255,255,.15);
-    transform: translateY(-3px);
-    border-color: rgba(255,255,255,.3);
-  }
-  .tb-stat-pill::after {
-    content:''; position:absolute; top:0; left:0; width:40%; height:100%;
-    background: linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
-    transform: translateX(-100%);
-  }
-  .tb-stat-pill:hover::after { animation: tb-shimmer 1.2s ease forwards; }
-  .tb-stat-val { font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 700; color: #fff; }
-  .tb-stat-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: #dbeafe; margin-top: 2px; }
-
   /* Tour button */
   .tb-btn-tour {
     display: inline-flex; align-items: center; gap: 8px;
@@ -680,7 +646,7 @@
 </style>
 @endpush
 
-<div x-data="tipsBantuanDevPage()" class="tb-page">
+<div x-data="tipsBantuanTesterPage()" class="tb-page">
 
   {{-- ═══════════ HERO BANNER ═══════════ --}}
   <div class="tb-hero" id="tb-hero">
@@ -737,7 +703,7 @@
           <h1 class="tb-hero-title">Tips & Bantuan</h1>
           <div class="tb-hero-sub">
             <span class="tb-dot"></span>
-            Panduan lengkap untuk Developer
+            Panduan lengkap untuk Tester
           </div>
         </div>
       </div>
@@ -821,30 +787,30 @@
 
   {{-- ═══════════ QUICK ACCESS ═══════════ --}}
   <div class="tb-quick-section" id="tb-quick-access">
-    <div class="tb-quick-title">⚡ Akses Cepat Developer</div>
+    <div class="tb-quick-title">⚡ Akses Cepat Tester</div>
     <div class="tb-quick-grid">
-      <a href="/developer" class="tb-quick-card">
+      <a href="/tester" class="tb-quick-card">
         <div class="tb-quick-icon" style="background:rgba(37,99,235,.1);">🏠</div>
         <div>
           <div class="tb-quick-label">Dashboard</div>
-          <div class="tb-quick-sublabel">Ringkasan aplikasi</div>
+          <div class="tb-quick-sublabel">Ringkasan aktivitas</div>
         </div>
       </a>
-      <a href="/developer/misis/create" class="tb-quick-card">
-        <div class="tb-quick-icon" style="background:rgba(16,185,129,.1);">📝</div>
+      <a href="/tester/misi-saya" class="tb-quick-card">
+        <div class="tb-quick-icon" style="background:rgba(16,185,129,.1);">🎯</div>
         <div>
-          <div class="tb-quick-label">Test Case Baru</div>
-          <div class="tb-quick-sublabel">Buat kampanye testing</div>
+          <div class="tb-quick-label">Misi Saya</div>
+          <div class="tb-quick-sublabel">Lihat & kerjakan misi</div>
         </div>
       </a>
-      <a href="/developer/pantau-progress" class="tb-quick-card">
-        <div class="tb-quick-icon" style="background:rgba(245,158,11,.1);">📈</div>
+      <a href="/tester/dompet" class="tb-quick-card">
+        <div class="tb-quick-icon" style="background:rgba(245,158,11,.1);">💰</div>
         <div>
-          <div class="tb-quick-label">Pantau Progress</div>
-          <div class="tb-quick-sublabel">Monitor testing</div>
+          <div class="tb-quick-label">Dompet</div>
+          <div class="tb-quick-sublabel">Tarik pendapatan</div>
         </div>
       </a>
-      <a href="/developer/profile-developer" class="tb-quick-card">
+      <a href="/tester/profile-tester" class="tb-quick-card">
         <div class="tb-quick-icon" style="background:rgba(20,184,166,.1);">👤</div>
         <div>
           <div class="tb-quick-label">Profil</div>
@@ -876,143 +842,82 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/driver.js@1.3.1/dist/driver.js.iife.js"></script>
 <script>
-  function tipsBantuanDevPage() {
+  function tipsBantuanTesterPage() {
     return {
       search: '',
       activeCategory: 'semua',
       expandedTip: null,
       tips: [
         {
-          title: 'Dashboard Developer',
+          title: 'Dashboard Tester',
           emoji: '🏠',
           iconBg: 'rgba(37,99,235,0.12)',
           category: 'navigasi',
           categoryLabel: 'Navigasi',
-          desc: 'Dashboard Developer menampilkan ringkasan aplikasi Anda, progres testing, dan statistik kampanye. Di sini Anda bisa melihat total misi, misi aktif, dan notifikasi terbaru secara real-time.',
+          desc: 'Dashboard Tester menampilkan ringkasan performa Anda, misi yang sedang aktif, dan total saldo yang Anda miliki saat ini.',
           steps: [
-            'Buka menu "Dashboard" di sidebar kiri atau klik ikon Home',
-            'Lihat kartu statistik di bagian atas: Total Misi, Misi Aktif, Misi Selesai',
-            'Scroll ke bawah untuk melihat aktivitas terbaru dan notifikasi',
-            'Gunakan Quick Actions untuk akses cepat ke fitur utama'
+            'Buka menu "Dashboard" di sidebar kiri atau klik logo utama',
+            'Lihat performa Anda: total misi selesai, total reward terkumpul',
+            'Periksa daftar misi terbaru yang siap untuk diambil di bagian bawah',
+            'Akses cepat menu Dompet atau Profil langsung dari dashboard'
           ]
         },
         {
-          title: 'Monitoring Statistik Real-time',
-          emoji: '📊',
-          iconBg: 'rgba(16,185,129,0.12)',
-          category: 'navigasi',
-          categoryLabel: 'Navigasi',
-          desc: 'Dashboard menyediakan monitoring real-time untuk semua kampanye testing Anda. Pantau tren pengujian dan progress tester yang bergabung.',
-          steps: [
-            'Perhatikan kartu statistik yang menampilkan data terbaru',
-            'Lihat progress bar untuk setiap kampanye aktif',
-            'Periksa jumlah tester yang sudah bergabung vs target',
-            'Data di dashboard diperbarui secara otomatis'
-          ]
-        },
-        {
-          title: 'Buat Test Case Baru',
-          emoji: '📝',
+          title: 'Misi & Cara Pengerjaannya',
+          emoji: '🎯',
           iconBg: 'rgba(16,185,129,0.12)',
           category: 'fitur',
           categoryLabel: 'Fitur',
-          desc: 'Buat kampanye testing baru untuk aplikasi Anda. Tentukan detail aplikasi, langkah-langkah testing yang perlu dilakukan tester, dan target jumlah tester.',
+          desc: 'Selesaikan misi pengujian aplikasi untuk mendapatkan saldo reward. Baca instruksi developer dengan detail sebelum memulai testing.',
           steps: [
-            'Klik menu "New Test Case" di sidebar atau tombol "+" di dashboard',
-            'Isi nama aplikasi dan deskripsi singkat kampanye Anda',
-            'Tentukan langkah-langkah testing yang harus diikuti tester',
-            'Upload screenshot atau file pendukung jika diperlukan',
-            'Tentukan jumlah tester yang dibutuhkan',
-            'Submit dan tunggu tester bergabung ke kampanye Anda'
+            'Buka halaman "Misi Saya" dari menu sidebar',
+            'Pilih salah satu misi aktif untuk melihat detail instruksi pengujian',
+            'Klik tombol "Ambil Misi" untuk mulai bergabung',
+            'Lakukan pengetesan sesuai langkah pengerjaan yang diminta developer',
+            'Kirim bukti screenshot dan laporan feedback Anda sebelum batas waktu habis',
+            'Tunggu review developer dan saldo reward akan otomatis masuk ke dompet Anda'
           ]
         },
         {
-          title: 'Upload Aplikasi & Aset',
-          emoji: '📦',
-          iconBg: 'rgba(139,92,246,0.12)',
-          category: 'fitur',
-          categoryLabel: 'Fitur',
-          desc: 'Upload file aplikasi (APK, link, dsb.) dan aset pendukung untuk memudahkan tester dalam proses pengujian.',
-          steps: [
-            'Saat membuat test case baru, gunakan form upload file',
-            'Upload file APK, link website, atau dokumen pendukung',
-            'Pastikan file yang di-upload sudah benar dan bisa diakses',
-            'Tester akan menggunakan file ini sebagai bahan pengujian'
-          ]
-        },
-        {
-          title: 'Pantau Progress Testing',
-          emoji: '📈',
+          title: 'Dompet & Tarik Saldo (Withdraw)',
+          emoji: '💰',
           iconBg: 'rgba(245,158,11,0.12)',
           category: 'fitur',
           categoryLabel: 'Fitur',
-          desc: 'Monitor progres testing aplikasi Anda secara real-time. Lihat berapa tester yang sudah bergabung, progress pengerjaan, dan hasil feedback.',
+          desc: 'Kumpulkan reward dari misi dan cairkan dana langsung ke rekening bank atau dompet digital Anda.',
           steps: [
-            'Buka menu "Pantau Progress" di sidebar',
-            'Pilih kampanye yang ingin dipantau',
-            'Lihat statistik: jumlah tester, progress, dan hasil',
-            'Baca feedback detail dari setiap tester',
-            'Download laporan hasil testing jika diperlukan'
+            'Masuk ke menu "Dompet" di sidebar kiri',
+            'Lihat total saldo aktif dan riwayat transaksi pengerjaan misi Anda',
+            'Klik tombol "Tarik Saldo" atau "Withdraw Request"',
+            'Masukkan nominal penarikan dan pilih rekening tujuan',
+            'Konfirmasi penarikan dan tunggu admin memproses transfer Anda'
           ]
         },
         {
-          title: 'Review Feedback Tester',
-          emoji: '💬',
-          iconBg: 'rgba(236,72,153,0.12)',
+          title: 'History Misi & Status Pengujian',
+          emoji: '⏳',
+          iconBg: 'rgba(139,92,246,0.12)',
           category: 'fitur',
           categoryLabel: 'Fitur',
-          desc: 'Baca dan review feedback yang diberikan oleh tester. Setiap tester yang menyelesaikan misi akan memberikan laporan hasil pengujian.',
+          desc: 'Pantau status pengerjaan misi yang telah Anda kumpulkan, apakah sedang direview, diterima, atau perlu perbaikan.',
           steps: [
-            'Buka halaman "Pantau Progress" dan pilih kampanye',
-            'Scroll ke bagian daftar tester yang sudah submit',
-            'Klik detail untuk membaca feedback lengkap',
-            'Tandai feedback yang sudah ditindaklanjuti',
-            'Gunakan feedback untuk perbaikan aplikasi Anda'
+            'Buka menu "History Misi" di sidebar',
+            'Lihat status di setiap kartu misi: Pending (Ditinjau), Approved (Disetujui), atau Rejected (Ditolak)',
+            'Jika ditolak, baca catatan revisi dari developer untuk melakukan pengetesan ulang'
           ]
         },
         {
-          title: 'Pembayaran & Paket',
-          emoji: '💳',
-          iconBg: 'rgba(99,102,241,0.12)',
-          category: 'fitur',
-          categoryLabel: 'Fitur',
-          desc: 'Kelola pembayaran untuk mengaktifkan kampanye testing. Pilih paket yang sesuai kebutuhan dan upload bukti pembayaran.',
-          steps: [
-            'Pilih paket testing saat membuat kampanye baru',
-            'Lihat detail harga dan kapasitas tester di setiap paket',
-            'Upload bukti pembayaran sesuai instruksi',
-            'Tunggu verifikasi dari admin (biasanya 1x24 jam)',
-            'Kampanye akan aktif setelah pembayaran diverifikasi'
-          ]
-        },
-        {
-          title: 'Profil & Pengaturan Akun',
+          title: 'Profil & Rekening Tester',
           emoji: '👤',
           iconBg: 'rgba(20,184,166,0.12)',
           category: 'fitur',
           categoryLabel: 'Fitur',
-          desc: 'Edit informasi profil developer Anda termasuk nama, email, dan password. Halaman profil juga menampilkan statistik kampanye Anda.',
+          desc: 'Lengkapi informasi profil dan detail rekening bank Anda untuk memperlancar proses transfer dana withdraw.',
           steps: [
-            'Klik nama Anda di pojok kanan atas atau buka menu "Profil Saya"',
-            'Lihat ringkasan statistik di hero banner profil',
-            'Edit nama dan email pada form yang tersedia',
-            'Ubah password di bagian keamanan akun',
-            'Klik "Simpan Perubahan" untuk menyimpan'
-          ]
-        },
-        {
-          title: 'Menggunakan Halaman Tips',
-          emoji: '💡',
-          iconBg: 'rgba(251,191,36,0.12)',
-          category: 'navigasi',
-          categoryLabel: 'Navigasi',
-          desc: 'Halaman Tips & Bantuan ini berisi panduan lengkap untuk semua fitur developer. Gunakan fitur pencarian dan filter untuk menemukan tips yang Anda butuhkan.',
-          steps: [
-            'Gunakan kolom pencarian untuk mencari tips berdasarkan kata kunci',
-            'Klik tab kategori untuk memfilter tips: Navigasi, Fitur, Umum, atau Keamanan',
-            'Klik kartu tips untuk membuka detail dan langkah-langkah',
-            'Gunakan "Akses Cepat" di bawah untuk langsung ke halaman yang dituju',
-            'Klik "Mulai Tur Halaman" untuk panduan interaktif'
+            'Klik menu "Profil Saya" di sidebar',
+            'Lengkapi nama lengkap, email, nomor HP, dan instansi Anda',
+            'Isi data bank dengan benar (Nama Bank, Nomor Rekening, & Nama Pemilik Rekening)',
+            'Klik "Simpan Perubahan" untuk mengamankan data Anda'
           ]
         },
         {
@@ -1021,12 +926,11 @@
           iconBg: 'rgba(71,85,105,0.12)',
           category: 'umum',
           categoryLabel: 'Umum',
-          desc: 'Aktifkan mode gelap untuk pengalaman yang lebih nyaman, terutama saat bekerja di malam hari. Semua halaman developer mendukung dark mode sepenuhnya.',
+          desc: 'Aktifkan mode gelap agar mata tidak cepat lelah saat melakukan testing aplikasi, terutama di malam hari.',
           steps: [
             'Klik nama Anda di pojok kanan atas sidebar',
             'Pilih ikon bulan (🌙) untuk mengaktifkan mode gelap',
-            'Pilih ikon matahari (☀️) untuk kembali ke mode terang',
-            'Pengaturan tema akan disimpan otomatis untuk sesi berikutnya'
+            'Pilih ikon matahari (☀️) untuk kembali ke mode terang'
           ]
         },
         {
@@ -1035,36 +939,18 @@
           iconBg: 'rgba(34,211,238,0.12)',
           category: 'umum',
           categoryLabel: 'Umum',
-          desc: 'Gunakan pintasan keyboard untuk navigasi lebih cepat dan meningkatkan produktivitas Anda sebagai developer.',
+          desc: 'Gunakan shortcut keyboard berikut untuk mempercepat navigasi dan pengerjaan di dashboard.',
           steps: [
-            'Ctrl/⌘ + K untuk membuka pencarian global Filament',
-            'ESC untuk menutup modal, panel, atau dialog aktif',
-            'Tab untuk navigasi antar elemen form',
-            'Enter untuk mengonfirmasi aksi yang sedang aktif'
+            'Ctrl/⌘ + K untuk membuka kolom pencarian global Filament',
+            'ESC untuk menutup modal dialog, popup bantuan, atau menu dropdown'
           ]
-        },
-        {
-          title: 'Keamanan Akun Developer',
-          emoji: '🔐',
-          iconBg: 'rgba(239,68,68,0.12)',
-          category: 'keamanan',
-          categoryLabel: 'Keamanan',
-          desc: 'Jaga keamanan akun developer Anda dengan mengikuti praktik terbaik keamanan. Lindungi data kampanye dan informasi pembayaran Anda.',
-          steps: [
-            'Gunakan password yang kuat (minimal 8 karakter, kombinasi huruf, angka, dan simbol)',
-            'Jangan bagikan kredensial login Anda ke siapapun',
-            'Logout setelah selesai menggunakan panel developer, terutama di komputer bersama',
-            'Periksa aktivitas akun secara berkala',
-            'Ganti password secara rutin minimal setiap 3 bulan'
-          ]
-        },
+        }
       ],
       categories: [
         { id: 'semua', label: '🏷️ Semua' },
         { id: 'navigasi', label: '🧭 Navigasi' },
         { id: 'fitur', label: '⚙️ Fitur' },
-        { id: 'umum', label: '📌 Umum' },
-        { id: 'keamanan', label: '🔐 Keamanan' },
+        { id: 'umum', label: '📌 Umum' }
       ],
       get filteredTips() {
         let r = this.tips;
@@ -1087,29 +973,29 @@
         // Build steps dynamically — only include sidebar items that exist in the DOM
         const steps = [];
 
-        // Step 1: Welcome (no element - modal)
+        // Step 1: Welcome
         steps.push({
           popover: {
-            title: '👋 Selamat Datang di Panel Developer!',
-            description: 'Tur ini akan memandu Anda mengenal <strong>seluruh fitur developer</strong> PlayTest ID. Mari kita mulai!',
+            title: '👋 Selamat Datang di Panel Tester!',
+            description: 'Tur ini akan memandu Anda mengenal <strong>seluruh fitur pengetesan</strong> PlayTest ID. Mari kita mulai!',
           }
         });
 
-        // Step 2: Sidebar navigation
+        // Step 2: Sidebar
         const sidebar = document.querySelector('.fi-sidebar-nav');
         if (sidebar) {
           steps.push({
             element: '.fi-sidebar-nav',
             popover: {
               title: '📋 Sidebar Navigasi',
-              description: 'Ini adalah <strong>menu utama</strong> panel developer. Semua fitur bisa diakses dari sidebar ini.',
+              description: 'Ini adalah <strong>menu utama</strong> panel tester. Akses seluruh fitur tester dari sidebar ini.',
               side: 'right',
               align: 'start'
             }
           });
         }
 
-        // Helper: find sidebar item by href keyword or label text
+        // Helper
         const findSidebarItem = (keywords) => {
           const links = document.querySelectorAll('.fi-sidebar-item a[href], .fi-sidebar-item button');
           for (const link of links) {
@@ -1125,119 +1011,133 @@
         };
 
         // Step 3: Dashboard
-        const dashboard = findSidebarItem(['dashboard', '/developer']);
+        const dashboard = findSidebarItem(['dashboard', '/tester']);
         if (dashboard) {
           steps.push({
             element: dashboard,
             popover: {
-              title: '🏠 Dashboard',
-              description: 'Halaman utama developer. Lihat <strong>statistik kampanye</strong>, misi aktif, notifikasi, dan ringkasan aplikasi Anda.',
+              title: '🏠 Dashboard Tester',
+              description: 'Halaman ringkasan performa Anda. Lihat <strong>misi baru</strong>, reward terkumpul, dan misi aktif.',
               side: 'right',
               align: 'start'
             }
           });
         }
 
-        // Step 4: New Test Case
-        const newTest = findSidebarItem(['new test', 'test case', 'misis/create']);
-        if (newTest) {
+        // Step 4: Misi Saya
+        const misiSaya = findSidebarItem(['misi saya', 'misi-saya']);
+        if (misiSaya) {
           steps.push({
-            element: newTest,
+            element: misiSaya,
             popover: {
-              title: '📝 New Test Case',
-              description: 'Buat <strong>kampanye testing baru</strong> untuk aplikasi Anda. Tentukan detail, langkah testing, dan jumlah tester yang dibutuhkan.',
+              title: '🎯 Misi Saya',
+              description: 'Tempat Anda mengelola dan **mengerjakan misi** testing aplikasi, serta mengunggah laporan hasil pengujian.',
               side: 'right',
               align: 'start'
             }
           });
         }
 
-        // Step 5: Pantau Progress
-        const pantau = findSidebarItem(['pantau', 'progress']);
-        if (pantau) {
+        // Step 5: Dompet
+        const dompet = findSidebarItem(['dompet']);
+        if (dompet) {
           steps.push({
-            element: pantau,
+            element: dompet,
             popover: {
-              title: '📈 Pantau Progress',
-              description: 'Monitor <strong>progres testing</strong> secara real-time. Lihat jumlah tester, status pengerjaan, dan feedback dari tester.',
+              title: '💰 Dompet Saya',
+              description: 'Pantau saldo reward Anda dan lakukan **pengajuan pencairan dana (withdraw)** ke rekening Anda.',
               side: 'right',
               align: 'start'
             }
           });
         }
 
-        // Step 6: Profil Saya
-        const profil = findSidebarItem(['profil']);
+        // Step 6: History Misi
+        const historyMisi = findSidebarItem(['history', 'riwayat']);
+        if (historyMisi) {
+          steps.push({
+            element: historyMisi,
+            popover: {
+              title: '⏳ History Misi',
+              description: 'Lihat daftar pengerjaan misi masa lalu beserta status approval dari developer.',
+              side: 'right',
+              align: 'start'
+            }
+          });
+        }
+
+        // Step 7: Profil
+        const profil = findSidebarItem(['profil', 'profile-tester']);
         if (profil) {
           steps.push({
             element: profil,
             popover: {
-              title: '👤 Profil Saya',
-              description: 'Edit <strong>informasi akun</strong> Anda: nama, email, dan password. Lihat juga statistik kampanye di halaman profil.',
+              title: '👤 Profil & Rekening',
+              description: 'Kelola informasi pribadi dan data rekening bank Anda untuk keperluan transfer dana withdraw.',
               side: 'right',
               align: 'start'
             }
           });
         }
 
-        // Step 7: Topbar
+        // Step 8: Topbar
         const topbar = document.querySelector('.fi-topbar');
         if (topbar) {
           steps.push({
             element: '.fi-topbar',
             popover: {
-              title: '🔝 Topbar Developer',
-              description: 'Area atas panel. Akses <strong>pencarian global</strong> (Ctrl+K), pengaturan <strong>tema dark/light</strong>, dan <strong>menu profil</strong> Anda.',
+              title: '🔝 Topbar Tester',
+              description: 'Akses **pencarian global** (Ctrl+K), toggle **tema dark/light**, dan **menu profil** di bagian atas.',
               side: 'bottom',
               align: 'center'
             }
           });
         }
 
-        // Step 8: User menu
+        // Step 9: User menu
         const userMenu = document.querySelector('.fi-user-menu-trigger') || document.querySelector('.topbar-user-combined');
         if (userMenu) {
           steps.push({
             element: userMenu,
             popover: {
               title: '👤 Menu Pengguna',
-              description: 'Klik untuk akses <strong>profil akun</strong>, ganti <strong>tema dark/light mode</strong>, atau <strong>logout</strong> dari panel developer.',
+              description: 'Kelola profil, aktifkan **dark mode**, atau lakukan **logout** akun tester.',
               side: 'bottom',
               align: 'end'
             }
           });
         }
 
-        // Step 9: Tips page hero
+        // Step 10: Hero
         steps.push({
           element: '#tb-hero',
           popover: {
-            title: '💡 Halaman Tips & Bantuan',
-            description: 'Anda sedang berada di halaman ini! Cari tips, filter berdasarkan kategori, dan gunakan <strong>Akses Cepat</strong> untuk navigasi langsung ke fitur developer.',
+            title: '💡 Tips & Bantuan',
+            description: 'Halaman panduan Anda! Cari tips, gunakan filter, dan klik **Akses Cepat** di bawah untuk melompat langsung ke halaman menu.',
             side: 'bottom',
             align: 'center'
           }
         });
 
-        // Step 10: Quick access grid
+        // Step 11: Quick access
         const quickAccess = document.querySelector('#tb-quick-access');
         if (quickAccess) {
           steps.push({
             element: '#tb-quick-access',
             popover: {
               title: '⚡ Akses Cepat',
-              description: 'Shortcut ke semua halaman developer tanpa perlu kembali ke sidebar. Klik untuk langsung membuka halaman yang dituju.',
+              description: 'Pintasan instan ke seluruh halaman penting tester tanpa perlu membuka navigasi sidebar.',
               side: 'top',
               align: 'center'
             }
           });
         }
 
-        // Step 11: Finish
+        // Step 12: Finish
         steps.push({
           popover: {
             title: '🎉 Tur Selesai!',
-            description: 'Anda sudah mengenal <strong>seluruh fitur panel developer</strong> PlayTest ID!<br><br>🏠 Dashboard — 📝 Test Case — 📈 Progress<br>👤 Profil — 💡 Tips & Bantuan<br><br>Kembali ke halaman ini kapanpun Anda butuh bantuan.',
+            description: 'Anda siap menjelajahi seluruh fitur platform sebagai Tester hebat di PlayTest ID!<br><br>🏠 Dashboard — 🎯 Misi Saya — 💰 Dompet — 👤 Profil<br><br>Gunakan halaman ini kapan pun Anda membutuhkan panduan.',
           }
         });
 

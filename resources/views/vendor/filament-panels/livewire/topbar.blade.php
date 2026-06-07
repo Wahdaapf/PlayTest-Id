@@ -784,6 +784,9 @@ function guidedTourSystem() {
             this.touring = false;
             document.body.style.overflow = '';
             this.highlightStyle = '';
+            if (window.matchMedia('(max-width: 1024px)').matches && window.Alpine) {
+                window.Alpine.store('sidebar')?.close();
+            }
         },
         nextStep() {
             if (this.currentStep < this.totalSteps - 1) {
@@ -798,6 +801,23 @@ function guidedTourSystem() {
             }
         },
         positionTooltip() {
+            if (window.matchMedia('(max-width: 1024px)').matches && window.Alpine) {
+                const needsSidebar = this.currentTip.selector && (
+                    this.currentTip.selector.includes('.fi-sidebar') || 
+                    this.currentTip.selector.includes('sidebar')
+                );
+                const isSidebarOpen = window.Alpine.store('sidebar')?.isOpen;
+                if (needsSidebar && !isSidebarOpen) {
+                    window.Alpine.store('sidebar')?.open();
+                    setTimeout(() => this.positionTooltip(), 300);
+                    return;
+                } else if (!needsSidebar && isSidebarOpen) {
+                    window.Alpine.store('sidebar')?.close();
+                    setTimeout(() => this.positionTooltip(), 300);
+                    return;
+                }
+            }
+
             const el = document.querySelector(this.currentTip.selector);
             if (!el) {
                 this.highlightStyle = '';

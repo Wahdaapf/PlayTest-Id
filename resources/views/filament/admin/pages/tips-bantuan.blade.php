@@ -1352,7 +1352,35 @@
           doneBtnText: {!! json_encode(__('Selesai')) !!} + ' ✓',
           progressText: '@{{current}} / @{{total}}',
           allowClose: true,
-          steps: steps
+          steps: steps,
+          onHighlightStarted: (element, step, { config, state, driver }) => {
+            if (window.matchMedia('(max-width: 1024px)').matches && window.Alpine) {
+              const isSidebar = element && (
+                element.closest('.fi-sidebar') ||
+                element.closest('.fi-sidebar-nav') ||
+                element.classList.contains('fi-sidebar-nav') ||
+                element.classList.contains('fi-sidebar-item') ||
+                element.closest('.fi-sidebar-item')
+              );
+              const isSidebarOpen = window.Alpine.store('sidebar')?.isOpen;
+              if (isSidebar && !isSidebarOpen) {
+                window.Alpine.store('sidebar')?.open();
+                setTimeout(() => {
+                  driver.refresh();
+                }, 300);
+              } else if (!isSidebar && isSidebarOpen) {
+                window.Alpine.store('sidebar')?.close();
+                setTimeout(() => {
+                  driver.refresh();
+                }, 300);
+              }
+            }
+          },
+          onDestroyed: () => {
+            if (window.matchMedia('(max-width: 1024px)').matches && window.Alpine) {
+              window.Alpine.store('sidebar')?.close();
+            }
+          }
         });
 
         driverObj.drive();
