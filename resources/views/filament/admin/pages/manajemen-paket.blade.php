@@ -189,12 +189,12 @@
 {{-- ══ HEADER ══ --}}
 <div class="flex items-center justify-between animate-fade-in-up">
     <div>
-        <h1 class="mp-sora text-xl font-bold text-slate-900">Manajemen Paket</h1>
-        <p class="text-sm text-slate-500 mt-0.5">Kelola paket harga dan fitur yang tersedia untuk developer</p>
+        <h1 class="mp-sora text-xl font-bold text-slate-900">{{ __('Manajemen Paket') }}</h1>
+        <p class="text-sm text-slate-500 mt-0.5">{{ __('Kelola paket harga dan fitur yang tersedia untuk developer') }}</p>
     </div>
     <a href="{{ \App\Filament\Admin\Resources\Pakets\PaketResource::getUrl('create') }}" class="mp-btn mp-btn-primary">
         <span class="material-symbols-outlined text-[1.1rem]">add</span>
-        Tambah Paket
+        {{ __('Tambah Paket') }}
     </a>
 </div>
 
@@ -205,9 +205,9 @@
         <div class="flex items-start gap-3 mt-1">
             <div class="mp-stat-icon mp-bg-blue"><span class="material-symbols-outlined">inventory_2</span></div>
             <div class="flex-1 min-w-0">
-                <div class="mp-stat-label">Total Paket</div>
+                <div class="mp-stat-label">{{ __('Total Paket') }}</div>
                 <div class="mp-stat-value">{{ $statTotalPaket }}</div>
-                <div class="mp-stat-sub">paket tersedia</div>
+                <div class="mp-stat-sub">{{ __('paket tersedia') }}</div>
             </div>
         </div>
     </div>
@@ -216,9 +216,9 @@
         <div class="flex items-start gap-3 mt-1">
             <div class="mp-stat-icon mp-bg-green"><span class="material-symbols-outlined">check_circle</span></div>
             <div>
-                <div class="mp-stat-label">Paket Aktif</div>
+                <div class="mp-stat-label">{{ __('Paket Aktif') }}</div>
                 <div class="mp-stat-value text-green-700">{{ $statPaketAktif }}</div>
-                <div class="mp-stat-sub">sedang berjalan</div>
+                <div class="mp-stat-sub">{{ __('sedang berjalan') }}</div>
             </div>
         </div>
     </div>
@@ -227,9 +227,9 @@
         <div class="flex items-start gap-3 mt-1">
             <div class="mp-stat-icon mp-bg-orange"><span class="material-symbols-outlined">group</span></div>
             <div>
-                <div class="mp-stat-label">Total Subscriber</div>
+                <div class="mp-stat-label">{{ __('Total Pelanggan') }}</div>
                 <div class="mp-stat-value text-amber-600">{{ $statTotalSubscriber }}</div>
-                <div class="mp-stat-sub">developer aktif</div>
+                <div class="mp-stat-sub">{{ __('developer aktif') }}</div>
             </div>
         </div>
     </div>
@@ -238,9 +238,9 @@
         <div class="flex items-start gap-3 mt-1">
             <div class="mp-stat-icon mp-bg-emerald"><span class="material-symbols-outlined">payments</span></div>
             <div class="flex-1 min-w-0">
-                <div class="mp-stat-label">Total Pendapatan</div>
+                <div class="mp-stat-label">{{ __('Total Pendapatan') }}</div>
                 <div class="mp-stat-value mp-mono" style="font-size:1.1rem">{{ $statPendapatan }}</div>
-                <div class="mp-stat-sub">dari semua paket</div>
+                <div class="mp-stat-sub">{{ __('dari semua paket') }}</div>
             </div>
         </div>
     </div>
@@ -252,7 +252,7 @@
     <div class="flex items-center justify-between mb-4">
         <div class="mp-sora font-bold text-slate-900 text-base flex items-center gap-2">
             <span class="material-symbols-outlined text-blue-600 text-[1.2rem]">inventory_2</span>
-            Daftar Paket
+            {{ __('Daftar Paket') }}
         </div>
     </div>
 
@@ -260,26 +260,26 @@
     <div class="mp-filter-bar mb-4">
         <div class="mp-search-wrap">
             <span class="material-symbols-outlined mp-search-icon">search</span>
-            <input type="text" placeholder="Cari nama paket…" class="mp-input mp-search-input" x-model="cariPaket">
+            <input type="text" placeholder="{{ __('Cari nama paket…') }}" class="mp-input mp-search-input" x-model="cariPaket">
         </div>
         <select class="mp-select" x-model="filterAktif">
-            <option value="">Semua Status</option>
-            <option value="1">Aktif</option>
-            <option value="0">Nonaktif</option>
+            <option value="">{{ __('Semua Status') }}</option>
+            <option value="1">{{ __('Aktif') }}</option>
+            <option value="0">{{ __('Nonaktif') }}</option>
         </select>
         <select class="mp-select" x-model="filterTrusted">
-            <option value="">Semua Badge</option>
-            <option value="1">Trusted</option>
-            <option value="0">Tidak Trusted</option>
+            <option value="">{{ __('Semua Lencana') }}</option>
+            <option value="1">{{ __('Terpercaya') }}</option>
+            <option value="0">{{ __('Tidak Terpercaya') }}</option>
         </select>
         <select class="mp-select max-w-[120px]" x-model="perPage">
-            <option value="5">5 Data</option>
-            <option value="10">10 Data</option>
-            <option value="20">20 Data</option>
-            <option value="50">50 Data</option>
-            <option value="1000">Semua</option>
+            <option value="5">{{ __('5 Data') }}</option>
+            <option value="10">{{ __('10 Data') }}</option>
+            <option value="20">{{ __('20 Data') }}</option>
+            <option value="50">{{ __('50 Data') }}</option>
+            <option value="1000">{{ __('Semua') }}</option>
         </select>
-        <button class="mp-btn mp-btn-ghost" @click="resetFilter()">Reset</button>
+        <button class="mp-btn mp-btn-ghost" @click="resetFilter()">{{ __('Reset') }}</button>
     </div>
 
     {{-- Table --}}
@@ -289,35 +289,35 @@
                 <tr>
                     <th>
                         <button class="mp-sort-btn" :class="sortCol==='nama'?'active':''" @click="setSort('nama')">
-                            Nama Paket
+                            {{ __('Nama Paket') }}
                             <span class="material-symbols-outlined mp-sort-icon"
                                   x-text="sortCol!=='nama' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                         </button>
                     </th>
                     <th>
                         <button class="mp-sort-btn" :class="sortCol==='harga'?'active':''" @click="setSort('harga')">
-                            Harga
+                            {{ __('Harga') }}
                             <span class="material-symbols-outlined mp-sort-icon"
                                   x-text="sortCol!=='harga' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                         </button>
                     </th>
                     <th>
                         <button class="mp-sort-btn" :class="sortCol==='durasi'?'active':''" @click="setSort('durasi')">
-                            Durasi
+                            {{ __('Durasi') }}
                             <span class="material-symbols-outlined mp-sort-icon"
                                   x-text="sortCol!=='durasi' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                         </button>
                     </th>
                     <th>
                         <button class="mp-sort-btn" :class="sortCol==='subscriber'?'active':''" @click="setSort('subscriber')">
-                            Subscriber
+                            {{ __('Pelanggan') }}
                             <span class="material-symbols-outlined mp-sort-icon"
                                   x-text="sortCol!=='subscriber' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                         </button>
                     </th>
-                    <th><span class="mp-sort-btn" style="cursor:default;pointer-events:none">Aktif</span></th>
-                    <th><span class="mp-sort-btn" style="cursor:default;pointer-events:none">Trusted Badge</span></th>
-                    <th><span class="mp-sort-btn" style="cursor:default;pointer-events:none">Aksi</span></th>
+                    <th><span class="mp-sort-btn" style="cursor:default;pointer-events:none">{{ __('Aktif') }}</span></th>
+                    <th><span class="mp-sort-btn" style="cursor:default;pointer-events:none">{{ __('Lencana Terpercaya') }}</span></th>
+                    <th><span class="mp-sort-btn" style="cursor:default;pointer-events:none">{{ __('Aksi') }}</span></th>
                 </tr>
             </thead>
             <tbody>
@@ -341,31 +341,31 @@
                         @endif
                     </td>
                     <td><span class="mp-mono font-bold text-slate-800">Rp {{ number_format($p['harga'], 0, ',', '.') }}</span></td>
-                    <td class="text-slate-600">{{ $p['durasi'] }} hari</td>
+                    <td class="text-slate-600">{{ $p['durasi'] }} {{ strtolower(__('Hari')) }}</td>
                     <td>
                         <span class="font-semibold text-slate-700">{{ $p['subscriber'] ?? 0 }}</span>
-                        <span class="text-xs text-slate-400 ml-1">dev</span>
+                        <span class="text-xs text-slate-400 ml-1">{{ __('developer') }}</span>
                     </td>
                     <td>
                         <button
                             class="mp-toggle {{ $p['isAktif'] ? 'is-on' : '' }}"
                             @click="bukaToggleKonfirmasi('aktif', {{ $p['id'] }}, {{ $p['isAktif'] ? 'true' : 'false' }}, '{{ addslashes($p['nama']) }}')"
-                            title="{{ $p['isAktif'] ? 'Nonaktifkan' : 'Aktifkan' }} paket ini">
+                            title="{{ $p['isAktif'] ? __('Nonaktifkan') : __('Aktifkan') }} {{ __('paket ini') }}">
                         </button>
                     </td>
                     <td>
                         <button
                             class="mp-toggle {{ $p['isTrusted'] ? 'is-on-blue' : '' }}"
                             @click="bukaToggleKonfirmasi('trusted', {{ $p['id'] }}, {{ $p['isTrusted'] ? 'true' : 'false' }}, '{{ addslashes($p['nama']) }}')"
-                            title="{{ $p['isTrusted'] ? 'Cabut' : 'Berikan' }} trusted badge">
+                            title="{{ $p['isTrusted'] ? __('Cabut') : __('Berikan') }} {{ __('lencana terpercaya') }}">
                         </button>
                     </td>
                     <td>
                         <div class="flex items-center gap-2">
-                            <button class="mp-action mp-action-edit" style="padding: 6px;" @click="bukaEdit($el.closest('tr'))" title="Edit">
+                            <button class="mp-action mp-action-edit" style="padding: 6px;" @click="bukaEdit($el.closest('tr'))" title="{{ __('Edit') }}">
                                 <span class="material-symbols-outlined text-[1.1rem]">edit</span>
                             </button>
-                            <button class="mp-action mp-action-delete" style="padding: 6px;" @click="bukaDeleteKonfirmasi({{ $p['id'] }}, '{{ addslashes($p['nama']) }}')" title="Hapus">
+                            <button class="mp-action mp-action-delete" style="padding: 6px;" @click="bukaDeleteKonfirmasi({{ $p['id'] }}, '{{ addslashes($p['nama']) }}')" title="{{ __('Hapus') }}">
                                 <span class="material-symbols-outlined text-[1.1rem]">delete</span>
                             </button>
                         </div>
@@ -379,8 +379,8 @@
                             <div class="mp-empty-icon">
                                 <span class="material-symbols-outlined text-[1.8rem] text-slate-400">manage_search</span>
                             </div>
-                            <div class="font-semibold text-slate-500 text-sm">Tidak ada paket ditemukan</div>
-                            <div class="text-xs text-slate-400 mt-1">Coba ubah filter atau kata kunci pencarian</div>
+                            <div class="font-semibold text-slate-500 text-sm">{{ __('Tidak ada paket ditemukan') }}</div>
+                            <div class="text-xs text-slate-400 mt-1">{{ __('Coba ubah filter atau kata kunci pencarian') }}</div>
                         </div>
                     </td>
                 </tr>
@@ -388,7 +388,7 @@
         </table>
 
         <div class="mp-pagi">
-            <div>Menampilkan <span x-text="visibleIds.length"></span> dari <span x-text="totalItems"></span> paket</div>
+            <div>{{ __('Menampilkan') }} <span x-text="visibleIds.length"></span> {{ __('dari') }} <span x-text="totalItems"></span> {{ __('paket') }}</div>
             <div class="flex items-center gap-1">
                 <button class="mp-pagi-btn" @click="currentPage > 1 && (currentPage--, updatePagi())" :disabled="currentPage <= 1">‹</button>
                 <template x-for="p in totalPages" :key="p">
@@ -416,9 +416,9 @@
                 <div>
                     <div class="mp-sora font-bold text-slate-900 text-base flex items-center gap-2">
                         <span class="material-symbols-outlined text-blue-600 text-[1.1rem]">edit</span>
-                        Edit Paket
+                        {{ __('Edit Paket') }}
                     </div>
-                    <div class="text-xs text-slate-400 mt-0.5" x-text="editForm ? 'Mengedit: ' + editForm.nama : ''"></div>
+                    <div class="text-xs text-slate-400 mt-0.5" x-text="editForm ? '{{ __('Mengedit') }}: ' + editForm.nama : ''"></div>
                 </div>
                 <button @click="tutupEdit()" class="mp-btn-icon">
                     <span class="material-symbols-outlined text-[1.2rem]">close</span>
@@ -429,79 +429,79 @@
         <template x-if="editForm">
             <div class="mp-panel-body">
 
-                <div class="mp-panel-section">Informasi Dasar</div>
+                <div class="mp-panel-section">{{ __('Informasi Dasar') }}</div>
 
                 <div class="mp-form-group">
-                    <label class="mp-form-label">Nama Paket <span class="mp-form-required">*</span></label>
-                    <input type="text" class="mp-form-input" x-model="editForm.nama" placeholder="Contoh: Basic Playtest">
+                    <label class="mp-form-label">{{ __('Nama Paket') }} <span class="mp-form-required">*</span></label>
+                    <input type="text" class="mp-form-input" x-model="editForm.nama" placeholder="{{ __('Contoh: Basic Playtest') }}">
                 </div>
                 <div class="mp-form-group">
-                    <label class="mp-form-label">Subtitle Dasar</label>
-                    <input type="text" class="mp-form-input" x-model="editForm.subtitle" placeholder="Solusi dasar untuk memenuhi syarat...">
-                    <div class="mp-form-note">Deskripsi singkat yang tampil di bawah nama paket</div>
+                    <label class="mp-form-label">{{ __('Subjudul Dasar') }}</label>
+                    <input type="text" class="mp-form-input" x-model="editForm.subtitle" placeholder="{{ __('Solusi dasar untuk memenuhi syarat...') }}">
+                    <div class="mp-form-note">{{ __('Deskripsi singkat yang tampil di bawah nama paket') }}</div>
                 </div>
                 <div class="mp-form-group">
-                    <label class="mp-form-label">Deskripsi</label>
-                    <textarea class="mp-form-textarea" x-model="editForm.deskripsi" placeholder="Deskripsi lengkap paket ini..."></textarea>
+                    <label class="mp-form-label">{{ __('Deskripsi') }}</label>
+                    <textarea class="mp-form-textarea" x-model="editForm.deskripsi" placeholder="{{ __('Deskripsi lengkap paket ini...') }}"></textarea>
                 </div>
 
-                <div class="mp-panel-section">Harga &amp; Durasi</div>
+                <div class="mp-panel-section">{{ __('Harga & Durasi') }}</div>
 
                 <div class="mp-form-row">
                     <div class="mp-form-group" style="margin-bottom:0">
-                        <label class="mp-form-label">Harga (Rp) <span class="mp-form-required">*</span></label>
+                        <label class="mp-form-label">{{ __('Harga (Rp)') }} <span class="mp-form-required">*</span></label>
                         <input type="number" class="mp-form-input" x-model="editForm.harga" placeholder="250000" min="0">
                     </div>
                     <div class="mp-form-group" style="margin-bottom:0">
-                        <label class="mp-form-label">Durasi (hari) <span class="mp-form-required">*</span></label>
+                        <label class="mp-form-label">{{ __('Durasi (hari)') }} <span class="mp-form-required">*</span></label>
                         <input type="number" class="mp-form-input" x-model="editForm.durasi" placeholder="30" min="1">
                     </div>
                 </div>
 
-                <div class="mp-panel-section">Batas &amp; Kuota</div>
+                <div class="mp-panel-section">{{ __('Batas & Kuota') }}</div>
 
                 <div class="mp-form-row">
                     <div class="mp-form-group" style="margin-bottom:0">
-                        <label class="mp-form-label">Max Kampanye</label>
+                        <label class="mp-form-label">{{ __('Maks. Kampanye') }}</label>
                         <input type="number" class="mp-form-input" x-model="editForm.maxKampanye" placeholder="1" min="0">
                     </div>
                     <div class="mp-form-group" style="margin-bottom:0">
-                        <label class="mp-form-label">Max Tester</label>
+                        <label class="mp-form-label">{{ __('Maks. Penguji') }}</label>
                         <input type="number" class="mp-form-input" x-model="editForm.maxTester" placeholder="10" min="0">
                     </div>
                 </div>
                 <div class="mp-form-row" style="margin-top:14px">
                     <div class="mp-form-group" style="margin-bottom:0">
-                        <label class="mp-form-label">Coin Reward Tester</label>
+                        <label class="mp-form-label">{{ __('Koin Hadiah Penguji') }}</label>
                         <input type="number" class="mp-form-input" x-model="editForm.coinReward" placeholder="500" min="0">
                     </div>
                     <div class="mp-form-group" style="margin-bottom:0">
-                        <label class="mp-form-label">Max Revisi</label>
+                        <label class="mp-form-label">{{ __('Maks. Revisi') }}</label>
                         <input type="number" class="mp-form-input" x-model="editForm.maxRevisi" placeholder="2" min="0">
                     </div>
                 </div>
 
-                <div class="mp-panel-section">Pengaturan Fitur</div>
+                <div class="mp-panel-section">{{ __('Pengaturan Fitur') }}</div>
 
                 <div class="flex flex-col gap-3">
                     <div class="mp-toggle-row">
                         <div>
-                            <div class="mp-toggle-row-label">Status Aktif</div>
-                            <div class="mp-toggle-row-sub">Paket tersedia untuk dipilih developer</div>
+                            <div class="mp-toggle-row-label">{{ __('Status Aktif') }}</div>
+                            <div class="mp-toggle-row-sub">{{ __('Paket tersedia untuk dipilih developer') }}</div>
                         </div>
                         <button class="mp-form-toggle" :class="editForm.isAktif ? 'is-on' : ''" @click="editForm.isAktif = !editForm.isAktif" type="button"></button>
                     </div>
                     <div class="mp-toggle-row">
                         <div>
-                            <div class="mp-toggle-row-label">Trusted Badge</div>
-                            <div class="mp-toggle-row-sub">Tampilkan badge "Dipercaya" pada paket ini</div>
+                            <div class="mp-toggle-row-label">{{ __('Lencana Terpercaya') }}</div>
+                            <div class="mp-toggle-row-sub">{{ __('Tampilkan badge "Dipercaya" pada paket ini') }}</div>
                         </div>
                         <button class="mp-form-toggle" :class="editForm.isTrusted ? 'is-on-blue' : ''" @click="editForm.isTrusted = !editForm.isTrusted" type="button"></button>
                     </div>
                     <div class="mp-toggle-row">
                         <div>
-                            <div class="mp-toggle-row-label">Tampilkan di Landing Page</div>
-                            <div class="mp-toggle-row-sub">Paket muncul pada halaman publik</div>
+                            <div class="mp-toggle-row-label">{{ __('Halaman Utama') }}</div>
+                            <div class="mp-toggle-row-sub">{{ __('Paket muncul pada halaman publik') }}</div>
                         </div>
                         <button class="mp-form-toggle" :class="editForm.tampilLanding ? 'is-on' : ''" @click="editForm.tampilLanding = !editForm.tampilLanding" type="button"></button>
                     </div>
@@ -511,10 +511,10 @@
         </template>
 
         <div class="mp-panel-footer">
-            <button class="mp-btn mp-btn-ghost" @click="tutupEdit()">Batal</button>
+            <button class="mp-btn mp-btn-ghost" @click="tutupEdit()">{{ __('Batal') }}</button>
             <button class="mp-btn mp-btn-primary flex-1" @click="simpanEdit()">
                 <span class="material-symbols-outlined text-[1rem]">save</span>
-                Simpan Perubahan
+                {{ __('Simpan Perubahan') }}
             </button>
         </div>
     </div>
@@ -545,13 +545,13 @@
                 <div class="mp-alert" :class="toggleK.alertCls">
                     <span class="material-symbols-outlined text-[1.3rem] mt-0.5" :class="toggleK.alertIconCls">info</span>
                     <div>
-                        <p class="mp-alert-title" :class="toggleK.txtCls">Apakah Anda yakin?</p>
+                        <p class="mp-alert-title" :class="toggleK.txtCls">{{ __('Apakah Anda yakin?') }}</p>
                         <p class="mp-alert-text"  :class="toggleK.txtCls" x-text="toggleK.pesan"></p>
                     </div>
                 </div>
             </div>
             <div class="mp-confirm-footer">
-                <button class="mp-btn mp-btn-ghost" @click="toggleK.terbuka=false">Batal</button>
+                <button class="mp-btn mp-btn-ghost" @click="toggleK.terbuka=false">{{ __('Batal') }}</button>
                 <button class="mp-btn" :class="toggleK.btnCls" @click="konfirmasiToggle()">
                     <span x-text="toggleK.label"></span>
                 </button>
@@ -573,7 +573,7 @@
             <div class="mp-confirm-header">
                 <h3 class="mp-sora mp-confirm-title">
                     <span class="material-symbols-outlined mp-confirm-icon c-danger">delete_forever</span>
-                    Hapus Paket
+                    {{ __('Hapus Paket') }}
                 </h3>
                 <button @click="deleteK.terbuka=false" class="mp-btn-icon">
                     <span class="material-symbols-outlined">close</span>
@@ -583,20 +583,20 @@
                 <div class="mp-alert mp-alert-danger">
                     <span class="material-symbols-outlined text-[1.3rem] mt-0.5 text-red-500">warning</span>
                     <div>
-                        <p class="mp-alert-title c-danger">Tindakan ini tidak dapat dibatalkan!</p>
-                        <p class="mp-alert-text c-danger">Anda akan menghapus paket <strong x-text="'«' + deleteK.nama + '»'"></strong>. Semua data yang terkait akan ikut terhapus secara permanen.</p>
+                        <p class="mp-alert-title c-danger">{{ __('Tindakan ini tidak dapat dibatalkan!') }}</p>
+                        <p class="mp-alert-text c-danger">{{ __('Anda akan menghapus paket') }} <strong x-text="'«' + deleteK.nama + '»'"></strong>. {{ __('Semua data yang terkait akan ikut terhapus secara permanen.') }}</p>
                     </div>
                 </div>
                 <div class="mt-4">
-                    <p class="text-sm text-slate-600 mb-2">Ketik nama paket untuk mengonfirmasi:</p>
+                    <p class="text-sm text-slate-600 mb-2">{{ __('Ketik nama paket untuk mengonfirmasi:') }}</p>
                     <input type="text" class="mp-form-input" :placeholder="deleteK.nama" x-model="deleteK.konfTeks">
                 </div>
             </div>
             <div class="mp-confirm-footer">
-                <button class="mp-btn mp-btn-ghost" @click="deleteK.terbuka=false">Batal</button>
+                <button class="mp-btn mp-btn-ghost" @click="deleteK.terbuka=false">{{ __('Batal') }}</button>
                 <button class="mp-btn mp-btn-danger" :disabled="deleteK.konfTeks !== deleteK.nama" @click="konfirmasiDelete()">
                     <span class="material-symbols-outlined text-[1rem]">delete_forever</span>
-                    Ya, Hapus Sekarang
+                    {{ __('Ya, Hapus Sekarang') }}
                 </button>
             </div>
         </div>
@@ -736,11 +736,11 @@ function manajemenPaket() {
             let judul, pesan, label, icon, cls, alertCls, alertIconCls, txtCls, btnCls;
 
             if (tipe === 'aktif') {
-                judul    = nyalakan ? 'Aktifkan Paket' : 'Nonaktifkan Paket';
+                judul    = nyalakan ? @js(__('Aktifkan Paket')) : @js(__('Nonaktifkan Paket'));
                 pesan    = nyalakan
-                    ? `Paket «${nama}» akan diaktifkan dan dapat dipilih oleh developer.`
-                    : `Paket «${nama}» akan dinonaktifkan. Developer baru tidak bisa memilih paket ini.`;
-                label    = nyalakan ? 'Ya, Aktifkan' : 'Ya, Nonaktifkan';
+                    ? @js(__('Paket')) + ' «' + nama + '» ' + @js(__('akan diaktifkan dan dapat dipilih oleh developer.'))
+                    : @js(__('Paket')) + ' «' + nama + '» ' + @js(__('akan dinonaktifkan. Developer baru tidak bisa memilih paket ini.'));
+                label    = nyalakan ? @js(__('Ya, Aktifkan')) : @js(__('Ya, Nonaktifkan'));
                 icon     = 'power_settings_new';
                 cls      = nyalakan ? 'c-success' : 'c-warning';
                 alertCls = nyalakan ? 'mp-alert-success' : 'mp-alert-warning';
@@ -748,11 +748,11 @@ function manajemenPaket() {
                 txtCls   = nyalakan ? 'c-success' : 'c-warning';
                 btnCls   = nyalakan ? 'mp-btn-success' : 'mp-btn-ghost';
             } else {
-                judul    = nyalakan ? 'Berikan Trusted Badge' : 'Cabut Trusted Badge';
+                judul    = nyalakan ? @js(__('Berikan Lencana Terpercaya')) : @js(__('Cabut Lencana Terpercaya'));
                 pesan    = nyalakan
-                    ? `Badge "Dipercaya" akan diberikan pada paket «${nama}».`
-                    : `Badge "Dipercaya" pada paket «${nama}» akan dicabut.`;
-                label    = nyalakan ? 'Ya, Berikan Badge' : 'Ya, Cabut Badge';
+                    ? @js(__('Lencana "Dipercaya" akan diberikan pada paket')) + ' «' + nama + '».'
+                    : @js(__('Lencana "Dipercaya" pada paket')) + ' «' + nama + '» ' + @js(__('akan dicabut.'));
+                label    = nyalakan ? @js(__('Ya, Berikan Lencana')) : @js(__('Ya, Cabut Lencana'));
                 icon     = 'workspace_premium';
                 cls      = 'c-info';
                 alertCls = 'mp-alert-info';

@@ -112,10 +112,10 @@
 
     /* Badges */
     .mk-badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: 600; white-space: nowrap; }
-    .mk-badge-aktif    { background: #eff6ff; color: #1d4ed8; }
-    .mk-badge-selesai  { background: #f0fdf4; color: #15803d; }
-    .mk-badge-ditinjau { background: #fffbeb; color: #b45309; }
-    .mk-badge-ditolak  { background: #fff1f2; color: #be123c; }
+    .mk-badge-open     { background: #eff6ff; color: #1d4ed8; }
+    .mk-badge-completed{ background: #f0fdf4; color: #15803d; }
+    .mk-badge-pending  { background: #fffbeb; color: #b45309; }
+    .mk-badge-rejected { background: #fff1f2; color: #be123c; }
     .mk-badge-pro      { background: #fffbeb; color: #b45309; }
     .mk-badge-starter  { background: #eff6ff; color: #1d4ed8; }
 
@@ -180,9 +180,9 @@
 {{-- ── PAGE HEADER ──────────────────────────────── --}}
 <div class="flex items-start justify-between animate-fade-in-up">
     <div>
-        <h1 class="mp-sora text-xl font-bold text-slate-900">Manajemen Kampanye</h1>
+        <h1 class="mp-sora text-xl font-bold text-slate-900">{{ __('Manajemen Kampanye') }}</h1>
         <p class="text-sm text-slate-500 mt-0.5">
-            Pantau dan kelola semua kampanye pengujian aplikasi yang aktif di platform.
+            {{ __('Pantau dan kelola semua kampanye pengujian aplikasi yang aktif di platform.') }}
         </p>
     </div>
     <div class="flex items-center gap-3">
@@ -192,19 +192,19 @@
                     :class="viewMode === 'grid' ? 'mk-view-active' : 'mk-view-inactive'"
                     @click="viewMode = 'grid'">
                 <span class="material-symbols-outlined text-[.95rem]">grid_view</span>
-                Grid
+                {{ __('Kotak') }}
             </button>
             <button class="mk-view-btn"
                     :class="viewMode === 'list' ? 'mk-view-active' : 'mk-view-inactive'"
                     @click="viewMode = 'list'">
                 <span class="material-symbols-outlined text-[.95rem]">view_list</span>
-                List
+                {{ __('Daftar') }}
             </button>
         </div>
         {{-- Export --}}
         <a href="{{ route('admin.export.kampanye') }}" class="mp-btn mp-btn-primary">
             <span class="material-symbols-outlined text-[1.1rem]">download</span>
-            Export CSV
+            {{ __('Ekspor CSV') }}
         </a>
     </div>
 </div>
@@ -219,9 +219,9 @@
                 <span class="material-symbols-outlined">folder_copy</span>
             </div>
             <div class="flex-1 min-w-0">
-                <div class="mp-stat-label">Total</div>
+                <div class="mp-stat-label">{{ __('Total') }}</div>
                 <div class="mp-stat-value">{{ $statTotal }}</div>
-                <div class="mp-stat-sub">semua kampanye</div>
+                <div class="mp-stat-sub">{{ __('semua kampanye') }}</div>
             </div>
         </div>
     </div>
@@ -233,9 +233,9 @@
                 <span class="material-symbols-outlined">play_circle</span>
             </div>
             <div>
-                <div class="mp-stat-label">Aktif</div>
+                <div class="mp-stat-label">{{ __('Aktif') }}</div>
                 <div class="mp-stat-value text-blue-700">{{ $statAktif }}</div>
-                <div class="mp-stat-sub">sedang berjalan</div>
+                <div class="mp-stat-sub">{{ __('sedang berjalan') }}</div>
             </div>
         </div>
     </div>
@@ -247,9 +247,9 @@
                 <span class="material-symbols-outlined">task_alt</span>
             </div>
             <div>
-                <div class="mp-stat-label">Selesai</div>
+                <div class="mp-stat-label">{{ __('Selesai') }}</div>
                 <div class="mp-stat-value text-green-700">{{ $statSelesai }}</div>
-                <div class="mp-stat-sub">sudah selesai</div>
+                <div class="mp-stat-sub">{{ __('sudah selesai') }}</div>
             </div>
         </div>
     </div>
@@ -261,9 +261,9 @@
                 <span class="material-symbols-outlined">rate_review</span>
             </div>
             <div>
-                <div class="mp-stat-label">Ditinjau</div>
+                <div class="mp-stat-label">{{ __('Ditinjau') }}</div>
                 <div class="mp-stat-value text-amber-600">{{ $statDitinjau }}</div>
-                <div class="mp-stat-sub">perlu tinjauan</div>
+                <div class="mp-stat-sub">{{ __('perlu tinjauan') }}</div>
             </div>
         </div>
     </div>
@@ -275,9 +275,9 @@
                 <span class="material-symbols-outlined">cancel</span>
             </div>
             <div class="flex-1 min-w-0">
-                <div class="mp-stat-label">Ditolak</div>
+                <div class="mp-stat-label">{{ __('Ditolak') }}</div>
                 <div class="mp-stat-value text-red-600">{{ $statDitolak }}</div>
-                <div class="mp-stat-sub">tidak disetujui</div>
+                <div class="mp-stat-sub">{{ __('tidak disetujui') }}</div>
             </div>
         </div>
     </div>
@@ -290,7 +290,7 @@
     {{-- Search --}}
     <div class="mp-search-wrap">
         <span class="material-symbols-outlined mp-search-icon">search</span>
-        <input type="text" placeholder="Cari nama kampanye atau developer…"
+        <input type="text" placeholder="{{ __('Cari nama kampanye atau developer…') }}"
                x-model="cariTeks"
                class="mp-input mp-search-input">
     </div>
@@ -299,37 +299,37 @@
 
     {{-- Filter Status --}}
     <select x-model="filterStatus" class="mp-select">
-        <option value="">Semua Status</option>
-        <option value="Aktif">Aktif</option>
-        <option value="Selesai">Selesai</option>
-        <option value="Ditinjau">Ditinjau</option>
-        <option value="Ditolak">Ditolak</option>
+        <option value="">{{ __('Semua Status') }}</option>
+        <option value="open">{{ __('Aktif') }}</option>
+        <option value="Completed">{{ __('Selesai') }}</option>
+        <option value="Pending">{{ __('Ditinjau') }}</option>
+        <option value="rejected">{{ __('Ditolak') }}</option>
     </select>
 
     {{-- Urutkan --}}
     <select x-model="sortBy" class="mp-select">
-        <option value="terbaru">Terbaru</option>
-        <option value="terlama">Terlama</option>
-        <option value="tester">Tester Terbanyak</option>
-        <option value="progress">Progress Tertinggi</option>
-        <option value="nama">Nama A-Z</option>
+        <option value="terbaru">{{ __('Terbaru') }}</option>
+        <option value="terlama">{{ __('Terlama') }}</option>
+        <option value="tester">{{ __('Tester Terbanyak') }}</option>
+        <option value="progress">{{ __('Progres Tertinggi') }}</option>
+        <option value="nama">{{ __('Nama A-Z') }}</option>
     </select>
 
     {{-- Reset --}}
     <button @click="resetFilter()" class="mp-btn mp-btn-ghost">
-        Reset
+        {{ __('Reset') }}
     </button>
 
     {{-- Hasil count --}}
     <div class="ml-auto text-sm font-medium text-slate-400">
         <strong class="mp-mono text-slate-700" x-text="filteredCount()"></strong>
-        kampanye ditampilkan
+        {{ __('Kampanye ditampilkan') }}
     </div>
 
     {{-- Timestamp --}}
     <div class="flex items-center gap-1.5 text-xs text-slate-400">
         <span class="material-symbols-outlined text-[.9rem]">refresh</span>
-        Update: {{ now()->format('H:i') }} WIB
+        {{ __('Diperbarui') }}: {{ now()->format('H:i') }} WIB
     </div>
 
 </div>
@@ -338,11 +338,11 @@
 <div class="flex items-center justify-between animate-fade-in-up delay-300">
     <div class="mp-sora font-bold text-slate-900 text-base flex items-center gap-2">
         <span class="material-symbols-outlined text-blue-600 text-[1.2rem]">campaign</span>
-        <span x-text="filterStatus || 'Semua Kampanye'"></span>
+        <span x-text="filterStatusName()"></span>
     </div>
     <span class="text-xs mp-mono px-2.5 py-1 rounded-lg font-semibold"
           style="background:#eff6ff;color:#2563eb;"
-          x-text="filteredCount() + ' kampanye'">
+          x-text="filteredCount() + ' {{ __('kampanye') }}'">
     </span>
 </div>
 
@@ -354,15 +354,15 @@
 
     @foreach($kampanyeList as $idx => $k)
     @php
-        $borderColor = ['Aktif'=>'#2563eb','Selesai'=>'#16a34a','Ditinjau'=>'#f59e0b','Ditolak'=>'#ef4444'][$k['status']] ?? '#94a3b8';
+        $borderColor = ['open'=>'#2563eb','Completed'=>'#16a34a','Pending'=>'#f59e0b','rejected'=>'#ef4444'][$k['raw_status']] ?? '#94a3b8';
         $progColor   = $borderColor;
-        $dotClass    = ['Aktif'=>'mk-dot-filled-blue','Selesai'=>'mk-dot-filled-green','Ditinjau'=>'mk-dot-filled-amber','Ditolak'=>'mk-dot-empty'][$k['status']] ?? 'mk-dot-empty';
+        $dotClass    = ['open'=>'mk-dot-filled-blue','Completed'=>'mk-dot-filled-green','Pending'=>'mk-dot-filled-amber','rejected'=>'mk-dot-empty'][$k['raw_status']] ?? 'mk-dot-empty';
         $pctTester   = $k['maxTester'] > 0 ? round($k['tester'] / $k['maxTester'] * 100) : 0;
     @endphp
 
     <div class="mk-card"
          style="border-left-color:{{ $borderColor }};"
-         x-show="tampilKard('{{ $k['status'] }}', '{{ strtolower($k['nama']) }}', '{{ strtolower($k['developer']) }}')">
+         x-show="tampilKard('{{ $k['raw_status'] }}', '{{ strtolower($k['nama']) }}', '{{ strtolower($k['developer']) }}')">
         <div class="p-5">
 
             {{-- App info --}}
@@ -381,7 +381,7 @@
                         <p class="text-xs mt-0.5" style="color:#64748b;">{{ $k['developer'] }}</p>
                     </div>
                 </div>
-                <span class="mk-badge mk-badge-{{ strtolower($k['status']) }} flex-shrink-0">
+                <span class="mk-badge mk-badge-{{ strtolower($k['raw_status']) }} flex-shrink-0">
                     <span class="w-1.5 h-1.5 rounded-full" style="background:{{ $borderColor }};"></span>
                     {{ $k['status'] }}
                 </span>
@@ -390,7 +390,7 @@
             {{-- Tester progress --}}
             <div class="mb-3">
                 <div class="flex items-center justify-between mb-1.5">
-                    <span class="text-xs font-medium" style="color:#64748b;">Tester Bergabung</span>
+                    <span class="text-xs font-medium" style="color:#64748b;">{{ __('Tester Bergabung') }}</span>
                     <span class="text-xs font-bold mp-mono" style="color:#1e293b;">
                         {{ $k['tester'] }}
                         <span style="color:#94a3b8;font-weight:400;">/ {{ $k['maxTester'] }}</span>
@@ -404,11 +404,11 @@
             {{-- Timeline --}}
             <div class="mb-3">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs font-medium" style="color:#64748b;">Timeline 14 Hari</span>
+                    <span class="text-xs font-medium" style="color:#64748b;">{{ __('Linimasa 14 Hari') }}</span>
                     @if($k['hariKe'] > 0)
-                        <span class="text-xs mp-mono font-semibold" style="color:{{ $progColor }};">Hari {{ $k['hariKe'] }}</span>
-                    @elseif($k['status'] === 'Ditinjau')
-                        <span class="text-xs mp-mono font-semibold" style="color:#b45309;">Menunggu</span>
+                        <span class="text-xs mp-mono font-semibold" style="color:{{ $progColor }};">{{ __('Hari') }} {{ $k['hariKe'] }}</span>
+                    @elseif($k['raw_status'] === 'Pending')
+                        <span class="text-xs mp-mono font-semibold" style="color:#b45309;">{{ __('Menunggu') }}</span>
                     @else
                         <span class="text-xs mp-mono font-semibold" style="color:#94a3b8;">-</span>
                     @endif
@@ -433,28 +433,28 @@
                         onmouseover="this.style.background='#dbeafe'"
                         onmouseout="this.style.background='#eff6ff'"
                         @click="bukaModal({{ $idx }})"
-                        title="Detail">
+                        title="{{ __('Detail') }}">
                     <span class="material-symbols-outlined text-[1.1rem]">visibility</span>
                 </button>
 
-                @if($k['status'] === 'Aktif')
-                <button class="mk-action-btn mk-btn-pause" title="Hentikan Sementara" wire:click="pauseKampanye('{{ $k['id'] }}')">
+                @if($k['raw_status'] === 'open')
+                <button class="mk-action-btn mk-btn-pause" title="{{ __('Hentikan Sementara') }}" wire:click="pauseKampanye('{{ $k['id'] }}')">
                     <span class="material-symbols-outlined text-[1rem]" style="color:#ef4444;">pause_circle</span>
                 </button>
-                <button class="mk-action-btn mk-btn-more" title="Lainnya">
+                <button class="mk-action-btn mk-btn-more" title="{{ __('Lainnya') }}">
                     <span class="material-symbols-outlined text-[1rem]" style="color:#64748b;">more_horiz</span>
                 </button>
 
-                @elseif($k['status'] === 'Ditinjau')
-                <button class="mk-action-btn mk-btn-approve" title="Setujui" wire:click="approveKampanye('{{ $k['id'] }}')">
+                @elseif($k['raw_status'] === 'Pending')
+                <button class="mk-action-btn mk-btn-approve" title="{{ __('Setujui') }}" wire:click="approveKampanye('{{ $k['id'] }}')">
                     <span class="material-symbols-outlined text-[1rem]" style="color:#16a34a;">check_circle</span>
                 </button>
-                <button class="mk-action-btn mk-btn-reject" title="Tolak" wire:click="rejectKampanye('{{ $k['id'] }}')">
+                <button class="mk-action-btn mk-btn-reject" title="{{ __('Tolak') }}" wire:click="rejectKampanye('{{ $k['id'] }}')">
                     <span class="material-symbols-outlined text-[1rem]" style="color:#ef4444;">cancel</span>
                 </button>
 
-                @elseif($k['status'] === 'Selesai')
-                <button class="mk-action-btn mk-btn-report" title="Lihat Laporan">
+                @elseif($k['raw_status'] === 'Completed')
+                <button class="mk-action-btn mk-btn-report" title="{{ __('Lihat Laporan') }}">
                     <span class="material-symbols-outlined text-[1rem]" style="color:#16a34a;">bar_chart</span>
                 </button>
                 @endif
@@ -470,8 +470,8 @@
             <div class="mp-empty-icon">
                 <span class="material-symbols-outlined text-slate-400 text-[1.8rem]">campaign</span>
             </div>
-            <p class="text-sm font-semibold text-slate-600">Tidak ada kampanye ditemukan</p>
-            <p class="text-xs mt-1 text-slate-400">Coba ubah filter atau kata kunci pencarian</p>
+            <p class="text-sm font-semibold text-slate-600">{{ __('Tidak ada kampanye ditemukan') }}</p>
+            <p class="text-xs mt-1 text-slate-400">{{ __('Coba ubah filter atau kata kunci pencarian') }}</p>
         </div>
     </div>
 
@@ -491,54 +491,54 @@
     <div class="mk-list-header flex items-center gap-4 px-5 py-3" style="background:#f8fafc;border-bottom:1px solid #e2e8f0;">
         <div class="w-56 flex-shrink-0">
             <button class="mk-sort-btn" :class="sortCol==='nama'?'active':''" @click="setSort('nama')">
-                Kampanye
+                {{ __('Kampanye') }}
                 <span class="material-symbols-outlined mk-sort-icon"
                       x-text="sortCol!=='nama' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
             </button>
         </div>
         <div class="w-24 flex-shrink-0">
             <button class="mk-sort-btn" :class="sortCol==='status'?'active':''" @click="setSort('status')">
-                Status
+                {{ __('Status') }}
                 <span class="material-symbols-outlined mk-sort-icon"
                       x-text="sortCol!=='status' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
             </button>
         </div>
         <div class="flex-1">
             <button class="mk-sort-btn" :class="sortCol==='tester'?'active':''" @click="setSort('tester')">
-                Tester
+                {{ __('Tester') }}
                 <span class="material-symbols-outlined mk-sort-icon"
                       x-text="sortCol!=='tester' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
             </button>
         </div>
         <div class="w-32 flex-shrink-0">
             <button class="mk-sort-btn" :class="sortCol==='timeline'?'active':''" @click="setSort('timeline')">
-                Timeline
+                {{ __('Linimasa') }}
                 <span class="material-symbols-outlined mk-sort-icon"
                       x-text="sortCol!=='timeline' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
             </button>
         </div>
         <div class="w-24 flex-shrink-0">
             <button class="mk-sort-btn" :class="sortCol==='paket'?'active':''" @click="setSort('paket')">
-                Paket
+                {{ __('Paket') }}
                 <span class="material-symbols-outlined mk-sort-icon"
                       x-text="sortCol!=='paket' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
             </button>
         </div>
         <div class="w-28 flex-shrink-0 text-center">
-            <span class="mk-sort-btn" style="cursor:default;pointer-events:none">Aksi</span>
+            <span class="mk-sort-btn" style="cursor:default;pointer-events:none">{{ __('Aksi') }}</span>
         </div>
     </div>
 
     @foreach($kampanyeList as $idx => $k)
     @php
-        $borderColor = ['Aktif'=>'#2563eb','Selesai'=>'#16a34a','Ditinjau'=>'#f59e0b','Ditolak'=>'#ef4444'][$k['status']] ?? '#94a3b8';
+        $borderColor = ['open'=>'#2563eb','Completed'=>'#16a34a','Pending'=>'#f59e0b','rejected'=>'#ef4444'][$k['raw_status']] ?? '#94a3b8';
         $pctTester = $k['maxTester'] > 0 ? round($k['tester']/$k['maxTester']*100) : 0;
         $pctHari   = $k['maxHari']   > 0 ? round($k['hariKe']/$k['maxHari']*100)   : 0;
     @endphp
     <div class="mk-list-row" data-row-id="{{ $idx }}"
          data-nama="{{ strtolower($k['nama']) }}"
          data-developer="{{ strtolower($k['developer']) }}"
-         data-status="{{ $k['status'] }}"
+         data-status="{{ $k['raw_status'] }}"
          data-tester="{{ $k['tester'] }}"
          data-timeline="{{ $k['hariKe'] }}"
          data-paket="{{ $k['paket'] }}"
@@ -561,7 +561,7 @@
 
         {{-- Status --}}
         <div class="w-24 flex-shrink-0">
-            <span class="mk-badge mk-badge-{{ strtolower($k['status']) }}">{{ $k['status'] }}</span>
+            <span class="mk-badge mk-badge-{{ strtolower($k['raw_status']) }}">{{ $k['status'] }}</span>
         </div>
 
         {{-- Tester progress --}}
@@ -593,22 +593,22 @@
 
         {{-- Aksi --}}
         <div class="w-28 flex-shrink-0 flex items-center justify-center gap-1.5">
-            <button class="mk-action-btn mk-btn-detail" @click="bukaModal({{ $idx }})" title="Detail">
+            <button class="mk-action-btn mk-btn-detail" @click="bukaModal({{ $idx }})" title="{{ __('Detail') }}">
                 <span class="material-symbols-outlined text-[1rem]" style="color:#2563eb;">visibility</span>
             </button>
-            @if($k['status'] === 'Ditinjau')
-            <button class="mk-action-btn mk-btn-approve" title="Approve" wire:click="approveKampanye('{{ $k['id'] }}')">
+            @if($k['raw_status'] === 'Pending')
+            <button class="mk-action-btn mk-btn-approve" title="{{ __('Setujui') }}" wire:click="approveKampanye('{{ $k['id'] }}')">
                 <span class="material-symbols-outlined text-[1rem]" style="color:#16a34a;">check_circle</span>
             </button>
-            <button class="mk-action-btn mk-btn-reject" title="Tolak" wire:click="rejectKampanye('{{ $k['id'] }}')">
+            <button class="mk-action-btn mk-btn-reject" title="{{ __('Tolak') }}" wire:click="rejectKampanye('{{ $k['id'] }}')">
                 <span class="material-symbols-outlined text-[1rem]" style="color:#ef4444;">cancel</span>
             </button>
-            @elseif($k['status'] === 'Aktif')
-            <button class="mk-action-btn mk-btn-pause" title="Pause" wire:click="pauseKampanye('{{ $k['id'] }}')">
+            @elseif($k['raw_status'] === 'open')
+            <button class="mk-action-btn mk-btn-pause" title="{{ __('Hentikan Sementara') }}" wire:click="pauseKampanye('{{ $k['id'] }}')">
                 <span class="material-symbols-outlined text-[1rem]" style="color:#ef4444;">pause_circle</span>
             </button>
-            @elseif($k['status'] === 'Selesai')
-            <button class="mk-action-btn mk-btn-report" title="Laporan">
+            @elseif($k['raw_status'] === 'Completed')
+            <button class="mk-action-btn mk-btn-report" title="{{ __('Lihat Laporan') }}">
                 <span class="material-symbols-outlined text-[1rem]" style="color:#16a34a;">bar_chart</span>
             </button>
             @endif
@@ -622,8 +622,8 @@
         <div class="mp-empty-icon">
             <span class="material-symbols-outlined text-slate-400 text-[1.8rem]">campaign</span>
         </div>
-        <p class="text-sm font-semibold text-slate-600">Tidak ada kampanye ditemukan</p>
-        <p class="text-xs mt-1 text-slate-400">Coba ubah filter atau kata kunci pencarian</p>
+        <p class="text-sm font-semibold text-slate-600">{{ __('Tidak ada kampanye ditemukan') }}</p>
+        <p class="text-xs mt-1 text-slate-400">{{ __('Coba ubah filter atau kata kunci pencarian') }}</p>
     </div>
 
     </div>
@@ -676,10 +676,10 @@
             <div class="flex items-center gap-2">
                 <span class="mk-badge"
                       :class="{
-                          'mk-badge-aktif':    kampanye?.status === 'Aktif',
-                          'mk-badge-selesai':  kampanye?.status === 'Selesai',
-                          'mk-badge-ditinjau': kampanye?.status === 'Ditinjau',
-                          'mk-badge-ditolak':  kampanye?.status === 'Ditolak',
+                          'mk-badge-open':      kampanye?.raw_status === 'open',
+                          'mk-badge-completed': kampanye?.raw_status === 'Completed',
+                          'mk-badge-pending':   kampanye?.raw_status === 'Pending',
+                          'mk-badge-rejected':  kampanye?.raw_status === 'rejected',
                       }"
                       x-text="kampanye?.status ?? ''">
                 </span>
@@ -698,7 +698,7 @@
             <div class="grid grid-cols-2 gap-4 mb-5 p-4 rounded-xl" style="background:#f8fafc;">
                 <div>
                     <div class="flex items-center justify-between mb-1.5">
-                        <span class="text-xs font-medium" style="color:#64748b;">Tester</span>
+                        <span class="text-xs font-medium" style="color:#64748b;">{{ __('Tester') }}</span>
                         <span class="text-xs font-bold mp-mono" style="color:#1e293b;"
                               x-text="(kampanye?.tester ?? 0) + '/' + (kampanye?.maxTester ?? 20)">
                         </span>
@@ -711,7 +711,7 @@
                 </div>
                 <div>
                     <div class="flex items-center justify-between mb-1.5">
-                        <span class="text-xs font-medium" style="color:#64748b;">Hari</span>
+                        <span class="text-xs font-medium" style="color:#64748b;">{{ __('Hari') }}</span>
                         <span class="text-xs font-bold mp-mono" style="color:#1e293b;"
                               x-text="(kampanye?.hariKe ?? 0) + '/' + (kampanye?.maxHari ?? 14)">
                         </span>
@@ -726,7 +726,7 @@
 
             {{-- Detail rows --}}
             <div class="mk-detail-row">
-                <span class="mk-detail-label">Paket</span>
+                <span class="mk-detail-label">{{ __('Paket') }}</span>
                 <span class="mk-detail-value">
                     <span class="mk-badge"
                           :class="kampanye?.paket === 'Pro' ? 'mk-badge-pro' : 'mk-badge-starter'"
@@ -735,43 +735,43 @@
                 </span>
             </div>
             <div class="mk-detail-row">
-                <span class="mk-detail-label">Tanggal Mulai</span>
+                <span class="mk-detail-label">{{ __('Tanggal Mulai') }}</span>
                 <span class="mk-detail-value mp-mono" x-text="kampanye?.mulai ?? '-'"></span>
             </div>
             <div class="mk-detail-row">
-                <span class="mk-detail-label">Tanggal Selesai</span>
+                <span class="mk-detail-label">{{ __('Tanggal Selesai') }}</span>
                 <span class="mk-detail-value mp-mono" x-text="kampanye?.selesai ?? '-'"></span>
             </div>
             <div class="mk-detail-row">
-                <span class="mk-detail-label">Developer</span>
+                <span class="mk-detail-label">{{ __('Developer') }}</span>
                 <span class="mk-detail-value" x-text="kampanye?.developer ?? '-'"></span>
             </div>
         </div>
 
         {{-- Footer --}}
         <div class="mk-modal-footer">
-            <button @click="tutupModal()" class="mp-btn mp-btn-ghost">Tutup</button>
+            <button @click="tutupModal()" class="mp-btn mp-btn-ghost">{{ __('Tutup') }}</button>
 
-            <template x-if="kampanye?.status === 'Ditinjau'">
+            <template x-if="kampanye?.raw_status === 'Pending'">
                 <div class="flex gap-2">
                     <button @click="$wire.rejectKampanye(kampanye.id); tutupModal()"
                             class="mp-btn" style="background:#fff1f2;color:#ef4444;border:1px solid #fecdd3;">
                         <span class="material-symbols-outlined text-[1rem]">cancel</span>
-                        Tolak
+                        {{ __('Tolak') }}
                     </button>
                     <button @click="$wire.approveKampanye(kampanye.id); tutupModal()"
                             class="mp-btn" style="background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;box-shadow:0 4px 12px rgba(22,163,74,0.25);">
                         <span class="material-symbols-outlined text-[1rem]">check_circle</span>
-                        Setujui
+                        {{ __('Setujui') }}
                     </button>
                 </div>
             </template>
 
-            <template x-if="kampanye?.status === 'Aktif'">
+            <template x-if="kampanye?.raw_status === 'open'">
                 <button @click="$wire.pauseKampanye(kampanye.id); tutupModal()"
                         class="mp-btn" style="background:#fff1f2;color:#ef4444;border:1px solid #fecdd3;">
                     <span class="material-symbols-outlined text-[1rem]">pause_circle</span>
-                    Hentikan Sementara
+                    {{ __('Hentikan Sementara') }}
                 </button>
             </template>
         </div>
@@ -888,9 +888,19 @@ function manajemenKampanye() {
             return true;
         },
 
+        filterStatusName() {
+            const map = {
+                'open': '{{ __('Aktif') }}',
+                'Completed': '{{ __('Selesai') }}',
+                'Pending': '{{ __('Ditinjau') }}',
+                'rejected': '{{ __('Ditolak') }}',
+            };
+            return this.filterStatus ? map[this.filterStatus] : '{{ __('Semua Kampanye') }}';
+        },
+
         filteredCount() {
             return this.getCurrentData().filter(k =>
-                (!this.filterStatus || k.status === this.filterStatus) &&
+                (!this.filterStatus || k.raw_status === this.filterStatus) &&
                 (!this.cariTeks || k.nama.toLowerCase().includes(this.cariTeks.toLowerCase()) ||
                  k.developer.toLowerCase().includes(this.cariTeks.toLowerCase()))
             ).length;

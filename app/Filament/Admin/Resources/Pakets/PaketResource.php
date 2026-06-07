@@ -22,11 +22,20 @@ class PaketResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $navigationLabel = 'Packets';
+    public static function getNavigationLabel(): string
+    {
+        return __('Daftar Paket');
+    }
 
-    protected static ?string $modelLabel = 'Packet';
+    public static function getModelLabel(): string
+    {
+        return __('Paket');
+    }
 
-    protected static ?string $pluralModelLabel = 'Packets';
+    public static function getPluralModelLabel(): string
+    {
+        return __('Daftar Paket');
+    }
 
     protected static ?string $slug = 'packets';
 

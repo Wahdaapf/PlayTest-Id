@@ -431,10 +431,36 @@
         }
 
         /* ══ SORT HEADER BUTTON ══ */
-        .tk-sort-btn { display: inline-flex; align-items: center; gap: 3px; background: none; border: none; cursor: pointer; font-size: .75rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: .07em; padding: 0; transition: color 0.2s; font-family: 'Inter', sans-serif; white-space: nowrap; }
-        .tk-sort-btn:hover  { color: #2563eb; }
-        .tk-sort-btn.active { color: #2563eb; }
-        .tk-sort-icon { font-size: .95rem !important; line-height: 1; }
+        .tk-sort-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: .75rem;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            padding: 0;
+            transition: color 0.2s;
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+        }
+
+        .tk-sort-btn:hover {
+            color: #2563eb;
+        }
+
+        .tk-sort-btn.active {
+            color: #2563eb;
+        }
+
+        .tk-sort-icon {
+            font-size: .95rem !important;
+            line-height: 1;
+        }
 
         /* ══ TABLE ══ */
         .tk-table-wrap {
@@ -991,12 +1017,12 @@
         {{-- ══ HEADER ══ --}}
         <div class="flex items-center justify-between animate-fade-in-up">
             <div>
-                <h1 class="tk-sora text-xl font-bold text-slate-900">Manajemen Pembayaran Developer</h1>
-                <p class="text-sm text-slate-500 mt-0.5">Transaksi otomatis via <strong class="text-blue-600">Duitku</strong> Payment Gateway</p>
+                <h1 class="tk-sora text-xl font-bold text-slate-900">{{ __('Manajemen Pembayaran Developer') }}</h1>
+                <p class="text-sm text-slate-500 mt-0.5">{{ __('Transaksi otomatis via') }} <strong class="text-blue-600">Duitku</strong> {{ __('Payment Gateway') }}</p>
             </div>
             <a href="{{ route('admin.export.pendapatan') }}" class="tk-btn tk-btn-export">
                 <span class="material-symbols-outlined text-[1.1rem]">download</span>
-                Export CSV
+                {{ __('Ekspor CSV') }}
             </a>
         </div>
 
@@ -1010,11 +1036,11 @@
                         <span class="material-symbols-outlined">account_balance_wallet</span>
                     </div>
                     <div class="flex-1 min-w-0">
-                        <div class="tk-stat-label">Total Pendapatan</div>
+                        <div class="tk-stat-label">{{ __('Total Pendapatan') }}</div>
                         <div class="tk-stat-value tk-mono">{{ $statTotalPendapatan }}</div>
                         <div class="flex items-center gap-2 mt-1">
                             <span class="tk-growth {{ str_starts_with($growthPendapatan, '-') ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700' }}">{{ $growthPendapatan }}</span>
-                            <span class="tk-stat-sub">vs bulan lalu</span>
+                            <span class="tk-stat-sub">{{ __('vs bulan lalu') }}</span>
                         </div>
                     </div>
                 </div>
@@ -1027,7 +1053,7 @@
                         <span class="material-symbols-outlined">calendar_month</span>
                     </div>
                     <div>
-                        <div class="tk-stat-label">Bulan Ini</div>
+                        <div class="tk-stat-label">{{ __('Bulan Ini') }}</div>
                         <div class="tk-stat-value tk-mono text-[1.1rem]">{{ $statBulanIni }}</div>
                     </div>
                 </div>
@@ -1040,9 +1066,9 @@
                         <span class="material-symbols-outlined">check_circle</span>
                     </div>
                     <div>
-                        <div class="tk-stat-label">Berhasil</div>
+                        <div class="tk-stat-label">{{ __('Berhasil') }}</div>
                         <div class="tk-stat-value">{{ $statBerhasil }}</div>
-                        <div class="tk-stat-sub text-green-600 font-medium">{{ $statBerhasilBulanIni }} bulan ini</div>
+                        <div class="tk-stat-sub text-green-600 font-medium">{{ $statBerhasilBulanIni }} {{ __('bulan ini') }}</div>
                     </div>
                 </div>
             </div>
@@ -1054,9 +1080,9 @@
                         <span class="material-symbols-outlined">schedule</span>
                     </div>
                     <div>
-                        <div class="tk-stat-label">Menunggu Bayar</div>
+                        <div class="tk-stat-label">{{ __('Menunggu Bayar') }}</div>
                         <div class="tk-stat-value text-[#d97706]">{{ $statPending }}</div>
-                        <div class="tk-stat-sub text-[#d97706] font-medium">{{ $statPendingMingguIni }} minggu ini</div>
+                        <div class="tk-stat-sub text-[#d97706] font-medium">{{ $statPendingMingguIni }} {{ __('minggu ini') }}</div>
                     </div>
                 </div>
             </div>
@@ -1068,11 +1094,11 @@
             <div class="xl:col-span-2 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between mb-6">
                     <div>
-                        <div class="tk-sora font-bold text-slate-900 text-base">Pendapatan 6 Bulan Terakhir</div>
-                        <div class="text-xs text-slate-400 mt-0.5">Berdasarkan transaksi yang berhasil dikonfirmasi</div>
+                        <div class="tk-sora font-bold text-slate-900 text-base">{{ __('Pendapatan 6 Bulan Terakhir') }}</div>
+                        <div class="text-xs text-slate-400 mt-0.5">{{ __('Berdasarkan transaksi yang berhasil dikonfirmasi') }}</div>
                     </div>
                     <div class="flex items-center gap-2 text-xs text-slate-500">
-                        <span class="inline-block w-3 h-3 rounded-sm tk-grad-blue"></span> Pendapatan
+                        <span class="inline-block w-3 h-3 rounded-sm tk-grad-blue"></span> {{ __('Pendapatan') }}
                     </div>
                 </div>
                 <div class="flex items-end gap-3 h-[140px]">
@@ -1099,15 +1125,15 @@
 
             <div class="flex flex-col gap-4">
                 <div class="bg-white border border-slate-200 rounded-2xl p-5 flex-1 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="tk-sora font-bold text-slate-800 text-sm mb-4">Ringkasan Status</div>
+                    <div class="tk-sora font-bold text-slate-800 text-sm mb-4">{{ __('Ringkasan Status') }}</div>
                     <div class="space-y-4">
                         @php $total = $statBerhasil + $statPending + $statGagal; @endphp
                         @if($total > 0)
                         @php
                         $ringkasan = [
-                        ['label'=>'Berhasil','val'=>$statBerhasil,'pct'=>round($statBerhasil/$total*100),'color'=>'#22c55e'],
-                        ['label'=>'Menunggu Bayar', 'val'=>$statPending, 'pct'=>round($statPending/$total*100), 'color'=>'#f59e0b'],
-                        ['label'=>'Gagal', 'val'=>$statGagal, 'pct'=>round($statGagal/$total*100), 'color'=>'#ef4444'],
+                        ['label'=>__('Berhasil'),'val'=>$statBerhasil,'pct'=>round($statBerhasil/$total*100),'color'=>'#22c55e'],
+                        ['label'=>__('Menunggu Bayar'), 'val'=>$statPending, 'pct'=>round($statPending/$total*100), 'color'=>'#f59e0b'],
+                        ['label'=>__('Gagal'), 'val'=>$statGagal, 'pct'=>round($statGagal/$total*100), 'color'=>'#ef4444'],
                         ];
                         @endphp
                         @foreach($ringkasan as $r)
@@ -1123,39 +1149,39 @@
                         @endforeach
                         @else
                         <div class="text-center py-6">
-                            <p class="text-sm text-slate-400">Belum ada data transaksi</p>
+                            <p class="text-sm text-slate-400">{{ __('Belum ada data transaksi') }}</p>
                         </div>
                         @endif
                     </div>
                 </div>
 
                 <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-5 flex-1 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="tk-sora font-bold text-slate-800 dark:text-slate-100 text-sm mb-4">Payment Gateway</div>
+                    <div class="tk-sora font-bold text-slate-800 dark:text-slate-100 text-sm mb-4">{{ __('Payment Gateway') }}</div>
                     <div class="flex items-center gap-4 p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-700/50 dark:to-slate-700/50 rounded-xl border border-blue-100 dark:border-slate-600">
                         <div class="w-12 h-12 rounded-xl bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center border border-blue-100 dark:border-slate-600">
                             <span class="material-symbols-outlined text-[1.6rem] text-blue-600 dark:text-blue-400">account_balance</span>
                         </div>
                         <div class="flex-1">
                             <div class="font-bold text-slate-800 dark:text-slate-100 text-sm">Duitku</div>
-                            <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Payment gateway otomatis</div>
+                            <div class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{{ __('Payment gateway otomatis') }}</div>
                         </div>
                         <div class="flex items-center gap-1.5 bg-green-100 dark:bg-emerald-900/30 text-green-700 dark:text-emerald-400 px-3 py-1.5 rounded-full text-xs font-bold">
                             <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                            Aktif
+                            {{ __('Aktif') }}
                         </div>
                     </div>
                     <div class="mt-4 space-y-2.5">
                         <div class="flex items-center justify-between text-xs">
-                            <span class="text-slate-500 dark:text-slate-400">Mode</span>
+                            <span class="text-slate-500 dark:text-slate-400">{{ __('Mode') }}</span>
                             <span class="font-semibold text-slate-700 dark:text-slate-200">{{ config('duitku.mode') === 'production' ? 'Production' : 'Sandbox' }}</span>
                         </div>
                         <div class="flex items-center justify-between text-xs">
-                            <span class="text-slate-500 dark:text-slate-400">Callback</span>
-                            <span class="font-semibold text-green-600 dark:text-emerald-400">Otomatis</span>
+                            <span class="text-slate-500 dark:text-slate-400">{{ __('Callback') }}</span>
+                            <span class="font-semibold text-green-600 dark:text-emerald-400">{{ __('Otomatis') }}</span>
                         </div>
                         <div class="flex items-center justify-between text-xs">
-                            <span class="text-slate-500 dark:text-slate-400">Verifikasi Admin</span>
-                            <span class="font-semibold text-slate-400 dark:text-slate-500">Tidak diperlukan</span>
+                            <span class="text-slate-500 dark:text-slate-400">{{ __('Verifikasi Admin') }}</span>
+                            <span class="font-semibold text-slate-400 dark:text-slate-500">{{ __('Tidak diperlukan') }}</span>
                         </div>
                     </div>
                 </div>
@@ -1167,29 +1193,29 @@
             <div class="flex flex-wrap gap-3 items-center flex-1">
                 <div class="tk-search-wrap">
                     <span class="material-symbols-outlined tk-search-icon">search</span>
-                    <input type="text" placeholder="Cari nama, ID transaksi, referensi, kampanye…" class="tk-input tk-search-input" x-model="cariTeks">
+                    <input type="text" placeholder="{{ __('Cari nama, ID transaksi, referensi, kampanye…') }}" class="tk-input tk-search-input" x-model="cariTeks">
                 </div>
                 <select class="tk-select" x-model="filterStatus">
-                    <option value="">Semua Status</option>
-                    <option value="Berhasil">Berhasil</option>
-                    <option value="Menunggu Bayar">Menunggu Bayar</option>
-                    <option value="Gagal">Gagal</option>
+                    <option value="">{{ __('Semua Status') }}</option>
+                    <option value="{{ __('Berhasil') }}">{{ __('Berhasil') }}</option>
+                    <option value="{{ __('Menunggu Bayar') }}">{{ __('Menunggu Bayar') }}</option>
+                    <option value="{{ __('Gagal') }}">{{ __('Gagal') }}</option>
                 </select>
                 <select class="tk-select" x-model="filterPaket">
-                    <option value="">Semua Paket</option>
+                    <option value="">{{ __('Semua Paket') }}</option>
                     @foreach(\App\Models\Paket::orderBy('name')->get() as $pkt)
                     <option value="{{ $pkt->name }}">{{ $pkt->name }}</option>
                     @endforeach
                 </select>
                 <select class="tk-select max-w-[120px]" x-model="perPage">
-                    <option value="5">5 Data</option>
-                    <option value="10">10 Data</option>
-                    <option value="20">20 Data</option>
-                    <option value="50">50 Data</option>
-                    <option value="100">100 Data</option>
-                    <option value="1000">Semua</option>
+                    <option value="5">{{ __('5 Data') }}</option>
+                    <option value="10">{{ __('10 Data') }}</option>
+                    <option value="20">{{ __('20 Data') }}</option>
+                    <option value="50">{{ __('50 Data') }}</option>
+                    <option value="100">{{ __('100 Data') }}</option>
+                    <option value="1000">{{ __('Semua') }}</option>
                 </select>
-                <button class="tk-btn tk-btn-ghost" @click="resetFilter()">Reset</button>
+                <button class="tk-btn tk-btn-ghost" @click="resetFilter()">{{ __('Reset') }}</button>
             </div>
         </div>
 
@@ -1200,71 +1226,71 @@
                     <tr>
                         <th>
                             <button class="tk-sort-btn" :class="sortCol==='id'?'active':''" @click="setSort('id')">
-                                ID Transaksi
+                                {{ __('ID Transaksi') }}
                                 <span class="material-symbols-outlined tk-sort-icon"
-                                      x-text="sortCol!=='id' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    x-text="sortCol!=='id' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="tk-sort-btn" :class="sortCol==='developer'?'active':''" @click="setSort('developer')">
-                                Developer
+                                {{ __('Developer') }}
                                 <span class="material-symbols-outlined tk-sort-icon"
-                                      x-text="sortCol!=='developer' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    x-text="sortCol!=='developer' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="tk-sort-btn" :class="sortCol==='kampanye'?'active':''" @click="setSort('kampanye')">
-                                Kampanye
+                                {{ __('Kampanye') }}
                                 <span class="material-symbols-outlined tk-sort-icon"
-                                      x-text="sortCol!=='kampanye' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    x-text="sortCol!=='kampanye' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="tk-sort-btn" :class="sortCol==='paket'?'active':''" @click="setSort('paket')">
-                                Paket
+                                {{ __('Paket') }}
                                 <span class="material-symbols-outlined tk-sort-icon"
-                                      x-text="sortCol!=='paket' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    x-text="sortCol!=='paket' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="tk-sort-btn" :class="sortCol==='jumlah'?'active':''" @click="setSort('jumlah')">
-                                Jumlah
+                                {{ __('Jumlah') }}
                                 <span class="material-symbols-outlined tk-sort-icon"
-                                      x-text="sortCol!=='jumlah' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    x-text="sortCol!=='jumlah' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="tk-sort-btn" :class="sortCol==='referensi'?'active':''" @click="setSort('referensi')">
-                                Referensi
+                                {{ __('Referensi') }}
                                 <span class="material-symbols-outlined tk-sort-icon"
-                                      x-text="sortCol!=='referensi' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    x-text="sortCol!=='referensi' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="tk-sort-btn" :class="sortCol==='status'?'active':''" @click="setSort('status')">
-                                Status
+                                {{ __('Status') }}
                                 <span class="material-symbols-outlined tk-sort-icon"
-                                      x-text="sortCol!=='status' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    x-text="sortCol!=='status' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="tk-sort-btn" :class="sortCol==='tanggal'?'active':''" @click="setSort('tanggal')">
-                                Tanggal
+                                {{ __('Tanggal') }}
                                 <span class="material-symbols-outlined tk-sort-icon"
-                                      x-text="sortCol!=='tanggal' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    x-text="sortCol!=='tanggal' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
-                        <th><span class="tk-sort-btn" style="cursor:default;pointer-events:none">Aksi</span></th>
+                        <th><span class="tk-sort-btn" style="cursor:default;pointer-events:none">{{ __('Aksi') }}</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($transaksiList as $idx => $t)
                     @php
                     $statusClass = match($t['status']) {
-                        'Berhasil' => 'berhasil',
-                        'Menunggu Bayar' => 'pending',
-                        'Gagal' => 'gagal',
-                        default => 'pending',
+                    __('Berhasil') => 'berhasil',
+                    __('Menunggu Bayar') => 'pending',
+                    __('Gagal') => 'gagal',
+                    default => 'pending',
                     };
                     $jumlahF = 'Rp ' . number_format($t['jumlah'], 0, ',', '.');
                     @endphp
@@ -1318,8 +1344,8 @@
                                 <div class="tk-empty-icon">
                                     <span class="material-symbols-outlined text-[1.8rem]">inbox</span>
                                 </div>
-                                <div class="font-semibold text-slate-500">Tidak ada transaksi ditemukan</div>
-                                <div class="text-sm text-slate-400 mt-1">Coba ubah filter atau kata kunci pencarian</div>
+                                <div class="font-semibold text-slate-500">{{ __('Tidak ada transaksi ditemukan') }}</div>
+                                <div class="text-sm text-slate-400 mt-1">{{ __('Coba ubah filter atau kata kunci pencarian') }}</div>
                             </div>
                         </td>
                     </tr>
@@ -1327,7 +1353,7 @@
             </table>
 
             <div class="tk-pagi" x-show="totalItems > 0" x-cloak>
-                <span>Menampilkan <strong class="text-slate-700" x-text="visibleIds.length"></strong> dari <strong class="text-slate-700" x-text="totalItems"></strong> transaksi</span>
+                <span>{{ __('Menampilkan') }} <strong class="text-slate-700" x-text="visibleIds.length"></strong> {{ __('dari') }} <strong class="text-slate-700" x-text="totalItems"></strong> {{ __('transaksi') }}</span>
                 <div class="flex items-center gap-1.5" x-show="totalPages > 1">
                     <button class="tk-pagi-btn" @click="currentPage > 1 ? currentPage-- : null; updatePagi()">‹</button>
                     <template x-for="p in totalPages" :key="p">
@@ -1349,7 +1375,7 @@
                 <div class="tk-detail-header">
                     <div class="flex items-center justify-between">
                         <div>
-                            <div class="tk-sora font-bold text-slate-900 text-base">Detail Transaksi</div>
+                            <div class="tk-sora font-bold text-slate-900 text-base">{{ __('Detail Transaksi') }}</div>
                             <div class="text-xs text-slate-400 mt-0.5" x-text="transaksi ? transaksi.id : ''"></div>
                         </div>
                         <button @click="tutupModal()" class="tk-btn-icon">
@@ -1370,50 +1396,50 @@
                             </div>
                             <div class="tk-mono text-white font-bold text-3xl" x-text="'Rp ' + transaksi.jumlah.toLocaleString('id-ID')"></div>
                             <div class="flex items-center gap-2 mt-3">
-                                <template x-if="transaksi.status === 'Berhasil'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500 text-white shadow-sm shadow-green-500/50">✓ Berhasil</span></template>
-                                <template x-if="transaksi.status === 'Menunggu Bayar'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-500 text-white shadow-sm shadow-amber-500/50">⏳ Menunggu Bayar</span></template>
-                                <template x-if="transaksi.status === 'Gagal'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-red-500 text-white shadow-sm shadow-red-500/50">✗ Gagal</span></template>
+                                <template x-if="transaksi.status === '{{ __('Berhasil') }}'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500 text-white shadow-sm shadow-green-500/50">✓ {{ __('Berhasil') }}</span></template>
+                                <template x-if="transaksi.status === '{{ __('Menunggu Bayar') }}'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-500 text-white shadow-sm shadow-amber-500/50">⏳ {{ __('Menunggu Bayar') }}</span></template>
+                                <template x-if="transaksi.status === '{{ __('Gagal') }}'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-red-500 text-white shadow-sm shadow-red-500/50">✗ {{ __('Gagal') }}</span></template>
                                 <span class="text-blue-300 text-[.75rem]" x-text="transaksi.tanggal + ' · ' + transaksi.waktu"></span>
                             </div>
                         </div>
 
-                        <div class="tk-detail-section">Informasi Transaksi</div>
+                        <div class="tk-detail-section">{{ __('Informasi Transaksi') }}</div>
                         <div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">ID Transaksi</span><span class="tk-detail-val tk-mono text-xs" x-text="transaksi.id"></span></div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">No. Invoice</span><span class="tk-detail-val tk-mono text-xs" x-text="transaksi.invoice"></span></div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Tanggal</span><span class="tk-detail-val" x-text="transaksi.tanggal + ' · ' + transaksi.waktu"></span></div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Status</span><span class="tk-detail-val" x-text="transaksi.status"></span></div>
+                            <div class="tk-detail-row"><span class="tk-detail-label">{{ __('ID Transaksi') }}</span><span class="tk-detail-val tk-mono text-xs" x-text="transaksi.id"></span></div>
+                            <div class="tk-detail-row"><span class="tk-detail-label">{{ __('No. Invoice') }}</span><span class="tk-detail-val tk-mono text-xs" x-text="transaksi.invoice"></span></div>
+                            <div class="tk-detail-row"><span class="tk-detail-label">{{ __('Tanggal') }}</span><span class="tk-detail-val" x-text="transaksi.tanggal + ' · ' + transaksi.waktu"></span></div>
+                            <div class="tk-detail-row"><span class="tk-detail-label">{{ __('Status') }}</span><span class="tk-detail-val" x-text="transaksi.status"></span></div>
                         </div>
 
-                        <div class="tk-detail-section">Payment Gateway</div>
+                        <div class="tk-detail-section">{{ __('Payment Gateway') }}</div>
                         <div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Gateway</span><span class="tk-detail-val font-bold text-blue-600" x-text="transaksi.gateway || 'Duitku'"></span></div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Reference ID</span><span class="tk-detail-val tk-mono text-xs" x-text="transaksi.reference || '-'"></span></div>
+                            <div class="tk-detail-row"><span class="tk-detail-label">{{ __('Gateway') }}</span><span class="tk-detail-val font-bold text-blue-600" x-text="transaksi.gateway || 'Duitku'"></span></div>
+                            <div class="tk-detail-row"><span class="tk-detail-label">{{ __('ID Referensi') }}</span><span class="tk-detail-val tk-mono text-xs" x-text="transaksi.reference || '-'"></span></div>
                             <template x-if="transaksi.paymentUrl">
                                 <div class="tk-detail-row">
-                                    <span class="tk-detail-label">Payment URL</span>
+                                    <span class="tk-detail-label">{{ __('URL Pembayaran') }}</span>
                                     <a :href="transaksi.paymentUrl" target="_blank" class="tk-detail-val text-blue-600 text-xs hover:underline flex items-center gap-1">
                                         <span class="material-symbols-outlined text-[.9rem]">open_in_new</span>
-                                        Buka Link
+                                        {{ __('Buka Link') }}
                                     </a>
                                 </div>
                             </template>
                         </div>
 
-                        <div class="tk-detail-section">Paket &amp; Kampanye</div>
+                        <div class="tk-detail-section">{{ __('Paket & Kampanye') }}</div>
                         <div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Developer</span><span class="tk-detail-val" x-text="transaksi.namaUser"></span></div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Kampanye</span><span class="tk-detail-val max-w-[200px] text-right" x-text="transaksi.kampanye"></span></div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Paket</span><span class="tk-detail-val" x-text="transaksi.paket"></span></div>
+                            <div class="tk-detail-row"><span class="tk-detail-label">{{ __('Developer') }}</span><span class="tk-detail-val" x-text="transaksi.namaUser"></span></div>
+                            <div class="tk-detail-row"><span class="tk-detail-label">{{ __('Kampanye') }}</span><span class="tk-detail-val max-w-[200px] text-right" x-text="transaksi.kampanye"></span></div>
+                            <div class="tk-detail-row"><span class="tk-detail-label">{{ __('Paket') }}</span><span class="tk-detail-val" x-text="transaksi.paket"></span></div>
                         </div>
 
-                        <div class="tk-detail-section">Rincian Pembayaran</div>
+                        <div class="tk-detail-section">{{ __('Rincian Pembayaran') }}</div>
                         <div>
-                            <div class="tk-detail-row"><span class="tk-detail-label">Total Bayar</span><span class="tk-detail-val tk-mono text-xs" x-text="'Rp ' + transaksi.jumlah.toLocaleString('id-ID')"></span></div>
+                            <div class="tk-detail-row"><span class="tk-detail-label">{{ __('Total Bayar') }}</span><span class="tk-detail-val tk-mono text-xs" x-text="'Rp ' + transaksi.jumlah.toLocaleString('id-ID')"></span></div>
                             <div class="tk-detail-row bg-blue-50 -mx-1 px-3 py-3 rounded-lg mt-2 border border-blue-100">
                                 <div class="flex items-center gap-2">
                                     <span class="material-symbols-outlined text-blue-500 text-[1.1rem]">info</span>
-                                    <span class="text-xs text-blue-700">Pembayaran diproses otomatis via Duitku</span>
+                                    <span class="text-xs text-blue-700">{{ __('Pembayaran diproses otomatis via Duitku') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -1422,25 +1448,25 @@
                 </template>
 
                 <div class="tk-detail-footer">
-                    <template x-if="transaksi && transaksi.status === 'Menunggu Bayar' && transaksi.paymentUrl">
+                    <template x-if="transaksi && transaksi.status === '{{ __('Menunggu Bayar') }}' && transaksi.paymentUrl">
                         <a :href="transaksi.paymentUrl" target="_blank" class="tk-btn flex-1 tk-btn-primary text-center no-underline">
                             <span class="material-symbols-outlined text-[1.1rem]">open_in_new</span>
-                            Buka Halaman Pembayaran
+                            {{ __('Buka Halaman Pembayaran') }}
                         </a>
                     </template>
-                    <template x-if="transaksi && transaksi.status === 'Menunggu Bayar' && !transaksi.paymentUrl">
+                    <template x-if="transaksi && transaksi.status === '{{ __('Menunggu Bayar') }}' && !transaksi.paymentUrl">
                         <div class="flex items-center gap-2 w-full justify-center text-sm text-amber-600">
                             <span class="material-symbols-outlined text-[1.1rem]">warning</span>
-                            Link pembayaran tidak tersedia
+                            {{ __('Link pembayaran tidak tersedia') }}
                         </div>
                     </template>
-                    <template x-if="transaksi && transaksi.status === 'Berhasil'">
-                        <button class="tk-btn flex-1 tk-btn-ghost">📄 Unduh Invoice</button>
+                    <template x-if="transaksi && transaksi.status === '{{ __('Berhasil') }}'">
+                        <button class="tk-btn flex-1 tk-btn-ghost">📄 {{ __('Unduh Invoice') }}</button>
                     </template>
-                    <template x-if="transaksi && transaksi.status === 'Gagal'">
+                    <template x-if="transaksi && transaksi.status === '{{ __('Gagal') }}'">
                         <div class="flex items-center gap-2 w-full justify-center text-sm text-red-500">
                             <span class="material-symbols-outlined text-[1.1rem]">error</span>
-                            Pembayaran gagal / ditolak
+                            {{ __('Pembayaran gagal / ditolak') }}
                         </div>
                     </template>
                 </div>
@@ -1466,7 +1492,7 @@
                 sortDir: 'desc',
                 modalTerbuka: false,
                 transaksi: null,
-                
+
                 init() {
                     this.updatePagi();
                     this.$watch('cariTeks', () => this.resetPagi());
@@ -1495,8 +1521,12 @@
                 },
 
                 setSort(col) {
-                    if (this.sortCol === col) { this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc'; }
-                    else { this.sortCol = col; this.sortDir = 'asc'; }
+                    if (this.sortCol === col) {
+                        this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        this.sortCol = col;
+                        this.sortDir = 'asc';
+                    }
                 },
 
                 updatePagi() {
@@ -1506,18 +1536,34 @@
 
                     rows.sort((a, b) => {
                         let va, vb;
-                        if (this.sortCol === 'id') { va = (a.dataset.id || ''); vb = (b.dataset.id || ''); }
-                        else if (this.sortCol === 'developer') { va = (a.dataset.nama || ''); vb = (b.dataset.nama || ''); }
-                        else if (this.sortCol === 'kampanye') { va = (a.dataset.kampanye || ''); vb = (b.dataset.kampanye || ''); }
-                        else if (this.sortCol === 'paket') { va = (a.dataset.paket || '').toLowerCase(); vb = (b.dataset.paket || '').toLowerCase(); }
-                        else if (this.sortCol === 'jumlah') { va = +(a.dataset.jumlah || 0); vb = +(b.dataset.jumlah || 0); }
-                        else if (this.sortCol === 'referensi') { va = (a.dataset.referensi || '').toLowerCase(); vb = (b.dataset.referensi || '').toLowerCase(); }
-                        else if (this.sortCol === 'status') { va = (a.dataset.status || '').toLowerCase(); vb = (b.dataset.status || '').toLowerCase(); }
-                        else if (this.sortCol === 'tanggal') { va = +(a.dataset.tanggal || 0); vb = +(b.dataset.tanggal || 0); }
-                        else return 0;
-                        return va < vb ? (this.sortDir==='asc'?-1:1) : (va > vb ? (this.sortDir==='asc'?1:-1) : 0);
+                        if (this.sortCol === 'id') {
+                            va = (a.dataset.id || '');
+                            vb = (b.dataset.id || '');
+                        } else if (this.sortCol === 'developer') {
+                            va = (a.dataset.nama || '');
+                            vb = (b.dataset.nama || '');
+                        } else if (this.sortCol === 'kampanye') {
+                            va = (a.dataset.kampanye || '');
+                            vb = (b.dataset.kampanye || '');
+                        } else if (this.sortCol === 'paket') {
+                            va = (a.dataset.paket || '').toLowerCase();
+                            vb = (b.dataset.paket || '').toLowerCase();
+                        } else if (this.sortCol === 'jumlah') {
+                            va = +(a.dataset.jumlah || 0);
+                            vb = +(b.dataset.jumlah || 0);
+                        } else if (this.sortCol === 'referensi') {
+                            va = (a.dataset.referensi || '').toLowerCase();
+                            vb = (b.dataset.referensi || '').toLowerCase();
+                        } else if (this.sortCol === 'status') {
+                            va = (a.dataset.status || '').toLowerCase();
+                            vb = (b.dataset.status || '').toLowerCase();
+                        } else if (this.sortCol === 'tanggal') {
+                            va = +(a.dataset.tanggal || 0);
+                            vb = +(b.dataset.tanggal || 0);
+                        } else return 0;
+                        return va < vb ? (this.sortDir === 'asc' ? -1 : 1) : (va > vb ? (this.sortDir === 'asc' ? 1 : -1) : 0);
                     });
-                    
+
                     rows.forEach(r => tbody.appendChild(r));
                     const emptyRow = tbody.querySelector('tr[x-show="totalItems === 0"]');
                     if (emptyRow) tbody.appendChild(emptyRow);

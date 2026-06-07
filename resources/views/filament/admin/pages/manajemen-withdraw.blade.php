@@ -424,10 +424,36 @@
         }
 
         /* ══ SORT HEADER BUTTON ══ */
-        .mw-sort-btn { display: inline-flex; align-items: center; gap: 3px; background: none; border: none; cursor: pointer; font-size: .75rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: .07em; padding: 0; transition: color 0.2s; font-family: 'Inter', sans-serif; white-space: nowrap; }
-        .mw-sort-btn:hover  { color: #2563eb; }
-        .mw-sort-btn.active { color: #2563eb; }
-        .mw-sort-icon { font-size: .95rem !important; line-height: 1; }
+        .mw-sort-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: .75rem;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            padding: 0;
+            transition: color 0.2s;
+            font-family: 'Inter', sans-serif;
+            white-space: nowrap;
+        }
+
+        .mw-sort-btn:hover {
+            color: #2563eb;
+        }
+
+        .mw-sort-btn.active {
+            color: #2563eb;
+        }
+
+        .mw-sort-icon {
+            font-size: .95rem !important;
+            line-height: 1;
+        }
 
         /* ══ TABLE ══ */
         .mw-table-wrap {
@@ -989,35 +1015,170 @@
             margin-bottom: 10px;
             box-shadow: 0 10px 25px -5px rgba(20, 83, 45, 0.3);
         }
-    
+
         /* ══ DARK MODE OVERRIDES ══ */
-        .dark body, .dark .fi-main, .dark .fi-simple-main { background-color: #0f172a !important; color: #f8fafc !important; }
-        .dark .mw-stat, .dark .mw-filter-bar, .dark .mw-table-wrap, .dark .mw-modal-box, .dark .mw-detail-panel, .dark .bg-white { background: #1e293b !important; border-color: #334155 !important; }
-        .dark .mw-stat-value, .dark .mw-sora, .dark .mw-modal-title, .dark .mw-detail-val, .dark .text-slate-900, .dark .text-slate-800, .dark .text-slate-700, .dark .mw-td-name, .dark .mw-td-nom, .dark .mw-td-point { color: #f1f5f9 !important; }
-        .dark .mw-stat-label, .dark .mw-table th, .dark .text-slate-500, .dark .text-slate-600, .dark .mw-td-metode, .dark .mw-td-akun, .dark .mw-td-date, .dark .mw-td-id { color: #94a3b8 !important; }
-        .dark .mw-table thead tr { background: #0f172a !important; border-bottom-color: #334155 !important; }
-        .dark .mw-table td { border-bottom-color: #1e293b !important; }
-        .dark .mw-table tbody tr:hover { background: #0f172a !important; }
-        .dark .mw-detail-header, .dark .mw-detail-footer { background: rgba(15, 23, 42, 0.9) !important; border-color: #334155 !important; }
-        .dark .mw-detail-row { border-bottom-color: #334155 !important; }
-        .dark .mw-detail-row:hover { background: #0f172a !important; }
-        .dark .mw-pagi { background: #1e293b !important; border-color: #334155 !important; color: #cbd5e1 !important; }
-        .dark .mw-pagi-btn { background: #0f172a !important; border-color: #334155 !important; color: #cbd5e1 !important; }
-        .dark .mw-pagi-btn:hover { background: #334155 !important; border-color: #475569 !important; }
-        .dark .mw-pagi-btn.active { background: #2563eb !important; color: #fff !important; border-color: #2563eb !important; }
-        .dark .mw-input, .dark .mw-select { background: #0f172a !important; border-color: #334155 !important; color: #f1f5f9 !important; }
-        .dark .mw-btn-secondary, .dark .mw-btn-ghost, .dark .mw-btn-icon { background: #0f172a !important; border-color: #334155 !important; color: #cbd5e1 !important; }
-        .dark .mw-btn-secondary:hover, .dark .mw-btn-ghost:hover, .dark .mw-btn-icon:hover { background: #334155 !important; color: #f1f5f9 !important; }
-        .dark .mw-btn-export { background: #064e3b !important; border-color: #059669 !important; color: #34d399 !important; }
-        .dark .mw-btn-export:hover { background: #065f46 !important; color: #6ee7b7 !important; }
-        .dark .mw-detail-section { color: #64748b !important; }
-        .dark .bg-slate-50, .dark .bg-slate-100 { background-color: #0f172a !important; border-color: #334155 !important; }
-        .dark .mw-chart-bar-tooltip { background: #fff !important; color: #0f172a !important; }
-        .dark .mw-badge-pending { background: #422006 !important; color: #fef08a !important; }
-        .dark .mw-badge-success { background: #064e3b !important; color: #6ee7b7 !important; }
-        .dark .mw-badge-rejected { background: #450a0a !important; color: #fca5a5 !important; }
-        .dark .mw-action-detail { background: #1e3a8a !important; color: #93c5fd !important; }
-        .dark .mw-action-detail:hover { background: #1e40af !important; }
+        .dark body,
+        .dark .fi-main,
+        .dark .fi-simple-main {
+            background-color: #0f172a !important;
+            color: #f8fafc !important;
+        }
+
+        .dark .mw-stat,
+        .dark .mw-filter-bar,
+        .dark .mw-table-wrap,
+        .dark .mw-modal-box,
+        .dark .mw-detail-panel,
+        .dark .bg-white {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+        }
+
+        .dark .mw-stat-value,
+        .dark .mw-sora,
+        .dark .mw-modal-title,
+        .dark .mw-detail-val,
+        .dark .text-slate-900,
+        .dark .text-slate-800,
+        .dark .text-slate-700,
+        .dark .mw-td-name,
+        .dark .mw-td-nom,
+        .dark .mw-td-point {
+            color: #f1f5f9 !important;
+        }
+
+        .dark .mw-stat-label,
+        .dark .mw-table th,
+        .dark .text-slate-500,
+        .dark .text-slate-600,
+        .dark .mw-td-metode,
+        .dark .mw-td-akun,
+        .dark .mw-td-date,
+        .dark .mw-td-id {
+            color: #94a3b8 !important;
+        }
+
+        .dark .mw-table thead tr {
+            background: #0f172a !important;
+            border-bottom-color: #334155 !important;
+        }
+
+        .dark .mw-table td {
+            border-bottom-color: #1e293b !important;
+        }
+
+        .dark .mw-table tbody tr:hover {
+            background: #0f172a !important;
+        }
+
+        .dark .mw-detail-header,
+        .dark .mw-detail-footer {
+            background: rgba(15, 23, 42, 0.9) !important;
+            border-color: #334155 !important;
+        }
+
+        .dark .mw-detail-row {
+            border-bottom-color: #334155 !important;
+        }
+
+        .dark .mw-detail-row:hover {
+            background: #0f172a !important;
+        }
+
+        .dark .mw-pagi {
+            background: #1e293b !important;
+            border-color: #334155 !important;
+            color: #cbd5e1 !important;
+        }
+
+        .dark .mw-pagi-btn {
+            background: #0f172a !important;
+            border-color: #334155 !important;
+            color: #cbd5e1 !important;
+        }
+
+        .dark .mw-pagi-btn:hover {
+            background: #334155 !important;
+            border-color: #475569 !important;
+        }
+
+        .dark .mw-pagi-btn.active {
+            background: #2563eb !important;
+            color: #fff !important;
+            border-color: #2563eb !important;
+        }
+
+        .dark .mw-input,
+        .dark .mw-select {
+            background: #0f172a !important;
+            border-color: #334155 !important;
+            color: #f1f5f9 !important;
+        }
+
+        .dark .mw-btn-secondary,
+        .dark .mw-btn-ghost,
+        .dark .mw-btn-icon {
+            background: #0f172a !important;
+            border-color: #334155 !important;
+            color: #cbd5e1 !important;
+        }
+
+        .dark .mw-btn-secondary:hover,
+        .dark .mw-btn-ghost:hover,
+        .dark .mw-btn-icon:hover {
+            background: #334155 !important;
+            color: #f1f5f9 !important;
+        }
+
+        .dark .mw-btn-export {
+            background: #064e3b !important;
+            border-color: #059669 !important;
+            color: #34d399 !important;
+        }
+
+        .dark .mw-btn-export:hover {
+            background: #065f46 !important;
+            color: #6ee7b7 !important;
+        }
+
+        .dark .mw-detail-section {
+            color: #64748b !important;
+        }
+
+        .dark .bg-slate-50,
+        .dark .bg-slate-100 {
+            background-color: #0f172a !important;
+            border-color: #334155 !important;
+        }
+
+        .dark .mw-chart-bar-tooltip {
+            background: #fff !important;
+            color: #0f172a !important;
+        }
+
+        .dark .mw-badge-pending {
+            background: #422006 !important;
+            color: #fef08a !important;
+        }
+
+        .dark .mw-badge-success {
+            background: #064e3b !important;
+            color: #6ee7b7 !important;
+        }
+
+        .dark .mw-badge-rejected {
+            background: #450a0a !important;
+            color: #fca5a5 !important;
+        }
+
+        .dark .mw-action-detail {
+            background: #1e3a8a !important;
+            color: #93c5fd !important;
+        }
+
+        .dark .mw-action-detail:hover {
+            background: #1e40af !important;
+        }
     </style>
 
     @endpush
@@ -1027,12 +1188,12 @@
         {{-- ══ HEADER ══ --}}
         <div class="flex items-center justify-between animate-fade-in-up">
             <div>
-                <h1 class="mw-sora text-xl font-bold text-slate-900">Manajemen Penarikan Tester</h1>
-                <p class="text-sm text-slate-500 mt-0.5">Kelola permintaan pencairan poin dari tester</p>
+                <h1 class="mw-sora text-xl font-bold text-slate-900">{{ __('Manajemen Penarikan Tester') }}</h1>
+                <p class="text-sm text-slate-500 mt-0.5">{{ __('Kelola permintaan pencairan poin dari tester') }}</p>
             </div>
             <a href="{{ route('admin.export.withdraw') }}" class="mw-btn mw-btn-export">
                 <span class="material-symbols-outlined">download</span>
-                Export CSV
+                {{ __('Ekspor CSV') }}
             </a>
         </div>
 
@@ -1046,7 +1207,7 @@
                         <span class="material-symbols-outlined">payments</span>
                     </div>
                     <div class="flex-1 min-w-0">
-                        <div class="mw-stat-label">Total Dicairkan</div>
+                        <div class="mw-stat-label">{{ __('Total Dicairkan') }}</div>
                         <div class="mw-stat-value mw-mono">{{ $totalRupiahSuccess }}</div>
                     </div>
                 </div>
@@ -1060,11 +1221,11 @@
                         <span class="material-symbols-outlined">calendar_month</span>
                     </div>
                     <div>
-                        <div class="mw-stat-label">Bulan Ini</div>
+                        <div class="mw-stat-label">{{ __('Bulan Ini') }}</div>
                         <div class="mw-stat-value mw-mono text-[1.1rem]">{{ $rupiahBulanIni }}</div>
                         <div class="flex items-center gap-2 mt-1">
                             <span class="mw-growth {{ str_starts_with($growthRupiah, '-') ? 'bg-red-100 text-red-700 px-1 rounded' : 'bg-green-100 text-green-700 px-1 rounded' }} text-xs font-medium">{{ $growthRupiah }}</span>
-                            <span class="mw-stat-sub text-xs">vs bln lalu</span>
+                            <span class="mw-stat-sub text-xs">{{ __('vs bulan lalu') }}</span>
                         </div>
                     </div>
                 </div>
@@ -1077,9 +1238,9 @@
                         <span class="material-symbols-outlined">schedule</span>
                     </div>
                     <div>
-                        <div class="mw-stat-label">Pending</div>
+                        <div class="mw-stat-label">{{ __('Tertunda') }}</div>
                         <div class="mw-stat-value text-[#d97706]">{{ $totalPending }}</div>
-                        <div class="mw-stat-sub text-[#d97706] font-medium">{{ $pendingMingguIni }} minggu ini</div>
+                        <div class="mw-stat-sub text-[#d97706] font-medium">{{ $pendingMingguIni }} {{ __('minggu ini') }}</div>
                     </div>
                 </div>
             </div>
@@ -1091,9 +1252,9 @@
                         <span class="material-symbols-outlined">cancel</span>
                     </div>
                     <div>
-                        <div class="mw-stat-label">Ditolak</div>
+                        <div class="mw-stat-label">{{ __('Ditolak') }}</div>
                         <div class="mw-stat-value text-[#dc2626]">{{ $totalRejected }}</div>
-                        <div class="mw-stat-sub text-[#dc2626] font-medium">{{ $rejectedMingguIni }} minggu ini</div>
+                        <div class="mw-stat-sub text-[#dc2626] font-medium">{{ $rejectedMingguIni }} {{ __('minggu ini') }}</div>
                     </div>
                 </div>
             </div>
@@ -1104,11 +1265,11 @@
             <div class="xl:col-span-2 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow">
                 <div class="flex items-center justify-between mb-6">
                     <div>
-                        <div class="mw-sora font-bold text-slate-900 text-base">Pencairan 6 Bulan Terakhir</div>
-                        <div class="text-xs text-slate-400 mt-0.5">Total withdraw yang berhasil dicairkan</div>
+                        <div class="mw-sora font-bold text-slate-900 text-base">{{ __('Pencairan 6 Bulan Terakhir') }}</div>
+                        <div class="text-xs text-slate-400 mt-0.5">{{ __('Total penarikan yang berhasil dicairkan') }}</div>
                     </div>
                     <div class="flex items-center gap-2 text-xs text-slate-500">
-                        <span class="inline-block w-3 h-3 rounded-sm mw-grad-green"></span> Pencairan
+                        <span class="inline-block w-3 h-3 rounded-sm mw-grad-green"></span> {{ __('Pencairan') }}
                     </div>
                 </div>
                 <div class="flex items-end gap-3 h-[140px]">
@@ -1135,14 +1296,14 @@
 
             <div class="flex flex-col gap-4">
                 <div class="bg-white border border-slate-200 rounded-2xl p-5 flex-1 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="mw-sora font-bold text-slate-800 text-sm mb-4">Ringkasan Status</div>
+                    <div class="mw-sora font-bold text-slate-800 text-sm mb-4">{{ __('Ringkasan Status') }}</div>
                     <div class="space-y-4">
                         @php $total = $totalSuccess + $totalPending + $totalRejected; @endphp
                         @if($total > 0)
                         @php $ringkasan = [
-                        ['label'=>'Berhasil','val'=>$totalSuccess,'pct'=>round($totalSuccess/$total*100),'color'=>'#22c55e'],
-                        ['label'=>'Pending','val'=>$totalPending,'pct'=>round($totalPending/$total*100),'color'=>'#f59e0b'],
-                        ['label'=>'Ditolak','val'=>$totalRejected,'pct'=>round($totalRejected/$total*100),'color'=>'#ef4444'],
+                        ['label'=>__('Berhasil'),'val'=>$totalSuccess,'pct'=>round($totalSuccess/$total*100),'color'=>'#22c55e'],
+                        ['label'=>__('Tertunda'),'val'=>$totalPending,'pct'=>round($totalPending/$total*100),'color'=>'#f59e0b'],
+                        ['label'=>__('Ditolak'),'val'=>$totalRejected,'pct'=>round($totalRejected/$total*100),'color'=>'#ef4444'],
                         ]; @endphp
                         @foreach($ringkasan as $r)
                         <div class="group">
@@ -1157,35 +1318,35 @@
                         @endforeach
                         @else
                         <div class="text-center py-6">
-                            <p class="text-sm text-slate-400">Belum ada data</p>
+                            <p class="text-sm text-slate-400">{{ __('Belum ada data') }}</p>
                         </div>
                         @endif
                     </div>
                 </div>
 
                 <div class="bg-white border border-slate-200 rounded-2xl p-5 flex-1 shadow-sm hover:shadow-md transition-shadow">
-                    <div class="mw-sora font-bold text-slate-800 text-sm mb-4">Metode Populer</div>
+                    <div class="mw-sora font-bold text-slate-800 text-sm mb-4">{{ __('Metode Populer') }}</div>
                     <div class="space-y-3">
                         @forelse($metodeBreakdown as $m)
                         <div class="flex items-center gap-3 group">
                             @php
-                                $mLabel = strtolower($m['label']);
-                                $logoUrl = null;
-                                if ($mLabel === 'gopay') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Gopay_logo.svg';
-                                elseif ($mLabel === 'dana') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Logo_dana_blue.svg';
-                                elseif ($mLabel === 'shopeepay') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Shopee.svg';
-                                elseif ($mLabel === 'ovo') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Logo_ovo_purple.svg';
-                                elseif ($mLabel === 'bca') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Central_Asia.svg';
-                                elseif ($mLabel === 'mandiri') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Mandiri_logo_2016.svg';
-                                elseif ($mLabel === 'bni') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Negara_Indonesia_logo_(2004).svg';
-                                elseif ($mLabel === 'bri') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/BRI_2020.svg';
-                                elseif ($mLabel === 'bsi') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Syariah_Indonesia.svg';
+                            $mLabel = strtolower($m['label']);
+                            $logoUrl = null;
+                            if ($mLabel === 'gopay') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Gopay_logo.svg';
+                            elseif ($mLabel === 'dana') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Logo_dana_blue.svg';
+                            elseif ($mLabel === 'shopeepay') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Shopee.svg';
+                            elseif ($mLabel === 'ovo') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Logo_ovo_purple.svg';
+                            elseif ($mLabel === 'bca') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Central_Asia.svg';
+                            elseif ($mLabel === 'mandiri') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Mandiri_logo_2016.svg';
+                            elseif ($mLabel === 'bni') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Negara_Indonesia_logo_(2004).svg';
+                            elseif ($mLabel === 'bri') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/BRI_2020.svg';
+                            elseif ($mLabel === 'bsi') $logoUrl = 'https://commons.wikimedia.org/wiki/Special:FilePath/Bank_Syariah_Indonesia.svg';
                             @endphp
                             <div class="w-9 h-9 rounded-lg bg-slate-50 flex items-center justify-center border border-slate-100 transition-transform group-hover:scale-110 p-1">
                                 @if($logoUrl)
-                                    <img src="{{ $logoUrl }}" alt="{{ $m['label'] }}" class="w-full h-full object-contain" />
+                                <img src="{{ $logoUrl }}" alt="{{ $m['label'] }}" class="w-full h-full object-contain" />
                                 @else
-                                    <span class="material-symbols-outlined text-[1.2rem] text-slate-500 group-hover:text-green-600 transition-colors">account_balance_wallet</span>
+                                <span class="material-symbols-outlined text-[1.2rem] text-slate-500 group-hover:text-green-600 transition-colors">account_balance_wallet</span>
                                 @endif
                             </div>
                             <div class="flex-1">
@@ -1200,7 +1361,7 @@
                         </div>
                         @empty
                         <div class="text-center py-4">
-                            <p class="text-sm text-slate-400">Belum ada data</p>
+                            <p class="text-sm text-slate-400">{{ __('Belum ada data') }}</p>
                         </div>
                         @endforelse
                     </div>
@@ -1213,16 +1374,16 @@
             <div class="flex flex-wrap gap-3 items-center flex-1">
                 <div class="mw-search-wrap">
                     <span class="material-symbols-outlined mw-search-icon">search</span>
-                    <input type="text" placeholder="Cari nama tester, ID…" class="mw-input mw-search-input" x-model="cariTeks">
+                    <input type="text" placeholder="{{ __('Cari nama tester, ID…') }}" class="mw-input mw-search-input" x-model="cariTeks">
                 </div>
                 <select class="mw-select" x-model="filterStatus">
-                    <option value="">Semua Status</option>
-                    <option value="pending">Pending</option>
-                    <option value="success">Berhasil</option>
-                    <option value="rejected">Ditolak</option>
+                    <option value="">{{ __('Semua Status') }}</option>
+                    <option value="pending">{{ __('Tertunda') }}</option>
+                    <option value="success">{{ __('Berhasil') }}</option>
+                    <option value="rejected">{{ __('Ditolak') }}</option>
                 </select>
                 <select class="mw-select" x-model="filterMetode">
-                    <option value="">Semua Metode</option>
+                    <option value="">{{ __('Semua Metode') }}</option>
                     <option value="GoPay">GoPay</option>
                     <option value="DANA">DANA</option>
                     <option value="ShopeePay">ShopeePay</option>
@@ -1234,14 +1395,14 @@
                     <option value="BSI">BSI</option>
                 </select>
                 <select class="mw-select max-w-[120px]" x-model="perPage">
-                    <option value="5">5 Data</option>
-                    <option value="10">10 Data</option>
-                    <option value="20">20 Data</option>
-                    <option value="50">50 Data</option>
-                    <option value="100">100 Data</option>
-                    <option value="1000">Semua</option>
+                    <option value="5">{{ __('5 Data') }}</option>
+                    <option value="10">{{ __('10 Data') }}</option>
+                    <option value="20">{{ __('20 Data') }}</option>
+                    <option value="50">{{ __('50 Data') }}</option>
+                    <option value="100">{{ __('100 Data') }}</option>
+                    <option value="1000">{{ __('Semua') }}</option>
                 </select>
-                <button class="mw-btn mw-btn-ghost" @click="resetFilter()">Reset</button>
+                <button class="mw-btn mw-btn-ghost" @click="resetFilter()">{{ __('Reset') }}</button>
             </div>
         </div>
 
@@ -1252,61 +1413,61 @@
                     <tr>
                         <th>
                             <button class="mw-sort-btn" :class="sortCol==='id'?'active':''" @click="setSort('id')">
-                                ID Transaksi
+                                {{ __('ID Transaksi') }}
                                 <span class="material-symbols-outlined mw-sort-icon"
-                                      x-text="sortCol!=='id' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    x-text="sortCol!=='id' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="mw-sort-btn" :class="sortCol==='tester'?'active':''" @click="setSort('tester')">
-                                Tester
+                                {{ __('Tester') }}
                                 <span class="material-symbols-outlined mw-sort-icon"
-                                      x-text="sortCol!=='tester' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    x-text="sortCol!=='tester' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="mw-sort-btn" :class="sortCol==='point'?'active':''" @click="setSort('point')">
-                                Point
+                                {{ __('Poin') }}
                                 <span class="material-symbols-outlined mw-sort-icon"
-                                      x-text="sortCol!=='point' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    x-text="sortCol!=='point' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="mw-sort-btn" :class="sortCol==='nominal'?'active':''" @click="setSort('nominal')">
-                                Nominal
+                                {{ __('Nominal') }}
                                 <span class="material-symbols-outlined mw-sort-icon"
-                                      x-text="sortCol!=='nominal' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    x-text="sortCol!=='nominal' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="mw-sort-btn" :class="sortCol==='metode'?'active':''" @click="setSort('metode')">
-                                Metode
+                                {{ __('Metode') }}
                                 <span class="material-symbols-outlined mw-sort-icon"
-                                      x-text="sortCol!=='metode' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    x-text="sortCol!=='metode' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="mw-sort-btn" :class="sortCol==='akun'?'active':''" @click="setSort('akun')">
-                                No. Akun
+                                {{ __('No. Akun') }}
                                 <span class="material-symbols-outlined mw-sort-icon"
-                                      x-text="sortCol!=='akun' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    x-text="sortCol!=='akun' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="mw-sort-btn" :class="sortCol==='status'?'active':''" @click="setSort('status')">
-                                Status
+                                {{ __('Status') }}
                                 <span class="material-symbols-outlined mw-sort-icon"
-                                      x-text="sortCol!=='status' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    x-text="sortCol!=='status' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
                         <th>
                             <button class="mw-sort-btn" :class="sortCol==='tanggal'?'active':''" @click="setSort('tanggal')">
-                                Tanggal
+                                {{ __('Tanggal') }}
                                 <span class="material-symbols-outlined mw-sort-icon"
-                                      x-text="sortCol!=='tanggal' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
+                                    x-text="sortCol!=='tanggal' ? 'unfold_more' : (sortDir==='asc' ? 'arrow_upward' : 'arrow_downward')"></span>
                             </button>
                         </th>
-                        <th><span class="mw-sort-btn" style="cursor:default;pointer-events:none">Aksi</span></th>
+                        <th><span class="mw-sort-btn" style="cursor:default;pointer-events:none">{{ __('Aksi') }}</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1324,7 +1485,7 @@
                             </div>
                         </td>
                         <td>
-                            <div class="mw-mono mw-td-point">-{{ number_format($w['point']) }} pts</div>
+                            <div class="mw-mono mw-td-point">-{{ number_format($w['point']) }} poin</div>
                         </td>
                         <td>
                             <div class="mw-mono mw-td-nom">{{ $w['rupiahF'] }}</div>
@@ -1338,7 +1499,7 @@
                         <td>
                             <span class="mw-badge mw-badge-{{ $w['status'] }}">
                                 <span class="mw-dot mw-dot-{{ $w['status'] }}"></span>
-                                {{ ucfirst($w['status']) }}
+                                {{ $w['status'] == 'success' ? __('Berhasil') : ($w['status'] == 'pending' ? __('Tertunda') : __('Ditolak')) }}
                             </span>
                         </td>
                         <td>
@@ -1361,8 +1522,8 @@
                                 <div class="mw-empty-icon">
                                     <span class="material-symbols-outlined text-[1.8rem]">inbox</span>
                                 </div>
-                                <div class="font-semibold text-slate-500">Tidak ada penarikan ditemukan</div>
-                                <div class="text-sm text-slate-400 mt-1">Coba ubah filter atau kata kunci pencarian</div>
+                                <div class="font-semibold text-slate-500">{{ __('Tidak ada penarikan ditemukan') }}</div>
+                                <div class="text-sm text-slate-400 mt-1">{{ __('Coba ubah filter atau kata kunci pencarian') }}</div>
                             </div>
                         </td>
                     </tr>
@@ -1370,7 +1531,7 @@
             </table>
 
             <div class="mw-pagi" x-show="totalItems > 0" x-cloak>
-                <span>Menampilkan <strong class="text-slate-700" x-text="visibleIds.length"></strong> dari <strong class="text-slate-700" x-text="totalItems"></strong> penarikan</span>
+                <span>{{ __('Menampilkan') }} <strong class="text-slate-700" x-text="visibleIds.length"></strong> {{ __('dari') }} <strong class="text-slate-700" x-text="totalItems"></strong> {{ __('penarikan') }}</span>
                 <div class="flex items-center gap-1.5" x-show="totalPages > 1">
                     <button class="mw-pagi-btn" @click="currentPage > 1 ? currentPage-- : null; updatePagi()">‹</button>
                     <template x-for="p in totalPages" :key="p">
@@ -1392,7 +1553,7 @@
                 <div class="mw-detail-header">
                     <div class="flex items-center justify-between">
                         <div>
-                            <div class="mw-sora font-bold text-slate-900 text-base">Detail Withdraw</div>
+                            <div class="mw-sora font-bold text-slate-900 text-base">{{ __('Detail Penarikan') }}</div>
                             <div class="text-xs text-slate-400 mt-0.5" x-text="detail ? detail.withdrawId : ''"></div>
                         </div>
                         <button @click="tutupDetail()" class="mw-btn-icon">
@@ -1412,42 +1573,42 @@
                             </div>
                             <div class="mw-mono text-white font-bold text-3xl" x-text="detail.rupiahF"></div>
                             <div class="flex items-center gap-2 mt-3">
-                                <template x-if="detail.status === 'success'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500 text-white shadow-sm shadow-green-500/50">✓ Berhasil</span></template>
-                                <template x-if="detail.status === 'pending'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-500 text-white shadow-sm shadow-amber-500/50">⏳ Pending</span></template>
-                                <template x-if="detail.status === 'rejected'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-red-500 text-white shadow-sm shadow-red-500/50">✗ Ditolak</span></template>
+                                <template x-if="detail.status === 'success'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-green-500 text-white shadow-sm shadow-green-500/50">✓ {{ __('Berhasil') }}</span></template>
+                                <template x-if="detail.status === 'pending'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-amber-500 text-white shadow-sm shadow-amber-500/50">⏳ {{ __('Tertunda') }}</span></template>
+                                <template x-if="detail.status === 'rejected'"><span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-red-500 text-white shadow-sm shadow-red-500/50">✗ {{ __('Ditolak') }}</span></template>
                                 <span class="text-emerald-300 text-[.75rem]" x-text="detail.tanggal + ' · ' + detail.waktu"></span>
                             </div>
                         </div>
 
-                        <div class="mw-detail-section">Informasi Withdraw</div>
+                        <div class="mw-detail-section">{{ __('Informasi Penarikan') }}</div>
                         <div>
-                            <div class="mw-detail-row"><span class="mw-detail-label">ID Withdraw</span><span class="mw-detail-val mw-mono text-xs" x-text="detail.withdrawId"></span></div>
-                            <div class="mw-detail-row"><span class="mw-detail-label">Tanggal</span><span class="mw-detail-val" x-text="detail.tanggal + ' · ' + detail.waktu"></span></div>
-                            <div class="mw-detail-row"><span class="mw-detail-label">Status</span><span class="mw-detail-val" x-text="detail.status === 'success' ? 'Berhasil' : (detail.status === 'pending' ? 'Pending' : 'Ditolak')"></span></div>
-                            <div class="mw-detail-row"><span class="mw-detail-label">Diproses oleh</span><span class="mw-detail-val" x-text="detail.adminNama"></span></div>
+                            <div class="mw-detail-row"><span class="mw-detail-label">{{ __('ID Penarikan') }}</span><span class="mw-detail-val mw-mono text-xs" x-text="detail.withdrawId"></span></div>
+                            <div class="mw-detail-row"><span class="mw-detail-label">{{ __('Tanggal') }}</span><span class="mw-detail-val" x-text="detail.tanggal + ' · ' + detail.waktu"></span></div>
+                            <div class="mw-detail-row"><span class="mw-detail-label">{{ __('Status') }}</span><span class="mw-detail-val" x-text="detail.status === 'success' ? '{{ __('Berhasil') }}' : (detail.status === 'pending' ? '{{ __('Tertunda') }}' : '{{ __('Ditolak') }}')"></span></div>
+                            <div class="mw-detail-row"><span class="mw-detail-label">{{ __('Diproses oleh') }}</span><span class="mw-detail-val" x-text="detail.adminNama"></span></div>
                         </div>
 
-                        <div class="mw-detail-section">Rincian Pencairan</div>
+                        <div class="mw-detail-section">{{ __('Rincian Pencairan') }}</div>
                         <div>
-                            <div class="mw-detail-row"><span class="mw-detail-label">Point Ditukar</span><span class="mw-detail-val mw-mono text-xs text-red-500" x-text="'-' + detail.point.toLocaleString('id-ID') + ' pts'"></span></div>
-                            <div class="mw-detail-row"><span class="mw-detail-label">Metode</span><span class="mw-detail-val" x-text="detail.metode"></span></div>
-                            <div class="mw-detail-row"><span class="mw-detail-label">No. Akun</span><span class="mw-detail-val mw-mono text-xs" x-text="detail.nomorAkun"></span></div>
+                            <div class="mw-detail-row"><span class="mw-detail-label">{{ __('Poin Ditukar') }}</span><span class="mw-detail-val mw-mono text-xs text-red-500" x-text="'-' + detail.point.toLocaleString('id-ID') + ' poin'"></span></div>
+                            <div class="mw-detail-row"><span class="mw-detail-label">{{ __('Metode') }}</span><span class="mw-detail-val" x-text="detail.metode"></span></div>
+                            <div class="mw-detail-row"><span class="mw-detail-label">{{ __('No. Akun') }}</span><span class="mw-detail-val mw-mono text-xs" x-text="detail.nomorAkun"></span></div>
                             <div class="mw-detail-row bg-slate-50 -mx-1 px-1 py-3 rounded-lg mt-2">
-                                <span class="mw-detail-label font-bold text-slate-800">Total Dicairkan</span>
+                                <span class="mw-detail-label font-bold text-slate-800">{{ __('Total Dicairkan') }}</span>
                                 <span class="mw-detail-val mw-mono font-bold text-emerald-700 text-[.95rem]" x-text="detail.rupiahF"></span>
                             </div>
                         </div>
 
                         <template x-if="detail.catatan">
                             <div>
-                                <div class="mw-detail-section">Catatan Admin</div>
+                                <div class="mw-detail-section">{{ __('Catatan Admin') }}</div>
                                 <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 text-[.85rem] text-slate-700 leading-relaxed" x-text="detail.catatan"></div>
                             </div>
                         </template>
 
                         <template x-if="detail.image">
                             <div>
-                                <div class="mw-detail-section">Bukti Transfer</div>
+                                <div class="mw-detail-section">{{ __('Bukti Transfer') }}</div>
                                 <div class="mw-upload-preview">
                                     <img :src="detail.image" alt="Bukti Transfer" class="transition-transform duration-300 hover:scale-105">
                                 </div>
@@ -1456,7 +1617,7 @@
 
                         <template x-if="detail.updatedAt && detail.updatedAt !== '-'">
                             <div class="mt-4 text-[.75rem] text-slate-400 text-center">
-                                Terakhir diperbarui: <span x-text="detail.updatedAt"></span>
+                                {{ __('Terakhir diperbarui:') }} <span x-text="detail.updatedAt"></span>
                             </div>
                         </template>
                     </div>
@@ -1464,21 +1625,21 @@
                 <div class="mw-detail-footer">
                     <template x-if="detail && detail.status === 'pending'">
                         <div class="flex flex-col gap-2 w-full">
-                            
-                                <button class="mw-btn w-full mw-btn-primary"
-                                        wire:click="syncWithdrawStatus(detail.id)"
-                                        wire:loading.attr="disabled">
-                                    <span class="material-symbols-outlined animate-spin" wire:loading wire:target="syncWithdrawStatus" style="font-size:1.1rem;">sync</span>
-                                    <span class="material-symbols-outlined" wire:loading.remove wire:target="syncWithdrawStatus" style="font-size:1.1rem;">sync</span>
-                                    <span wire:loading.remove wire:target="syncWithdrawStatus">Sync Xendit Status</span>
-                                    <span wire:loading wire:target="syncWithdrawStatus">Synchronizing...</span>
-                                </button>
-                            
-                            
+
+                            <button class="mw-btn w-full mw-btn-primary"
+                                wire:click="syncWithdrawStatus(detail.id)"
+                                wire:loading.attr="disabled">
+                                <span class="material-symbols-outlined animate-spin" wire:loading wire:target="syncWithdrawStatus" style="font-size:1.1rem;">sync</span>
+                                <span class="material-symbols-outlined" wire:loading.remove wire:target="syncWithdrawStatus" style="font-size:1.1rem;">sync</span>
+                                <span wire:loading.remove wire:target="syncWithdrawStatus">{{ __('Sinkronisasi Status Xendit') }}</span>
+                                <span wire:loading wire:target="syncWithdrawStatus">{{ __('Menyinkronkan...') }}</span>
+                            </button>
+
+
                         </div>
                     </template>
                     <template x-if="detail && detail.status === 'success' && detail.image">
-                        <a :href="detail.image" target="_blank" class="mw-btn mw-btn-ghost w-full block text-center">📄 Lihat Bukti Transfer</a>
+                        <a :href="detail.image" target="_blank" class="mw-btn mw-btn-ghost w-full block text-center">📄 {{ __('Lihat Bukti Transfer') }}</a>
                     </template>
                 </div>
             </div>
@@ -1531,8 +1692,12 @@
                 },
 
                 setSort(col) {
-                    if (this.sortCol === col) { this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc'; }
-                    else { this.sortCol = col; this.sortDir = 'asc'; }
+                    if (this.sortCol === col) {
+                        this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        this.sortCol = col;
+                        this.sortDir = 'asc';
+                    }
                 },
 
                 updatePagi() {
@@ -1542,18 +1707,34 @@
 
                     rows.sort((a, b) => {
                         let va, vb;
-                        if (this.sortCol === 'id') { va = (a.dataset.id || ''); vb = (b.dataset.id || ''); }
-                        else if (this.sortCol === 'tester') { va = (a.dataset.nama || ''); vb = (b.dataset.nama || ''); }
-                        else if (this.sortCol === 'point') { va = +(a.dataset.point || 0); vb = +(b.dataset.point || 0); }
-                        else if (this.sortCol === 'nominal') { va = +(a.dataset.point || 0); vb = +(b.dataset.point || 0); }
-                        else if (this.sortCol === 'metode') { va = (a.dataset.metode || '').toLowerCase(); vb = (b.dataset.metode || '').toLowerCase(); }
-                        else if (this.sortCol === 'akun') { va = (a.dataset.akun || '').toLowerCase(); vb = (b.dataset.akun || '').toLowerCase(); }
-                        else if (this.sortCol === 'status') { va = (a.dataset.status || '').toLowerCase(); vb = (b.dataset.status || '').toLowerCase(); }
-                        else if (this.sortCol === 'tanggal') { va = +(a.dataset.tanggal || 0); vb = +(b.dataset.tanggal || 0); }
-                        else return 0;
-                        return va < vb ? (this.sortDir==='asc'?-1:1) : (va > vb ? (this.sortDir==='asc'?1:-1) : 0);
+                        if (this.sortCol === 'id') {
+                            va = (a.dataset.id || '');
+                            vb = (b.dataset.id || '');
+                        } else if (this.sortCol === 'tester') {
+                            va = (a.dataset.nama || '');
+                            vb = (b.dataset.nama || '');
+                        } else if (this.sortCol === 'point') {
+                            va = +(a.dataset.point || 0);
+                            vb = +(b.dataset.point || 0);
+                        } else if (this.sortCol === 'nominal') {
+                            va = +(a.dataset.point || 0);
+                            vb = +(b.dataset.point || 0);
+                        } else if (this.sortCol === 'metode') {
+                            va = (a.dataset.metode || '').toLowerCase();
+                            vb = (b.dataset.metode || '').toLowerCase();
+                        } else if (this.sortCol === 'akun') {
+                            va = (a.dataset.akun || '').toLowerCase();
+                            vb = (b.dataset.akun || '').toLowerCase();
+                        } else if (this.sortCol === 'status') {
+                            va = (a.dataset.status || '').toLowerCase();
+                            vb = (b.dataset.status || '').toLowerCase();
+                        } else if (this.sortCol === 'tanggal') {
+                            va = +(a.dataset.tanggal || 0);
+                            vb = +(b.dataset.tanggal || 0);
+                        } else return 0;
+                        return va < vb ? (this.sortDir === 'asc' ? -1 : 1) : (va > vb ? (this.sortDir === 'asc' ? 1 : -1) : 0);
                     });
-                    
+
                     rows.forEach(r => tbody.appendChild(r));
                     const emptyRow = tbody.querySelector('tr[x-show="totalItems === 0"]');
                     if (emptyRow) tbody.appendChild(emptyRow);

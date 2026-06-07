@@ -13,8 +13,18 @@ class ManajemenWithdraw extends Page
 {
     use WithFileUploads;
 
-    protected static ?string $navigationLabel = 'Withdraw Tester';
-    protected static ?string $title = 'Transaksi Tester';
+    public static function getNavigationLabel(): string
+    {
+        return __('Penarikan Tester');
+    }
+
+    public function getTitle(): string | \Illuminate\Contracts\Support\Htmlable
+    {
+        return __('Penarikan Tester');
+    }
+
+    protected static ?string $navigationLabel = 'Penarikan Tester';
+    protected static ?string $title = 'Penarikan Tester';
     protected static ?string $slug = 'manajemen-withdraw';
     protected string $view = 'filament.admin.pages.manajemen-withdraw';
 
@@ -42,9 +52,9 @@ class ManajemenWithdraw extends Page
         $withdraw = Withdraw::find($id);
         if (!$withdraw || !$withdraw->xendit_payout_id) {
             Notification::make()
-                ->title('Gagal')
+                ->title(__('Gagal'))
                 ->danger()
-                ->body('Transaksi tidak memiliki Xendit Payout ID.')
+                ->body(__('Transaksi tidak memiliki Xendit Payout ID.'))
                 ->send();
             return;
         }
@@ -58,12 +68,12 @@ class ManajemenWithdraw extends Page
                 $withdraw->update([
                     'status' => 'success',
                     'id_admin' => Auth::id(),
-                    'catatan' => 'Withdrawal completed via Xendit Payout.',
+                    'catatan' => 'Penarikan berhasil melalui Xendit Payout.',
                 ]);
                 Notification::make()
-                    ->title('Withdrawal Berhasil')
+                    ->title(__('Penarikan Berhasil'))
                     ->success()
-                    ->body('Transaksi #' . $id . ' selesai diproses via Xendit.')
+                    ->body(__('Transaksi #') . $id . __(' selesai diproses via Xendit.'))
                     ->send();
             } elseif ($status === 'FAILED' || $status === 'REJECTED') {
                 \Illuminate\Support\Facades\DB::transaction(function () use ($withdraw, $payout) {
@@ -74,27 +84,27 @@ class ManajemenWithdraw extends Page
                     $withdraw->update([
                         'status' => 'rejected',
                         'id_admin' => Auth::id(),
-                        'catatan' => 'Xendit payout failed: ' . ($payout['failure_code'] ?? 'Unknown Reason'),
+                        'catatan' => 'Penarikan Xendit gagal: ' . ($payout['failure_code'] ?? 'Alasan tidak diketahui'),
                     ]);
                 });
 
                 Notification::make()
-                    ->title('Withdrawal Gagal')
+                    ->title(__('Penarikan Gagal'))
                     ->danger()
-                    ->body('Transaksi #' . $id . ' gagal/ditolak. Point dikembalikan ke user.')
+                    ->body(__('Transaksi #') . $id . __(' gagal/ditolak. Poin dikembalikan kepada tester.'))
                     ->send();
             } else {
                 Notification::make()
-                    ->title('Sedang Diproses')
+                    ->title(__('Sedang Diproses'))
                     ->info()
-                    ->body('Transaksi ini masih diproses oleh Xendit. Status: ' . $status)
+                    ->body(__('Transaksi ini masih diproses oleh Xendit. Status: ') . $status)
                     ->send();
             }
 
             $this->dispatch('data-updated');
         } catch (\Exception $e) {
             Notification::make()
-                ->title('Gagal sinkronisasi')
+                ->title(__('Gagal sinkronisasi'))
                 ->danger()
                 ->body($e->getMessage())
                 ->send();
@@ -115,7 +125,7 @@ class ManajemenWithdraw extends Page
         ];
 
         $handle = fopen('php://output', 'w');
-        fputcsv($handle, ['ID Withdraw', 'Tanggal', 'Nama Tester', 'Point Ditukar', 'Rupiah', 'Metode', 'No Akun', 'Status', 'Admin']);
+        fputcsv($handle, ['ID Penarikan', 'Tanggal', 'Nama Tester', 'Poin Ditukar', 'Rupiah', 'Metode', 'No Akun', 'Status', 'Admin']);
 
         foreach ($withdrawals as $w) {
             fputcsv($handle, [
@@ -187,6 +197,21 @@ class ManajemenWithdraw extends Page
 
             $dateObj = $w->created_at ?: now();
 
+            $catatanText = $w->catatan;
+            if ($catatanText) {
+                if (str_contains($catatanText, 'Withdrawal completed via Xendit Payout.') || str_contains($catatanText, 'Penarikan berhasil melalui Xendit Payout.')) {
+                    $catatanText = __('Penarikan berhasil melalui Xendit Payout.');
+                } elseif (str_contains($catatanText, 'Xendit payout failed:') || str_contains($catatanText, 'Penarikan Xendit gagal:')) {
+                    $reason = trim(explode(':', $catatanText, 2)[1] ?? '');
+                    if ($reason === 'Unknown Reason' || $reason === 'Alasan tidak diketahui') {
+                        $reason = __('Alasan tidak diketahui');
+                    }
+                    $catatanText = __('Penarikan Xendit gagal:') . ' ' . $reason;
+                } elseif (str_contains($catatanText, 'Disbursement initiated via Xendit.') || str_contains($catatanText, 'Pencairan dimulai melalui Xendit.')) {
+                    $catatanText = __('Pencairan dimulai melalui Xendit.');
+                }
+            }
+
             $list[] = [
                 'id'               => $w->id,
                 'withdrawId'       => 'WD-' . $dateObj->format('Y') . '-' . str_pad($w->id, 4, '0', STR_PAD_LEFT),
@@ -201,7 +226,7 @@ class ManajemenWithdraw extends Page
                 'nomorAkun'        => $w->nomor_akun,
                 'xendit_payout_id' => $w->xendit_payout_id,
                 'status'           => $w->status,
-                'catatan'          => $w->catatan,
+                'catatan'          => $catatanText,
                 'tanggal'          => $dateObj->format('d M Y'),
                 'waktu'            => $dateObj->format('H:i'),
                 'adminNama'        => $w->admin ? $w->admin->name : '-',

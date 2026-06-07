@@ -6,11 +6,19 @@ use Filament\Pages\Page;
   
 class ManajemenKampanye extends Page  
 {  
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';  
-    protected static ?string $navigationLabel = 'Kampanye';  
-    protected static ?string $title = 'Manajemen Kampanye';  
-    protected static ?int $navigationSort = 3;  
-    protected string $view = 'filament.admin.pages.manajemen-kampanye';  
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
+    protected static ?int $navigationSort = 3;
+    protected string $view = 'filament.admin.pages.manajemen-kampanye';
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Kampanye');
+    }
+
+    public function getTitle(): string | \Illuminate\Contracts\Support\Htmlable
+    {
+        return __('Manajemen Kampanye');
+    }
   
     public function approveKampanye($id)
     {
@@ -46,7 +54,9 @@ class ManajemenKampanye extends Page
 
         $statusMap = [
             'open'      => 'Aktif',
+            'pending'   => 'Ditinjau',
             'Pending'   => 'Ditinjau',
+            'completed' => 'Selesai',
             'Completed' => 'Selesai',
             'rejected'  => 'Ditolak',
         ];
@@ -66,7 +76,8 @@ class ManajemenKampanye extends Page
             'statDitinjau' => \App\Models\Misi::where('status', 'Pending')->count(),  
             'statDitolak'  => \App\Models\Misi::where('status', 'rejected')->count(),  
             'kampanyeList' => $misis->map(function($misi, $idx) use ($statusMap, $colors) {
-                $statusUI = $statusMap[$misi->status] ?? $misi->status;
+                $rawStatus = $misi->status;
+                $statusUI = __($statusMap[$rawStatus] ?? $rawStatus);
                 $grad = $colors[$idx % count($colors)];
                 
                 // Timeline logic (14 days)
@@ -79,9 +90,10 @@ class ManajemenKampanye extends Page
                     'nama'      => $misi->nama_aplikasi,  
                     'developer' => $misi->user->name ?? 'Unknown',  
                     'status'    => $statusUI,  
+                    'raw_status'=> $rawStatus,
                     'tester'    => $misi->misi_anggotas_count,  
                     'maxTester' => $misi->kapasitas ?? config('missions.max_capacity', 20),  
-                    'hariKe'    => ($statusUI === 'Selesai') ? 14 : (($statusUI === 'Ditinjau') ? 0 : $hariKe),  
+                    'hariKe'    => ($rawStatus === 'Completed') ? 14 : (($rawStatus === 'Pending') ? 0 : $hariKe),  
                     'maxHari'   => 14,  
                     'mulai'     => $misi->created_at ? $misi->created_at->format('d M Y') : '-',  
                     'selesai'   => $misi->created_at ? $misi->created_at->addDays(14)->format('d M Y') : '-',  

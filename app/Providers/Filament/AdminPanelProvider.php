@@ -88,7 +88,7 @@ class AdminPanelProvider extends PanelProvider
                             NavigationItem::make(__('Paket'))
                                 ->icon('heroicon-o-currency-dollar')
                                 ->url(fn() => ManajemenPaket::getUrl())
-                                ->isActiveWhen(fn() => request()->is('admin/manajemen-paket*')),
+                                ->isActiveWhen(fn() => request()->is('admin/manajemen-paket*') || request()->is('admin/packets*')),
                         ]),
 
                     NavigationGroup::make(__('Transaksi & Keuangan'))

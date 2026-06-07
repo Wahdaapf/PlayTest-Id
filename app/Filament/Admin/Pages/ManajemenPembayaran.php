@@ -6,8 +6,16 @@ use Filament\Pages\Page;
 
 class ManajemenPembayaran extends Page
 {
-    protected static ?string $navigationLabel = 'Pembayaran Developer';
-    protected static ?string $title = 'Transaksi Developer';
+    public static function getNavigationLabel(): string
+    {
+        return __('Pembayaran Developer');
+    }
+
+    public function getTitle(): string | \Illuminate\Contracts\Support\Htmlable
+    {
+        return __('Transaksi Developer');
+    }
+
     protected static ?string $slug = 'manajemen-pembayaran';
     protected string $view = 'filament.admin.pages.manajemen-pembayaran';
 
@@ -36,9 +44,9 @@ class ManajemenPembayaran extends Page
             $jumlah = $p->paket ? ($p->paket->price + ($p->paket->fee ?? 0)) : 0;
 
             // Map status dari Duitku callback
-            $statusUI = 'Menunggu Bayar';
+            $statusUI = __('Menunggu Bayar');
             if ($p->status === 'accepted' || $p->status === 'success') {
-                $statusUI = 'Berhasil';
+                $statusUI = __('Berhasil');
                 $statBerhasil++;
                 $totalPendapatan += $jumlah;
                 if ($p->created_at && $p->created_at->format('Y-m') === now()->format('Y-m')) {
@@ -51,13 +59,13 @@ class ManajemenPembayaran extends Page
                     $berhasilBulanIni++;
                 }
             } elseif ($p->status === 'pending') {
-                $statusUI = 'Menunggu Bayar';
+                $statusUI = __('Menunggu Bayar');
                 $statPending++;
                 if ($p->created_at && $p->created_at >= now()->startOfWeek()) {
                     $pendingMingguIni++;
                 }
             } elseif ($p->status === 'rejected' || $p->status === 'failed') {
-                $statusUI = 'Gagal';
+                $statusUI = __('Gagal');
                 $statGagal++;
             }
 
@@ -93,7 +101,7 @@ class ManajemenPembayaran extends Page
         $chartNilai = [];
         for ($i = 5; $i >= 0; $i--) {
             $date = now()->subMonths($i);
-            $bulanIndo = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            $bulanIndo = [__('Jan'), __('Feb'), __('Mar'), __('Apr'), __('Mei'), __('Jun'), __('Jul'), __('Agu'), __('Sep'), __('Okt'), __('Nov'), __('Des')];
             $chartBulan[] = $bulanIndo[(int) $date->format('n') - 1];
 
             $sum = collect($pembayarans)->filter(function ($p) use ($date) {

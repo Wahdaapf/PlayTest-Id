@@ -16,44 +16,44 @@ class PaketForm
         return $schema
             ->components([
                 // Section 1 - Information
-                Section::make("Information")
-                    ->description("Set information details for this package")
+                Section::make(__('Informasi'))
+                    ->description(__('Atur detail informasi untuk paket ini'))
                     ->icon('heroicon-o-document-text')
                     ->columnSpanFull()
                     ->schema([
                         TextInput::make("name")
-                            ->label("Package Name")
+                            ->label(__('Nama Paket'))
                             ->required()
                             ->columnSpanFull(),
                         RichEditor::make("desc")
-                            ->label("Description")
+                            ->label(__('Deskripsi'))
                             ->required()
                             ->columnSpanFull(),
                     ]),
 
                 // Section 2 - Pricing & Points
-                Section::make("Pricing & Rewards")
-                    ->description("Set the pricing and point rewards for this package")
+                Section::make(__('Harga & Hadiah'))
+                    ->description(__('Atur harga dan hadiah poin untuk paket ini'))
                     ->icon('heroicon-o-currency-dollar')
                     ->columnSpanFull()
                     ->schema([
                         Group::make([
                             TextInput::make("price")
-                                ->label("Price")
+                                ->label(__('Harga'))
                                 ->required()
                                 ->numeric()
                                 ->prefix('Rp')
                                 ->maxValue(9999999999999.99)
                                 ->step(0.01),
                             TextInput::make("fee")
-                                ->label("Fee")
+                                ->label(__('Biaya Layanan'))
                                 ->required()
                                 ->numeric()
                                 ->prefix('Rp')
                                 ->maxValue(9999999999999.99)
                                 ->step(0.01),
                             TextInput::make("point")
-                                ->label("Point Reward")
+                                ->label(__('Hadiah Poin'))
                                 ->placeholder("0")
                                 ->required()
                                 ->numeric()
@@ -64,22 +64,22 @@ class PaketForm
                     ]),
 
                 // Section 3 - Status & Badges
-                Section::make("Status & Badges")
-                    ->description("Manage the status and visibility of this package")
+                Section::make(__('Status & Lencana'))
+                    ->description(__('Kelola status dan visibilitas untuk paket ini'))
                     ->icon('heroicon-o-cog')
                     ->columnSpanFull()
                     ->schema([
                         Group::make([
                             Toggle::make("aktif")
-                                ->label("Active Status")
+                                ->label(__('Status Aktif'))
                                 ->required()
                                 ->default(true),
                             Toggle::make("most_popular")
-                                ->label("Most Popular")
+                                ->label(__('Paling Populer'))
                                 ->required()
                                 ->default(false),
                             Toggle::make("trusted_badge")
-                                ->label("Trusted Badge")
+                                ->label(__('Lencana Terpercaya'))
                                 ->required()
                                 ->default(false),
                         ])->columns(3),

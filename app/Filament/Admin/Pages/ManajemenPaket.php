@@ -25,9 +25,17 @@ class ManajemenPaket extends Page implements HasTable, HasForms
     use InteractsWithTable;
     use InteractsWithForms;
 
-    protected static ?string $navigationLabel = 'Paket';
-    protected static ?string $title = 'Manajemen Paket';
     protected static ?string $slug = 'manajemen-paket';
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Paket');
+    }
+
+    public function getTitle(): string | \Illuminate\Contracts\Support\Htmlable
+    {
+        return __('Manajemen Paket');
+    }
     protected string $view = 'filament.admin.pages.manajemen-paket';
 
     public function table(Table $table): Table
@@ -141,11 +149,11 @@ class ManajemenPaket extends Page implements HasTable, HasForms
             ];
             $color = $colors[crc32($nama) % count($colors)];
 
-            $statusStr = 'Aktif';
+            $statusStr = __('Aktif');
             if ($s->status === 'pending')
-                $statusStr = 'Review';
+                $statusStr = __('Ditinjau');
             else if ($s->status === 'failed' || $s->status === 'refund')
-                $statusStr = 'Selesai';
+                $statusStr = __('Selesai');
 
             if ($s->status === 'success')
                 $totalSubs++;
@@ -197,7 +205,7 @@ class ManajemenPaket extends Page implements HasTable, HasForms
         if ($paket) {
             $paket->aktif = $status;
             $paket->save();
-            \Filament\Notifications\Notification::make()->title('Status aktif berhasil diubah')->success()->send();
+            \Filament\Notifications\Notification::make()->title(__('Status aktif berhasil diubah'))->success()->send();
         }
     }
 
@@ -207,7 +215,7 @@ class ManajemenPaket extends Page implements HasTable, HasForms
         if ($paket) {
             $paket->trusted_badge = $status;
             $paket->save();
-            \Filament\Notifications\Notification::make()->title('Trusted badge berhasil diubah')->success()->send();
+            \Filament\Notifications\Notification::make()->title(__('Lencana terpercaya berhasil diubah'))->success()->send();
         }
     }
 
@@ -216,7 +224,7 @@ class ManajemenPaket extends Page implements HasTable, HasForms
         $paket = Paket::find($id);
         if ($paket) {
             $paket->delete();
-            \Filament\Notifications\Notification::make()->title('Paket berhasil dihapus')->success()->send();
+            \Filament\Notifications\Notification::make()->title(__('Paket berhasil dihapus'))->success()->send();
         }
     }
 
@@ -237,7 +245,7 @@ class ManajemenPaket extends Page implements HasTable, HasForms
             
             $paket->save();
             
-            \Filament\Notifications\Notification::make()->title('Paket berhasil diupdate')->success()->send();
+            \Filament\Notifications\Notification::make()->title(__('Paket berhasil diupdate'))->success()->send();
         }
     }
 }

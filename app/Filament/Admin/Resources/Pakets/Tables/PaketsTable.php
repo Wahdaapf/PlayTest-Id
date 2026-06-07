@@ -66,7 +66,7 @@ class PaketsTable
                 //
             ])
             ->recordActions([
-                \Filament\Tables\Actions\EditAction::make()->iconButton()->tooltip('Edit'),
+                EditAction::make()->iconButton()->tooltip('Edit'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
