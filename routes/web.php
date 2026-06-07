@@ -27,6 +27,7 @@ Route::prefix('admin/export')
         Route::get('/pengguna',  [\App\Http\Controllers\Admin\ExportController::class, 'exportPengguna'])->name('admin.export.pengguna');
         Route::get('/kampanye',  [\App\Http\Controllers\Admin\ExportController::class, 'exportKampanye'])->name('admin.export.kampanye');
         Route::get('/pendapatan',[\App\Http\Controllers\Admin\ExportController::class, 'exportPendapatan'])->name('admin.export.pendapatan');
+        Route::get('/withdraw',  [\App\Http\Controllers\Admin\ExportController::class, 'exportWithdraw'])->name('admin.export.withdraw');
         Route::get('/pdf',       [\App\Http\Controllers\Admin\ExportController::class, 'exportPdf'])->name('admin.export.pdf');
     });
 

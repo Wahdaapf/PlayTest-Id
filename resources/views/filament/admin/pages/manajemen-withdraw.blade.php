@@ -1030,10 +1030,10 @@
                 <h1 class="mw-sora text-xl font-bold text-slate-900">Manajemen Penarikan Tester</h1>
                 <p class="text-sm text-slate-500 mt-0.5">Kelola permintaan pencairan poin dari tester</p>
             </div>
-            <button wire:click="exportCsv" class="mw-btn mw-btn-export">
+            <a href="{{ route('admin.export.withdraw') }}" class="mw-btn mw-btn-export">
                 <span class="material-symbols-outlined">download</span>
                 Export CSV
-            </button>
+            </a>
         </div>
 
         {{-- ══ STAT CARDS ══ --}}

@@ -202,10 +202,10 @@
             </button>
         </div>
         {{-- Export --}}
-        <button class="mp-btn mp-btn-primary">
+        <a href="{{ route('admin.export.kampanye') }}" class="mp-btn mp-btn-primary">
             <span class="material-symbols-outlined text-[1.1rem]">download</span>
             Export CSV
-        </button>
+        </a>
     </div>
 </div>
 

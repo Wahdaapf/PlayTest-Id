@@ -994,10 +994,10 @@
                 <h1 class="tk-sora text-xl font-bold text-slate-900">Manajemen Pembayaran Developer</h1>
                 <p class="text-sm text-slate-500 mt-0.5">Transaksi otomatis via <strong class="text-blue-600">Duitku</strong> Payment Gateway</p>
             </div>
-            <button class="tk-btn tk-btn-export">
+            <a href="{{ route('admin.export.pendapatan') }}" class="tk-btn tk-btn-export">
                 <span class="material-symbols-outlined text-[1.1rem]">download</span>
                 Export CSV
-            </button>
+            </a>
         </div>
 
         {{-- ══ STAT CARDS ══ --}}
