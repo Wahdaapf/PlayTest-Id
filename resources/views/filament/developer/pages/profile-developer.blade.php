@@ -122,9 +122,9 @@
 
   /* Twinkling stars */
   .prof-stars { position:absolute; inset:0; pointer-events:none; }
-  .prof-stars i {
+  .prof-stars span {
     position:absolute; width:2px; height:2px; border-radius:50%;
-    background:#fff; box-shadow:0 0 6px #fff;
+    background:#fff !important; box-shadow:0 0 6px #fff, 0 0 12px #fff !important;
     animation: prof-twinkle 3s ease-in-out infinite;
   }
 
@@ -136,10 +136,11 @@
     filter: drop-shadow(0 0 6px rgba(147,197,253,.9));
     border-radius:2px;
     animation: prof-shoot 7s ease-in infinite;
-    animation-delay: 2s;
+    animation-delay: -2s;
     pointer-events:none;
+    opacity: 0;
   }
-  .prof-shoot.s2 { top:55%; animation-duration: 9s; animation-delay: 5s; opacity:.7; }
+  .prof-shoot.s2 { top:55%; animation-duration: 9s; animation-delay: -5s; opacity: 0; }
 
   /* Wave bottom */
   .prof-waves {
@@ -158,7 +159,7 @@
     pointer-events:none;
   }
   .prof-avatar {
-    background: linear-gradient(135deg,#3b82f6,#2563eb,#7c3aed);
+    background: linear-gradient(135deg,#fbbf24,#f59e0b,#ef4444);
     box-shadow: 0 8px 24px rgba(0,0,0,.25), 0 0 0 4px rgba(255,255,255,.15);
   }
   .prof-status-dot { animation: prof-pulse-ring 2s infinite; }
@@ -234,7 +235,7 @@
   @media (prefers-reduced-motion: reduce) {
     .prof-hero, .prof-blob, .prof-blob-rev, .prof-status-dot,
     .prof-btn-save, .prof-divider-anim, .prof-aurora, .prof-conic, .prof-conic-2,
-    .prof-grid-bg, .prof-particles span, .prof-shoot, .prof-waves svg, .prof-scan, .prof-stars i { animation: none !important; }
+    .prof-grid-bg, .prof-particles span, .prof-shoot, .prof-waves svg, .prof-scan, .prof-stars span { animation: none !important; }
   }
 </style>
 @endpush
@@ -263,7 +264,7 @@
       {{-- Twinkling stars --}}
       <div class="prof-stars">
         @for($i=0;$i<18;$i++)
-          <i style="top:{{ rand(2,90) }}%; left:{{ rand(2,98) }}%; animation-delay:{{ ($i*0.23) }}s;"></i>
+          <span style="top:{{ rand(2,90) }}%; left:{{ rand(2,98) }}%; animation-delay:-{{ ($i*0.23) }}s;"></span>
         @endfor
       </div>
 
@@ -288,37 +289,37 @@
            style="background:radial-gradient(circle,#ffffff,transparent 70%);animation-delay:-3s;"></div>
 
       {{-- Konten utama --}}
-      <div class="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div class="flex items-start sm:items-center gap-4">
+      <div class="relative z-10 flex flex-col lg:flex-row items-center lg:items-end lg:justify-between gap-6">
+        <div class="flex flex-col sm:flex-row items-center text-center sm:text-left gap-5 w-full lg:w-auto">
           {{-- Avatar with initial --}}
           <div class="relative flex-shrink-0">
-            <div class="prof-avatar w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center text-white text-2xl sm:text-3xl font-extrabold select-none">
+            <div class="prof-avatar w-20 h-20 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center text-white text-3xl sm:text-4xl font-extrabold select-none">
               {{ strtoupper(substr(Auth::user()->name,0,1)) }}
             </div>
-            <span class="prof-status-dot absolute -bottom-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 border-white"
+            <span class="prof-status-dot absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-2 border-white"
                   style="background:#34d399;"></span>
           </div>
 
-          <div class="min-w-0">
-            <p class="text-[10px] font-bold uppercase mb-1 flex items-center gap-2"
+          <div class="flex-1">
+            <p class="text-[11px] font-bold uppercase mb-1.5 flex items-center justify-center sm:justify-start gap-2"
                style="color:#bfdbfe;letter-spacing:0.18em;">
-              <span class="w-4 h-px" style="background:#bfdbfe;"></span>
+              <span class="w-6 h-px hidden sm:inline-block" style="background:#bfdbfe;"></span>
               DEVELOPER PANEL
             </p>
-            <h1 class="font-bold text-white mb-2 truncate" style="font-size:clamp(20px,5vw,34px);line-height:1.1;letter-spacing:-0.02em;">
+            <h1 class="font-bold text-white mb-2.5 text-2xl sm:text-[34px]" style="line-height:1.1;letter-spacing:-0.02em;">
               {{ Auth::user()->name }}
             </h1>
-            <div class="flex items-center gap-1.5 flex-wrap">
-              <span class="inline-flex items-center gap-1 text-[10px] sm:text-xs font-bold px-2 py-1 rounded-full"
+            <div class="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full"
                     style="background:linear-gradient(135deg,rgba(59,130,246,.25),rgba(124,58,237,.25));color:#dbeafe;border:1px solid rgba(59,130,246,.3);">
                 💻 Developer
               </span>
-              <span class="inline-flex items-center gap-1 text-[10px] sm:text-xs font-medium px-2 py-1 rounded-full"
+              <span class="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full"
                     style="background:rgba(255,255,255,0.12);color:#dbeafe;border:1px solid rgba(255,255,255,.15);">
                 <span class="w-1.5 h-1.5 rounded-full inline-block prof-status-dot" style="background:#34d399;"></span>
-                Bergabung {{ Auth::user()->created_at->format('M Y') }}
+                {{ __('Bergabung') }} {{ Auth::user()->created_at->format('M Y') }}
               </span>
-              <span class="inline-flex items-center gap-1 text-[10px] sm:text-xs font-medium px-2 py-1 rounded-full max-w-full truncate"
+              <span class="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full"
                     style="background:rgba(255,255,255,0.12);color:#dbeafe;border:1px solid rgba(255,255,255,.15);">
                 ✉️ {{ Auth::user()->email }}
               </span>
@@ -326,19 +327,19 @@
           </div>
         </div>
 
-        {{-- Top stat pills: 3-col grid on mobile --}}
-        <div class="grid grid-cols-3 sm:flex sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
-          <div class="prof-stat-pill rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3 text-center">
-            <p class="font-mono-num text-xl sm:text-2xl font-bold text-white prof-counter" data-target="{{ $stats['total_misi'] }}">0</p>
-            <p class="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.08em;">Total Misi</p>
+        {{-- Top stat pills --}}
+        <div class="flex items-center justify-center sm:justify-start gap-3 flex-wrap w-full lg:w-auto">
+          <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px] flex-1 sm:flex-none">
+            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ $stats['total_misi'] }}">0</p>
+            <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">{{ __('Total Misi') }}</p>
           </div>
-          <div class="prof-stat-pill rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3 text-center">
-            <p class="font-mono-num text-xl sm:text-2xl font-bold text-white prof-counter" data-target="{{ $stats['misi_selesai'] }}">0</p>
-            <p class="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.08em;">Selesai</p>
+          <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px] flex-1 sm:flex-none">
+            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ $stats['misi_selesai'] }}">0</p>
+            <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">{{ __('Selesai') }}</p>
           </div>
-          <div class="prof-stat-pill rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3 text-center">
-            <p class="font-mono-num text-xl sm:text-2xl font-bold text-white prof-counter" data-target="{{ $stats['total_misi'] > 0 ? round($stats['misi_selesai'] / $stats['total_misi'] * 100) : 0 }}">0</p>
-            <p class="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.08em;">% Sukses</p>
+          <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px] flex-1 sm:flex-none">
+            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ $stats['total_misi'] > 0 ? round($stats['misi_selesai'] / $stats['total_misi'] * 100) : 0 }}">0</p>
+            <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">{{ __('% Sukses') }}</p>
           </div>
         </div>
       </div>
@@ -348,9 +349,9 @@
            style="border-top:1px solid rgba(255,255,255,0.15);">
         @php
           $mini = [
-            ['label'=>'Misi Dibuat','val'=>$stats['total_misi'],'color'=>'#60a5fa'],
-            ['label'=>'Misi Selesai','val'=>$stats['misi_selesai'],'color'=>'#34d399'],
-            ['label'=>'Paket Aktif','val'=>$stats['paket'],'color'=>'#a78bfa','isText'=>true],
+            ['label'=>__('Misi Dibuat'),'val'=>$stats['total_misi'],'color'=>'#60a5fa'],
+            ['label'=>__('Misi Selesai'),'val'=>$stats['misi_selesai'],'color'=>'#34d399'],
+            ['label'=>__('Paket Aktif'),'val'=>0,'color'=>'#a78bfa','isText'=>true,'textVal'=>$stats['paket']],
           ];
         @endphp
         @foreach($mini as $m)
@@ -358,7 +359,7 @@
             <span class="prof-mini-dot w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:{{ $m['color'] }};box-shadow:0 0 12px {{ $m['color'] }};"></span>
             <div>
               @if(isset($m['isText']) && $m['isText'])
-                <p class="font-mono-num text-lg font-bold text-white">{{ $m['val'] }}</p>
+                <p class="font-mono-num text-lg font-bold text-white">{{ $m['textVal'] }}</p>
               @else
                 <p class="font-mono-num text-lg font-bold text-white prof-counter" data-target="{{ $m['val'] }}">0</p>
               @endif
@@ -393,21 +394,21 @@
           </svg>
         </div>
         <div class="relative">
-          <h2 class="font-bold text-slate-800 text-base">Edit Profil</h2>
-          <p class="text-slate-400 text-xs">Perbarui informasi akun & keamanan Anda</p>
+          <h2 class="font-bold text-slate-800 text-base">{{ __('Edit Profil') }}</h2>
+          <p class="text-slate-400 text-xs">{{ __('Perbarui informasi akun & keamanan Anda') }}</p>
         </div>
       </div>
 
       <div class="p-6 prof-fade-3">
         <form wire:submit="save">
           {{ $this->form }}
-          <div class="mt-6 flex justify-end">
+          <div class="mt-6 flex flex-col sm:flex-row justify-end">
             <button type="submit"
-              class="prof-btn-save inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-bold text-white">
+              class="prof-btn-save inline-flex justify-center items-center gap-2 px-6 py-3 rounded-2xl text-sm font-bold text-white w-full sm:w-auto">
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
               </svg>
-              Simpan Perubahan
+              {{ __('Simpan Perubahan') }}
             </button>
           </div>
         </form>

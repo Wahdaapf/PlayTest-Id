@@ -136,11 +136,10 @@
 
   /* Twinkling stars */
   .tb-stars { position:absolute; inset:0; pointer-events:none; }
-  .tb-stars i {
+  .tb-stars span {
     position:absolute; width:2px; height:2px; border-radius:50%;
-    background:#fff; box-shadow:0 0 6px #fff;
+    background:#fff !important; box-shadow:0 0 6px #fff, 0 0 12px #fff !important;
     animation: tb-twinkle 3s ease-in-out infinite;
-    font-style: normal;
   }
 
   /* Shooting star */
@@ -151,10 +150,11 @@
     filter: drop-shadow(0 0 6px rgba(147,197,253,.9));
     border-radius:2px;
     animation: tb-shoot 7s ease-in infinite;
-    animation-delay: 2s;
+    animation-delay: -2s;
     pointer-events:none;
+    opacity: 0;
   }
-  .tb-shoot.s2 { top:55%; animation-duration: 9s; animation-delay: 5s; opacity:.7; }
+  .tb-shoot.s2 { top:55%; animation-duration: 9s; animation-delay: -5s; opacity: 0; }
 
   /* Wave bottom */
   .tb-waves {
@@ -681,7 +681,7 @@
   @media (prefers-reduced-motion: reduce) {
     .tb-hero, .tb-blob, .tb-blob-rev, .tb-aurora, .tb-conic, .tb-conic-2,
     .tb-grid-bg, .tb-particles span, .tb-shoot, .tb-waves svg, .tb-scan,
-    .tb-stars i, .tb-card, .tb-card-emoji, .tb-stat-pill { animation: none !important; }
+    .tb-stars span, .tb-card, .tb-card-emoji, .tb-stat-pill { animation: none !important; }
   }
 </style>
 @endpush
@@ -707,7 +707,7 @@
     {{-- Twinkling stars --}}
     <div class="tb-stars">
       @for($i=0;$i<16;$i++)
-        <i style="top:{{ rand(2,90) }}%; left:{{ rand(2,98) }}%; animation-delay:{{ ($i*0.23) }}s;"></i>
+        <span style="top:{{ rand(2,90) }}%; left:{{ rand(2,98) }}%; animation-delay:-{{ ($i*0.23) }}s;"></span>
       @endfor
     </div>
 

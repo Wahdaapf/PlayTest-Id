@@ -86,6 +86,8 @@
     background:
       radial-gradient(40% 35% at 20% 30%, rgba(96,165,250,.55), transparent 60%),
       radial-gradient(35% 30% at 80% 20%, rgba(167,139,250,.45), transparent 60%),
+      radial-gradient(25% 20% at 70% 55%, rgba(251,191,36,.30), transparent 55%),
+      radial-gradient(20% 18% at 40% 10%, rgba(245,158,11,.25), transparent 50%),
       radial-gradient(45% 40% at 60% 80%, rgba(34,211,238,.40), transparent 60%),
       radial-gradient(30% 25% at 15% 85%, rgba(244,114,182,.35), transparent 60%);
     filter: blur(40px);
@@ -105,10 +107,19 @@
   }
   .tb-conic-2 {
     position:absolute; width:380px; height:380px; right:-120px; top:-140px;
-    background: conic-gradient(from 180deg, rgba(244,114,182,0), rgba(244,114,182,.30), rgba(96,165,250,.30), rgba(244,114,182,0));
+    background: conic-gradient(from 180deg, rgba(251,191,36,0), rgba(251,191,36,.35), rgba(245,158,11,.30), rgba(239,68,68,.20), rgba(244,114,182,.25), rgba(251,191,36,0));
     border-radius:50%;
     filter: blur(30px);
     animation: tb-spin-rev 34s linear infinite;
+    opacity:.6; pointer-events:none;
+  }
+
+  .tb-golden-glow {
+    position:absolute; width:260px; height:260px; right:15%; top:-80px;
+    background: radial-gradient(circle, rgba(251,191,36,.45) 0%, rgba(245,158,11,.25) 40%, transparent 70%);
+    border-radius:50%;
+    filter: blur(35px);
+    animation: tb-float 12s ease-in-out infinite;
     opacity:.6; pointer-events:none;
   }
 
@@ -136,11 +147,10 @@
 
   /* Twinkling stars */
   .tb-stars { position:absolute; inset:0; pointer-events:none; }
-  .tb-stars i {
+  .tb-stars span {
     position:absolute; width:2px; height:2px; border-radius:50%;
-    background:#fff; box-shadow:0 0 6px #fff;
+    background:#fff !important; box-shadow:0 0 6px #fff, 0 0 12px #fff !important;
     animation: tb-twinkle 3s ease-in-out infinite;
-    font-style: normal;
   }
 
   /* Shooting star */
@@ -151,10 +161,11 @@
     filter: drop-shadow(0 0 6px rgba(147,197,253,.9));
     border-radius:2px;
     animation: tb-shoot 7s ease-in infinite;
-    animation-delay: 2s;
+    animation-delay: -2s;
     pointer-events:none;
+    opacity: 0;
   }
-  .tb-shoot.s2 { top:55%; animation-duration: 9s; animation-delay: 5s; opacity:.7; }
+  .tb-shoot.s2 { top:55%; animation-duration: 9s; animation-delay: -5s; opacity: 0; }
 
   /* Wave bottom */
   .tb-waves {
@@ -707,7 +718,7 @@
     {{-- Twinkling stars --}}
     <div class="tb-stars">
       @for($i=0;$i<16;$i++)
-        <i style="top:{{ rand(2,90) }}%; left:{{ rand(2,98) }}%; animation-delay:{{ ($i*0.23) }}s;"></i>
+        <span style="top:{{ rand(2,90) }}%; left:{{ rand(2,98) }}%; animation-delay:-{{ ($i*0.23) }}s;"></span>
       @endfor
     </div>
 
@@ -722,6 +733,9 @@
     {{-- Shooting stars --}}
     <div class="tb-shoot"></div>
     <div class="tb-shoot s2"></div>
+
+    {{-- Warm golden glow --}}
+    <div class="tb-golden-glow"></div>
 
     {{-- Decorative blobs --}}
     <div class="tb-blob" style="position:absolute;right:-48px;top:-48px;width:192px;height:192px;border-radius:50%;opacity:.2;background:radial-gradient(circle,#60a5fa,transparent 70%);"></div>

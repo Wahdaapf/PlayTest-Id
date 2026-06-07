@@ -1036,6 +1036,14 @@
     border-color: #475569 !important;
     background: #0f172a !important;
 }
+/* Icon bg payment method: always white regardless of dark theme */
+.dark .wlt-method-icon,
+.dark .wlt-method-icon[style*="background:#f8fafc"],
+.dark .wlt-method-icon[style*="background: #f8fafc"],
+.dark div.wlt-method-icon {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+}
 .dark .wlt-filter-ctrl {
     background: #0f172a !important;
     border-color: #334155 !important;

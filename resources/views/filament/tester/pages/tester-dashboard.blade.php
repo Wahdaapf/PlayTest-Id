@@ -228,9 +228,9 @@
 
 /* Twinkling stars */
 .prof-stars { position:absolute; inset:0; pointer-events:none; }
-.prof-stars i {
+.prof-stars span {
   position:absolute; width:2px; height:2px; border-radius:50%;
-  background:#fff; box-shadow:0 0 6px #fff;
+  background:#fff !important; box-shadow:0 0 6px #fff !important;
   animation: prof-twinkle 3s ease-in-out infinite;
 }
 
@@ -242,10 +242,11 @@
   filter: drop-shadow(0 0 6px rgba(147,197,253,.9));
   border-radius:2px;
   animation: prof-shoot 7s ease-in infinite;
-  animation-delay: 2s;
+  animation-delay: -2s;
+  opacity: 0;
   pointer-events:none;
 }
-.prof-shoot.s2 { top:55%; animation-duration: 9s; animation-delay: 5s; opacity:.7; }
+.prof-shoot.s2 { top:55%; animation-duration: 9s; animation-delay: -5s; opacity: 0; }
 
 /* Wave bottom */
 .prof-waves {
@@ -267,7 +268,7 @@
 @media (prefers-reduced-motion: reduce) {
   .prof-hero, .prof-blob, .prof-blob-rev,
   .prof-aurora, .prof-conic, .prof-conic-2,
-  .prof-grid-bg, .prof-particles span, .prof-shoot, .prof-waves svg, .prof-scan, .prof-stars i { animation: none !important; }
+  .prof-grid-bg, .prof-particles span, .prof-shoot, .prof-waves svg, .prof-scan, .prof-stars span { animation: none !important; }
 }
 </style>  
 @endpush  
@@ -308,7 +309,7 @@
           {{-- Twinkling stars --}}
           <div class="prof-stars">
             @for($i=0;$i<18;$i++)
-              <i style="top:{{ rand(2,90) }}%; left:{{ rand(2,98) }}%; animation-delay:{{ ($i*0.23) }}s;"></i>
+              <span style="top:{{ rand(2,90) }}%; left:{{ rand(2,98) }}%; animation-delay:-{{ ($i*0.23) }}s;"></span>
             @endfor
           </div>
  

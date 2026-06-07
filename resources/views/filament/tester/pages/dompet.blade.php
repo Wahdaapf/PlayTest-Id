@@ -126,9 +126,9 @@
 
         /* Twinkling stars */
         .prof-stars { position:absolute; inset:0; pointer-events:none; }
-        .prof-stars i {
+        .prof-stars span {
           position:absolute; width:2px; height:2px; border-radius:50%;
-          background:#fff; box-shadow:0 0 6px #fff;
+          background:#fff !important; box-shadow:0 0 6px #fff, 0 0 12px #fff !important;
           animation: prof-twinkle 3s ease-in-out infinite;
         }
 
@@ -140,10 +140,11 @@
           filter: drop-shadow(0 0 6px rgba(147,197,253,.9));
           border-radius:2px;
           animation: prof-shoot 7s ease-in infinite;
-          animation-delay: 2s;
+          animation-delay: -2s;
           pointer-events:none;
+          opacity: 0;
         }
-        .prof-shoot.s2 { top:55%; animation-duration: 9s; animation-delay: 5s; opacity:.7; }
+        .prof-shoot.s2 { top:55%; animation-duration: 9s; animation-delay: -5s; opacity: 0; }
 
         /* Wave bottom */
         .prof-waves {
@@ -165,8 +166,30 @@
         @media (prefers-reduced-motion: reduce) {
           .prof-hero, .prof-blob, .prof-blob-rev,
           .prof-aurora, .prof-conic, .prof-conic-2,
-          .prof-grid-bg, .prof-particles span, .prof-shoot, .prof-waves svg, .prof-scan, .prof-stars i { animation: none !important; }
+          .prof-grid-bg, .prof-particles span, .prof-shoot, .prof-waves svg, .prof-scan, .prof-stars span { animation: none !important; }
         }
+
+        .prof-avatar {
+          background: linear-gradient(135deg,#fbbf24,#f59e0b,#ef4444);
+          box-shadow: 0 8px 24px rgba(0,0,0,.25), 0 0 0 4px rgba(255,255,255,.15);
+        }
+        .prof-status-dot { animation: prof-pulse-ring 2s infinite; }
+        .prof-stat-pill {
+          background: rgba(255,255,255,.08); backdrop-filter: blur(12px);
+          border: 1px solid rgba(255,255,255,.15);
+          transition: all .3s cubic-bezier(.4,0,.2,1);
+          position: relative; overflow: hidden;
+        }
+        .prof-stat-pill:hover { background: rgba(255,255,255,.15); transform: translateY(-3px); border-color: rgba(255,255,255,.3); }
+        .prof-stat-pill::after { content:''; position:absolute; top:0; left:0; width:40%; height:100%; background: linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent); transform: translateX(-100%); }
+        .prof-stat-pill:hover::after { animation: prof-shimmer 1.2s ease forwards; }
+        .prof-mini { transition: transform .25s ease; cursor: default; }
+        .prof-mini:hover { transform: translateY(-2px); }
+        .prof-mini:hover .prof-mini-dot { animation: prof-bounce-soft .6s ease; }
+        .prof-fade-1 { animation: prof-fade-up .6s .05s ease both; }
+        .prof-fade-2 { animation: prof-fade-up .6s .15s ease both; }
+        .prof-fade-3 { animation: prof-fade-up .6s .25s ease both; }
+        .prof-counter { display: inline-block; }
 
         /* ══ FONTS ══ */
         .wlt-page {
@@ -299,6 +322,9 @@
             align-items: center;
             justify-content: center;
             transition: transform 0.3s ease;
+            background: #f8fafc;
+            border: 1px solid #f1f5f9;
+            padding: 4px;
         }
 
         .wlt-method:hover .wlt-method-icon {
@@ -678,7 +704,7 @@
               }
             @endphp
             {{-- ══ HERO — SALDO POIN ══ --}}
-            <div class="prof-hero w-full rounded-3xl p-6 sm:p-8 mb-8 relative overflow-hidden">
+            <div class="prof-hero prof-fade-1 w-full rounded-3xl p-6 sm:p-8 mb-8 relative overflow-hidden">
                 {{-- Aurora mesh gradient --}}
                 <div class="prof-aurora"></div>
 
@@ -695,7 +721,7 @@
                 {{-- Twinkling stars --}}
                 <div class="prof-stars">
                     @for($i=0;$i<18;$i++)
-                        <i style="top:{{ rand(2,90) }}%; left:{{ rand(2,98) }}%; animation-delay:{{ ($i*0.23) }}s; position:absolute; width:2px; height:2px; background:#fff; box-shadow:0 0 6px #fff; animation: prof-twinkle 3s ease-in-out infinite;"></i>
+                        <span style="top:{{ rand(2,90) }}%; left:{{ rand(2,98) }}%; animation-delay:-{{ ($i*0.23) }}s;"></span>
                     @endfor
                 </div>
 
@@ -711,20 +737,33 @@
                 <div class="prof-shoot"></div>
                 <div class="prof-shoot s2"></div>
 
+                {{-- Floating decorative blobs --}}
+                <div class="prof-blob absolute -right-12 -top-12 w-48 h-48 rounded-full opacity-20"
+                     style="background:radial-gradient(circle,#60a5fa,transparent 70%);"></div>
+                <div class="prof-blob-rev absolute right-20 -bottom-16 w-40 h-40 rounded-full opacity-15"
+                     style="background:radial-gradient(circle,#a78bfa,transparent 70%);"></div>
+                <div class="prof-blob absolute right-1/3 top-4 w-20 h-20 rounded-full opacity-10"
+                     style="background:radial-gradient(circle,#ffffff,transparent 70%);animation-delay:-3s;"></div>
+
                 {{-- Konten utama --}}
-                <div class="relative z-10 text-center">
-                    <p class="text-xs font-semibold uppercase tracking-widest mb-1.5" style="color:#e0f2fe;letter-spacing:0.12em;">SALDO POIN ANDA</p>
-                    <div class="flex items-baseline justify-center gap-2 mb-2">
-                        <span class="font-mono-num font-bold text-white" style="font-size:48px;line-height:1;">{{ number_format($totalPoin ?? 0) }}</span>
+                <div class="relative z-10 text-center py-6">
+                    <p class="text-xs font-semibold uppercase tracking-widest mb-2" style="color:#e0f2fe;letter-spacing:0.12em;">SALDO POIN ANDA</p>
+                    <div class="flex items-baseline justify-center gap-2 mb-3">
+                        <span class="font-mono-num font-bold text-white prof-counter" style="font-size:48px;line-height:1;" data-target="{{ $totalPoin ?? 0 }}">0</span>
                         <span class="text-xl font-semibold" style="color:#bae6fd;opacity:0.85;">pts</span>
                     </div>
                     <p class="text-sm font-medium" style="color:#bae6fd;">Setara dengan <span class="font-bold text-white">{{ $estimasiRupiah ?? 'Rp 0' }}</span></p>
                 </div>
 
                 {{-- Animated waves --}}
-                <div class="prof-waves" style="position:absolute; left:0; right:0; bottom:0; height:80px; overflow:hidden; pointer-events:none; opacity:.35; mask-image: linear-gradient(180deg, transparent, #000 60%);">
-                    <svg viewBox="0 0 2400 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="width:200%; height:100%; display:block; animation: prof-wave 14s linear infinite;">
+                <div class="prof-waves">
+                    <svg viewBox="0 0 2400 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0,40 C150,80 350,0 600,40 C850,80 1050,0 1200,40 C1350,80 1550,0 1800,40 C2050,80 2250,0 2400,40 L2400,80 L0,80 Z" fill="rgba(255,255,255,0.18)"/>
+                    </svg>
+                </div>
+                <div class="prof-waves w2">
+                    <svg viewBox="0 0 2400 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0,50 C200,20 400,70 600,50 C800,30 1000,70 1200,50 C1400,20 1600,70 1800,50 C2000,30 2200,70 2400,50 L2400,80 L0,80 Z" fill="rgba(147,197,253,0.22)"/>
                     </svg>
                 </div>
             </div>
@@ -754,7 +793,7 @@
                             @foreach($ewallets as $key => $data)
                             <div class="wlt-method" :class="{ 'active': $wire.selectedMethod === '{{ $key }}' }" wire:click="$set('selectedMethod', '{{ $key }}')">
                                 <span class="wlt-method-check material-symbols-outlined">check_circle</span>
-                                <div class="wlt-method-icon" style="background:#f8fafc; border:1px solid #f1f5f9; padding: 4px;">
+                                <div class="wlt-method-icon">
                                     <img src="{{ $data['img'] }}" alt="{{ $data['label'] }}" class="w-full h-full object-contain" />
                                 </div>
                                 <p class="text-sm font-bold font-heading" style="color:#1e293b;">{{ $data['label'] }}</p>
@@ -769,7 +808,7 @@
                             @foreach($banks as $key => $data)
                             <div class="wlt-method" :class="{ 'active': $wire.selectedMethod === '{{ $key }}' }" wire:click="$set('selectedMethod', '{{ $key }}')">
                                 <span class="wlt-method-check material-symbols-outlined">check_circle</span>
-                                <div class="wlt-method-icon" style="background:#f8fafc; border:1px solid #f1f5f9; padding: 4px;">
+                                <div class="wlt-method-icon">
                                     <img src="{{ $data['img'] }}" alt="{{ $data['label'] }}" class="w-full h-full object-contain" />
                                 </div>
                                 <p class="text-sm font-bold font-heading" style="color:#1e293b;">{{ $data['label'] }}</p>
@@ -1127,6 +1166,29 @@
                 category: 'ewallet',
             };
         }
+
+        // Animated count-up for all .prof-counter on load
+        (function(){
+            const animate = (el) => {
+                const target = parseInt(el.dataset.target || '0', 10);
+                if (!target) { el.textContent = '0'; return; }
+                const dur = 1200;
+                const start = performance.now();
+                const tick = (now) => {
+                    const p = Math.min((now - start) / dur, 1);
+                    const eased = 1 - Math.pow(1 - p, 3);
+                    el.textContent = Math.floor(eased * target).toLocaleString('id-ID');
+                    if (p < 1) requestAnimationFrame(tick);
+                    else el.textContent = target.toLocaleString('id-ID');
+                };
+                requestAnimationFrame(tick);
+            };
+            const run = () => document.querySelectorAll('.prof-counter').forEach(animate);
+            if (document.readyState !== 'loading') run(); else document.addEventListener('DOMContentLoaded', run);
+            // Re-run after Livewire updates
+            document.addEventListener('livewire:navigated', run);
+            if (window.Livewire) window.Livewire.hook('message.processed', run);
+        })();
     </script>
     @endpush
 
