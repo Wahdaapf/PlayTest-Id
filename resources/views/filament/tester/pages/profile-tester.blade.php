@@ -225,41 +225,60 @@
            style="background:radial-gradient(circle,#ffffff,transparent 70%);animation-delay:-3s;"></div>
 
       {{-- Konten utama --}}
-      <div class="relative z-10 flex items-center justify-between flex-wrap gap-4">
-        <div>
-          <p class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#e0f2fe;letter-spacing:0.12em;">POIN KAMU</p>
-          <div class="flex items-baseline gap-2 mb-2">
-            <span class="font-mono-num font-bold text-white" style="font-size:48px;line-height:1;">{{ number_format($stats['point']) }}</span>
-            <span class="text-xl font-semibold" style="color:#bae6fd;opacity:0.85;">pts</span>
+      <div class="relative z-10 flex items-center justify-between flex-wrap gap-6">
+        <div class="flex items-center gap-5">
+          {{-- Avatar with initial --}}
+          <div class="relative">
+            <div class="w-20 h-20 rounded-2xl flex items-center justify-center text-white text-3xl font-extrabold select-none"
+                 style="background: linear-gradient(135deg,#fbbf24,#f59e0b,#ef4444); box-shadow: 0 8px 24px rgba(0,0,0,.25), 0 0 0 4px rgba(255,255,255,.15);">
+              {{ strtoupper(substr(Auth::user()->name,0,1)) }}
+            </div>
+            <span class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-2 border-white"
+                  style="background:#34d399; animation: prof-pulse-ring 2s infinite;"></span>
           </div>
-          <div class="flex items-center gap-2 flex-wrap">
-            <span class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full"
-                  style="background:linear-gradient(135deg,rgba(251,191,36,.25),rgba(245,158,11,.25));color:#fef3c7;border:1px solid rgba(251,191,36,.4);backdrop-filter:blur(12px);">
-              ⭐ {{ $tierName }}
-            </span>
-            <span class="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded-full"
-                  style="background:rgba(255,255,255,0.12);color:#e0f2fe;border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(12px);">
-              <span class="w-1.5 h-1.5 rounded-full inline-block" style="background:#fbbf24;"></span>
-              {{ $badgeCount }} badge diraih
-            </span>
+
+          <div>
+            <p class="text-[11px] font-bold uppercase mb-1.5 flex items-center gap-2"
+               style="color:#bfdbfe;letter-spacing:0.18em;">
+              <span class="w-6 h-px" style="background:#bfdbfe;"></span>
+              TESTER PROFILE
+            </p>
+            <h1 class="font-bold text-white mb-2.5" style="font-size:34px;line-height:1.1;letter-spacing:-0.02em;">
+              {{ Auth::user()->name }}
+            </h1>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full"
+                    style="background:linear-gradient(135deg,rgba(251,191,36,.25),rgba(245,158,11,.25));color:#fef3c7;border:1px solid rgba(251,191,36,.4);">
+                ⭐ {{ $tierName }}
+              </span>
+              <span class="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full"
+                    style="background:rgba(255,255,255,0.12);color:#dbeafe;border:1px solid rgba(255,255,255,.15);">
+                📅 Bergabung {{ $stats['member_since'] }}
+              </span>
+              <span class="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full"
+                    style="background:rgba(255,255,255,0.12);color:#dbeafe;border:1px solid rgba(255,255,255,.15);">
+                ✉️ {{ Auth::user()->email }}
+              </span>
+            </div>
           </div>
         </div>
 
+        {{-- Top stats (Points) --}}
         <div class="flex items-center gap-3 flex-wrap">
-          <button class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold"
-                  style="background:rgba(255,255,255,0.12);color:#ffffff;border:1px solid rgba(255,255,255,0.25);backdrop-filter:blur(12px);">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            Riwayat
-          </button>
-          <a href="{{ \App\Filament\Tester\Pages\Dompet::getUrl() }}"
-             class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold"
-             style="background:#ffffff !important;color:#1d4ed8 !important;box-shadow:0 10px 25px -5px rgba(29,78,216,0.3);text-decoration:none !important;">
-            Tukar Poin
-          </a>
+          <div style="background: rgba(255,255,255,.08); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,.15);" class="rounded-2xl px-5 py-3 text-center min-w-[130px]">
+            <p class="font-mono-num text-2xl font-bold text-white">{{ number_format($stats['point']) }}</p>
+            <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">Poin Kamu (pts)</p>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <a href="{{ \App\Filament\Tester\Pages\Dompet::getUrl() }}"
+               class="flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-center"
+               style="background:#ffffff !important;color:#1d4ed8 !important;box-shadow:0 6px 15px -3px rgba(29,78,216,0.3);text-decoration:none !important;">
+              Tukar Poin
+            </a>
+          </div>
         </div>
       </div>
+
 
       {{-- Mini stats --}}
       <div class="relative z-10 grid grid-cols-2 sm:flex sm:items-center gap-4 sm:gap-6 mt-5 pt-4"
