@@ -2,7 +2,7 @@
     $pakets = \App\Models\Paket::where('aktif', true)->get();
 @endphp
 
-<div x-data="{ selectedId: @entangle('data.id_paket') }" class="grid grid-cols-1 md:grid-cols-3 gap-6 p-2 pt-6">
+<div x-data="{ selectedId: @entangle('data.id_paket') }" class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6 p-2 pt-6">
     @foreach($pakets as $paket)
         @php $id = $paket->id; @endphp
         
@@ -32,20 +32,20 @@
             @endif
 
             {{-- ── Konten utama ── --}}
-            <div class="p-6 flex-grow flex flex-col relative z-20">
+            <div class="p-3 sm:p-6 flex-grow flex flex-col relative z-20">
 
                 {{-- Baris atas: ikon + selection indicator --}}
-                <div class="flex items-start justify-between mb-6">
+                <div class="flex items-start justify-between mb-3 sm:mb-6">
                     {{-- Icon box --}}
                     <div class="relative">
                         <div 
-                            class="w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-500"
+                            class="w-10 h-10 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center transition-all duration-500"
                             :class="selectedId == {{ $id }} 
                                 ? 'bg-gradient-to-br from-red-500 to-orange-500 shadow-lg shadow-red-500/30 rotate-3' 
                                 : 'bg-slate-50 dark:bg-white/5 group-hover:bg-red-50 dark:group-hover:bg-red-500/10 group-hover:rotate-3'"
                         >
                             <x-heroicon-o-cube-transparent 
-                                class="w-7 h-7 transition-colors duration-300"
+                                class="w-5 h-5 sm:w-7 sm:h-7 transition-colors duration-300"
                                 x-bind:class="selectedId == {{ $id }} ? 'text-white' : 'text-slate-400 dark:text-gray-400 group-hover:text-red-500 dark:group-hover:text-red-400'" 
                             />
                         </div>
@@ -67,23 +67,23 @@
 
                 {{-- Nama paket --}}
                 <h3 
-                    class="text-xl font-black tracking-tight transition-colors duration-200"
+                    class="text-sm sm:text-xl font-black tracking-tight transition-colors duration-200"
                     :class="selectedId == {{ $id }} ? 'text-red-600 dark:text-red-400' : 'text-slate-800 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400'"
                 >
                     {{ $paket->name ?? $paket->desc ?? "Paket #{$id}" }}
                 </h3>
 
                 {{-- Deskripsi --}}
-                <p class="mt-2 text-sm leading-relaxed line-clamp-2 transition-colors duration-200"
+                <p class="mt-1 text-xs sm:text-sm leading-relaxed line-clamp-2 transition-colors duration-200"
                    :class="selectedId == {{ $id }} ? 'text-slate-600 dark:text-gray-300' : 'text-slate-500 dark:text-gray-400'">
                     {{ $paket->short_desc ?? strip_tags($paket->desc) ?? 'Ideal untuk testing aplikasi standar dengan hasil maksimal.' }}
                 </p>
 
-                <div class="mt-auto pt-6">
+                <div class="mt-auto pt-3 sm:pt-6">
                     {{-- Harga --}}
                     <div class="flex items-baseline gap-1.5 mb-4">
                         <span 
-                            class="text-3xl font-black tracking-tighter transition-colors duration-200"
+                            class="text-lg sm:text-3xl font-black tracking-tighter transition-colors duration-200"
                             :class="selectedId == {{ $id }} ? 'text-slate-900 dark:text-white' : 'text-slate-800 dark:text-gray-200'"
                         >
                             Rp {{ number_format($paket->price, 0, ',', '.') }}

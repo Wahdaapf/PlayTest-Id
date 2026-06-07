@@ -108,3 +108,50 @@ html.dark .mw-upload-preview { background: #0f172a !important; border-color: #33
 .fi-ta-header-cell * {
     text-transform: capitalize !important;
 }
+
+/* ════════════════════════════════════════════════════════
+   RICH EDITOR TOOLBAR — RESPONSIVE FIX FOR MOBILE
+   ════════════════════════════════════════════════════════ */
+
+/* Toolbar container: bisa wrap ke baris berikutnya */
+.fi-fo-rich-editor-toolbar {
+    flex-wrap: wrap !important;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: unset !important;
+    gap: 4px !important;
+    padding: 6px !important;
+}
+
+/* Setiap grup tombol juga bisa shrink */
+.fi-fo-rich-editor-toolbar-group {
+    flex-shrink: 1 !important;
+    flex-wrap: wrap !important;
+}
+
+/* Kurangi ukuran tombol di mobile agar lebih banyak muat per baris */
+@media (max-width: 640px) {
+    .fi-fo-rich-editor-toolbar {
+        gap: 2px !important;
+        padding: 4px !important;
+    }
+
+    .fi-fo-rich-editor-toolbar button,
+    .fi-fo-rich-editor-toolbar a {
+        padding: 4px 6px !important;
+        min-width: 26px !important;
+        width: auto !important;
+    }
+
+    /* Pastikan area teks tidak kemakan oleh toolbar yang 2 baris */
+    .fi-fo-rich-editor-content,
+    .fi-fo-rich-editor-main {
+        min-height: 120px !important;
+    }
+
+    /* Pastikan container keseluruhan bertumbuh mengikuti isi */
+    .fi-fo-rich-editor {
+        height: auto !important;
+        min-height: unset !important;
+    }
+}

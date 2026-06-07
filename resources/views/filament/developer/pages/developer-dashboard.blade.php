@@ -52,7 +52,7 @@
   </div>  
   
   {{-- Stat Cards --}}  
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">  
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-5">  
     <div class="dev-stat-card" style="border-top:4px solid #2563eb;">  
       <div class="flex items-start justify-between mb-5">  
         <p class="text-slate-400 font-bold uppercase tracking-widest" style="font-size:10.5px;">Active Testing</p>  

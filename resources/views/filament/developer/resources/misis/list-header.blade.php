@@ -55,12 +55,12 @@
 
 <div class="space-y-6">
     {{-- HEADER --}}
-    <div class="flex items-center justify-between animate-fade-in-up">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between animate-fade-in-up">
         <div>
             <h1 class="dm-sora text-xl font-bold text-slate-900">My Apps</h1>
             <p class="text-sm text-slate-500 mt-0.5">Kelola dan pantau aplikasi serta misi yang Anda buat</p>
         </div>
-        <a href="{{ \App\Filament\Developer\Resources\Misis\MisiResource::getUrl('create') }}" class="dm-btn-primary">
+        <a href="{{ \App\Filament\Developer\Resources\Misis\MisiResource::getUrl('create') }}" class="dm-btn-primary w-full justify-center sm:w-auto">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
             </svg>

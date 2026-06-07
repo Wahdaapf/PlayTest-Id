@@ -288,37 +288,37 @@
            style="background:radial-gradient(circle,#ffffff,transparent 70%);animation-delay:-3s;"></div>
 
       {{-- Konten utama --}}
-      <div class="relative z-10 flex items-center justify-between flex-wrap gap-6">
-        <div class="flex items-center gap-5">
+      <div class="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div class="flex items-start sm:items-center gap-4">
           {{-- Avatar with initial --}}
-          <div class="relative">
-            <div class="prof-avatar w-20 h-20 rounded-2xl flex items-center justify-center text-white text-3xl font-extrabold select-none">
+          <div class="relative flex-shrink-0">
+            <div class="prof-avatar w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center text-white text-2xl sm:text-3xl font-extrabold select-none">
               {{ strtoupper(substr(Auth::user()->name,0,1)) }}
             </div>
-            <span class="prof-status-dot absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-2 border-white"
+            <span class="prof-status-dot absolute -bottom-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 border-white"
                   style="background:#34d399;"></span>
           </div>
 
-          <div>
-            <p class="text-[11px] font-bold uppercase mb-1.5 flex items-center gap-2"
+          <div class="min-w-0">
+            <p class="text-[10px] font-bold uppercase mb-1 flex items-center gap-2"
                style="color:#bfdbfe;letter-spacing:0.18em;">
-              <span class="w-6 h-px" style="background:#bfdbfe;"></span>
+              <span class="w-4 h-px" style="background:#bfdbfe;"></span>
               DEVELOPER PANEL
             </p>
-            <h1 class="font-bold text-white mb-2.5" style="font-size:34px;line-height:1.1;letter-spacing:-0.02em;">
+            <h1 class="font-bold text-white mb-2 truncate" style="font-size:clamp(20px,5vw,34px);line-height:1.1;letter-spacing:-0.02em;">
               {{ Auth::user()->name }}
             </h1>
-            <div class="flex items-center gap-2 flex-wrap">
-              <span class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full"
+            <div class="flex items-center gap-1.5 flex-wrap">
+              <span class="inline-flex items-center gap-1 text-[10px] sm:text-xs font-bold px-2 py-1 rounded-full"
                     style="background:linear-gradient(135deg,rgba(59,130,246,.25),rgba(124,58,237,.25));color:#dbeafe;border:1px solid rgba(59,130,246,.3);">
                 💻 Developer
               </span>
-              <span class="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full"
+              <span class="inline-flex items-center gap-1 text-[10px] sm:text-xs font-medium px-2 py-1 rounded-full"
                     style="background:rgba(255,255,255,0.12);color:#dbeafe;border:1px solid rgba(255,255,255,.15);">
                 <span class="w-1.5 h-1.5 rounded-full inline-block prof-status-dot" style="background:#34d399;"></span>
                 Bergabung {{ Auth::user()->created_at->format('M Y') }}
               </span>
-              <span class="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full"
+              <span class="inline-flex items-center gap-1 text-[10px] sm:text-xs font-medium px-2 py-1 rounded-full max-w-full truncate"
                     style="background:rgba(255,255,255,0.12);color:#dbeafe;border:1px solid rgba(255,255,255,.15);">
                 ✉️ {{ Auth::user()->email }}
               </span>
@@ -326,19 +326,19 @@
           </div>
         </div>
 
-        {{-- Top stat pills --}}
-        <div class="flex items-center gap-3 flex-wrap">
-          <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px]">
-            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ $stats['total_misi'] }}">0</p>
-            <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">Total Misi</p>
+        {{-- Top stat pills: 3-col grid on mobile --}}
+        <div class="grid grid-cols-3 sm:flex sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
+          <div class="prof-stat-pill rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3 text-center">
+            <p class="font-mono-num text-xl sm:text-2xl font-bold text-white prof-counter" data-target="{{ $stats['total_misi'] }}">0</p>
+            <p class="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.08em;">Total Misi</p>
           </div>
-          <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px]">
-            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ $stats['misi_selesai'] }}">0</p>
-            <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">Selesai</p>
+          <div class="prof-stat-pill rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3 text-center">
+            <p class="font-mono-num text-xl sm:text-2xl font-bold text-white prof-counter" data-target="{{ $stats['misi_selesai'] }}">0</p>
+            <p class="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.08em;">Selesai</p>
           </div>
-          <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px]">
-            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ $stats['total_misi'] > 0 ? round($stats['misi_selesai'] / $stats['total_misi'] * 100) : 0 }}">0</p>
-            <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">% Sukses</p>
+          <div class="prof-stat-pill rounded-2xl px-3 sm:px-5 py-2.5 sm:py-3 text-center">
+            <p class="font-mono-num text-xl sm:text-2xl font-bold text-white prof-counter" data-target="{{ $stats['total_misi'] > 0 ? round($stats['misi_selesai'] / $stats['total_misi'] * 100) : 0 }}">0</p>
+            <p class="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.08em;">% Sukses</p>
           </div>
         </div>
       </div>
