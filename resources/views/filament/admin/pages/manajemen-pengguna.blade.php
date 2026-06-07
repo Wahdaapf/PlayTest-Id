@@ -153,10 +153,10 @@
         <h1 class="mp-sora text-xl font-bold text-slate-900">Manajemen Pengguna</h1>
         <p class="text-sm text-slate-500 mt-0.5">Kelola semua Developer dan Tester yang terdaftar di platform</p>
     </div>
-    <button class="mp-btn mp-btn-primary">
+    <a href="{{ route('admin.export.pengguna') }}" class="mp-btn mp-btn-primary">
         <span class="material-symbols-outlined text-[1.1rem]">download</span>
         Export CSV
-    </button>
+    </a>
 </div>
 
 {{-- ══ STAT CARDS ══ --}}

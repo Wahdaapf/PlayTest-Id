@@ -8,6 +8,7 @@ use App\Models\Misi;
 use App\Models\MisiAnggota;
 use App\Models\Pembayaran;
 use App\Models\User;
+use App\Models\Withdraw;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -119,6 +120,33 @@ class ExportController extends Controller
         ])->toArray();
 
         $filename = 'pendapatan_' . now()->format('Ymd_His') . '.csv';
+
+        return $this->csvResponse($filename, $headers, $rows);
+    }
+
+    // ══════════════════════════════════════════════════════════════════════════
+    //  3b. EXPORT WITHDRAW  (.csv)
+    // ══════════════════════════════════════════════════════════════════════════
+    public function exportWithdraw(): Response
+    {
+        $this->ensureAdmin();
+
+        $withdrawals = Withdraw::with(['user', 'admin'])->orderBy('created_at', 'desc')->get();
+
+        $headers = ['ID Withdraw', 'Tanggal', 'Nama Tester', 'Point Ditukar', 'Rupiah', 'Metode', 'No Akun', 'Status', 'Admin'];
+        $rows    = $withdrawals->map(fn($w) => [
+            $w->id,
+            $w->created_at->format('d/m/Y H:i'),
+            $w->user->name ?? '-',
+            $w->point,
+            $w->rupiah ?? ($w->point * 10),
+            $w->metode,
+            $w->nomor_akun,
+            ucfirst($w->status),
+            $w->admin->name ?? '-',
+        ])->toArray();
+
+        $filename = 'withdraw_' . now()->format('Ymd_His') . '.csv';
 
         return $this->csvResponse($filename, $headers, $rows);
     }
