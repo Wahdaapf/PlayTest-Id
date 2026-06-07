@@ -810,8 +810,8 @@
 
                     {{-- Link kembali ke halaman Login --}}
                     <p class="login-register-link">
-                        Already have an account?
-                        <a href="{{ filament()->getLoginUrl() }}">Log In</a>
+                        {{ __('Sudah punya akun?') }}
+                        <a href="{{ filament()->getLoginUrl() }}">{{ __('Masuk') }}</a>
                     </p>
 
                 </div>
@@ -819,7 +819,7 @@
 
             {{-- Mobile-only feature pills --}}
             <div class="login-mobile-features">
-                @foreach(['✓ 20+ Testers', '✓ 14-Day Test', '✓ Instant Access'] as $feature)
+                @foreach([__('✓ 20+ Tester'), __('✓ Uji 14 Hari'), __('✓ Akses Instan')] as $feature)
                 <span class="login-mobile-pill">{{ $feature }}</span>
                 @endforeach
             </div>

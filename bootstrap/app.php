@@ -17,6 +17,10 @@ return Application::configure(basePath: dirname(__DIR__))
             '/xendit/callback',
         ]);
         
+        $middleware->web(append: [
+            \App\Http\Middleware\LanguageManagerMiddleware::class,
+        ]);
+
         $middleware->alias([
             'lang' => \App\Http\Middleware\LanguageManagerMiddleware::class,
         ]);
