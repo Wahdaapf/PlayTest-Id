@@ -54,7 +54,7 @@ class KelolaTester extends Page implements HasTable
                 ->label('Input Link Aplikasi')
                 ->icon('heroicon-o-link')
                 ->color('success')
-                ->hidden(fn () => in_array($this->record->status, ['open', 'closed']))
+                ->visible(fn () => in_array($this->record->status, ['open', 'closed']))
                 ->form([
                     \Filament\Forms\Components\TextInput::make('link_aplikasi')
                         ->label('Link Aplikasi (Misal: Google Play URL)')
