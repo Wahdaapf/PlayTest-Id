@@ -788,6 +788,20 @@
             transform: scale(1.1) rotate(5deg);
         }
 
+        /* ══ RESPONSIVE ══ */
+        @media (max-width: 640px) {
+            .mw-filter-bar { flex-direction: column; align-items: stretch; }
+            .mw-search-wrap, .mw-select, .mw-btn-ghost { width: 100%; max-width: 100% !important; }
+            
+            .mw-table-wrap { overflow-x: auto; }
+            
+            .mw-detail-panel { width: 100%; max-width: 100vw; }
+            .mw-detail-footer { flex-direction: column; }
+            .mw-detail-footer button, .mw-detail-footer a { width: 100%; justify-content: center; text-align: center; }
+            
+            .mw-pagi { flex-direction: column; gap: 1rem; text-align: center; }
+        }
+
         /* ══ MODAL & SLIDE OUT ══ */
         .mw-modal-overlay {
             position: fixed;
@@ -1186,20 +1200,20 @@
     <div class="space-y-5" x-data="withdrawAdmin()" x-init="initChart()" @data-updated.window="tutupDetail()">
 
         {{-- ══ HEADER ══ --}}
-        <div class="flex items-center justify-between animate-fade-in-up">
-            <div>
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between animate-fade-in-up gap-4 sm:gap-0">
+            <div class="w-full sm:w-auto">
                 <h1 class="mw-sora text-xl font-bold text-slate-900">{{ __('Manajemen Penarikan Tester') }}</h1>
                 <p class="text-sm text-slate-500 mt-0.5">{{ __('Kelola permintaan pencairan poin dari tester') }}</p>
             </div>
-            <a href="{{ route('admin.export.withdraw') }}" class="mw-btn mw-btn-export">
-                <span class="material-symbols-outlined">download</span>
+            <a href="{{ route('admin.export.withdraw') }}" class="mw-btn mw-btn-export w-full sm:w-auto justify-center">
+                <span class="material-symbols-outlined text-[1.1rem]">download</span>
                 {{ __('Ekspor CSV') }}
             </a>
         </div>
 
         {{-- ══ STAT CARDS ══ --}}
         <!-- Ubah xl:grid-cols-5 menjadi xl:grid-cols-6 -->
-        <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 animate-fade-in-up delay-100">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 animate-fade-in-up delay-100">
             <div class="mw-stat xl:col-span-2">
                 <div class="mw-stat-accent mw-grad-green"></div>
                 <div class="flex items-start gap-3 mt-1">
@@ -1371,44 +1385,42 @@
 
         {{-- ══ FILTER BAR ══ --}}
         <div class="mw-filter-bar animate-fade-in-up delay-300">
-            <div class="flex flex-wrap gap-3 items-center flex-1">
-                <div class="mw-search-wrap">
-                    <span class="material-symbols-outlined mw-search-icon">search</span>
-                    <input type="text" placeholder="{{ __('Cari nama tester, ID…') }}" class="mw-input mw-search-input" x-model="cariTeks">
-                </div>
-                <select class="mw-select" x-model="filterStatus">
-                    <option value="">{{ __('Semua Status') }}</option>
-                    <option value="pending">{{ __('Tertunda') }}</option>
-                    <option value="success">{{ __('Berhasil') }}</option>
-                    <option value="rejected">{{ __('Ditolak') }}</option>
-                </select>
-                <select class="mw-select" x-model="filterMetode">
-                    <option value="">{{ __('Semua Metode') }}</option>
-                    <option value="GoPay">GoPay</option>
-                    <option value="DANA">DANA</option>
-                    <option value="ShopeePay">ShopeePay</option>
-                    <option value="OVO">OVO</option>
-                    <option value="BCA">BCA</option>
-                    <option value="Mandiri">Mandiri</option>
-                    <option value="BNI">BNI</option>
-                    <option value="BRI">BRI</option>
-                    <option value="BSI">BSI</option>
-                </select>
-                <select class="mw-select max-w-[120px]" x-model="perPage">
-                    <option value="5">{{ __('5 Data') }}</option>
-                    <option value="10">{{ __('10 Data') }}</option>
-                    <option value="20">{{ __('20 Data') }}</option>
-                    <option value="50">{{ __('50 Data') }}</option>
-                    <option value="100">{{ __('100 Data') }}</option>
-                    <option value="1000">{{ __('Semua') }}</option>
-                </select>
-                <button class="mw-btn mw-btn-ghost" @click="resetFilter()">{{ __('Reset') }}</button>
+            <div class="mw-search-wrap">
+                <span class="material-symbols-outlined mw-search-icon">search</span>
+                <input type="text" placeholder="{{ __('Cari nama tester, ID…') }}" class="mw-input mw-search-input" x-model="cariTeks">
             </div>
+            <select class="mw-select" x-model="filterStatus">
+                <option value="">{{ __('Semua Status') }}</option>
+                <option value="pending">{{ __('Tertunda') }}</option>
+                <option value="success">{{ __('Berhasil') }}</option>
+                <option value="rejected">{{ __('Ditolak') }}</option>
+            </select>
+            <select class="mw-select" x-model="filterMetode">
+                <option value="">{{ __('Semua Metode') }}</option>
+                <option value="GoPay">GoPay</option>
+                <option value="DANA">DANA</option>
+                <option value="ShopeePay">ShopeePay</option>
+                <option value="OVO">OVO</option>
+                <option value="BCA">BCA</option>
+                <option value="Mandiri">Mandiri</option>
+                <option value="BNI">BNI</option>
+                <option value="BRI">BRI</option>
+                <option value="BSI">BSI</option>
+            </select>
+            <select class="mw-select max-w-[120px] w-full sm:w-auto" x-model="perPage">
+                <option value="5">{{ __('5 Data') }}</option>
+                <option value="10">{{ __('10 Data') }}</option>
+                <option value="20">{{ __('20 Data') }}</option>
+                <option value="50">{{ __('50 Data') }}</option>
+                <option value="100">{{ __('100 Data') }}</option>
+                <option value="1000">{{ __('Semua') }}</option>
+            </select>
+            <button class="mw-btn mw-btn-ghost" @click="resetFilter()">{{ __('Reset') }}</button>
         </div>
 
         {{-- ══ TABLE ══ --}}
-        <div class="mw-table-wrap animate-fade-in-up delay-400">
-            <table class="mw-table">
+        <div class="mw-table-wrap animate-fade-in-up delay-400 overflow-x-auto">
+            <table class="mw-table min-w-[1000px]">
                 <thead>
                     <tr>
                         <th>

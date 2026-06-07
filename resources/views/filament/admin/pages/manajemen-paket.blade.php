@@ -181,25 +181,43 @@
     .c-warning { color: #92400e; }
     .c-success { color: #065f46; }
     .c-info    { color: #1e40af; }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 640px) {
+        .mp-filter-bar { flex-direction: column; align-items: stretch; }
+        .mp-search-wrap, .mp-select, .mp-btn-ghost { width: 100%; max-width: 100% !important; }
+        
+        .mp-table-wrap { overflow-x: auto; }
+        .mp-form-row { grid-template-columns: 1fr; }
+        
+        .mp-panel { width: 100%; max-width: 100vw; }
+        .mp-panel-footer { flex-direction: column; }
+        .mp-panel-footer button { width: 100%; justify-content: center; }
+        
+        .mp-confirm-footer { flex-direction: column; }
+        .mp-confirm-footer button { width: 100%; justify-content: center; }
+        
+        .mp-pagi { flex-direction: column; gap: 1rem; text-align: center; }
+    }
 </style>
 @endpush
 
 <div class="space-y-5" x-data="manajemenPaket()" x-init="initChart()">
 
 {{-- ══ HEADER ══ --}}
-<div class="flex items-center justify-between animate-fade-in-up">
-    <div>
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between animate-fade-in-up gap-4 sm:gap-0">
+    <div class="w-full sm:w-auto">
         <h1 class="mp-sora text-xl font-bold text-slate-900">{{ __('Manajemen Paket') }}</h1>
         <p class="text-sm text-slate-500 mt-0.5">{{ __('Kelola paket harga dan fitur yang tersedia untuk developer') }}</p>
     </div>
-    <a href="{{ \App\Filament\Admin\Resources\Pakets\PaketResource::getUrl('create') }}" class="mp-btn mp-btn-primary">
+    <a href="{{ \App\Filament\Admin\Resources\Pakets\PaketResource::getUrl('create') }}" class="mp-btn mp-btn-primary w-full sm:w-auto justify-center">
         <span class="material-symbols-outlined text-[1.1rem]">add</span>
         {{ __('Tambah Paket') }}
     </a>
 </div>
 
 {{-- ══ STAT CARDS ══ --}}
-<div class="grid grid-cols-2 xl:grid-cols-4 gap-4 animate-fade-in-up delay-100">
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 animate-fade-in-up delay-100">
     <div class="mp-stat">
         <div class="mp-stat-accent mp-grad-blue"></div>
         <div class="flex items-start gap-3 mt-1">
@@ -283,8 +301,8 @@
     </div>
 
     {{-- Table --}}
-    <div class="mp-table-wrap">
-        <table class="mp-table">
+    <div class="mp-table-wrap overflow-x-auto">
+        <table class="mp-table min-w-[900px]">
             <thead>
                 <tr>
                     <th>

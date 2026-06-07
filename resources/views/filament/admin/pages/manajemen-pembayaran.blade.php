@@ -782,6 +782,20 @@
             transform: scale(1.1) rotate(-5deg);
         }
 
+        /* ══ RESPONSIVE ══ */
+        @media (max-width: 640px) {
+            .tk-filter-bar { flex-direction: column; align-items: stretch; }
+            .tk-search-wrap, .tk-select, .tk-btn-ghost { width: 100%; max-width: 100% !important; }
+            
+            .tk-table-wrap { overflow-x: auto; }
+            
+            .tk-detail-panel { width: 100%; max-width: 100vw; }
+            .tk-detail-footer { flex-direction: column; }
+            .tk-detail-footer button, .tk-detail-footer a { width: 100%; justify-content: center; text-align: center; }
+            
+            .tk-pagi { flex-direction: column; gap: 1rem; text-align: center; }
+        }
+
         /* ══ MODAL & SLIDE OUT ══ */
         .tk-modal-overlay {
             position: fixed;
@@ -1015,19 +1029,19 @@
     <div class="space-y-5" x-data="transaksiKeuangan()" x-init="initChart()">
 
         {{-- ══ HEADER ══ --}}
-        <div class="flex items-center justify-between animate-fade-in-up">
-            <div>
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between animate-fade-in-up gap-4 sm:gap-0">
+            <div class="w-full sm:w-auto">
                 <h1 class="tk-sora text-xl font-bold text-slate-900">{{ __('Manajemen Pembayaran Developer') }}</h1>
                 <p class="text-sm text-slate-500 mt-0.5">{{ __('Transaksi otomatis via') }} <strong class="text-blue-600">Duitku</strong> {{ __('Payment Gateway') }}</p>
             </div>
-            <a href="{{ route('admin.export.pendapatan') }}" class="tk-btn tk-btn-export">
+            <a href="{{ route('admin.export.pendapatan') }}" class="tk-btn tk-btn-export w-full sm:w-auto justify-center">
                 <span class="material-symbols-outlined text-[1.1rem]">download</span>
                 {{ __('Ekspor CSV') }}
             </a>
         </div>
 
         {{-- ══ STAT CARDS ══ --}}
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in-up delay-100">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 animate-fade-in-up delay-100">
 
             <div class="tk-stat">
                 <div class="tk-stat-accent tk-grad-blue"></div>
@@ -1190,38 +1204,36 @@
 
         {{-- ══ FILTER BAR ══ --}}
         <div class="tk-filter-bar animate-fade-in-up delay-300">
-            <div class="flex flex-wrap gap-3 items-center flex-1">
-                <div class="tk-search-wrap">
-                    <span class="material-symbols-outlined tk-search-icon">search</span>
-                    <input type="text" placeholder="{{ __('Cari nama, ID transaksi, referensi, kampanye…') }}" class="tk-input tk-search-input" x-model="cariTeks">
-                </div>
-                <select class="tk-select" x-model="filterStatus">
-                    <option value="">{{ __('Semua Status') }}</option>
-                    <option value="{{ __('Berhasil') }}">{{ __('Berhasil') }}</option>
-                    <option value="{{ __('Menunggu Bayar') }}">{{ __('Menunggu Bayar') }}</option>
-                    <option value="{{ __('Gagal') }}">{{ __('Gagal') }}</option>
-                </select>
-                <select class="tk-select" x-model="filterPaket">
-                    <option value="">{{ __('Semua Paket') }}</option>
-                    @foreach(\App\Models\Paket::orderBy('name')->get() as $pkt)
-                    <option value="{{ $pkt->name }}">{{ $pkt->name }}</option>
-                    @endforeach
-                </select>
-                <select class="tk-select max-w-[120px]" x-model="perPage">
-                    <option value="5">{{ __('5 Data') }}</option>
-                    <option value="10">{{ __('10 Data') }}</option>
-                    <option value="20">{{ __('20 Data') }}</option>
-                    <option value="50">{{ __('50 Data') }}</option>
-                    <option value="100">{{ __('100 Data') }}</option>
-                    <option value="1000">{{ __('Semua') }}</option>
-                </select>
-                <button class="tk-btn tk-btn-ghost" @click="resetFilter()">{{ __('Reset') }}</button>
+            <div class="tk-search-wrap">
+                <span class="material-symbols-outlined tk-search-icon">search</span>
+                <input type="text" placeholder="{{ __('Cari nama, ID transaksi, referensi, kampanye…') }}" class="tk-input tk-search-input" x-model="cariTeks">
             </div>
+            <select class="tk-select" x-model="filterStatus">
+                <option value="">{{ __('Semua Status') }}</option>
+                <option value="{{ __('Berhasil') }}">{{ __('Berhasil') }}</option>
+                <option value="{{ __('Menunggu Bayar') }}">{{ __('Menunggu Bayar') }}</option>
+                <option value="{{ __('Gagal') }}">{{ __('Gagal') }}</option>
+            </select>
+            <select class="tk-select" x-model="filterPaket">
+                <option value="">{{ __('Semua Paket') }}</option>
+                @foreach(\App\Models\Paket::orderBy('name')->get() as $pkt)
+                <option value="{{ $pkt->name }}">{{ $pkt->name }}</option>
+                @endforeach
+            </select>
+            <select class="tk-select max-w-[120px] w-full sm:w-auto" x-model="perPage">
+                <option value="5">{{ __('5 Data') }}</option>
+                <option value="10">{{ __('10 Data') }}</option>
+                <option value="20">{{ __('20 Data') }}</option>
+                <option value="50">{{ __('50 Data') }}</option>
+                <option value="100">{{ __('100 Data') }}</option>
+                <option value="1000">{{ __('Semua') }}</option>
+            </select>
+            <button class="tk-btn tk-btn-ghost" @click="resetFilter()">{{ __('Reset') }}</button>
         </div>
 
         {{-- ══ TABEL ══ --}}
-        <div class="tk-table-wrap animate-fade-in-up delay-400">
-            <table class="tk-table">
+        <div class="tk-table-wrap animate-fade-in-up delay-400 overflow-x-auto">
+            <table class="tk-table min-w-[1000px]">
                 <thead>
                     <tr>
                         <th>

@@ -88,6 +88,8 @@
             justify-content: space-between;
             padding: 1rem 1.25rem;
             border-bottom: 1px solid #f1f5f9;
+            flex-wrap: wrap;
+            gap: 0.75rem;
         }
 
         /* ══════════════════════════════════════  
@@ -293,6 +295,16 @@
             z-index: 50;
         }
 
+        @media (max-width: 640px) {
+            .adm-export-dropdown {
+                right: 0;
+                left: -20px;
+                min-width: 260px;
+                width: max-content;
+                max-width: 90vw;
+            }
+        }
+
         .adm-export-dropdown-header {
             padding: 10px 14px 8px;
             border-bottom: 1px solid #f1f5f9;
@@ -357,20 +369,20 @@
     <div class="adm-page" x-data="adminDashboard()" wire:poll.3s>
 
         {{-- ── PAGE HEADER ─────────────────────────────────── --}}
-        <div data-design-id="page-header" class="flex items-center justify-between mb-6 px-6 pt-6">
-            <div>
+        <div data-design-id="page-header" class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 px-4 sm:px-6 pt-6 gap-4 sm:gap-0">
+            <div class="w-full sm:w-auto">
 
                 <p class="text-sm mt-0.5" style="color:#64748b;">
                     {{ __('Ringkasan platform PlayTest ID — data diperbarui') }} {{ now()->diffForHumans() }}
                 </p>
             </div>
-            <div class="flex items-center gap-3">
+            <div class="flex flex-wrap sm:flex-nowrap items-center gap-3 w-full sm:w-auto">
 
                 {{-- ── Export Dropdown ───────────────────────── --}}
-                <div class="relative" x-data="{ openExport: false }" @click.outside="openExport = false">
+                <div class="relative w-full sm:w-auto" x-data="{ openExport: false }" @click.outside="openExport = false">
                     <button
                         @click="openExport = !openExport"
-                        class="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-150"
+                        class="flex w-full sm:w-auto justify-center items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-150"
                         :class="openExport ? 'border-blue-600 text-blue-600 bg-blue-50 border' : 'bg-white border border-slate-200 text-slate-500'"
                         id="export-dropdown-btn">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -457,7 +469,7 @@
                     </div>
                 </div>{{-- end export dropdown --}}
 
-                <button class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white"
+                <button class="flex w-full sm:w-auto justify-center items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white"
                     style="background:#2563eb;box-shadow:0 4px 14px rgba(37,99,235,0.3);"
                     wire:click="$refresh">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
@@ -468,7 +480,7 @@
             </div>
         </div>
 
-        <div class="px-6 pb-6">
+        <div class="px-4 sm:px-6 pb-6">
 
             {{-- ══════════════════════════════════════  
              STAT CARDS — 6 kolom  
@@ -646,7 +658,7 @@
                         </div>
 
                         {{-- Chart stats row --}}
-                        <div class="flex items-center justify-between mt-4 pt-4" style="border-top:1px solid #f1f5f9;">
+                        <div class="grid grid-cols-2 sm:flex sm:items-center sm:justify-between mt-4 pt-4 gap-4 sm:gap-0" style="border-top:1px solid #f1f5f9;">
                             <div class="text-center">
                                 <p class="text-sm font-bold font-mono-data" style="color:#2563eb;">{{ $statDevMingguIni }}</p>
                                 <p class="text-xs" style="color:#94a3b8;">{{ __('Developer minggu ini') }}</p>

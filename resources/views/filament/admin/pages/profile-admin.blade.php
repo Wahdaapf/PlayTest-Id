@@ -286,27 +286,27 @@
            style="background:radial-gradient(circle,#ffffff,transparent 70%);animation-delay:-3s;"></div>
 
       {{-- Konten utama --}}
-      <div class="relative z-10 flex items-center justify-between flex-wrap gap-6">
-        <div class="flex items-center gap-5">
+      <div class="relative z-10 flex flex-col lg:flex-row items-center lg:items-end lg:justify-between gap-6">
+        <div class="flex flex-col sm:flex-row items-center text-center sm:text-left gap-5 w-full lg:w-auto">
           {{-- Avatar with initial --}}
-          <div class="relative">
-            <div class="prof-avatar w-20 h-20 rounded-2xl flex items-center justify-center text-white text-3xl font-extrabold select-none">
+          <div class="relative flex-shrink-0">
+            <div class="prof-avatar w-20 h-20 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center text-white text-3xl sm:text-4xl font-extrabold select-none">
               {{ strtoupper(substr(Auth::user()->name,0,1)) }}
             </div>
             <span class="prof-status-dot absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-2 border-white"
                   style="background:#34d399;"></span>
           </div>
 
-          <div>
-            <p class="text-[11px] font-bold uppercase mb-1.5 flex items-center gap-2"
+          <div class="flex-1">
+            <p class="text-[11px] font-bold uppercase mb-1.5 flex items-center justify-center sm:justify-start gap-2"
                style="color:#bfdbfe;letter-spacing:0.18em;">
-              <span class="w-6 h-px" style="background:#bfdbfe;"></span>
+              <span class="w-6 h-px hidden sm:inline-block" style="background:#bfdbfe;"></span>
               ADMIN PANEL
             </p>
-            <h1 class="font-bold text-white mb-2.5" style="font-size:34px;line-height:1.1;letter-spacing:-0.02em;">
+            <h1 class="font-bold text-white mb-2.5 text-2xl sm:text-[34px]" style="line-height:1.1;letter-spacing:-0.02em;">
               {{ Auth::user()->name }}
             </h1>
-            <div class="flex items-center gap-2 flex-wrap">
+            <div class="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
               <span class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full"
                     style="background:linear-gradient(135deg,rgba(251,191,36,.25),rgba(239,68,68,.25));color:#fef3c7;border:1px solid rgba(251,191,36,.3);">
                 🛡️ Administrator
@@ -325,16 +325,16 @@
         </div>
 
         {{-- Top stat pills --}}
-        <div class="flex items-center gap-3 flex-wrap">
-          <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px]">
+        <div class="flex items-center justify-center sm:justify-start gap-3 flex-wrap w-full lg:w-auto">
+          <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px] flex-1 sm:flex-none">
             <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ \App\Models\User::count() }}">0</p>
-            <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">{{ __('Total Pengguna') }}</p>
+            <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">{{ __('Pengguna') }}</p>
           </div>
-          <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px]">
+          <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px] flex-1 sm:flex-none">
             <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ \App\Models\Misi::count() }}">0</p>
             <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">{{ __('Kampanye') }}</p>
           </div>
-          <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px]">
+          <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px] flex-1 sm:flex-none">
             <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ \App\Models\Pembayaran::where('status','accepted')->count() }}">0</p>
             <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">{{ __('Transaksi') }}</p>
           </div>
@@ -396,9 +396,9 @@
       <div class="p-6 prof-fade-3">
         <form wire:submit="save">
           {{ $this->form }}
-          <div class="mt-6 flex justify-end">
+          <div class="mt-6 flex flex-col sm:flex-row justify-end">
             <button type="submit"
-              class="prof-btn-save inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-sm font-bold text-white">
+              class="prof-btn-save inline-flex justify-center items-center gap-2 px-6 py-3 rounded-2xl text-sm font-bold text-white w-full sm:w-auto">
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
               </svg>

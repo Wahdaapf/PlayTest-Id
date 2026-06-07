@@ -167,6 +167,19 @@
     .mk-detail-row:last-child { border-bottom: none; }
     .mk-detail-label   { font-size: 0.75rem; color: #94a3b8; font-weight: 500; width: 130px; flex-shrink: 0; padding-top: 1px; }
     .mk-detail-value   { font-size: 0.8125rem; color: #1e293b; font-weight: 500; flex: 1; }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 640px) {
+        .mp-filter-bar { flex-direction: column; align-items: stretch; }
+        .mp-search-wrap, .mp-select, .mp-btn-ghost { width: 100%; max-width: 100% !important; }
+        .mp-filter-divider { display: none; }
+        .mk-view-toggle { width: 100%; }
+        .mk-view-btn { flex: 1; justify-content: center; }
+        
+        .mk-modal-footer { flex-direction: column; align-items: stretch; }
+        .mk-modal-footer button { width: 100%; justify-content: center; }
+        .mk-modal-footer .flex { flex-direction: column; width: 100%; }
+    }
 </style>
 @endpush
 
@@ -178,14 +191,14 @@
     <div id="kampanye-data" style="display:none;" data-list="{{ json_encode($kampanyeList) }}"></div>
 
 {{-- ── PAGE HEADER ──────────────────────────────── --}}
-<div class="flex items-start justify-between animate-fade-in-up">
-    <div>
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between animate-fade-in-up gap-4 sm:gap-0">
+    <div class="w-full sm:w-auto">
         <h1 class="mp-sora text-xl font-bold text-slate-900">{{ __('Manajemen Kampanye') }}</h1>
         <p class="text-sm text-slate-500 mt-0.5">
             {{ __('Pantau dan kelola semua kampanye pengujian aplikasi yang aktif di platform.') }}
         </p>
     </div>
-    <div class="flex items-center gap-3">
+    <div class="flex flex-wrap sm:flex-nowrap items-center gap-3 w-full sm:w-auto">
         {{-- View Toggle Grid/List --}}
         <div class="mk-view-toggle">
             <button class="mk-view-btn"
@@ -202,7 +215,7 @@
             </button>
         </div>
         {{-- Export --}}
-        <a href="{{ route('admin.export.kampanye') }}" class="mp-btn mp-btn-primary">
+        <a href="{{ route('admin.export.kampanye') }}" class="mp-btn mp-btn-primary w-full sm:w-auto justify-center">
             <span class="material-symbols-outlined text-[1.1rem]">download</span>
             {{ __('Ekspor CSV') }}
         </a>
@@ -210,7 +223,7 @@
 </div>
 
 {{-- ── STAT CARDS ──────────────────────────────── --}}
-<div class="grid grid-cols-2 xl:grid-cols-5 gap-4 animate-fade-in-up delay-100">
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4 animate-fade-in-up delay-100">
 
     <div class="mp-stat">
         <div class="mp-stat-accent mp-grad-slate"></div>
@@ -321,7 +334,7 @@
     </button>
 
     {{-- Hasil count --}}
-    <div class="ml-auto text-sm font-medium text-slate-400">
+    <div class="sm:ml-auto text-sm font-medium text-slate-400 mt-2 sm:mt-0 text-center sm:text-left">
         <strong class="mp-mono text-slate-700" x-text="filteredCount()"></strong>
         {{ __('Kampanye ditampilkan') }}
     </div>
@@ -335,8 +348,8 @@
 </div>
 
 {{-- ── SECTION LABEL ─────────────────────────────── --}}
-<div class="flex items-center justify-between animate-fade-in-up delay-300">
-    <div class="mp-sora font-bold text-slate-900 text-base flex items-center gap-2">
+<div class="flex flex-wrap items-center justify-between animate-fade-in-up delay-300 gap-2">
+    <div class="mp-sora font-bold text-slate-900 text-base flex items-center gap-2 w-full sm:w-auto">
         <span class="material-symbols-outlined text-blue-600 text-[1.2rem]">campaign</span>
         <span x-text="filterStatusName()"></span>
     </div>
@@ -350,7 +363,7 @@
      GRID VIEW
 ══════════════════════════════════════════════ --}}
 <div x-show="viewMode === 'grid'"
-     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
     @foreach($kampanyeList as $idx => $k)
     @php

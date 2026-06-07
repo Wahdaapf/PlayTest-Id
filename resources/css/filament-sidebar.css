@@ -1594,3 +1594,25 @@
 .dark .fi-ta-record td {
     color: #cbd5e1 !important;
 }
+
+/* ═══ MOBILE SIDEBAR CLOSE BUTTON FIX ═══ */
+.fi-sidebar-close-btn,
+.fi-sidebar-header .fi-icon-btn {
+    color: #64748b !important;
+    background-color: transparent !important;
+}
+.fi-sidebar-close-btn:hover,
+.fi-sidebar-header .fi-icon-btn:hover {
+    color: #1e293b !important;
+    background-color: #f1f5f9 !important;
+}
+.dark .fi-sidebar-close-btn,
+.dark .fi-sidebar-header .fi-icon-btn {
+    color: #94a3b8 !important;
+    background-color: transparent !important;
+}
+.dark .fi-sidebar-close-btn:hover,
+.dark .fi-sidebar-header .fi-icon-btn:hover {
+    color: #f1f5f9 !important;
+    background-color: #1e293b !important;
+}

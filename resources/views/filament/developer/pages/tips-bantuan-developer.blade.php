@@ -663,9 +663,15 @@
   ══════════════════════════════════════ */
   @media (max-width: 640px) {
     .tb-hero { padding: 1.5rem; border-radius: 1.25rem; }
-    .tb-hero-content { flex-direction: column; align-items: flex-start; }
+    .tb-hero-content { flex-direction: column; align-items: stretch; gap: 1rem; }
+    .tb-hero-left { align-items: center; }
     .tb-hero-title { font-size: 1.5rem; }
-    .tb-toolbar { flex-direction: column; }
+    .tb-btn-tour { width: 100%; justify-content: center; }
+    .tb-toolbar { flex-direction: column; align-items: stretch; }
+    .tb-search-wrap { width: 100%; }
+    .tb-tabs { justify-content: flex-start; width: 100%; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .tb-tabs::-webkit-scrollbar { display: none; }
+    .tb-grid { grid-template-columns: 1fr; }
     .tb-quick-grid { grid-template-columns: 1fr 1fr; }
   }
 
