@@ -76,6 +76,10 @@
         justify-content: center;
         gap: 0.625rem;
         margin-bottom: 1.25rem;
+        background: #ffffff;
+        padding: 0.5rem 1.25rem;
+        border-radius: 9999px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
 
     .fp-mobile-header-icon {

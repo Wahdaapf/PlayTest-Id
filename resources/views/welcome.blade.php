@@ -353,6 +353,30 @@
           <li><a href="#how-it-works" class="hover:text-brand-600 dark:hover:text-brand-400 transition duration-200">{{ __('Cara Kerja') }}</a></li>
           <li><a href="#benefits" class="hover:text-brand-600 dark:hover:text-brand-400 transition duration-200">{{ __('Manfaat') }}</a></li>
           <li><a href="#pricing" class="hover:text-brand-600 dark:hover:text-brand-400 transition duration-200">{{ __('Harga') }}</a></li>
+          <li><a href="#hero" class="hover:text-brand-600 dark:hover:text-brand-400 transition duration-200">{{ __('Dasbor') }}</a></li>
+          <li><a href="#testi" class="hover:text-brand-600 dark:hover:text-brand-400 transition duration-200">{{ __('Blog') }}</a></li>
+          <!-- Dropdown: Lainnya -->
+          <li class="relative" id="navDropdownWrapper">
+            <button id="navDropdownBtn" onclick="toggleNavDropdown()" class="flex items-center gap-1 hover:text-brand-600 dark:hover:text-brand-400 transition duration-200 focus:outline-none">
+              {{ __('Lainnya') }}
+              <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200" id="navDropdownChevron"></i>
+            </button>
+            <div id="navDropdownMenu" class="hidden absolute top-full right-0 mt-2 w-52 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50">
+              <a href="{{ route('kebijakan-privasi') }}" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-300 hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">
+                <i class="fa-solid fa-shield-halved text-xs w-4 text-center"></i> {{ __('Kebijakan Privasi') }}
+              </a>
+              <a href="{{ route('syarat-ketentuan') }}" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-300 hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">
+                <i class="fa-solid fa-file-contract text-xs w-4 text-center"></i> {{ __('Syarat & Ketentuan') }}
+              </a>
+              <div class="border-t border-slate-100 dark:border-slate-800 my-1"></div>
+              <a href="{{ route('faq') }}" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-300 hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">
+                <i class="fa-solid fa-circle-question text-xs w-4 text-center"></i> FAQ
+              </a>
+              <a href="{{ route('hubungi-kami') }}" class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-300 hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">
+                <i class="fa-solid fa-headset text-xs w-4 text-center"></i> {{ __('Hubungi Kami') }}
+              </a>
+            </div>
+          </li>
         </ul>
 
         <!-- Desktop CTA -->
@@ -408,6 +432,24 @@
           <li><a href="#how-it-works" class="block px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">{{ __('Cara Kerja') }}</a></li>
           <li><a href="#benefits" class="block px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">{{ __('Manfaat') }}</a></li>
           <li><a href="#pricing" class="block px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">{{ __('Harga') }}</a></li>
+          <li><a href="#hero" class="block px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">{{ __('Dasbor') }}</a></li>
+          <li><a href="#testi" class="block px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition">{{ __('Blog') }}</a></li>
+          <!-- Mobile: Lainnya submenu -->
+          <li class="border-t border-slate-100 dark:border-slate-700 mt-1 pt-2">
+            <span class="block px-3 py-1 text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">{{ __('Lainnya') }}</span>
+          </li>
+          <li><a href="{{ route('kebijakan-privasi') }}" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition text-sm">
+            <i class="fa-solid fa-shield-halved text-xs text-slate-400"></i> {{ __('Kebijakan Privasi') }}
+          </a></li>
+          <li><a href="{{ route('syarat-ketentuan') }}" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition text-sm">
+            <i class="fa-solid fa-file-contract text-xs text-slate-400"></i> {{ __('Syarat & Ketentuan') }}
+          </a></li>
+          <li><a href="{{ route('faq') }}" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition text-sm">
+            <i class="fa-solid fa-circle-question text-xs text-slate-400"></i> FAQ
+          </a></li>
+          <li><a href="{{ route('hubungi-kami') }}" class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-brand-50 dark:hover:bg-slate-800 hover:text-brand-600 dark:hover:text-brand-400 transition text-sm">
+            <i class="fa-solid fa-headset text-xs text-slate-400"></i> {{ __('Hubungi Kami') }}
+          </a></li>
           <li class="border-t border-slate-100 dark:border-slate-800 mt-2 pt-3 flex gap-2">
             <button onclick="openAuthModal('login')" class="flex-1 text-center px-4 py-2 font-semibold text-brand-600 dark:text-brand-400 border-2 border-brand-600 dark:border-brand-500 rounded-xl hover:bg-brand-50 dark:hover:bg-brand-950 transition">{{ __('Masuk') }}</button>
             <button onclick="openAuthModal('register')" class="flex-1 text-center px-4 py-2 font-semibold text-white bg-brand-600 rounded-xl shadow hover:bg-brand-700 transition">{{ __('Daftar') }}</button>
@@ -834,7 +876,7 @@
   <!-- ════════════════════════════════════════════
      6. TESTIMONIAL (bonus) – Social proof
      ════════════════════════════════════════════ -->
-  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900">
+  <section id="testi" class="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-900">
     <div class="max-w-6xl mx-auto">
 
       <div class="text-center mb-10 reveal">
@@ -976,8 +1018,8 @@
             <li><a href="#how-it-works" class="hover:text-white transition">{{ __('Cara Kerja') }}</a></li>
             <li><a href="#benefits" class="hover:text-white transition">{{ __('Manfaat') }}</a></li>
             <li><a href="#pricing" class="hover:text-white transition">{{ __('Harga') }}</a></li>
-            <li><a href="#" class="hover:text-white transition">{{ __('Dasbor') }}</a></li>
-            <li><a href="#" class="hover:text-white transition">{{ __('Blog') }}</a></li>
+            <li><a href="#hero" class="hover:text-white transition">{{ __('Dasbor') }}</a></li>
+            <li><a href="#testi" class="hover:text-white transition">{{ __('Blog') }}</a></li>
           </ul>
         </div>
 
@@ -985,10 +1027,10 @@
         <div>
           <h5 class="text-white font-bold text-sm mb-4">{{ __('Legal & Dukungan') }}</h5>
           <ul class="space-y-2.5 text-sm">
-            <li><a href="#" class="hover:text-white transition">{{ __('Kebijakan Privasi') }}</a></li>
-            <li><a href="#" class="hover:text-white transition">{{ __('Syarat & Ketentuan') }}</a></li>
-            <li><a href="#" class="hover:text-white transition">{{ __('FAQ') }}</a></li>
-            <li><a href="#" class="hover:text-white transition">{{ __('Hubungi Kami') }}</a></li>
+            <li><a href="{{ route('kebijakan-privasi') }}" class="hover:text-white transition">{{ __('Kebijakan Privasi') }}</a></li>
+            <li><a href="{{ route('syarat-ketentuan') }}" class="hover:text-white transition">{{ __('Syarat & Ketentuan') }}</a></li>
+            <li><a href="{{ route('faq') }}" class="hover:text-white transition">{{ __('FAQ') }}</a></li>
+            <li><a href="{{ route('hubungi-kami') }}" class="hover:text-white transition">{{ __('Hubungi Kami') }}</a></li>
           </ul>
         </div>
 
@@ -1125,6 +1167,15 @@
         localStorage.setItem('pt-theme', 'dark');
       }
     }
+
+    function toggleNavDropdown() {
+      var menu = document.getElementById('navDropdownMenu');
+      var chevron = document.getElementById('navDropdownChevron');
+      if (!menu) return;
+      var isHidden = menu.classList.contains('hidden');
+      menu.classList.toggle('hidden', !isHidden);
+      chevron.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
   </script>
 
 
@@ -1134,7 +1185,20 @@
   <script>
     $(function() {
 
+      /* ── 0. NAVBAR DROPDOWN: Lainnya ── */
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function(e) {
+        var wrapper = document.getElementById('navDropdownWrapper');
+        if (wrapper && !wrapper.contains(e.target)) {
+          var menu = document.getElementById('navDropdownMenu');
+          var chevron = document.getElementById('navDropdownChevron');
+          if (menu) menu.classList.add('hidden');
+          if (chevron) chevron.style.transform = 'rotate(0deg)';
+        }
+      });
+
       /* ── 1. NAVBAR: Sticky scroll shadow ── */
+
       $(window).on('scroll', function() {
         if ($(this).scrollTop() > 10) {
           $('#navbar').addClass('scrolled');
@@ -1210,7 +1274,7 @@
       });
 
       /* ── 7. NAVBAR LINK ACTIVE STATE on scroll ── */
-      var sections = ['how-it-works', 'benefits', 'pricing'];
+      var sections = ['how-it-works', 'benefits', 'pricing', 'hero', 'testi'];
       $(window).on('scroll', function() {
         var scrollPos = $(this).scrollTop() + 80;
         sections.forEach(function(id) {

@@ -28,6 +28,14 @@ Route::prefix('{locale}')->where(['locale' => 'id|en'])->middleware(\App\Http\Mi
     })->name('welcome');
 });
 
+// ── Static Pages ───────────────────────────────────────────────────────────
+Route::middleware(\App\Http\Middleware\LanguageManagerMiddleware::class)->group(function () {
+    Route::get('/kebijakan-privasi', fn() => view('pages.kebijakan-privasi'))->name('kebijakan-privasi');
+    Route::get('/syarat-ketentuan',  fn() => view('pages.syarat-ketentuan'))->name('syarat-ketentuan');
+    Route::get('/faq',               fn() => view('pages.faq'))->name('faq');
+    Route::get('/hubungi-kami',      fn() => view('pages.hubungi-kami'))->name('hubungi-kami');
+});
+
 Route::get('/language/switch/{locale}', function ($locale) {
     if (in_array($locale, ['id', 'en'])) {
         \Illuminate\Support\Facades\Session::put('app_locale', $locale);
