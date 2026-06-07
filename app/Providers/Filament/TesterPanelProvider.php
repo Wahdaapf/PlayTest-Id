@@ -10,6 +10,7 @@ use App\Filament\Tester\Pages\TesterDashboard;
 use App\Filament\Tester\Pages\ProfileTester;
 use App\Filament\Tester\Pages\Dompet;
 use App\Filament\Tester\Pages\MisiSaya;
+use App\Filament\Tester\Pages\HistoryMisi;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -74,6 +75,11 @@ class TesterPanelProvider extends PanelProvider
                                 ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.misi-saya'))
                                 ->url(fn() => MisiSaya::getUrl()),
 
+                            NavigationItem::make('History Misi')
+                                ->icon('heroicon-o-clock')
+                                ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.history-misi'))
+                                ->url(fn() => HistoryMisi::getUrl()),
+
                             NavigationItem::make('Dompet')
                                 ->icon('heroicon-o-credit-card')
                                 ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.dompet'))
@@ -99,6 +105,7 @@ class TesterPanelProvider extends PanelProvider
                 TesterDashboard::class,
                 ProfileTester::class,
                 Dompet::class,
+                HistoryMisi::class,
             ])
             ->discoverPages(
                 in: app_path('Filament/Tester/Pages'),

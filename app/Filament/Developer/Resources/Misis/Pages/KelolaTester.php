@@ -144,11 +144,22 @@ class KelolaTester extends Page implements HasTable
 
                 TextColumn::make('status')
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'accepted' => 'Diterima',
+                        'progress' => 'Berlangsung',
+                        'submitted' => 'Menunggu',
+                        'selesai' => 'Selesai',
+                        'failed' => 'Gagal',
+                        'rejected' => 'Ditolak',
+                        default => ucfirst($state),
+                    })
                     ->color(fn (string $state): string => match ($state) {
                         'accepted' => 'info',
                         'progress' => 'warning',
                         'submitted' => 'primary',
                         'selesai' => 'success',
+                        'failed' => 'danger',
+                        'rejected' => 'danger',
                         default => 'gray',
                     }),
 
