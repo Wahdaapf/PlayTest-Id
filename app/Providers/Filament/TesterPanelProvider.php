@@ -62,7 +62,7 @@ class TesterPanelProvider extends PanelProvider
             ->favicon('/logoheader.png')
             ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
                 return $builder->groups([
-                    NavigationGroup::make('Menu')
+                    NavigationGroup::make('Main')
                         ->items([
                             NavigationItem::make('Home')
                                 ->icon('heroicon-o-home')
@@ -75,25 +75,26 @@ class TesterPanelProvider extends PanelProvider
                                 ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.misi-saya'))
                                 ->url(fn() => MisiSaya::getUrl()),
 
-                            NavigationItem::make('History Misi')
-                                ->icon('heroicon-o-clock')
-                                ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.history-misi'))
-                                ->url(fn() => HistoryMisi::getUrl()),
-
                             NavigationItem::make('Dompet')
                                 ->icon('heroicon-o-credit-card')
                                 ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.dompet'))
                                 ->url(fn() => Dompet::getUrl()),
 
-                            NavigationItem::make('Profil')
+                            NavigationItem::make('History Misi')
+                                ->icon('heroicon-o-clock')
+                                ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.history-misi'))
+                                ->url(fn() => HistoryMisi::getUrl()),
+
+                        ]),
+
+                    NavigationGroup::make('Profil & Bantuan')
+                        ->items([
+                            NavigationItem::make('Profil Saya')
                                 ->icon('heroicon-o-user-circle')
                                 ->url(fn() => ProfileTester::getUrl())
                                 ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.profile-tester')),
-                        ]),
 
-                    NavigationGroup::make('Lainnya')
-                        ->items([
-                            NavigationItem::make('Bantuan')
+                            NavigationItem::make('Tips & Bantuan')
                                 ->icon('heroicon-o-question-mark-circle')
                                 ->url('#'),
                         ]),
@@ -114,7 +115,7 @@ class TesterPanelProvider extends PanelProvider
             ->userMenuItems([
                 'profile' => \Filament\Navigation\MenuItem::make()
                     ->label(fn() => auth()->user()->name)
-                    ->url(fn (): string => ProfileTester::getUrl())
+                    ->url(fn(): string => ProfileTester::getUrl())
                     ->icon('heroicon-o-user-circle'),
             ])
 
