@@ -340,15 +340,15 @@
         {{-- Top stat pills --}}
         <div class="flex items-center justify-center sm:justify-start gap-3 flex-wrap w-full lg:w-auto">
           <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px] flex-1 sm:flex-none">
-            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ $stats['point'] ?? 0 }}">0</p>
+            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ $stats['point'] ?? 0 }}">{{ number_format($stats['point'] ?? 0, 0, ',', '.') }}</p>
             <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">{{ __('Poin') }}</p>
           </div>
           <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px] flex-1 sm:flex-none">
-            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ $stats['misi_selesai'] ?? 0 }}">0</p>
+            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ $stats['misi_selesai'] ?? 0 }}">{{ number_format($stats['misi_selesai'] ?? 0, 0, ',', '.') }}</p>
             <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">{{ __('Misi Selesai') }}</p>
           </div>
           <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px] flex-1 sm:flex-none">
-            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ $badgeCount }}">0</p>
+            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ $badgeCount }}">{{ number_format($badgeCount, 0, ',', '.') }}</p>
             <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">{{ __('Badge') }}</p>
           </div>
         </div>
@@ -372,7 +372,7 @@
               @if(isset($m['isText']) && $m['isText'])
                 <p class="font-mono-num text-lg font-bold text-white">{{ $m['textVal'] }}</p>
               @else
-                <p class="font-mono-num text-lg font-bold text-white prof-counter" data-target="{{ $m['val'] }}">0</p>
+                <p class="font-mono-num text-lg font-bold text-white prof-counter" data-target="{{ $m['val'] }}">{{ number_format($m['val'], 0, ',', '.') }}</p>
               @endif
               <p class="text-[10px] font-semibold uppercase tracking-wider" style="color:#dbeafe;letter-spacing:0.12em;">{{ $m['label'] }}</p>
             </div>

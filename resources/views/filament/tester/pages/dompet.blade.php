@@ -749,7 +749,7 @@
                 <div class="relative z-10 text-center py-6">
                     <p class="text-xs font-semibold uppercase tracking-widest mb-2" style="color:#e0f2fe;letter-spacing:0.12em;">SALDO POIN ANDA</p>
                     <div class="flex items-baseline justify-center gap-2 mb-3">
-                        <span class="font-mono-num font-bold text-white prof-counter" style="font-size:48px;line-height:1;" data-target="{{ $totalPoin ?? 0 }}">0</span>
+                        <span class="font-mono-num font-bold text-white prof-counter" style="font-size:48px;line-height:1;" data-target="{{ $totalPoin ?? 0 }}">{{ number_format($totalPoin ?? 0, 0, ',', '.') }}</span>
                         <span class="text-xl font-semibold" style="color:#bae6fd;opacity:0.85;">pts</span>
                     </div>
                     <p class="text-sm font-medium" style="color:#bae6fd;">Setara dengan <span class="font-bold text-white">{{ $estimasiRupiah ?? 'Rp 0' }}</span></p>

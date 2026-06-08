@@ -328,15 +328,15 @@
         {{-- Top stat pills --}}
         <div class="flex items-center justify-center sm:justify-start gap-3 flex-wrap w-full lg:w-auto">
           <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px] flex-1 sm:flex-none">
-            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ \App\Models\User::count() }}">0</p>
+            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ \App\Models\User::count() }}">{{ number_format(\App\Models\User::count(), 0, ',', '.') }}</p>
             <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">{{ __('Pengguna') }}</p>
           </div>
           <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px] flex-1 sm:flex-none">
-            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ \App\Models\Misi::count() }}">0</p>
+            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ \App\Models\Misi::count() }}">{{ number_format(\App\Models\Misi::count(), 0, ',', '.') }}</p>
             <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">{{ __('Kampanye') }}</p>
           </div>
           <div class="prof-stat-pill rounded-2xl px-5 py-3 text-center min-w-[100px] flex-1 sm:flex-none">
-            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ \App\Models\Pembayaran::where('status','accepted')->count() }}">0</p>
+            <p class="font-mono-num text-2xl font-bold text-white prof-counter" data-target="{{ \App\Models\Pembayaran::where('status','accepted')->count() }}">{{ number_format(\App\Models\Pembayaran::where('status','accepted')->count(), 0, ',', '.') }}</p>
             <p class="text-[10px] font-semibold uppercase tracking-wider mt-0.5" style="color:#dbeafe;letter-spacing:0.12em;">{{ __('Transaksi') }}</p>
           </div>
         </div>
@@ -357,7 +357,7 @@
           <div class="prof-mini flex items-center gap-3">
             <span class="prof-mini-dot w-2.5 h-2.5 rounded-full flex-shrink-0" style="background:{{ $m['color'] }};box-shadow:0 0 12px {{ $m['color'] }};"></span>
             <div>
-              <p class="font-mono-num text-lg font-bold text-white prof-counter" data-target="{{ $m['val'] }}">0</p>
+              <p class="font-mono-num text-lg font-bold text-white prof-counter" data-target="{{ $m['val'] }}">{{ number_format($m['val'], 0, ',', '.') }}</p>
               <p class="text-[10px] font-semibold uppercase tracking-wider" style="color:#dbeafe;letter-spacing:0.12em;">{{ $m['label'] }}</p>
             </div>
           </div>
