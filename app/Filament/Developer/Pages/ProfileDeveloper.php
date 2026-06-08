@@ -16,6 +16,16 @@ class ProfileDeveloper extends Page implements HasForms
 {
     use InteractsWithForms;
 
+    public static function getNavigationLabel(): string
+    {
+        return __('Profil Saya');
+    }
+
+    public function getTitle(): string | \Illuminate\Contracts\Support\Htmlable
+    {
+        return __('Profil Developer');
+    }
+
     protected static bool $shouldRegisterNavigation = false;
     protected static ?string $navigationLabel = 'Profil Saya';
     protected static ?string $title           = 'Profil Developer';
@@ -37,33 +47,33 @@ class ProfileDeveloper extends Page implements HasForms
     {
         return $form
             ->schema([
-                Section::make('Informasi Akun')
+                Section::make(__('Informasi Akun'))
                     ->schema([
                         TextInput::make('name')
-                            ->label('Nama Lengkap')
+                            ->label(__('Nama Lengkap'))
                             ->required()
                             ->maxLength(255),
                         TextInput::make('email')
-                            ->label('Email')
+                            ->label(__('Email'))
                             ->email()
                             ->required()
                             ->maxLength(255),
                     ])->columns(2),
 
-                Section::make('Ubah Password')
-                    ->description('Kosongkan jika tidak ingin mengubah password.')
+                Section::make(__('Ubah Password'))
+                    ->description(__('Kosongkan jika tidak ingin mengubah password.'))
                     ->schema([
                         TextInput::make('current_password')
-                            ->label('Password Saat Ini')
+                            ->label(__('Password Saat Ini'))
                             ->password()
                             ->revealable(),
                         TextInput::make('new_password')
-                            ->label('Password Baru')
+                            ->label(__('Password Baru'))
                             ->password()
                             ->revealable()
                             ->minLength(8),
                         TextInput::make('new_password_confirmation')
-                            ->label('Konfirmasi Password Baru')
+                            ->label(__('Konfirmasi Password Baru'))
                             ->password()
                             ->revealable()
                             ->same('new_password'),
@@ -80,7 +90,7 @@ class ProfileDeveloper extends Page implements HasForms
         if (!empty($data['new_password'])) {
             if (empty($data['current_password']) || !Hash::check($data['current_password'], $user->password)) {
                 Notification::make()
-                    ->title('Password saat ini tidak cocok.')
+                    ->title(__('Password saat ini tidak cocok.'))
                     ->danger()
                     ->send();
                 return;
@@ -95,7 +105,7 @@ class ProfileDeveloper extends Page implements HasForms
         $user->save();
 
         Notification::make()
-            ->title('Profil berhasil diperbarui!')
+            ->title(__('Profil berhasil diperbarui!'))
             ->success()
             ->send();
 
@@ -114,7 +124,7 @@ class ProfileDeveloper extends Page implements HasForms
         return [
             'total_misi'   => $misiCount,
             'misi_selesai' => $misiSelesai,
-            'paket'        => $pembayaran?->paket?->name ?? 'Belum Berlangganan',
+            'paket'        => $pembayaran?->paket?->name ?? __('Belum Berlangganan'),
             'member_since' => $user->created_at->format('M Y'),
         ];
     }

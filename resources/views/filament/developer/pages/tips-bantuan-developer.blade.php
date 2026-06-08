@@ -752,12 +752,12 @@
         <div>
           <div class="tb-hero-label">
             <span></span>
-            PUSAT BANTUAN
+            {{ __('PUSAT BANTUAN') }}
           </div>
-          <h1 class="tb-hero-title">Tips & Bantuan</h1>
+          <h1 class="tb-hero-title">{{ __('Tips & Bantuan') }}</h1>
           <div class="tb-hero-sub">
             <span class="tb-dot"></span>
-            Panduan lengkap untuk Developer
+            {{ __('Panduan lengkap untuk Developer') }}
           </div>
         </div>
       </div>
@@ -765,7 +765,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456Z" />
         </svg>
-        Mulai Tur Halaman
+        {{ __('Mulai Tur Halaman') }}
       </button>
     </div>
 
@@ -788,7 +788,7 @@
       <svg class="tb-search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
       </svg>
-      <input type="text" x-model="search" placeholder="Cari tips, panduan, atau bantuan..." class="tb-search-input" />
+      <input type="text" x-model="search" placeholder="{{ __('Cari tips, panduan, atau bantuan...') }}" class="tb-search-input" />
     </div>
     <div class="tb-tabs" id="tb-tabs">
       <template x-for="cat in categories" :key="cat.id">
@@ -835,40 +835,40 @@
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:48px;height:48px;color:#94a3b8;margin:0 auto 12px;display:block">
       <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
     </svg>
-    <p style="font-weight:600;margin-bottom:4px;">Tidak ditemukan</p>
-    <p style="font-size:.8rem;">Coba kata kunci lain atau ganti filter kategori.</p>
+    <p style="font-weight:600;margin-bottom:4px;">{{ __('Tidak ditemukan') }}</p>
+    <p style="font-size:.8rem;">{{ __('Coba kata kunci lain atau ganti filter kategori.') }}</p>
   </div>
 
   {{-- ═══════════ QUICK ACCESS ═══════════ --}}
   <div class="tb-quick-section" id="tb-quick-access">
-    <div class="tb-quick-title">⚡ Akses Cepat Developer</div>
+    <div class="tb-quick-title">⚡ {{ __('Akses Cepat Developer') }}</div>
     <div class="tb-quick-grid">
       <a href="/developer" class="tb-quick-card">
         <div class="tb-quick-icon" style="background:rgba(37,99,235,.1);">🏠</div>
         <div>
-          <div class="tb-quick-label">Dashboard</div>
-          <div class="tb-quick-sublabel">Ringkasan aplikasi</div>
+          <div class="tb-quick-label">{{ __('Dashboard') }}</div>
+          <div class="tb-quick-sublabel">{{ __('Ringkasan aplikasi') }}</div>
         </div>
       </a>
       <a href="/developer/misis/create" class="tb-quick-card">
         <div class="tb-quick-icon" style="background:rgba(16,185,129,.1);">📝</div>
         <div>
-          <div class="tb-quick-label">Test Case Baru</div>
-          <div class="tb-quick-sublabel">Buat kampanye testing</div>
+          <div class="tb-quick-label">{{ __('Test Case Baru') }}</div>
+          <div class="tb-quick-sublabel">{{ __('Buat kampanye testing') }}</div>
         </div>
       </a>
       <a href="/developer/pantau-progress" class="tb-quick-card">
         <div class="tb-quick-icon" style="background:rgba(245,158,11,.1);">📈</div>
         <div>
-          <div class="tb-quick-label">Pantau Progress</div>
-          <div class="tb-quick-sublabel">Monitor testing</div>
+          <div class="tb-quick-label">{{ __('Pantau Progress') }}</div>
+          <div class="tb-quick-sublabel">{{ __('Monitor testing') }}</div>
         </div>
       </a>
       <a href="/developer/profile-developer" class="tb-quick-card">
         <div class="tb-quick-icon" style="background:rgba(20,184,166,.1);">👤</div>
         <div>
-          <div class="tb-quick-label">Profil</div>
-          <div class="tb-quick-sublabel">Edit profil Anda</div>
+          <div class="tb-quick-label">{{ __('Profil') }}</div>
+          <div class="tb-quick-sublabel">{{ __('Edit profil Anda') }}</div>
         </div>
       </a>
     </div>
@@ -878,16 +878,16 @@
   <div class="tb-stats-bar">
     <div class="tb-stats-item">
       <span class="tb-stats-num" x-text="filteredTips.length"></span>
-      <span>tips ditampilkan</span>
+      <span>{{ __('tips ditampilkan') }}</span>
     </div>
     <div class="tb-stats-item">
-      <span>dari</span>
+      <span>{{ __('dari') }}</span>
       <span class="tb-stats-num" x-text="tips.length"></span>
-      <span>total tips</span>
+      <span>{{ __('total tips') }}</span>
     </div>
     <div class="tb-stats-item">
       <span style="opacity:.5;">•</span>
-      <span>Tekan <kbd style="background:rgba(241,245,249,.8);padding:2px 8px;border-radius:5px;border:1px solid rgba(226,232,240,.6);font-size:.7rem;font-weight:600;font-family:'JetBrains Mono',monospace;">Ctrl+K</kbd> untuk pencarian global</span>
+      <span>{{ __('Tekan') }} <kbd style="background:rgba(241,245,249,.8);padding:2px 8px;border-radius:5px;border:1px solid rgba(226,232,240,.6);font-size:.7rem;font-weight:600;font-family:'JetBrains Mono',monospace;">Ctrl+K</kbd> {{ __('untuk pencarian global') }}</span>
     </div>
   </div>
 
@@ -903,188 +903,139 @@
       expandedTip: null,
       tips: [
         {
-          title: 'Dashboard Developer',
+          title: {!! json_encode(__('Dashboard Developer')) !!},
           emoji: '🏠',
           iconBg: 'rgba(37,99,235,0.12)',
           category: 'navigasi',
-          categoryLabel: 'Navigasi',
-          desc: 'Dashboard Developer menampilkan ringkasan aplikasi Anda, progres testing, dan statistik kampanye. Di sini Anda bisa melihat total misi, misi aktif, dan notifikasi terbaru secara real-time.',
-          steps: [
-            'Buka menu "Dashboard" di sidebar kiri atau klik ikon Home',
-            'Lihat kartu statistik di bagian atas: Total Misi, Misi Aktif, Misi Selesai',
-            'Scroll ke bawah untuk melihat aktivitas terbaru dan notifikasi',
-            'Gunakan Quick Actions untuk akses cepat ke fitur utama'
-          ]
+          categoryLabel: {!! json_encode(__('Navigasi')) !!},
+          desc: {!! json_encode(__('Dashboard Developer menampilkan ringkasan aplikasi Anda, progres testing, dan statistik kampanye. Di sini Anda bisa melihat total misi, misi aktif, dan notifikasi terbaru secara real-time.')) !!},
+          steps: [{!! json_encode(__('Buka menu "Dashboard" di sidebar kiri atau klik ikon Home')) !!}, {!! json_encode(__('Lihat kartu statistik di bagian atas: Total Misi, Misi Aktif, Misi Selesai')) !!}, {!! json_encode(__('Scroll ke bawah untuk melihat aktivitas terbaru dan notifikasi')) !!}, {!! json_encode(__('Gunakan Quick Actions untuk akses cepat ke fitur utama')) !!}]
         },
+
         {
-          title: 'Monitoring Statistik Real-time',
+          title: {!! json_encode(__('Monitoring Statistik Real-time')) !!},
           emoji: '📊',
           iconBg: 'rgba(16,185,129,0.12)',
           category: 'navigasi',
-          categoryLabel: 'Navigasi',
-          desc: 'Dashboard menyediakan monitoring real-time untuk semua kampanye testing Anda. Pantau tren pengujian dan progress tester yang bergabung.',
-          steps: [
-            'Perhatikan kartu statistik yang menampilkan data terbaru',
-            'Lihat progress bar untuk setiap kampanye aktif',
-            'Periksa jumlah tester yang sudah bergabung vs target',
-            'Data di dashboard diperbarui secara otomatis'
-          ]
+          categoryLabel: {!! json_encode(__('Navigasi')) !!},
+          desc: {!! json_encode(__('Dashboard menyediakan monitoring real-time untuk semua kampanye testing Anda. Pantau tren pengujian dan progress tester yang bergabung.')) !!},
+          steps: [{!! json_encode(__('Perhatikan kartu statistik yang menampilkan data terbaru')) !!}, {!! json_encode(__('Lihat progress bar untuk setiap kampanye aktif')) !!}, {!! json_encode(__('Periksa jumlah tester yang sudah bergabung vs target')) !!}, {!! json_encode(__('Data di dashboard diperbarui secara otomatis')) !!}]
         },
         {
-          title: 'Buat Test Case Baru',
+          title: {!! json_encode(__('Buat Test Case Baru')) !!},
           emoji: '📝',
           iconBg: 'rgba(16,185,129,0.12)',
           category: 'fitur',
-          categoryLabel: 'Fitur',
-          desc: 'Buat kampanye testing baru untuk aplikasi Anda. Tentukan detail aplikasi, langkah-langkah testing yang perlu dilakukan tester, dan target jumlah tester.',
-          steps: [
-            'Klik menu "New Test Case" di sidebar atau tombol "+" di dashboard',
-            'Isi nama aplikasi dan deskripsi singkat kampanye Anda',
-            'Tentukan langkah-langkah testing yang harus diikuti tester',
-            'Upload screenshot atau file pendukung jika diperlukan',
-            'Tentukan jumlah tester yang dibutuhkan',
-            'Submit dan tunggu tester bergabung ke kampanye Anda'
-          ]
+          categoryLabel: {!! json_encode(__('Fitur')) !!},
+          desc: {!! json_encode(__('Buat kampanye testing baru untuk aplikasi Anda. Tentukan detail aplikasi, langkah-langkah testing yang perlu dilakukan tester, dan target jumlah tester.')) !!},
+          steps: [{!! json_encode(__('Klik menu "New Test Case" di sidebar atau tombol "+" di dashboard')) !!}, {!! json_encode(__('Isi nama aplikasi dan deskripsi singkat kampanye Anda')) !!}, {!! json_encode(__('Tentukan langkah-langkah testing yang harus diikuti tester')) !!}, {!! json_encode(__('Upload screenshot atau file pendukung jika diperlukan')) !!}, {!! json_encode(__('Tentukan jumlah tester yang dibutuhkan')) !!}, {!! json_encode(__('Submit dan tunggu tester bergabung ke kampanye Anda')) !!}]
         },
         {
-          title: 'Upload Aplikasi & Aset',
+          title: {!! json_encode(__('Upload Aplikasi & Aset')) !!},
           emoji: '📦',
           iconBg: 'rgba(139,92,246,0.12)',
           category: 'fitur',
-          categoryLabel: 'Fitur',
-          desc: 'Upload file aplikasi (APK, link, dsb.) dan aset pendukung untuk memudahkan tester dalam proses pengujian.',
-          steps: [
-            'Saat membuat test case baru, gunakan form upload file',
-            'Upload file APK, link website, atau dokumen pendukung',
-            'Pastikan file yang di-upload sudah benar dan bisa diakses',
-            'Tester akan menggunakan file ini sebagai bahan pengujian'
-          ]
+          categoryLabel: {!! json_encode(__('Fitur')) !!},
+          desc: {!! json_encode(__('Upload file aplikasi (APK, link, dsb.) dan aset pendukung untuk memudahkan tester dalam proses pengujian.')) !!},
+          steps: [{!! json_encode(__('Saat membuat test case baru, gunakan form upload file')) !!}, {!! json_encode(__('Upload file APK, link website, atau dokumen pendukung')) !!}, {!! json_encode(__('Pastikan file yang di-upload sudah benar dan bisa diakses')) !!}, {!! json_encode(__('Tester akan menggunakan file ini sebagai bahan pengujian')) !!}]
         },
         {
-          title: 'Pantau Progress Testing',
+          title: {!! json_encode(__('Pantau Progress Testing')) !!},
           emoji: '📈',
           iconBg: 'rgba(245,158,11,0.12)',
           category: 'fitur',
-          categoryLabel: 'Fitur',
-          desc: 'Monitor progres testing aplikasi Anda secara real-time. Lihat berapa tester yang sudah bergabung, progress pengerjaan, dan hasil feedback.',
-          steps: [
-            'Buka menu "Pantau Progress" di sidebar',
-            'Pilih kampanye yang ingin dipantau',
-            'Lihat statistik: jumlah tester, progress, dan hasil',
-            'Baca feedback detail dari setiap tester',
-            'Download laporan hasil testing jika diperlukan'
-          ]
+          categoryLabel: {!! json_encode(__('Fitur')) !!},
+          desc: {!! json_encode(__('Monitor progres testing aplikasi Anda secara real-time. Lihat berapa tester yang sudah bergabung, progress pengerjaan, dan hasil feedback.')) !!},
+          steps: [{!! json_encode(__('Buka menu "Pantau Progress" di sidebar')) !!}, {!! json_encode(__('Pilih kampanye yang ingin dipantau')) !!}, {!! json_encode(__('Lihat statistik: jumlah tester, progress, dan hasil')) !!}, {!! json_encode(__('Baca feedback detail dari setiap tester')) !!}, {!! json_encode(__('Download laporan hasil testing jika diperlukan')) !!}]
         },
         {
-          title: 'Review Feedback Tester',
+          title: {!! json_encode(__('Daftar Aplikasi Saya')) !!},
+          emoji: '📱',
+          iconBg: 'rgba(59,130,246,0.12)',
+          category: 'fitur',
+          categoryLabel: {!! json_encode(__('Fitur')) !!},
+          desc: {!! json_encode(__('Di sini Anda dapat melihat seluruh aplikasi yang telah Anda daftarkan, statusnya, serta opsi untuk mengelola tester.')) !!},
+          steps: [{!! json_encode(__('Buka menu "Aplikasi Saya" di sidebar')) !!}, {!! json_encode(__('Lihat daftar aplikasi yang telah terdaftar')) !!}, {!! json_encode(__('Klik pada aplikasi untuk mengelola misi dan tester')) !!}]
+        },
+        {
+          title: {!! json_encode(__('Review Feedback Tester')) !!},
           emoji: '💬',
           iconBg: 'rgba(236,72,153,0.12)',
           category: 'fitur',
-          categoryLabel: 'Fitur',
-          desc: 'Baca dan review feedback yang diberikan oleh tester. Setiap tester yang menyelesaikan misi akan memberikan laporan hasil pengujian.',
-          steps: [
-            'Buka halaman "Pantau Progress" dan pilih kampanye',
-            'Scroll ke bagian daftar tester yang sudah submit',
-            'Klik detail untuk membaca feedback lengkap',
-            'Tandai feedback yang sudah ditindaklanjuti',
-            'Gunakan feedback untuk perbaikan aplikasi Anda'
-          ]
+          categoryLabel: {!! json_encode(__('Fitur')) !!},
+          desc: {!! json_encode(__('Baca dan review feedback yang diberikan oleh tester. Setiap tester yang menyelesaikan misi akan memberikan laporan hasil pengujian.')) !!},
+          steps: [{!! json_encode(__('Buka halaman "Pantau Progress" dan pilih kampanye')) !!}, {!! json_encode(__('Scroll ke bagian daftar tester yang sudah submit')) !!}, {!! json_encode(__('Klik detail untuk membaca feedback lengkap')) !!}, {!! json_encode(__('Tandai feedback yang sudah ditindaklanjuti')) !!}, {!! json_encode(__('Gunakan feedback untuk perbaikan aplikasi Anda')) !!}]
         },
         {
-          title: 'Pembayaran & Paket',
+          title: {!! json_encode(__('Pembayaran & Paket')) !!},
           emoji: '💳',
           iconBg: 'rgba(99,102,241,0.12)',
           category: 'fitur',
-          categoryLabel: 'Fitur',
-          desc: 'Kelola pembayaran untuk mengaktifkan kampanye testing. Pilih paket yang sesuai kebutuhan dan upload bukti pembayaran.',
-          steps: [
-            'Pilih paket testing saat membuat kampanye baru',
-            'Lihat detail harga dan kapasitas tester di setiap paket',
-            'Upload bukti pembayaran sesuai instruksi',
-            'Tunggu verifikasi dari admin (biasanya 1x24 jam)',
-            'Kampanye akan aktif setelah pembayaran diverifikasi'
-          ]
+          categoryLabel: {!! json_encode(__('Fitur')) !!},
+          desc: {!! json_encode(__('Kelola pembayaran untuk mengaktifkan kampanye testing. Pilih paket yang sesuai kebutuhan dan upload bukti pembayaran.')) !!},
+          steps: [{!! json_encode(__('Pilih paket testing saat membuat kampanye baru')) !!}, {!! json_encode(__('Lihat detail harga dan kapasitas tester di setiap paket')) !!}, {!! json_encode(__('Upload bukti pembayaran sesuai instruksi')) !!}, {!! json_encode(__('Tunggu verifikasi dari admin (biasanya 1x24 jam)')) !!}, {!! json_encode(__('Kampanye akan aktif setelah pembayaran diverifikasi')) !!}]
         },
         {
-          title: 'Profil & Pengaturan Akun',
+          title: {!! json_encode(__('Profil & Pengaturan Akun')) !!},
           emoji: '👤',
           iconBg: 'rgba(20,184,166,0.12)',
           category: 'fitur',
-          categoryLabel: 'Fitur',
-          desc: 'Edit informasi profil developer Anda termasuk nama, email, dan password. Halaman profil juga menampilkan statistik kampanye Anda.',
-          steps: [
-            'Klik nama Anda di pojok kanan atas atau buka menu "Profil Saya"',
-            'Lihat ringkasan statistik di hero banner profil',
-            'Edit nama dan email pada form yang tersedia',
-            'Ubah password di bagian keamanan akun',
-            'Klik "Simpan Perubahan" untuk menyimpan'
-          ]
+          categoryLabel: {!! json_encode(__('Fitur')) !!},
+          desc: {!! json_encode(__('Edit informasi profil developer Anda termasuk nama, email, dan password. Halaman profil juga menampilkan statistik kampanye Anda.')) !!},
+          steps: [{!! json_encode(__('Klik nama Anda di pojok kanan atas atau buka menu "Profil Saya"')) !!}, {!! json_encode(__('Lihat ringkasan statistik di hero banner profil')) !!}, {!! json_encode(__('Edit nama dan email pada form yang tersedia')) !!}, {!! json_encode(__('Ubah password di bagian keamanan akun')) !!}, {!! json_encode(__('Klik "Simpan Perubahan" untuk menyimpan')) !!}]
         },
         {
-          title: 'Menggunakan Halaman Tips',
+          title: {!! json_encode(__('Menggunakan Halaman Tips')) !!},
           emoji: '💡',
           iconBg: 'rgba(251,191,36,0.12)',
           category: 'navigasi',
-          categoryLabel: 'Navigasi',
-          desc: 'Halaman Tips & Bantuan ini berisi panduan lengkap untuk semua fitur developer. Gunakan fitur pencarian dan filter untuk menemukan tips yang Anda butuhkan.',
-          steps: [
-            'Gunakan kolom pencarian untuk mencari tips berdasarkan kata kunci',
-            'Klik tab kategori untuk memfilter tips: Navigasi, Fitur, Umum, atau Keamanan',
-            'Klik kartu tips untuk membuka detail dan langkah-langkah',
-            'Gunakan "Akses Cepat" di bawah untuk langsung ke halaman yang dituju',
-            'Klik "Mulai Tur Halaman" untuk panduan interaktif'
-          ]
+          categoryLabel: {!! json_encode(__('Navigasi')) !!},
+          desc: {!! json_encode(__('Halaman Tips & Bantuan ini berisi panduan lengkap untuk semua fitur developer. Gunakan fitur pencarian dan filter untuk menemukan tips yang Anda butuhkan.')) !!},
+          steps: [{!! json_encode(__('Gunakan kolom pencarian untuk mencari tips berdasarkan kata kunci')) !!}, {!! json_encode(__('Klik tab kategori untuk memfilter tips: Navigasi, Fitur, Umum, atau Keamanan')) !!}, {!! json_encode(__('Klik kartu tips untuk membuka detail dan langkah-langkah')) !!}, {!! json_encode(__('Gunakan "Akses Cepat" di bawah untuk langsung ke halaman yang dituju')) !!}, {!! json_encode(__('Klik "Mulai Tur Halaman" untuk panduan interaktif')) !!}]
         },
         {
-          title: 'Dark Mode & Tema',
+          title: {!! json_encode(__('Dark Mode & Tema')) !!},
           emoji: '🌙',
           iconBg: 'rgba(71,85,105,0.12)',
           category: 'umum',
-          categoryLabel: 'Umum',
-          desc: 'Aktifkan mode gelap untuk pengalaman yang lebih nyaman, terutama saat bekerja di malam hari. Semua halaman developer mendukung dark mode sepenuhnya.',
-          steps: [
-            'Klik nama Anda di pojok kanan atas sidebar',
-            'Pilih ikon bulan (🌙) untuk mengaktifkan mode gelap',
-            'Pilih ikon matahari (☀️) untuk kembali ke mode terang',
-            'Pengaturan tema akan disimpan otomatis untuk sesi berikutnya'
-          ]
+          categoryLabel: {!! json_encode(__('Umum')) !!},
+          desc: {!! json_encode(__('Aktifkan mode gelap untuk pengalaman yang lebih nyaman, terutama saat bekerja di malam hari. Semua halaman developer mendukung dark mode sepenuhnya.')) !!},
+          steps: [{!! json_encode(__('Klik nama Anda di pojok kanan atas sidebar')) !!}, {!! json_encode(__('Pilih ikon bulan (🌙) untuk mengaktifkan mode gelap')) !!}, {!! json_encode(__('Pilih ikon matahari (☀️) untuk kembali ke mode terang')) !!}, {!! json_encode(__('Pengaturan tema akan disimpan otomatis untuk sesi berikutnya')) !!}]
         },
         {
-          title: 'Keyboard Shortcuts',
+          title: {!! json_encode(__('Keyboard Shortcuts')) !!},
           emoji: '⌨️',
           iconBg: 'rgba(34,211,238,0.12)',
           category: 'umum',
-          categoryLabel: 'Umum',
-          desc: 'Gunakan pintasan keyboard untuk navigasi lebih cepat dan meningkatkan produktivitas Anda sebagai developer.',
-          steps: [
-            'Ctrl/⌘ + K untuk membuka pencarian global Filament',
-            'ESC untuk menutup modal, panel, atau dialog aktif',
-            'Tab untuk navigasi antar elemen form',
-            'Enter untuk mengonfirmasi aksi yang sedang aktif'
-          ]
+          categoryLabel: {!! json_encode(__('Umum')) !!},
+          desc: {!! json_encode(__('Gunakan pintasan keyboard untuk navigasi lebih cepat dan meningkatkan produktivitas Anda sebagai developer.')) !!},
+          steps: [{!! json_encode(__('Ctrl/⌘ + K untuk membuka pencarian global Filament')) !!}, {!! json_encode(__('ESC untuk menutup modal, panel, atau dialog aktif')) !!}, {!! json_encode(__('Tab untuk navigasi antar elemen form')) !!}, {!! json_encode(__('Enter untuk mengonfirmasi aksi yang sedang aktif')) !!}]
         },
         {
-          title: 'Keamanan Akun Developer',
+          title: {!! json_encode(__('Keamanan Akun Developer')) !!},
           emoji: '🔐',
           iconBg: 'rgba(239,68,68,0.12)',
           category: 'keamanan',
-          categoryLabel: 'Keamanan',
-          desc: 'Jaga keamanan akun developer Anda dengan mengikuti praktik terbaik keamanan. Lindungi data kampanye dan informasi pembayaran Anda.',
-          steps: [
-            'Gunakan password yang kuat (minimal 8 karakter, kombinasi huruf, angka, dan simbol)',
-            'Jangan bagikan kredensial login Anda ke siapapun',
-            'Logout setelah selesai menggunakan panel developer, terutama di komputer bersama',
-            'Periksa aktivitas akun secara berkala',
-            'Ganti password secara rutin minimal setiap 3 bulan'
-          ]
+          categoryLabel: {!! json_encode(__('Keamanan')) !!},
+          desc: {!! json_encode(__('Jaga keamanan akun developer Anda dengan mengikuti praktik terbaik keamanan. Lindungi data kampanye dan informasi pembayaran Anda.')) !!},
+          steps: [{!! json_encode(__('Gunakan password yang kuat (minimal 8 karakter, kombinasi huruf, angka, dan simbol)')) !!}, {!! json_encode(__('Jangan bagikan kredensial login Anda ke siapapun')) !!}, {!! json_encode(__('Logout setelah selesai menggunakan panel developer, terutama di komputer bersama')) !!}, {!! json_encode(__('Periksa aktivitas akun secara berkala')) !!}, {!! json_encode(__('Ganti password secara rutin minimal setiap 3 bulan')) !!}]
+        },
+        {
+          title: {!! json_encode(__('Ganti Bahasa')) !!},
+          emoji: '🌐',
+          iconBg: 'rgba(59,130,246,0.12)',
+          category: 'umum',
+          categoryLabel: {!! json_encode(__('Umum')) !!},
+          desc: {!! json_encode(__('Ubah bahasa antarmuka panel developer sesuai preferensi Anda. Tersedia pilihan Bahasa Indonesia dan Bahasa Inggris.')) !!},
+          steps: [{!! json_encode(__('Klik card akun pada kanan atas')) !!}, {!! json_encode(__('Klik EN untuk mengubah ke bahasa Inggris')) !!}, {!! json_encode(__('Klik ID untuk kembali ke bahasa Indonesia')) !!}, {!! json_encode(__('Sistem akan menyimpan preferensi bahasa Anda untuk kunjungan berikutnya')) !!}]
         },
       ],
       categories: [
-        { id: 'semua', label: '🏷️ Semua' },
-        { id: 'navigasi', label: '🧭 Navigasi' },
-        { id: 'fitur', label: '⚙️ Fitur' },
-        { id: 'umum', label: '📌 Umum' },
-        { id: 'keamanan', label: '🔐 Keamanan' },
+        { id: 'semua', label: '🏷️ ' + {!! json_encode(__('Semua')) !!} },
+        { id: 'navigasi', label: '🧭 ' + {!! json_encode(__('Navigasi')) !!} },
+        { id: 'fitur', label: '⚙️ ' + {!! json_encode(__('Fitur')) !!} },
+        { id: 'umum', label: '📌 ' + {!! json_encode(__('Umum')) !!} },
+        { id: 'keamanan', label: '🔐 ' + {!! json_encode(__('Keamanan')) !!} },
       ],
       get filteredTips() {
         let r = this.tips;
@@ -1110,8 +1061,8 @@
         // Step 1: Welcome (no element - modal)
         steps.push({
           popover: {
-            title: '👋 Selamat Datang di Panel Developer!',
-            description: 'Tur ini akan memandu Anda mengenal <strong>seluruh fitur developer</strong> PlayTest ID. Mari kita mulai!',
+            title: {!! json_encode(__('👋 Selamat Datang di Panel Developer!')) !!},
+            description: {!! json_encode(__('Tur ini akan memandu Anda mengenal <strong>seluruh fitur developer</strong> PlayTest ID. Mari kita mulai!')) !!},
           }
         });
 
@@ -1121,8 +1072,8 @@
           steps.push({
             element: '.fi-sidebar-nav',
             popover: {
-              title: '📋 Sidebar Navigasi',
-              description: 'Ini adalah <strong>menu utama</strong> panel developer. Semua fitur bisa diakses dari sidebar ini.',
+              title: {!! json_encode(__('📋 Sidebar Navigasi')) !!},
+              description: {!! json_encode(__('Ini adalah <strong>menu utama</strong> panel developer. Semua fitur bisa diakses dari sidebar ini.')) !!},
               side: 'right',
               align: 'start'
             }
@@ -1150,8 +1101,38 @@
           steps.push({
             element: dashboard,
             popover: {
-              title: '🏠 Dashboard',
-              description: 'Halaman utama developer. Lihat <strong>statistik kampanye</strong>, misi aktif, notifikasi, dan ringkasan aplikasi Anda.',
+              title: {!! json_encode(__('🏠 Dashboard')) !!},
+              description: {!! json_encode(__('Halaman utama developer. Lihat <strong>statistik kampanye</strong>, misi aktif, notifikasi, dan ringkasan aplikasi Anda.')) !!},
+              side: 'right',
+              align: 'start'
+            }
+          });
+        }
+
+
+
+        // Step 5: Pantau Progress
+        const pantau = findSidebarItem(['pantau', 'progress']);
+        if (pantau) {
+          steps.push({
+            element: pantau,
+            popover: {
+              title: {!! json_encode(__('📈 Pantau Progress')) !!},
+              description: {!! json_encode(__('Monitor <strong>progres testing</strong> secara real-time. Lihat jumlah tester, status pengerjaan, dan feedback dari tester.')) !!},
+              side: 'right',
+              align: 'start'
+            }
+          });
+        }
+
+        // Step 5.5: Aplikasi Saya
+        const aplikasiSaya = findSidebarItem(['aplikasi saya', 'aplikasi', 'aplikasis', 'my apps']);
+        if (aplikasiSaya) {
+          steps.push({
+            element: aplikasiSaya,
+            popover: {
+              title: {!! json_encode(__('📱 Aplikasi Saya')) !!},
+              description: {!! json_encode(__('Di sini Anda dapat melihat seluruh <strong>aplikasi yang terdaftar</strong>, mengelola misi, dan memantau status aplikasi Anda.')) !!},
               side: 'right',
               align: 'start'
             }
@@ -1164,22 +1145,8 @@
           steps.push({
             element: newTest,
             popover: {
-              title: '📝 New Test Case',
-              description: 'Buat <strong>kampanye testing baru</strong> untuk aplikasi Anda. Tentukan detail, langkah testing, dan jumlah tester yang dibutuhkan.',
-              side: 'right',
-              align: 'start'
-            }
-          });
-        }
-
-        // Step 5: Pantau Progress
-        const pantau = findSidebarItem(['pantau', 'progress']);
-        if (pantau) {
-          steps.push({
-            element: pantau,
-            popover: {
-              title: '📈 Pantau Progress',
-              description: 'Monitor <strong>progres testing</strong> secara real-time. Lihat jumlah tester, status pengerjaan, dan feedback dari tester.',
+              title: {!! json_encode(__('📝 New Test Case')) !!},
+              description: {!! json_encode(__('Buat <strong>kampanye testing baru</strong> untuk aplikasi Anda. Tentukan detail, langkah testing, dan jumlah tester yang dibutuhkan.')) !!},
               side: 'right',
               align: 'start'
             }
@@ -1187,13 +1154,13 @@
         }
 
         // Step 6: Profil Saya
-        const profil = findSidebarItem(['profil']);
+        const profil = findSidebarItem(['profil', 'profile']);
         if (profil) {
           steps.push({
             element: profil,
             popover: {
-              title: '👤 Profil Saya',
-              description: 'Edit <strong>informasi akun</strong> Anda: nama, email, dan password. Lihat juga statistik kampanye di halaman profil.',
+              title: {!! json_encode(__('👤 Profil Saya')) !!},
+              description: {!! json_encode(__('Edit <strong>informasi akun</strong> Anda: nama, email, dan password. Lihat juga statistik kampanye di halaman profil.')) !!},
               side: 'right',
               align: 'start'
             }
@@ -1206,8 +1173,8 @@
           steps.push({
             element: '.fi-topbar',
             popover: {
-              title: '🔝 Topbar Developer',
-              description: 'Area atas panel. Akses <strong>pencarian global</strong> (Ctrl+K), pengaturan <strong>tema dark/light</strong>, dan <strong>menu profil</strong> Anda.',
+              title: {!! json_encode(__('🔝 Topbar Developer')) !!},
+              description: {!! json_encode(__('Area atas panel. Akses <strong>pencarian global</strong> (Ctrl+K), pengaturan <strong>tema dark/light</strong>, dan <strong>menu profil</strong> Anda.')) !!},
               side: 'bottom',
               align: 'center'
             }
@@ -1220,8 +1187,8 @@
           steps.push({
             element: userMenu,
             popover: {
-              title: '👤 Menu Pengguna',
-              description: 'Klik untuk akses <strong>profil akun</strong>, ganti <strong>tema dark/light mode</strong>, atau <strong>logout</strong> dari panel developer.',
+              title: {!! json_encode(__('👤 Menu Pengguna')) !!},
+              description: {!! json_encode(__('Klik untuk akses <strong>profil akun</strong>, <strong>ganti bahasa</strong>, ganti <strong>tema dark/light mode</strong>, atau <strong>logout</strong> dari panel developer.')) !!},
               side: 'bottom',
               align: 'end'
             }
@@ -1232,8 +1199,8 @@
         steps.push({
           element: '#tb-hero',
           popover: {
-            title: '💡 Halaman Tips & Bantuan',
-            description: 'Anda sedang berada di halaman ini! Cari tips, filter berdasarkan kategori, dan gunakan <strong>Akses Cepat</strong> untuk navigasi langsung ke fitur developer.',
+            title: {!! json_encode(__('💡 Halaman Tips & Bantuan')) !!},
+            description: {!! json_encode(__('Anda sedang berada di halaman ini! Cari tips, filter berdasarkan kategori, dan gunakan <strong>Akses Cepat</strong> untuk navigasi langsung ke fitur developer.')) !!},
             side: 'bottom',
             align: 'center'
           }
@@ -1245,8 +1212,8 @@
           steps.push({
             element: '#tb-quick-access',
             popover: {
-              title: '⚡ Akses Cepat',
-              description: 'Shortcut ke semua halaman developer tanpa perlu kembali ke sidebar. Klik untuk langsung membuka halaman yang dituju.',
+              title: {!! json_encode(__('⚡ Akses Cepat')) !!},
+              description: {!! json_encode(__('Shortcut ke semua halaman developer tanpa perlu kembali ke sidebar. Klik untuk langsung membuka halaman yang dituju.')) !!},
               side: 'top',
               align: 'center'
             }
@@ -1256,8 +1223,8 @@
         // Step 11: Finish
         steps.push({
           popover: {
-            title: '🎉 Tur Selesai!',
-            description: 'Anda sudah mengenal <strong>seluruh fitur panel developer</strong> PlayTest ID!<br><br>🏠 Dashboard — 📝 Test Case — 📈 Progress<br>👤 Profil — 💡 Tips & Bantuan<br><br>Kembali ke halaman ini kapanpun Anda butuh bantuan.',
+            title: {!! json_encode(__('🎉 Tur Selesai!')) !!},
+            description: {!! json_encode(__('Anda sudah mengenal <strong>seluruh fitur panel developer</strong> PlayTest ID!<br><br>🏠 Dashboard — 📝 Test Case — 📈 Progress<br>👤 Profil — 💡 Tips & Bantuan<br><br>Kembali ke halaman ini kapanpun Anda butuh bantuan.')) !!},
           }
         });
 
@@ -1270,9 +1237,9 @@
           stageRadius: 12,
           popoverClass: 'tb-driver-theme',
           popoverOffset: 14,
-          nextBtnText: 'Lanjut →',
-          prevBtnText: '← Kembali',
-          doneBtnText: 'Selesai ✓',
+          nextBtnText: {!! json_encode(__('Lanjut')) !!} + ' →',
+          prevBtnText: '← ' + {!! json_encode(__('Kembali')) !!},
+          doneBtnText: {!! json_encode(__('Selesai')) !!} + ' ✓',
           progressText: '@{{current}} / @{{total}}',
           allowClose: true,
           steps: steps,

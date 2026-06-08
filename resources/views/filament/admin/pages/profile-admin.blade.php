@@ -302,7 +302,7 @@
             <p class="text-[11px] font-bold uppercase mb-1.5 flex items-center justify-center sm:justify-start gap-2"
                style="color:#bfdbfe;letter-spacing:0.18em;">
               <span class="w-6 h-px hidden sm:inline-block" style="background:#bfdbfe;"></span>
-              ADMIN PANEL
+              {{ __('PANEL ADMIN')}}
             </p>
             <h1 class="font-bold text-white mb-2.5 text-2xl sm:text-[34px]" style="line-height:1.1;letter-spacing:-0.02em;">
               {{ Auth::user()->name }}
