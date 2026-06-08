@@ -25,7 +25,7 @@ class GoogleController extends Controller
 
         session(['google_auth_panel' => $panel]);
 
-        return Socialite::driver('google')->stateless()->redirect();
+        return Socialite::driver('google')->redirect();
     }
 
     public function handleGoogleCallback()
@@ -35,8 +35,7 @@ class GoogleController extends Controller
         $loginUrl = "/{$panel}/login";
 
         try {
-            $googleUser = Socialite::driver('google')->stateless()->user();
-
+            $googleUser = Socialite::driver('google')->user();
             $user = User::where('email', $googleUser->getEmail())->first();
 
             if ($user) {
@@ -99,7 +98,7 @@ class GoogleController extends Controller
             session()->forget('google_auth_panel');
 
             // Redirect back to the login page of the panel they came from
-            return redirect($loginUrl)->with('error', 'Login with Google failed: ' . $e->getMessage());
+            return redirect($loginUrl)->with('error', 'Login with Google failed. Please try again.');
         }
     }
 }
