@@ -25,7 +25,7 @@ class GoogleController extends Controller
 
         session(['google_auth_panel' => $panel]);
 
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('google')->stateless()->redirect();
     }
 
     public function handleGoogleCallback()
@@ -35,7 +35,7 @@ class GoogleController extends Controller
         $loginUrl = "/{$panel}/login";
 
         try {
-            $googleUser = Socialite::driver('google')->user();
+            $googleUser = Socialite::driver('google')->stateless()->user();
 
             $user = User::where('email', $googleUser->getEmail())->first();
 
