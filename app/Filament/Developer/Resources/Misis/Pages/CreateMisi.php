@@ -19,7 +19,12 @@ class CreateMisi extends CreateRecord
 
     public function getTitle(): string
     {
-        return 'Buat Misi Baru';
+        return __('Buat Misi Baru');
+    }
+
+    public function getBreadcrumbs(): array
+    {
+        return [];
     }
 
     /**
@@ -111,8 +116,8 @@ class CreateMisi extends CreateRecord
             $errorMessage = isset($result['returnMessage']) ? $result['returnMessage'] : $response->body();
             
             Notification::make()
-                ->title('Gagal membuat link pembayaran')
-                ->body('Detail: ' . substr($errorMessage, 0, 150))
+                ->title(__('Gagal membuat link pembayaran'))
+                ->body(__('Detail: ') . substr($errorMessage, 0, 150))
                 ->danger()
                 ->send();
         }

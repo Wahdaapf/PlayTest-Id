@@ -12,10 +12,10 @@
     </x-slot>
 
     <span wire:loading.remove wire:target="create" class="font-bold">
-        Buat Misi Sekarang
+        {{ __('Buat Misi Sekarang') }}
     </span>
     
     <span wire:loading wire:target="create" class="font-bold">
-        Memproses Pembayaran...
+        {{ __('Memproses Pembayaran...') }}
     </span>
 </x-filament::button>

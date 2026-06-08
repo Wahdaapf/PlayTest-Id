@@ -1,8 +1,17 @@
 @php
     $pakets = \App\Models\Paket::where('aktif', true)->get();
+    
+    // Sesuaikan grid berdasarkan jumlah paket agar tidak ada spasi kosong
+    $count = $pakets->count();
+    $gridClass = 'md:grid-cols-3';
+    if ($count === 1) {
+        $gridClass = 'md:grid-cols-1 max-w-md mx-auto';
+    } elseif ($count === 2) {
+        $gridClass = 'md:grid-cols-2 max-w-3xl mx-auto';
+    }
 @endphp
 
-<div x-data="{ selectedId: @entangle('data.id_paket') }" class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6 p-2 pt-6">
+<div x-data="{ selectedId: @entangle('data.id_paket') }" class="grid grid-cols-1 sm:grid-cols-2 {{ $gridClass }} gap-4 sm:gap-6 p-2 pt-6 w-full">
     @foreach($pakets as $paket)
         @php $id = $paket->id; @endphp
         
@@ -26,7 +35,7 @@
                     <span class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest text-white bg-gradient-to-r from-red-600 to-orange-500 shadow-md ring-4 ring-white dark:ring-gray-900 transition-all duration-300"
                           :class="selectedId == {{ $id }} ? 'dark:ring-[#2a171c]' : ''">
                         <x-heroicon-m-fire class="w-3.5 h-3.5" />
-                        Popular
+                        {{ __('Popular') }}
                     </span>
                 </div>
             @endif
@@ -70,13 +79,13 @@
                     class="text-sm sm:text-xl font-black tracking-tight transition-colors duration-200"
                     :class="selectedId == {{ $id }} ? 'text-red-600 dark:text-red-400' : 'text-slate-800 dark:text-white group-hover:text-red-600 dark:group-hover:text-red-400'"
                 >
-                    {{ $paket->name ?? $paket->desc ?? "Paket #{$id}" }}
+                    {{ $paket->name ?? $paket->desc ?? __('Paket') . " #{$id}" }}
                 </h3>
 
                 {{-- Deskripsi --}}
                 <p class="mt-1 text-xs sm:text-sm leading-relaxed line-clamp-2 transition-colors duration-200"
                    :class="selectedId == {{ $id }} ? 'text-slate-600 dark:text-gray-300' : 'text-slate-500 dark:text-gray-400'">
-                    {{ $paket->short_desc ?? strip_tags($paket->desc) ?? 'Ideal untuk testing aplikasi standar dengan hasil maksimal.' }}
+                    {{ $paket->short_desc ?? strip_tags($paket->desc) ?? __('Ideal untuk testing aplikasi standar dengan hasil maksimal.') }}
                 </p>
 
                 <div class="mt-auto pt-3 sm:pt-6">

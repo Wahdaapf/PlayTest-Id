@@ -81,15 +81,15 @@
         $name = $item['paymentName'];
         $image = $item['paymentImage'];
         
-        $kategori = 'Lainnya';
+        $kategori = __('Lainnya');
         if (str_contains(strtolower($name), 'va') || str_contains(strtolower($name), 'virtual account')) {
-            $kategori = 'Virtual Account';
+            $kategori = __('Virtual Account');
         } elseif (in_array($code, ['OV', 'DA', 'LA', 'SA', 'SP', 'LQ', 'NQ', 'GQ']) || str_contains(strtolower($name), 'qris') || str_contains(strtolower($name), 'ovo') || str_contains(strtolower($name), 'dana') || str_contains(strtolower($name), 'linkaja') || str_contains(strtolower($name), 'shopeepay')) {
-            $kategori = 'E-Wallet / QRIS';
+            $kategori = __('E-Wallet / QRIS');
         } elseif (in_array($code, ['IR', 'FT']) || str_contains(strtolower($name), 'indomaret') || str_contains(strtolower($name), 'retail')) {
-            $kategori = 'Retail / Gerai';
+            $kategori = __('Retail / Gerai');
         } elseif ($code === 'VC' || str_contains(strtolower($name), 'card') || str_contains(strtolower($name), 'kartu')) {
-            $kategori = 'Kartu Kredit';
+            $kategori = __('Kartu Kredit');
         }
         
         $groupedMethods[$kategori][] = (object) [

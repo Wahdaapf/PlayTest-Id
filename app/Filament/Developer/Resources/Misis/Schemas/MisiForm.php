@@ -30,21 +30,21 @@ class MisiForm
                     // ══════════════════════════════════════════════
                     //  STEP 1 — Upload Misi
                     // ══════════════════════════════════════════════
-                    Step::make('Upload Misi')
+                    Step::make(__('Unggah Misi'))
                         ->icon('heroicon-o-document-text')
-                        ->description('Lengkapi informasi aplikasi yang ingin ditest')
+                        ->description(__('Lengkapi informasi aplikasi yang ingin ditest'))
                         ->schema([
                             Section::make()
                                 ->schema([
                                     TextInput::make('nama_aplikasi')
-                                        ->label('Nama Aplikasi')
-                                        ->placeholder('Contoh: My Awesome App')
+                                        ->label(__('Nama Aplikasi'))
+                                        ->placeholder(__('Contoh: My Awesome App'))
                                         ->required()
                                         ->maxLength(255)
                                         ->columnSpanFull(),
 
                                     FileUpload::make('logo')
-                                        ->label('Logo Aplikasi')
+                                        ->label(__('Logo Aplikasi'))
                                         ->disk('public')
                                         ->directory('logos')
                                         ->image()
@@ -57,8 +57,8 @@ class MisiForm
                                         ->default('-'),
 
                                     RichEditor::make('instruksi')
-                                        ->label('Instruksi untuk Tester')
-                                        ->placeholder('Tuliskan langkah-langkah detail pengetesan di sini...')
+                                        ->label(__('Instruksi untuk Tester'))
+                                        ->placeholder(__('Tuliskan langkah-langkah detail pengetesan di sini...'))
                                         ->toolbarButtons([
                                             'bold',
                                             'italic',
@@ -85,9 +85,9 @@ class MisiForm
                     // ══════════════════════════════════════════════
                     //  STEP 2 — Pilih Package
                     // ══════════════════════════════════════════════
-                    Step::make('Pilih Package')
+                    Step::make(__('Pilih Package'))
                         ->icon('heroicon-o-squares-2x2')
-                        ->description('Pilih paket yang sesuai kebutuhanmu')
+                        ->description(__('Pilih paket yang sesuai kebutuhanmu'))
                         ->hiddenOn('edit')
                         ->schema([
                             Section::make()
@@ -110,18 +110,18 @@ class MisiForm
                     // ══════════════════════════════════════════════
                     //  STEP 3 — Pembayaran
                     // ══════════════════════════════════════════════
-                    Step::make('Pembayaran')
+                    Step::make(__('Pembayaran'))
                         ->icon('heroicon-o-banknotes')
-                        ->description('Upload bukti pembayaran untuk mengaktifkan misi')
+                        ->description(__('Lakukan pembayaran untuk mengaktifkan misi'))
                         ->hiddenOn('edit')
                         ->schema([
                             Grid::make(3)
                                 ->schema([
 
                                     // ── Kolom Kiri: Info Duitku ──────────
-                                    Section::make('Metode Pembayaran')
+                                    Section::make(__('Metode Pembayaran'))
                                         ->icon('heroicon-o-credit-card')
-                                        ->description('Pilih metode pembayaran yang akan digunakan. Anda akan diarahkan ke halaman pembayaran Duitku setelah menekan tombol submit.')
+                                        ->description(__('Pilih metode pembayaran yang akan digunakan. Anda akan diarahkan ke halaman pembayaran Duitku setelah menekan tombol submit.'))
                                         ->schema([
                                             Hidden::make('payment_method')
                                                 ->required(),
@@ -131,7 +131,7 @@ class MisiForm
                                         ->columnSpan(2),
 
                                     // ── Kolom Kanan: Ringkasan ──────────────────
-                                    Section::make('Ringkasan')
+                                    Section::make(__('Ringkasan'))
                                         ->icon('heroicon-o-receipt-percent')
                                         ->schema([
                                             View::make('filament.developer.components.payment-summary')
