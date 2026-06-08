@@ -90,8 +90,10 @@ class MisiSaya extends Page implements HasForms
             $m = $ma->misi;
             if (!$m) continue;
 
+                        // Hanya ambil record yang sudah benar-benar disubmit (bukan 'notdone')
                         $lastSub = MisiSub::where('id_misi', $m->id)
                 ->where('id_user', $userId)
+                ->whereIn('status', ['pending', 'done', 'rejected'])
                 ->orderBy('hari_ke', 'desc')
                 ->first();
                 
@@ -99,12 +101,12 @@ class MisiSaya extends Page implements HasForms
                 if ($lastSub->created_at && $lastSub->created_at->format('Y-m-d') === now()->toDateString()) {
                     $hari = $lastSub->hari_ke;
                 } else {
-                    $hari = $lastSub->hari_ke + 1;
+                    $hari = min($lastSub->hari_ke + 1, 14); // cap agar tidak melebihi 14
                 }
             } else {
                 $hari = 1;
             }
-            $persen = round(($hari / 14) * 100);
+            $persen = min(round(($hari / 14) * 100), 100); // cap persentase maksimal 100%
 
             $colors = ['#10b981', '#8b5cf6', '#3b82f6', '#f59e0b'];
             $color = $colors[$m->id % count($colors)];
@@ -192,9 +194,10 @@ class MisiSaya extends Page implements HasForms
             ->first();
 
         if (!$currentSub) {
-            // Hitung hari_ke (cari nilai max hari_ke sebelumnya, lalu tambah 1)
+            // Hitung hari_ke (cari nilai max hari_ke sebelumnya yang sudah disubmit, lalu tambah 1)
             $lastSub = MisiSub::where('id_misi', $this->selectedMissionId)
                 ->where('id_user', Auth::id())
+                ->whereIn('status', ['pending', 'done', 'rejected'])
                 ->orderBy('hari_ke', 'desc')
                 ->first();
                 
