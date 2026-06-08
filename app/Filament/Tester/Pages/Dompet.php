@@ -11,8 +11,19 @@ use Illuminate\Support\Facades\Auth;
 class Dompet extends Page
 {
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-credit-card';
-    protected static ?string $navigationLabel = 'Dompet';
-    protected static ?string $title = 'Dompet';
+    protected static ?string $navigationLabel = null;
+    protected static ?string $title = null;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Dompet');
+    }
+
+    public function getTitle(): string
+    {
+        return __('Dompet');
+    }
+
     protected static ?string $slug = 'dompet';
     protected static ?int $navigationSort = 3;
     protected string $view = 'filament.tester.pages.dompet';
@@ -124,9 +135,9 @@ class Dompet extends Page
 
         if (!$withdraw || !$withdraw->xendit_payout_id) {
             Notification::make()
-                ->title('Gagal')
+                ->title(__('Gagal'))
                 ->danger()
-                ->body('Data transaksi tidak valid atau tidak memiliki Xendit Payout ID.')
+                ->body(__('Data transaksi tidak valid atau tidak memiliki Xendit Payout ID.'))
                 ->send();
             return;
         }
@@ -142,9 +153,9 @@ class Dompet extends Page
                     'catatan' => 'Withdrawal completed via Xendit.',
                 ]);
                 Notification::make()
-                    ->title('Berhasil!')
+                    ->title(__('Berhasil!'))
                     ->success()
-                    ->body('Withdrawal Anda sebesar Rp ' . number_format($withdraw->rupiah, 0, ',', '.') . ' telah sukses dikirim.')
+                    ->body(__('Withdrawal Anda sebesar Rp :amount telah sukses dikirim.', ['amount' => number_format($withdraw->rupiah, 0, ',', '.')]))
                     ->send();
             } elseif ($status === 'FAILED' || $status === 'REJECTED') {
                 \Illuminate\Support\Facades\DB::transaction(function () use ($withdraw, $payout) {
@@ -159,15 +170,15 @@ class Dompet extends Page
                 });
 
                 Notification::make()
-                    ->title('Pencairan Gagal')
+                    ->title(__('Pencairan Gagal'))
                     ->danger()
-                    ->body('Transaksi gagal. Point sebesar ' . $withdraw->point . ' telah dikembalikan ke saldo Anda.')
+                    ->body(__('Transaksi gagal. Point sebesar :point telah dikembalikan ke saldo Anda.', ['point' => $withdraw->point]))
                     ->send();
             } else {
                 Notification::make()
-                    ->title('Sedang Diproses')
+                    ->title(__('Sedang Diproses'))
                     ->info()
-                    ->body('Transaksi masih diproses oleh Xendit (Status: ' . $status . '). Silakan cek kembali nanti.')
+                    ->body(__('Transaksi masih diproses oleh Xendit (Status: :status). Silakan cek kembali nanti.', ['status' => $status]))
                     ->send();
             }
 
@@ -176,7 +187,7 @@ class Dompet extends Page
             $this->showInvoice($withdraw->id);
         } catch (\Exception $e) {
             Notification::make()
-                ->title('Gagal Sinkronisasi')
+                ->title(__('Gagal Sinkronisasi'))
                 ->danger()
                 ->body($e->getMessage())
                 ->send();
@@ -204,9 +215,9 @@ class Dompet extends Page
         // Validasi minimum
         if ($point < Withdraw::MIN_POINT) {
             Notification::make()
-                ->title('Gagal')
+                ->title(__('Gagal'))
                 ->danger()
-                ->body('Minimum withdrawal adalah ' . Withdraw::MIN_POINT . ' point (Rp ' . number_format(Withdraw::pointToRupiah(Withdraw::MIN_POINT), 0, ',', '.') . ').')
+                ->body(__('Minimum withdrawal adalah :point point (Rp :rupiah).', ['point' => Withdraw::MIN_POINT, 'rupiah' => number_format(Withdraw::pointToRupiah(Withdraw::MIN_POINT), 0, ',', '.')]))
                 ->send();
             return;
         }
@@ -214,9 +225,9 @@ class Dompet extends Page
         // Validasi nomor akun
         if (empty(trim($this->nomorAkun))) {
             Notification::make()
-                ->title('Gagal')
+                ->title(__('Gagal'))
                 ->danger()
-                ->body('Nomor akun / nomor telepon wajib diisi.')
+                ->body(__('Nomor akun / nomor telepon wajib diisi.'))
                 ->send();
             return;
         }
@@ -224,9 +235,9 @@ class Dompet extends Page
         // Validasi saldo cukup
         if ($currentPoints < $point) {
             Notification::make()
-                ->title('Saldo Tidak Cukup')
+                ->title(__('Saldo Tidak Cukup'))
                 ->danger()
-                ->body('Point Anda tidak mencukupi. Point saat ini: ' . $currentPoints . ', dibutuhkan: ' . $point . '.')
+                ->body(__('Point Anda tidak mencukupi. Point saat ini: :current, dibutuhkan: :needed.', ['current' => $currentPoints, 'needed' => $point]))
                 ->send();
             return;
         }
@@ -234,9 +245,9 @@ class Dompet extends Page
         // Validasi metode
         if (!array_key_exists($this->selectedMethod, Withdraw::METHODS)) {
             Notification::make()
-                ->title('Gagal')
+                ->title(__('Gagal'))
                 ->danger()
-                ->body('Metode pembayaran tidak valid.')
+                ->body(__('Metode pembayaran tidak valid.'))
                 ->send();
             return;
         }
@@ -248,9 +259,9 @@ class Dompet extends Page
 
         if ($pendingExists) {
             Notification::make()
-                ->title('Peringatan')
+                ->title(__('Peringatan'))
                 ->warning()
-                ->body('Anda masih memiliki pengajuan withdrawal yang sedang diproses. Harap tunggu hingga selesai.')
+                ->body(__('Anda masih memiliki pengajuan withdrawal yang sedang diproses. Harap tunggu hingga selesai.'))
                 ->send();
             return;
         }
@@ -315,15 +326,15 @@ class Dompet extends Page
 
             if ($finalStatus === 'success') {
                 Notification::make()
-                    ->title('Berhasil!')
+                    ->title(__('Berhasil!'))
                     ->success()
-                    ->body('Pengajuan withdrawal sebesar Rp ' . number_format($rupiah, 0, ',', '.') . ' telah berhasil dicairkan!')
+                    ->body(__('Pengajuan withdrawal sebesar Rp :amount telah berhasil dicairkan!', ['amount' => number_format($rupiah, 0, ',', '.')]))
                     ->send();
             } else {
                 Notification::make()
-                    ->title('Pengajuan Dibuat')
+                    ->title(__('Pengajuan Dibuat'))
                     ->success()
-                    ->body('Pengajuan withdrawal sebesar Rp ' . number_format($rupiah, 0, ',', '.') . ' (' . $point . ' pts) sedang diproses.')
+                    ->body(__('Pengajuan withdrawal sebesar Rp :amount (:point pts) sedang diproses.', ['amount' => number_format($rupiah, 0, ',', '.'), 'point' => $point]))
                     ->send();
             }
 
@@ -346,9 +357,9 @@ class Dompet extends Page
             }
 
             Notification::make()
-                ->title('Gagal Melakukan Penarikan')
+                ->title(__('Gagal Melakukan Penarikan'))
                 ->danger()
-                ->body('Terjadi kesalahan: ' . $e->getMessage())
+                ->body(__('Terjadi kesalahan: :error', ['error' => $e->getMessage()]))
                 ->send();
 
             // Refresh riwayat so the failed withdrawal immediately shows up as rejected

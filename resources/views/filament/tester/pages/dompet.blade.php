@@ -747,12 +747,12 @@
 
                 {{-- Konten utama --}}
                 <div class="relative z-10 text-center py-6">
-                    <p class="text-xs font-semibold uppercase tracking-widest mb-2" style="color:#e0f2fe;letter-spacing:0.12em;">SALDO POIN ANDA</p>
+                    <p class="text-xs font-semibold uppercase tracking-widest mb-2" style="color:#e0f2fe;letter-spacing:0.12em;">{{ __('SALDO POIN ANDA') }}</p>
                     <div class="flex items-baseline justify-center gap-2 mb-3">
                         <span class="font-mono-num font-bold text-white prof-counter" style="font-size:48px;line-height:1;" data-target="{{ $totalPoin ?? 0 }}">{{ number_format($totalPoin ?? 0, 0, ',', '.') }}</span>
                         <span class="text-xl font-semibold" style="color:#bae6fd;opacity:0.85;">pts</span>
                     </div>
-                    <p class="text-sm font-medium" style="color:#bae6fd;">Setara dengan <span class="font-bold text-white">{{ $estimasiRupiah ?? 'Rp 0' }}</span></p>
+                    <p class="text-sm font-medium" style="color:#bae6fd;">{{ __('Setara dengan') }} <span class="font-bold text-white">{{ $estimasiRupiah ?? 'Rp 0' }}</span></p>
                 </div>
 
                 {{-- Animated waves --}}
@@ -774,16 +774,16 @@
                 {{-- 1. Metode Pembayaran --}}
                 <section>
                     <h3 class="font-heading text-lg font-bold mb-4" style="color:#1e293b;">
-                        <span class="wlt-step-badge">1</span> Pilih Metode Penarikan
+                        <span class="wlt-step-badge">1</span> {{ __('Pilih Metode Penarikan') }}
                     </h3>
 
                     {{-- TABS CATEGORY --}}
                     <div class="wlt-tabs-container">
                         <div class="wlt-tab" :class="{ 'active': category === 'ewallet' }" @click="category = 'ewallet'; $wire.selectedMethod = null;">
-                            <span class="material-symbols-outlined" style="font-size: 1.2rem; transition: transform 0.3s;" :style="category === 'ewallet' && 'transform: scale(1.1);'">account_balance_wallet</span> E-Wallet
+                            <span class="material-symbols-outlined" style="font-size: 1.2rem; transition: transform 0.3s;" :style="category === 'ewallet' && 'transform: scale(1.1);'">account_balance_wallet</span> {{ __('E-Wallet') }}
                         </div>
                         <div class="wlt-tab" :class="{ 'active': category === 'bank' }" @click="category = 'bank'; $wire.selectedMethod = null;">
-                            <span class="material-symbols-outlined" style="font-size: 1.2rem; transition: transform 0.3s;" :style="category === 'bank' && 'transform: scale(1.1);'">account_balance</span> Transfer Bank
+                            <span class="material-symbols-outlined" style="font-size: 1.2rem; transition: transform 0.3s;" :style="category === 'bank' && 'transform: scale(1.1);'">account_balance</span> {{ __('Transfer Bank') }}
                         </div>
                     </div>
 
@@ -821,7 +821,7 @@
                 {{-- 2. Pilih Nominal --}}
                 <section x-show="$wire.selectedMethod" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-6" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
                     <h3 class="font-heading text-lg font-bold mb-4" style="color:#1e293b;">
-                        <span class="wlt-step-badge">2</span> Pilih Nominal Saldo
+                        <span class="wlt-step-badge">2</span> {{ __('Pilih Nominal Saldo') }}
                     </h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         @if(isset($denominations))
@@ -829,7 +829,7 @@
                         <div class="wlt-denom" :class="{ 'active': $wire.selectedDenom === {{ $idx }} }" wire:click="$set('selectedDenom', {{ $idx }})">
                             <span class="text-xl font-bold font-heading" style="color:#0f172a;">{{ $d['rupiahF'] }}</span>
                             <span class="text-xs font-semibold font-mono-num px-3 py-1.5 rounded-lg transition-colors" :style="$wire.selectedDenom === {{ $idx }} ? 'background:#e0f2fe; color:#0284c7; border-color:#bae6fd;' : 'background:#f1f5f9; color:#475569; border: 1px solid #e2e8f0;'">
-                                Cost: {{ $d['pointLabel'] }}
+                                {{ __('Biaya') }}: {{ $d['pointLabel'] }}
                             </span>
                             <span class="wlt-denom-check material-symbols-outlined">check_circle</span>
                         </div>
@@ -841,7 +841,7 @@
                 {{-- 3. Nomor Akun --}}
                 <section x-show="$wire.selectedMethod && $wire.selectedDenom !== null" x-transition:enter="transition ease-out duration-400 delay-75" x-transition:enter-start="opacity-0 translate-y-6" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
                     <h3 class="font-heading text-lg font-bold mb-4" style="color:#1e293b;">
-                        <span class="wlt-step-badge">3</span> <span x-text="category === 'ewallet' ? 'Nomor HP (E-Wallet)' : 'Nomor Rekening Bank'">Nomor Akun</span>
+                        <span class="wlt-step-badge">3</span> <span x-text="category === 'ewallet' ? '{{ __('Nomor HP (E-Wallet)') }}' : '{{ __('Nomor Rekening Bank') }}'">Nomor Akun</span>
                     </h3>
                     <div class="wlt-input-group">
                         <div class="wlt-input-icon">
@@ -849,7 +849,7 @@
                         </div>
                         <input type="text"
                             class="wlt-input font-mono-num"
-                            :placeholder="category === 'ewallet' ? 'Contoh: 081234567890' : 'Masukkan nomor rekening Anda'"
+                            :placeholder="category === 'ewallet' ? '{{ __('Contoh: 081234567890') }}' : '{{ __('Masukkan nomor rekening Anda') }}'"
                             wire:model="nomorAkun">
                     </div>
                 </section>
@@ -859,9 +859,9 @@
                     <div class="wlt-warning">
                         <span class="material-symbols-outlined" style="color:#2563eb; font-size:1.5rem; margin-top:2px;">info</span>
                         <div>
-                            <p class="text-sm font-bold font-heading text-blue-900 mb-1">Informasi Penarikan</p>
+                            <p class="text-sm font-bold font-heading text-blue-900 mb-1">{{ __('Informasi Penarikan') }}</p>
                             <p class="text-sm font-medium" style="color:#1e3a8a; line-height:1.5; opacity: 0.85;">
-                                Proses withdrawal membutuhkan waktu maksimal <strong>24 jam kerja</strong>. Pastikan nomor yang dimasukkan sudah benar karena transaksi tidak dapat dibatalkan.
+                                {{ __('Proses withdrawal membutuhkan waktu maksimal :hours jam kerja. Pastikan nomor yang dimasukkan sudah benar karena transaksi tidak dapat dibatalkan.', ['hours' => '<strong>24</strong>']) }}
                             </p>
                         </div>
                     </div>
@@ -870,8 +870,8 @@
                         wire:click="submitWithdraw"
                         wire:loading.attr="disabled"
                         wire:target="submitWithdraw">
-                        <span wire:loading.remove wire:target="submitWithdraw">Tarik Saldo Sekarang</span>
-                        <span wire:loading wire:target="submitWithdraw">Memproses Transaksi...</span>
+                        <span wire:loading.remove wire:target="submitWithdraw">{{ __('Tarik Saldo Sekarang') }}</span>
+                        <span wire:loading wire:target="submitWithdraw">{{ __('Memproses Transaksi...') }}</span>
                         <span class="material-symbols-outlined transition-transform group-hover:translate-x-1" style="font-size:1.4rem;" wire:loading.remove wire:target="submitWithdraw">arrow_forward</span>
                     </button>
                 </div>
@@ -923,8 +923,8 @@
 
                 {{-- Header --}}
                 <div class="mb-4">
-                    <h2 class="text-xl font-bold font-heading" style="color:#1e293b;">Riwayat Penarikan</h2>
-                    <p class="text-sm mt-1" style="color:#64748b;">Menampilkan riwayat transaksi penarikan saldo</p>
+                    <h2 class="text-xl font-bold font-heading" style="color:#1e293b;">{{ __('Riwayat Penarikan') }}</h2>
+                    <p class="text-sm mt-1" style="color:#64748b;">{{ __('Menampilkan riwayat transaksi penarikan saldo') }}</p>
                 </div>
 
                 {{-- Toolbar Control (Search, Filters, Reset) --}}
@@ -933,39 +933,39 @@
                     {{-- Search Box (Full Width) --}}
                     <div class="relative w-full">
                         <span class="material-symbols-outlined wlt-search-icon">search</span>
-                        <input type="text" x-model="search" placeholder="Cari nominal, nomor tujuan, atau metode..."
+                        <input type="text" x-model="search" placeholder="{{ __('Cari nominal, nomor tujuan, atau metode...') }}"
                             class="wlt-filter-ctrl w-full" style="padding-left:2.5rem;">
                     </div>
 
                     {{-- Filters & Reset Button --}}
                     <div class="flex flex-wrap gap-2">
                         <select x-model="filterStatus" class="wlt-filter-ctrl flex-1 sm:flex-none">
-                            <option value="all">Semua Status</option>
-                            <option value="success">Berhasil</option>
-                            <option value="pending">Pending</option>
-                            <option value="rejected">Ditolak</option>
+                            <option value="all">{{ __('Semua Status') }}</option>
+                            <option value="success">{{ __('Berhasil') }}</option>
+                            <option value="pending">{{ __('Pending') }}</option>
+                            <option value="rejected">{{ __('Ditolak') }}</option>
                         </select>
 
                         <select x-model="filterMethod" class="wlt-filter-ctrl flex-1 sm:flex-none">
-                            <option value="all">Semua Metode</option>
+                            <option value="all">{{ __('Semua Metode') }}</option>
                             <template x-for="m in uniqueMethods" :key="m">
                                 <option :value="m" x-text="m.toUpperCase()"></option>
                             </template>
                         </select>
 
                         <select x-model="perPage" class="wlt-filter-ctrl flex-1 sm:flex-none">
-                            <option value="5">5 Data</option>
-                            <option value="10">10 Data</option>
-                            <option value="20">20 Data</option>
-                            <option value="all">Semua Data</option>
+                            <option value="5">{{ __('5 Data') }}</option>
+                            <option value="10">{{ __('10 Data') }}</option>
+                            <option value="20">{{ __('20 Data') }}</option>
+                            <option value="all">{{ __('Semua Data') }}</option>
                         </select>
 
                         <button @click="search = ''; filterStatus = 'all'; filterMethod = 'all'; perPage = '5'"
                             wire:click="loadRiwayat"
                             wire:loading.attr="disabled"
                             wire:target="loadRiwayat"
-                            class="wlt-btn-reset flex-1 sm:flex-none" title="Refresh data">
-                            <span class="material-symbols-outlined" wire:loading.class="animate-spin" wire:target="loadRiwayat" style="font-size: 1.1rem;">refresh</span> Refresh
+                            class="wlt-btn-reset flex-1 sm:flex-none" title="{{ __('Refresh data') }}">
+                            <span class="material-symbols-outlined" wire:loading.class="animate-spin" wire:target="loadRiwayat" style="font-size: 1.1rem;">refresh</span> {{ __('Refresh') }}
                         </button>
                     </div>
                 </div>
@@ -1012,7 +1012,7 @@
                     {{-- Empty State (Jika hasil filter kosong) --}}
                     <div x-show="filteredHistory.length === 0" x-cloak class="p-10 text-center flex flex-col items-center justify-center">
                         <span class="material-symbols-outlined text-slate-300" style="font-size: 3rem; margin-bottom: 10px;">search_off</span>
-                        <p class="text-slate-500 font-medium text-sm">Tidak ada transaksi yang cocok dengan filter pencarian.</p>
+                        <p class="text-slate-500 font-medium text-sm">{{ __('Tidak ada transaksi yang cocok dengan filter pencarian.') }}</p>
                     </div>
 
                 </div>
@@ -1051,7 +1051,7 @@
                     <div style="padding:24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #f1f5f9; background:#f8fafc;">
                         <h3 class="font-heading" style="font-size:1.1rem; font-weight:800; color:#0f172a; margin:0;">
                             <span class="material-symbols-outlined" style="font-size:1.2rem; vertical-align:middle; margin-right:6px; color:#2563eb;">receipt_long</span>
-                            Detail Transaksi
+                            {{ __('Detail Transaksi') }}
                         </h3>
                         <button @click="open = false; setTimeout(() => $wire.closeInvoice(), 300)" style="background:#e2e8f0; border-radius:50%; border:none; cursor:pointer; width:32px; height:32px; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">
                             <span class="material-symbols-outlined" style="color:#475569;font-size:1.2rem;">close</span>
@@ -1059,7 +1059,7 @@
                     </div>
 
                     <div style="padding:24px; flex-grow:1;">
-                        <p style="color:#64748b; font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">ID Invoice #{{ $invoiceDetail['id'] }}</p>
+                        <p style="color:#64748b; font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;">{{ __('ID Invoice') }} #{{ $invoiceDetail['id'] }}</p>
 
                         {{-- Nominal Besar --}}
                         <div style="margin-bottom:24px;">
@@ -1075,7 +1075,7 @@
                                     {{ $invoiceDetail['status'] === 'success' ? 'check_circle' : ($invoiceDetail['status'] === 'pending' ? 'schedule' : 'cancel') }}
                                 </span>
                                 <span class="font-heading" style="font-weight:700;font-size:.9rem;color:{{ $invoiceDetail['status'] === 'success' ? '#15803d' : ($invoiceDetail['status'] === 'pending' ? '#a16207' : '#b91c1c') }};">
-                                    {{ $invoiceDetail['status'] === 'success' ? 'Withdrawal Berhasil' : ($invoiceDetail['status'] === 'pending' ? 'Menunggu Proses' : 'Withdrawal Ditolak') }}
+                                    {{ $invoiceDetail['status'] === 'success' ? __('Withdrawal Berhasil') : ($invoiceDetail['status'] === 'pending' ? __('Menunggu Proses') : __('Withdrawal Ditolak')) }}
                                 </span>
                             </div>
                         </div>
@@ -1089,8 +1089,8 @@
                                     onmouseout="this.style.borderColor='#e2e8f0'; this.style.background='#ffffff'; this.style.transform='none';">
                                 <span class="material-symbols-outlined animate-spin" wire:loading wire:target="syncStatus" style="font-size: 1.2rem;">sync</span>
                                 <span class="material-symbols-outlined" wire:loading.remove wire:target="syncStatus" style="font-size: 1.2rem;">sync</span>
-                                <span wire:loading.remove wire:target="syncStatus">Sync Status Transaksi</span>
-                                <span wire:loading wire:target="syncStatus">Sinkronisasi...</span>
+                                <span wire:loading.remove wire:target="syncStatus">{{ __('Sync Status Transaksi') }}</span>
+                                <span wire:loading wire:target="syncStatus">{{ __('Sinkronisasi...') }}</span>
                             </button>
                         </div>
                         @endif
@@ -1098,15 +1098,15 @@
                         {{-- Detail Info --}}
                         <div style="display:flex;flex-direction:column;gap:16px;">
                             <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px dashed #e2e8f0;">
-                                <span style="color:#64748b;font-size:.85rem;font-weight:500;">Metode Penarikan</span>
+                                <span style="color:#64748b;font-size:.85rem;font-weight:500;">{{ __('Metode Penarikan') }}</span>
                                 <span style="font-weight:700;font-size:.85rem;color:#0f172a; text-transform:uppercase;">{{ $invoiceDetail['metode'] }}</span>
                             </div>
                             <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px dashed #e2e8f0;">
-                                <span style="color:#64748b;font-size:.85rem;font-weight:500;">Nomor Tujuan</span>
+                                <span style="color:#64748b;font-size:.85rem;font-weight:500;">{{ __('Nomor Tujuan') }}</span>
                                 <span class="font-mono-num" style="font-weight:700;font-size:.9rem;color:#0ea5e9;">{{ $invoiceDetail['nomorAkun'] }}</span>
                             </div>
                             <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px dashed #e2e8f0;">
-                                <span style="color:#64748b;font-size:.85rem;font-weight:500;">Waktu Pengajuan</span>
+                                <span style="color:#64748b;font-size:.85rem;font-weight:500;">{{ __('Waktu Pengajuan') }}</span>
                                 <div style="text-align:right;">
                                     <span style="font-weight:600;font-size:.85rem;color:#334155; display:block;">{{ $invoiceDetail['tanggal'] }}</span>
                                     <span style="font-weight:500;font-size:.75rem;color:#94a3b8;">{{ $invoiceDetail['waktu'] }}</span>
@@ -1114,11 +1114,11 @@
                             </div>
                             @if($invoiceDetail['status'] !== 'pending')
                             <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px dashed #e2e8f0;">
-                                <span style="color:#64748b;font-size:.85rem;font-weight:500;">Diproses oleh</span>
+                                <span style="color:#64748b;font-size:.85rem;font-weight:500;">{{ __('Diproses oleh') }}</span>
                                 <span style="font-weight:600;font-size:.85rem;color:#334155;">{{ $invoiceDetail['adminNama'] }}</span>
                             </div>
                             <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px dashed #e2e8f0;">
-                                <span style="color:#64748b;font-size:.85rem;font-weight:500;">Waktu Selesai</span>
+                                <span style="color:#64748b;font-size:.85rem;font-weight:500;">{{ __('Waktu Selesai') }}</span>
                                 <span style="font-weight:600;font-size:.85rem;color:#334155;">{{ $invoiceDetail['updatedAt'] }}</span>
                             </div>
                             @endif
@@ -1126,7 +1126,7 @@
 
                         @if($invoiceDetail['catatan'])
                         <div style="margin-top:20px; padding:16px; background:#f8fafc; border-radius:12px; border:1px solid #e2e8f0;">
-                            <span style="color:#64748b;font-size:.8rem;font-weight:700;display:block;margin-bottom:6px;text-transform:uppercase;">Catatan Admin</span>
+                            <span style="color:#64748b;font-size:.8rem;font-weight:700;display:block;margin-bottom:6px;text-transform:uppercase;">{{ __('Catatan Admin') }}</span>
                             <span style="font-weight:500;font-size:.9rem;color:#334155;line-height:1.5;">{{ $invoiceDetail['catatan'] }}</span>
                         </div>
                         @endif
@@ -1136,7 +1136,7 @@
                         <div style="margin-top:24px;">
                             <p class="font-heading" style="font-weight:700;font-size:.9rem;color:#0f172a;margin-bottom:12px;">
                                 <span class="material-symbols-outlined" style="font-size:1.1rem;vertical-align:middle;margin-right:4px;color:#16a34a;">verified</span>
-                                Bukti Transfer
+                                {{ __('Bukti Transfer') }}
                             </p>
                             <div style="border-radius:16px; overflow:hidden; border:2px solid #e2e8f0; box-shadow:0 4px 6px rgba(0,0,0,0.05);">
                                 <img src="{{ $invoiceDetail['image'] }}" alt="Bukti Transfer" style="width:100%;display:block;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
@@ -1149,7 +1149,7 @@
                     <div style="padding:24px; border-top:1px solid #f1f5f9; background:#fff; position:sticky; bottom:0;">
                         <button @click="open = false; setTimeout(() => $wire.closeInvoice(), 300)"
                             class="wlt-btn-submit" style="box-shadow:none; padding:14px;">
-                            Selesai
+                            {{ __('Selesai') }}
                         </button>
                     </div>
                 </div>

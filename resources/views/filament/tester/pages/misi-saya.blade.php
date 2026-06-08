@@ -223,30 +223,30 @@
                 {{-- Konten --}}
                 <div class="relative z-10 text-left">
                     <p class="mb-1.5 text-xs font-semibold uppercase tracking-widest text-sky-100" style="letter-spacing:0.12em;">
-                        Misi Kamu
+                        {{ __('Misi Kamu') }}
                     </p>
                     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                         <div>
                             <div class="flex items-baseline gap-2">
                                 <span class="font-bold text-white" style="font-size:48px;line-height:1;font-family: 'JetBrains Mono', monospace;">{{ count($this->getMissionsData()) }}</span>
                             </div>
-                            <p class="mt-1 text-sm font-medium text-sky-100">misi sedang berjalan</p>
+                            <p class="mt-1 text-sm font-medium text-sky-100">{{ __('Misi sedang berjalan') }}</p>
                         </div>
                         @php $stats = $this->getStats(); @endphp
                         <div class="flex gap-4 sm:gap-8 border-t border-white/20 sm:border-none pt-4 sm:pt-0 mt-2 sm:mt-0">
                             <div class="text-center">
                                 <p class="text-2xl font-bold font-mono text-white">{{ $stats['selesai'] }}</p>
-                                <p class="text-xs text-sky-100">Selesai</p>
+                                <p class="text-xs text-sky-100">{{ __('Selesai') }}</p>
                             </div>
                             <div class="hidden w-px bg-white/20 sm:block"></div>
                             <div class="text-center">
                                 <p class="text-2xl font-bold font-mono text-white">{{ $stats['aktif'] }}</p>
-                                <p class="text-xs text-sky-100">Aktif</p>
+                                <p class="text-xs text-sky-100">{{ __('Aktif') }}</p>
                             </div>
                             <div class="hidden w-px bg-white/20 sm:block"></div>
                             <div class="text-center">
                                 <p class="text-2xl font-bold font-mono text-white">{{ $stats['pending'] >= 0 ? '+' : '' }}{{ $stats['pending'] }}</p>
-                                <p class="text-xs text-sky-100">Pts Pending</p>
+                                <p class="text-xs text-sky-100">{{ __('Pts Tertunda') }}</p>
                             </div>
                         </div>
                     </div>
@@ -263,10 +263,10 @@
             {{-- ── Judul Seksi ──────────────────────────────────── --}}
             <div>
                 <h2 class="text-lg font-bold text-slate-800" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                    Aplikasi yang Saya Submit
+                    {{ __('Aplikasi yang Saya Kumpulkan') }}
                 </h2>
                 <p class="text-sm text-slate-500 mt-0.5">
-                    {{ count($this->getMissionsData()) }} misi sedang berjalan
+                    {{ count($this->getMissionsData()) }} {{ __('Misi sedang berjalan') }}
                 </p>
             </div>
 
@@ -298,13 +298,13 @@
                                 </div>
                             </div>
                             {{-- Badge status --}}
-                            @if($mission['ma_status'] === 'failed')
+                           @if($mission['ma_status'] === 'failed')
                                 <span class="rounded-lg bg-red-50 px-2 py-0.5 text-xs font-semibold text-red-600 border border-red-200">
-                                    {{ $mission['status'] }}
+                                    {{ __($mission['status']) }}
                                 </span>
                             @else
                                 <span class="rounded-lg bg-green-50 px-2 py-0.5 text-xs font-semibold text-green-600">
-                                    {{ $mission['status'] }}
+                                    {{ __($mission['status']) }}
                                 </span>
                             @endif
                         </div>
@@ -328,7 +328,7 @@
                         {{-- 14 Days History --}}
                         <div class="mb-5 border-t border-slate-100 pt-3">
                             <div class="flex justify-between items-center text-[10px] font-bold text-slate-400 mb-1.5 uppercase tracking-wider">
-                                <span>Tracker 14 Hari</span>
+                                <span>{{ __('Pelacak') }} 14 {{ __('Hari') }}</span>
                             </div>
                             <div class="flex gap-1">
                                 @for ($h = 1; $h <= 14; $h++)
@@ -382,7 +382,7 @@
                                     <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                     </svg>
-                                    Misi Gagal
+                                    {{ __('Misi Gagal') }}
                                 </button>
                             @elseif ($mission['today_status'] === 'done')
                                 <button
@@ -420,7 +420,7 @@
                                     <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
                                     </svg>
-                                    Submit Task
+                                    {{ __('Kumpulkan Misi') }}
                                 </button>
                             @endif
                         </div>
@@ -451,9 +451,9 @@
                     </button>
                     <div>
                         <h1 class="text-xl font-bold text-slate-800" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                            Submit Daily Task
+                            {{ __('Kumpulkan Tugas Harian') }}
                         </h1>
-                        <p class="text-sm text-slate-500">Unggah bukti pengerjaan tugas hari ini.</p>
+                        <p class="text-sm text-slate-500">{{ __('Unggah bukti pengerjaan tugas hari ini.') }}</p>
                     </div>
                 </div>
 
@@ -464,7 +464,7 @@
                     <div class="lg:col-span-5 space-y-5">
                         {{-- Info Aplikasi --}}
                         <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                            <h3 class="mb-3 text-sm font-bold text-slate-800 uppercase tracking-wider">Detail Misi</h3>
+                            <h3 class="mb-3 text-sm font-bold text-slate-800 uppercase tracking-wider">{{ __('Detail Misi') }}</h3>
                             <div class="flex items-center gap-4 rounded-xl bg-slate-50 p-4">
                                 @if($mission['logo'])
                                     <img src="/storage/{{ $mission['logo'] }}" alt="Logo" class="flex h-14 w-14 flex-shrink-0 object-cover rounded-xl shadow-sm">
@@ -477,7 +477,7 @@
                                 @endif
                                 <div>
                                     <p class="font-bold text-slate-800 text-base">{{ $mission['name'] }}</p>
-                                    <p class="text-sm font-medium text-slate-500 mt-0.5">Day {{ $mission['day'] }} of {{ $mission['total_days'] }}</p>
+                                    <p class="text-sm font-medium text-slate-500 mt-0.5">{{ __('Hari') }} {{ $mission['day'] }} {{ __('Dari') }} {{ $mission['total_days'] }}</p>
                                 </div>
                             </div>
                         </div>
@@ -485,20 +485,20 @@
                         {{-- App Download Link --}}
                         @if(!empty($mission['link_aplikasi']))
                         <div class="rounded-2xl border border-blue-200 bg-blue-50 p-5 shadow-sm">
-                            <h3 class="mb-2 text-sm font-bold text-blue-800 uppercase tracking-wider">Akses Aplikasi</h3>
+                            <h3 class="mb-2 text-sm font-bold text-blue-800 uppercase tracking-wider">{{ __('Akses Aplikasi') }}</h3>
                             <p class="text-sm text-blue-700 mb-4">
-                                Silakan download dan buka aplikasi yang akan diuji melalui link berikut:
+                                {{ __('Silakan download dan buka aplikasi yang akan diuji melalui link berikut:') }}
                             </p>
                             <a href="{{ $mission['link_aplikasi'] }}" target="_blank" class="w-full flex items-center justify-center gap-2 rounded-xl bg-white border border-blue-300 py-3 text-sm font-bold text-blue-700 shadow-sm transition-colors hover:bg-blue-100">
                                 <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                                 </svg>
-                                Buka Link Aplikasi
+                                {{ __('Buka Link Aplikasi') }}
                             </a>
                         </div>
                         @else
                         <div class="rounded-2xl border border-amber-200 bg-amber-50 p-5 shadow-sm">
-                            <h3 class="mb-2 text-sm font-bold text-amber-800 uppercase tracking-wider">Menunggu Link</h3>
+                            <h3 class="mb-2 text-sm font-bold text-amber-800 uppercase tracking-wider">{{ __('Menunggu Link') }}</h3>
                             <p class="text-sm text-amber-700">
                                 Developer belum memberikan link aplikasi. Mohon tunggu.
                             </p>
@@ -507,12 +507,12 @@
 
                         {{-- Instruksi --}}
                         <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                            <h3 class="mb-4 text-sm font-bold text-slate-800 uppercase tracking-wider">Instructions</h3>
+                            <h3 class="mb-4 text-sm font-bold text-slate-800 uppercase tracking-wider">{{ __('Instruksi') }}</h3>
                             <div class="space-y-4">
                                 @foreach ([
-                                    'Buka aplikasi dan mainkan selama 10–15 menit.',
-                                    'Ambil screenshot layar yang menunjukkan aktivitasmu.',
-                                    'Unggah screenshot di form yang disediakan.',
+                                    __('Buka aplikasi dan mainkan selama 10–15 menit.'),
+                                    __('Ambil screenshot layar yang menunjukkan aktivitasmu.'),
+                                    __('Unggah screenshot di form yang disediakan.'),
                                 ] as $i => $instruction)
                                     <div class="flex items-start gap-3">
                                         <div class="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-blue-50 text-xs font-bold text-blue-600">
@@ -537,14 +537,14 @@
                                     d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                             </svg>
                             <p class="text-sm text-amber-700 leading-relaxed">
-                                <span class="font-bold">Important:</span>
-                                You must play the app for 10–15 minutes before capturing! Screenshots that don't meet the criteria will be rejected.
+                                <span class="font-bold">{{ __('Penting') }}:</span>
+                                {{ __('Anda harus menggunakan aplikasi tersebut selama 10–15 menit sebelum mengambil tangkapan layar (screenshot)! Screenshot yang tidak memenuhi kriteria akan ditolak.') }}
                             </p>
                         </div>
 
                         {{-- Area Upload Screenshot --}}
                         <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                            <h3 class="mb-4 text-sm font-bold text-slate-800 uppercase tracking-wider">Upload Screenshot</h3>
+                            <h3 class="mb-4 text-sm font-bold text-slate-800 uppercase tracking-wider">{{ __('Unggah Tangkapan Layar') }}</h3>
                             
                             {{ $this->form }}
 
@@ -562,7 +562,7 @@
                                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
                                     </svg>
-                                    Submit Task Sekarang
+                                    {{ __('Kumpulkan Task Sekarang') }}
                                 </span>
 
                                 <span wire:loading wire:target="submitTask" class="flex items-center justify-center gap-2">
@@ -570,7 +570,7 @@
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
                                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                                     </svg>
-                                    Submitting...
+                                    {{ __('Sedang Mengirim...') }}
                                 </span>
                             </button>
                         </div>

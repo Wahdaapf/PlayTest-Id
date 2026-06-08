@@ -12,11 +12,20 @@ class HistoryMisi extends Page
 
     protected string $view = 'filament.tester.pages.history-misi';
 
-    protected static ?string $navigationLabel = 'History Misi';
+    public static function getNavigationLabel(): string
+    {
+        return __('History Misi');
+    }
 
-    protected static ?string $title = 'History Misi';
+    public function getTitle(): string
+    {
+        return __('History Misi');
+    }
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Menu';
+    public static function getNavigationGroup(): ?string
+    {
+        return __('Menu');
+    }
 
     protected static ?int $navigationSort = 3;
 
@@ -34,13 +43,13 @@ class HistoryMisi extends Page
             if (!$misi) return null;
 
             $statusConfig = match ($ma->status) {
-                'selesai'   => ['label' => 'Selesai',    'color' => '#10b981', 'bg' => '#ecfdf5', 'icon' => '✅'],
-                'progress'  => ['label' => 'Berlangsung','color' => '#f59e0b', 'bg' => '#fffbeb', 'icon' => '🔄'],
-                'accepted'  => ['label' => 'Diterima',   'color' => '#3b82f6', 'bg' => '#eff6ff', 'icon' => '👍'],
-                'failed'    => ['label' => 'Gagal',       'color' => '#ef4444', 'bg' => '#fef2f2', 'icon' => '❌'],
-                'submitted' => ['label' => 'Menunggu',   'color' => '#8b5cf6', 'bg' => '#f5f3ff', 'icon' => '⏳'],
-                'rejected'  => ['label' => 'Ditolak',    'color' => '#64748b', 'bg' => '#f8fafc', 'icon' => '🚫'],
-                'pending'   => ['label' => 'Pending',    'color' => '#f59e0b', 'bg' => '#fffbeb', 'icon' => '⏳'],
+                'selesai'   => ['label' => __('Selesai'),    'color' => '#10b981', 'bg' => '#ecfdf5', 'icon' => '✅'],
+                'progress'  => ['label' => __('Berlangsung'),'color' => '#f59e0b', 'bg' => '#fffbeb', 'icon' => '🔄'],
+                'accepted'  => ['label' => __('Diterima'),   'color' => '#3b82f6', 'bg' => '#eff6ff', 'icon' => '👍'],
+                'failed'    => ['label' => __('Gagal'),       'color' => '#ef4444', 'bg' => '#fef2f2', 'icon' => '❌'],
+                'submitted' => ['label' => __('Menunggu'),   'color' => '#8b5cf6', 'bg' => '#f5f3ff', 'icon' => '⏳'],
+                'rejected'  => ['label' => __('Ditolak'),    'color' => '#64748b', 'bg' => '#f8fafc', 'icon' => '🚫'],
+                'pending'   => ['label' => __('Pending'),    'color' => '#f59e0b', 'bg' => '#fffbeb', 'icon' => '⏳'],
                 default     => ['label' => ucfirst($ma->status), 'color' => '#64748b', 'bg' => '#f8fafc', 'icon' => '•'],
             };
 
@@ -64,8 +73,8 @@ class HistoryMisi extends Page
                 'statusColor'   => $statusConfig['color'],
                 'statusBg'      => $statusConfig['bg'],
                 'statusIcon'    => $statusConfig['icon'],
-                'joinedAt'      => $ma->created_at?->format('d M Y'),
-                'tipe'          => $misi->id % 2 === 0 ? 'Functional Testing' : 'UX Research',
+                'joinedAt'      => $ma->created_at?->translatedFormat('d M Y'),
+                'tipe'          => $misi->id % 2 === 0 ? __('Pengujian Fungsional') : __('Riset UX'),
             ];
         })->filter()->values()->toArray();
 

@@ -275,11 +275,11 @@
 
 @php
   if ($userBadgeCount <= 5) {
-      $tierName = 'Tester Beginner';
+      $tierName = __('Tester Beginner');
   } elseif ($userBadgeCount <= 50) {
-      $tierName = 'Tester Intermediate';
+      $tierName = __('Tester Intermediate');
   } else {
-      $tierName = 'Tester Master';
+      $tierName = __('Tester Master');
   }
 @endphp
 
@@ -336,7 +336,7 @@
           {{-- Konten utama --}}  
           <div class="relative z-10 flex items-center justify-between flex-wrap gap-4">  
                 <div>  
-                    <p class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#e0f2fe;letter-spacing:0.12em;">POIN KAMU</p>  
+                    <p class="text-xs font-semibold uppercase tracking-widest mb-1" style="color:#e0f2fe;letter-spacing:0.12em;">{{ __('POIN KAMU') }}</p>  
                     <div class="flex items-baseline gap-2 mb-2">  
                         <span class="font-mono-num font-bold text-white" style="font-size:48px;line-height:1;">{{ number_format($totalPoin) }}</span>  
                         <span class="text-xl font-semibold" style="color:#bae6fd;opacity:0.85;">pts</span>  
@@ -349,12 +349,12 @@
                         <span class="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded-full"  
                               style="background:rgba(255,255,255,0.12);color:#e0f2fe;border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(12px);">  
                             <span class="w-1.5 h-1.5 rounded-full inline-block" style="background:#fbbf24;"></span>  
-                            {{ $userBadgeCount }} badge diraih  
+                            {{ $userBadgeCount }} {{ __('lencana diraih') }}  
                         </span>  
                         <span class="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded-full"  
                               style="background:rgba(255,255,255,0.12);color:#e0f2fe;border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(12px);">  
                             <span class="w-1.5 h-1.5 rounded-full inline-block" style="background:#10b981;"></span>  
-                            +{{ $poinPending }} pts pending  
+                            +{{ $poinPending }} {{ __('pts pending') }}  
                         </span>  
                     </div>  
                 </div>  
@@ -365,12 +365,12 @@
                         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">  
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>  
                         </svg>  
-                        Riwayat  
+                        {{ __('Riwayat') }}  
                     </button>  
                     <a href="{{ \App\Filament\Tester\Pages\Dompet::getUrl() }}"
                        class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold"
                              style="background:#ffffff !important;color:#1d4ed8 !important;box-shadow:0 10px 25px -5px rgba(29,78,216,0.3);text-decoration:none !important;">
-                        Tukar Poin
+                        {{ __('Tukar Poin') }}
                     </a>  
                 </div>  
             </div>  
@@ -380,12 +380,12 @@
                  style="border-top:1px solid rgba(255,255,255,0.15);align-items:center;">  
                 <div>  
                     <p class="font-mono-num text-lg font-bold text-white">{{ $misiSelesai }}</p>  
-                    <p class="text-xs opacity-70" style="color:#e0f2fe;">Misi Selesai</p>  
+                    <p class="text-xs opacity-70" style="color:#e0f2fe;">{{ __('Misi Selesai') }}</p>  
                 </div>  
                 <div class="hidden sm:block w-px h-8 opacity-20" style="background:#ffffff;"></div>  
                 <div>  
                     <p class="font-mono-num text-lg font-bold text-white">{{ $rating }}</p>  
-                    <p class="text-xs opacity-70" style="color:#e0f2fe;">Rating</p>  
+                    <p class="text-xs opacity-70" style="color:#e0f2fe;">{{ __('Rating') }}</p>  
                 </div>  
                 <div class="hidden sm:block w-px h-8 opacity-20" style="background:#ffffff;"></div>  
                 
@@ -398,18 +398,18 @@
                         </svg>
                         <span style="color:#fbbf24 !important;">{{ $userBadgeCount }}</span>
                     </p>
-                    <p class="text-[9px] font-bold uppercase tracking-wider mt-0.5" style="color:#fef3c7 !important;">Badge</p>
+                    <p class="text-[9px] font-bold uppercase tracking-wider mt-0.5" style="color:#fef3c7 !important;">{{ __('Lencana') }}</p>
                 </div>
                 
                 <div class="hidden sm:block w-px h-8 opacity-20" style="background:#ffffff;"></div>  
                 <div>  
                     <p class="font-mono-num text-lg font-bold text-white">{{ $misiAktif }}</p>  
-                    <p class="text-xs opacity-70" style="color:#e0f2fe;">Aktif Sekarang</p>  
+                    <p class="text-xs opacity-70" style="color:#e0f2fe;">{{ __('Aktif Sekarang') }}</p>  
                 </div>  
                 <div class="hidden sm:block w-px h-8 opacity-20" style="background:#ffffff;"></div>  
                 <div>  
                     <p class="font-mono-num text-lg font-bold text-white">{{ $streakHari }}</p>  
-                    <p class="text-xs opacity-70" style="color:#e0f2fe;">Hari Streak</p>  
+                    <p class="text-xs opacity-70" style="color:#e0f2fe;">{{ __('Hari Streak') }}</p>  
                 </div>  
             </div>  
 
@@ -433,11 +433,11 @@
         <div data-design-id="missions-section" class="mb-6">  
             <div class="flex items-center justify-between mb-4">  
                 <div>  
-                    <h2 class="text-base font-bold font-heading" style="color:#1e293b;">Misi Aktif Saya</h2>  
-                    <p class="text-xs mt-0.5" style="color:#94a3b8;">{{ count($misiAktifList) }} misi sedang berjalan</p>  
+                    <h2 class="text-base font-bold font-heading" style="color:#1e293b;">{{ __('Misi Aktif Saya') }}</h2>  
+                    <p class="text-xs mt-0.5" style="color:#94a3b8;">{{ __(':count misi sedang berjalan', ['count' => count($misiAktifList)]) }}</p>  
                 </div>  
                 <a href="#" class="text-sm font-semibold flex items-center gap-1" style="color:#2563eb;">  
-                    Lihat Semua  
+                    {{ __('Lihat Semua') }}  
                     <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">  
                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>  
                     </svg>  
@@ -458,21 +458,21 @@
                                      style="background:{{ $misi['gradient'] }};">  
                                     <span class="text-white font-bold text-sm">{{ $misi['inisial'] }}</span>  
                                 </div>  
-                            @endif
+                            @endif  
                             <div>  
                                 <a href="/tester/misi-detail?misi_id={{ $misi['id'] }}" class="text-sm font-bold font-heading hover:underline" style="color:#1e293b;">{{ $misi['nama'] }}</a>  
                                 <p class="text-xs" style="color:#64748b;">{{ $misi['tipe'] }}</p>  
                             </div>  
                         </div>  
                         <span class="text-xs font-semibold px-2 py-0.5 rounded-lg"  
-                              style="background:#f0fdf4;color:#16a34a;">{{ $misi['status'] }}</span>  
+                              style="background:#f0fdf4;color:#16a34a;">{{ __($misi['status']) }}</span>  
                     </div>  
   
                     {{-- Progress hari --}}  
                     <div class="mb-3">  
                         <div class="flex items-center justify-between mb-1.5">  
                             <span class="text-xs font-medium" style="color:#64748b;">  
-                                <span class="font-mono-num font-bold" style="color:#1e293b;">Day {{ $misi['hari'] }}</span> of {{ $misi['maxHari'] }}  
+                                <span class="font-mono-num font-bold" style="color:#1e293b;">{{ __('Day') }} {{ $misi['hari'] }}</span> {{ __('of') }} {{ $misi['maxHari'] }}  
                             </span>  
                             <span class="text-xs font-semibold font-mono-num"  
                                   style="color:{{ $misi['warnaPersen'] }};">{{ $misi['persen'] }}%</span>  
@@ -501,14 +501,14 @@
                                         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">  
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>  
                                         </svg>  
-                                        Submit Task  
+                                        {{ __('Submit Task') }}  
                                     </a>  
                                 @else
                                     <button class="tsr-btn-submit" disabled style="opacity: 0.6; cursor: not-allowed; background: #f1f5f9; color: #94a3b8;">  
                                         <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">  
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>  
                                         </svg>  
-                                        Pending  
+                                        {{ __('Pending') }}  
                                     </button>
                                 @endif
                             @else  
@@ -516,12 +516,12 @@
                                 <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">  
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>  
                                 </svg>  
-                                Laporkan  
+                                {{ __('Laporkan') }}  
                             </button>  
                             @endif  
                             @if($misi['rawStatus'] !== 'progress')
                                 <a href="/tester/misi-detail?misi_id={{ $misi['id'] }}" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors flex items-center gap-1.5" style="text-decoration:none;">
-                                    Detail
+                                    {{ __('Detail') }}
                                 </a>
                             @endif
                         </div>  
@@ -538,11 +538,11 @@
         <div data-design-id="available-section" class="mb-4">  
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">  
                 <div class="w-full md:w-auto">  
-                    <h2 class="text-base font-bold font-heading" style="color:#1e293b;">Aplikasi Tersedia untuk Diuji</h2>  
-                    <p class="text-xs mt-0.5" style="color:#94a3b8;">{{ count($aplikasiList) }} slot terbuka • Lamar sekarang</p>  
+                    <h2 class="text-base font-bold font-heading" style="color:#1e293b;">{{ __('Aplikasi Tersedia untuk Diuji') }}</h2>  
+                    <p class="text-xs mt-0.5" style="color:#94a3b8;">{{ __(':count slot terbuka • Lamar sekarang', ['count' => count($aplikasiList)]) }}</p>  
                 </div>  
                 <div class="flex items-center gap-2 flex-wrap w-full md:w-auto mt-1 md:mt-0">  
-                    <button class="tsr-filter-active" x-on:click="setFilter('semua')" :class="filter === 'semua' ? 'tsr-filter-active' : 'tsr-filter-inactive'">Semua</button>  
+                    <button class="tsr-filter-active" x-on:click="setFilter('semua')" :class="filter === 'semua' ? 'tsr-filter-active' : 'tsr-filter-inactive'">{{ __('Semua') }}</button>  
                     <button class="tsr-filter-inactive" x-on:click="setFilter('functional')" :class="filter === 'functional' ? 'tsr-filter-active' : 'tsr-filter-inactive'">Functional</button>  
                     <button class="tsr-filter-inactive" x-on:click="setFilter('ux')" :class="filter === 'ux' ? 'tsr-filter-active' : 'tsr-filter-inactive'">UX</button>  
                 </div>  
@@ -583,7 +583,7 @@
                         {{-- Durasi --}}
                         <div class="text-center hidden lg:block">  
                             <p class="text-xs font-bold font-mono-num" style="color:#1e293b;">{{ $app['durasi'] }}</p>  
-                            <p class="text-xs" style="color:#94a3b8;">Durasi</p>  
+                            <p class="text-xs" style="color:#94a3b8;">{{ __('Durasi') }}</p>  
                         </div>  
                         
                         {{-- Tester --}}
@@ -591,7 +591,7 @@
                             <p class="text-xs font-bold font-mono-num" style="color:#1e293b;">  
                                 {{ $app['testerCur'] }}/{{ $app['testerMax'] }}  
                             </p>  
-                            <p class="text-xs" style="color:#94a3b8;">Tester</p>  
+                            <p class="text-xs" style="color:#94a3b8;">{{ __('Tester') }}</p>  
                         </div>  
                         
                         {{-- Points --}}
@@ -608,7 +608,7 @@
                         @endphp  
                         <div class="flex items-center gap-2 flex-shrink-0 ml-auto md:ml-0">  
                             <a href="/tester/misi-detail?misi_id={{ $app['id'] }}" class="px-3 py-1.5 rounded-xl text-xs font-bold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors flex items-center gap-1.5" style="text-decoration:none;">  
-                                Detail  
+                                {{ __('Detail') }}  
                             </a>  
                             <button   
                                 @if(!$isRestricted)   
@@ -620,7 +620,7 @@
                                 @if($isRestricted) title="Misi ini membutuhkan minimal 6 badge" @endif  
                             >  
                                 <span wire:loading.remove wire:target="applyMisi('{{ $app['id'] }}')">  
-                                    {{ $isRestricted ? 'Locked' : 'Apply' }}  
+                                    {{ $isRestricted ? __('Locked') : __('Apply') }}  
                                 </span>  
                                 <span wire:loading wire:target="applyMisi('{{ $app['id'] }}')">...</span>  
                             </button>  
