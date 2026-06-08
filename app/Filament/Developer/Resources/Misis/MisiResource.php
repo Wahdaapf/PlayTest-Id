@@ -13,6 +13,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class MisiResource extends Resource
 {
@@ -27,6 +29,12 @@ class MisiResource extends Resource
     protected static ?string $pluralModelLabel = 'Misi';
 
     protected static ?string $recordTitleAttribute = 'nama_aplikasi';
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->where('id_user', Auth::id());
+    }
 
     public static function form(Schema $schema): Schema
     {
