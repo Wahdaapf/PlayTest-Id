@@ -99,7 +99,7 @@ class GoogleController extends Controller
             session()->forget('google_auth_panel');
 
             // Redirect back to the login page of the panel they came from
-            return redirect($loginUrl)->with('error', 'Login with Google failed. Please try again.');
+            return redirect($loginUrl)->with('error', 'Login with Google failed: ' . $e->getMessage());
         }
     }
 }
