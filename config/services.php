@@ -46,4 +46,8 @@ return [
         'callback_token' => env('XENDIT_CALLBACK_TOKEN'),
     ],
 
+    'groq' => [
+        'key' => env('GROQ_API_KEY'),
+    ],
+
 ];

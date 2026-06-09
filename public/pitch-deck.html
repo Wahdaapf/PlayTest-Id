@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlayTest ID - Final Pitch Deck</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            brand: {
+              50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa',
+              500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a',
+            },
+            promo: '#FFD700',
+            darkbg: '#0f172a'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
+    body { background-color: #222; display: flex; flex-direction: column; align-items: center; gap: 40px; padding: 40px; margin: 0; }
+
+    /* Kanvas Presentasi 16:9 */
+    .slide-16-9 {
+      width: 1280px;
+      height: 720px;
+      background-color: #f8fafc;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      border-radius: 16px;
+    }
+
+    /* Latar Belakang Biru Melengkung + Pola Titik (Disesuaikan untuk Slide) */
+    .slide-bg-curved {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      background-image: radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px), linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      background-size: 20px 20px, 100% 100%;
+      position: relative;
+    }
+    .slide-bg-curved::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: -10%;
+      width: 120%;
+      height: 80px;
+      background-color: #f8fafc;
+      border-radius: 50%;
+    }
+
+    /* Animasi Mengambang */
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+      50% { transform: translateY(-15px) rotate(calc(var(--rot, 0deg) + 5deg)); }
+    }
+    .animate-float { animation: float 4s ease-in-out infinite; }
+    .animate-float-delay-1 { animation: float 5s ease-in-out infinite 1s; }
+    .animate-float-delay-2 { animation: float 6s ease-in-out infinite 2s; }
+
+    /* Custom Scrollbar untuk Demo Dashboard */
+    .custom-scroll::-webkit-scrollbar { width: 6px; }
+    .custom-scroll::-webkit-scrollbar-track { background: #f1f5f9; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+  </style>
+</head>
+<body>
+
+  <div class="slide-16-9">
+    <div class="slide-bg-curved h-[500px] w-full pt-16 px-16 text-center z-10 flex flex-col items-center relative">
+      <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-400/30 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div class="absolute top-10 left-10 text-white/10 text-[16rem] pointer-events-none z-0 animate-float-delay-2" style="--rot: -15deg;">
+        <i class="fa-brands fa-google-play"></i>
+      </div>
+      <div class="absolute top-20 right-10 text-promo/20 text-[14rem] pointer-events-none z-0 animate-float" style="--rot: 25deg;">
+        <i class="fa-solid fa-rocket"></i>
+      </div>
+
+      <div class="bg-promo text-brand-900 font-black text-sm uppercase tracking-widest px-5 py-2 rounded-full inline-block mb-6 shadow-[0_5px_15px_rgba(255,215,0,0.4)] relative z-20">
+        Project-Based Learning (PBL) Kelompok 1
+      </div>
+
+      <div class="flex items-center gap-4 mb-6 relative z-20">
+        <div class="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg">
+          <i class="fa-solid fa-gamepad text-brand-600 text-2xl"></i>
+        </div>
+        <h1 class="text-6xl font-black text-white drop-shadow-lg">Play<span class="text-brand-300">Test</span> ID</h1>
+      </div>
+
+      <p class="text-xl font-medium text-blue-50 leading-snug px-10 bg-black/10 py-4 rounded-2xl backdrop-blur-sm border border-white/10 max-w-4xl relative z-20">
+        Marketplace pengujian aplikasi yang menghubungkan developer independen dengan masyarakat untuk memenuhi syarat rilis Google Play Console.
+      </p>
+    </div>
+
+    <div class="px-16 relative z-20 -mt-16 flex-1 flex justify-center items-center">
+      <div class="grid grid-cols-4 gap-6 w-full">
+        <div class="bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-[0_15px_30px_rgba(0,0,0,0.08)] border border-slate-200 text-center border-b-4 border-b-brand-500">
+          <h3 class="text-lg font-black text-brand-900 leading-tight mb-2">Fadhil<br/>Taufiqurrachman</h3>
+          <p class="text-promo font-bold bg-brand-900 rounded-lg py-1">244107020090</p>
+        </div>
+        <div class="bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-[0_15px_30px_rgba(0,0,0,0.08)] border border-slate-200 text-center border-b-4 border-b-brand-500">
+          <h3 class="text-lg font-black text-brand-900 leading-tight mb-2">Geraldi<br/>Akmal Syandana</h3>
+          <p class="text-promo font-bold bg-brand-900 rounded-lg py-1">244107020165</p>
+        </div>
+        <div class="bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-[0_15px_30px_rgba(0,0,0,0.08)] border border-slate-200 text-center border-b-4 border-b-brand-500">
+          <h3 class="text-lg font-black text-brand-900 leading-tight mb-2">Rakagali Resda<br/>Krisandi Putra</h3>
+          <p class="text-promo font-bold bg-brand-900 rounded-lg py-1">244107020136</p>
+        </div>
+        <div class="bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-[0_15px_30px_rgba(0,0,0,0.08)] border border-slate-200 text-center border-b-4 border-b-brand-500">
+          <h3 class="text-lg font-black text-brand-900 leading-tight mb-2">Wahda Adella<br/>Putri Febriana</h3>
+          <p class="text-promo font-bold bg-brand-900 rounded-lg py-1">244107020156</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-16-9">
+    <div class="slide-bg-curved h-[250px] w-full pt-12 px-16 z-10 relative">
+      <div class="bg-white text-brand-900 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full inline-block mb-4 shadow-md">
+        Analisis Masalah & Solusi
+      </div>
+      <h2 class="text-4xl font-black text-white drop-shadow-md">Kesenjangan Kebutuhan Developer & Peluang Masyarakat</h2>
+    </div>
+
+    <div class="px-16 relative z-20 -mt-16 flex-1 flex flex-col justify-center pb-10">
+      <div class="grid grid-cols-2 gap-10">
+
+        <div class="flex flex-col gap-6">
+          <div class="bg-red-50 rounded-2xl p-6 border-l-8 border-red-500 shadow-md">
+            <h3 class="text-xl font-black text-red-700 mb-2"><i class="fa-solid fa-triangle-exclamation"></i> Regulasi Ketat Google Play</h3>
+            <p class="text-red-900 font-medium">Mewajibkan pengujian tertutup dengan minimal <strong>14 penguji aktif selama 14 hari berturut-turut</strong>. Ini menjadi hambatan berat bagi <i>Indie Developer</i>.</p>
+          </div>
+          <div class="bg-yellow-50 rounded-2xl p-6 border-l-8 border-promo shadow-md">
+            <h3 class="text-xl font-black text-yellow-700 mb-2"><i class="fa-solid fa-users"></i> Potensi Masyarakat Digital</h3>
+            <p class="text-yellow-900 font-medium">72,78% pemuda Indonesia terhubung ke internet, namun partisipasinya didominasi aktivitas hiburan semata.</p>
+          </div>
+        </div>
+
+        <div class="bg-white/95 backdrop-blur-md rounded-3xl p-8 shadow-[0_20px_40px_rgba(0,0,0,0.1)] border border-slate-200 relative flex flex-col justify-center">
+          <div class="absolute -top-6 -right-6 w-16 h-16 bg-brand-500 text-white rounded-full flex items-center justify-center shadow-lg border-4 border-white text-3xl animate-float" style="--rot: 10deg;">
+            <i class="fa-solid fa-lightbulb"></i>
+          </div>
+          <h3 class="text-2xl font-black text-brand-900 mb-6 border-b-2 border-slate-100 pb-4">Solusi PlayTest ID (Gig Economy)</h3>
+
+          <div class="flex items-start gap-4 mb-6">
+            <div class="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center shrink-0"><i class="fa-solid fa-code text-brand-600 text-xl"></i></div>
+            <div>
+              <h4 class="font-bold text-slate-800 text-lg">Developer (B2B)</h4>
+              <p class="text-slate-600 text-sm font-medium">Memesan tenaga penguji secara terstruktur. Mendapatkan 20 email penguji nyata untuk sinkronisasi Google Play Console.</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center shrink-0"><i class="fa-solid fa-wallet text-yellow-600 text-xl"></i></div>
+            <div>
+              <h4 class="font-bold text-slate-800 text-lg">Tester (B2C)</h4>
+              <p class="text-slate-600 text-sm font-medium">Mengerjakan tugas harian, mengunggah screenshot, dan mengumpulkan poin yang dapat dicairkan menjadi saldo e-money.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-16-9">
+    <div class="slide-bg-curved h-[220px] w-full pt-12 px-16 text-center z-10 relative">
+      <div class="bg-promo text-brand-900 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full inline-block mb-3 shadow-md">
+        Value Proposition
+      </div>
+      <h2 class="text-4xl font-black text-white drop-shadow-md mb-2">Mengapa Memilih PlayTest ID?</h2>
+      <p class="text-blue-100 font-medium text-lg">Keunggulan kompetitif yang kami tawarkan untuk kesuksesan rilis aplikasi Anda.</p>
+    </div>
+
+    <div class="px-16 relative z-20 -mt-10 flex-1 flex flex-col justify-center pb-12">
+      <div class="grid grid-cols-3 gap-8">
+
+        <div class="bg-white rounded-3xl p-8 shadow-[0_15px_30px_rgba(0,0,0,0.08)] border border-slate-200 flex flex-col relative transform hover:-translate-y-2 transition-transform">
+          <div class="w-16 h-16 bg-brand-100 rounded-2xl flex items-center justify-center mb-6 shadow-inner text-brand-600 text-3xl">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <h3 class="text-xl font-black text-brand-900 mb-4">20 Tester Nyata</h3>
+          <div class="bg-slate-50 p-4 rounded-xl mb-4 border border-slate-100 flex-1">
+            <span class="text-xs font-bold text-brand-500 uppercase tracking-widest block mb-1">Bukan Akun Bot</span>
+            <p class="text-slate-600 text-sm font-medium">Penguji kami adalah pengguna aktif yang siap mengeksplorasi aplikasi Anda secara natural layaknya target pengguna asli di dunia nyata.</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl p-8 shadow-[0_15px_30px_rgba(0,0,0,0.08)] border border-slate-200 flex flex-col relative transform hover:-translate-y-2 transition-transform">
+          <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mb-6 shadow-inner text-green-600 text-3xl">
+            <i class="fa-solid fa-calendar-check"></i>
+          </div>
+          <h3 class="text-xl font-black text-brand-900 mb-4">Garansi 14 Hari</h3>
+          <div class="bg-green-50 p-4 rounded-xl mb-4 border border-green-100 flex-1">
+            <span class="text-xs font-bold text-green-600 uppercase tracking-widest block mb-1">Pasti Lolos Syarat</span>
+            <p class="text-green-800 text-sm font-medium">Sistem monitoring (Streak Tracker) kami memastikan setiap tester menyelesaikan siklus pengujian 14 hari penuh tanpa terputus.</p>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-3xl p-8 shadow-[0_15px_30px_rgba(0,0,0,0.08)] border border-slate-200 flex flex-col relative transform hover:-translate-y-2 transition-transform">
+          <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mb-6 shadow-inner text-purple-600 text-3xl">
+            <i class="fa-solid fa-chart-pie"></i>
+          </div>
+          <h3 class="text-xl font-black text-brand-900 mb-4">Laporan Lengkap</h3>
+          <div class="bg-purple-50 p-4 rounded-xl mb-4 border border-purple-100 flex-1">
+            <span class="text-xs font-bold text-purple-600 uppercase tracking-widest block mb-1">Feedback Berkualitas</span>
+            <p class="text-purple-800 text-sm font-medium">Dapatkan ulasan komprehensif, temuan <i>bug</i>, dan masukan berharga mengenai UI/UX sebelum aplikasi dirilis ke publik.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-16-9">
+    <div class="slide-bg-curved h-[200px] w-full pt-10 px-16 z-10 relative">
+      <div class="bg-promo text-brand-900 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full inline-block mb-3 shadow-md">
+        Live Demo
+      </div>
+      <h2 class="text-4xl font-black text-white drop-shadow-md">Alur Kerja & Developer Review</h2>
+    </div>
+
+    <div class="px-16 relative z-20 -mt-8 flex-1 flex items-center gap-10 pb-8">
+
+      <div class="w-1/3">
+        <h3 class="text-2xl font-black text-slate-800 mb-4 tracking-tight">Otoritas Penuh di Tangan Developer</h3>
+        <p class="text-slate-600 font-medium mb-6 leading-relaxed">
+          Developer bertindak sebagai <strong>Quality Assurance (QA)</strong>. Mereka menganalisis laporan harian dari 20 tester dan berhak menyetujui atau menolak tugas tersebut.
+        </p>
+        <div class="bg-brand-50 p-5 rounded-2xl border border-brand-100">
+          <i class="fa-solid fa-circle-check text-brand-500 text-xl mb-2"></i>
+          <p class="text-brand-900 font-bold text-sm">Memastikan setiap feedback valid dan memenuhi standar "Internal Review" Google Play.</p>
+        </div>
+      </div>
+
+      <div class="w-2/3 h-[420px] bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border-4 border-slate-800 flex overflow-hidden">
+        <div class="w-56 bg-slate-800 text-slate-300 p-6 flex flex-col text-sm font-medium">
+          <div class="text-promo font-black text-xl mb-8 flex items-center gap-2"><i class="fa-solid fa-gamepad"></i> PlayTest</div>
+          <div class="bg-slate-700 text-white rounded-lg p-3 mb-2 shadow-inner"><i class="fa-solid fa-layer-group w-6"></i> My Apps</div>
+          <div class="p-3 mb-2 hover:bg-slate-700/50 rounded-lg transition"><i class="fa-solid fa-users w-6"></i> Tester Progress</div>
+          <div class="p-3 hover:bg-slate-700/50 rounded-lg transition"><i class="fa-solid fa-wallet w-6"></i> Billing</div>
+        </div>
+
+        <div class="flex-1 bg-slate-50 p-8 flex flex-col custom-scroll overflow-y-auto">
+          <div class="flex justify-between items-end border-b border-slate-200 pb-4 mb-6">
+            <div>
+              <h4 class="text-2xl font-black text-slate-800">App Edukasi Anak</h4>
+              <p class="text-slate-500 font-medium text-sm">Reviewing Task: Tester_4421 (Day 12)</p>
+            </div>
+            <span class="text-xs font-bold text-slate-400 bg-slate-200 px-3 py-1 rounded-full">12 Jun 2026</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-6 mb-6">
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <h5 class="text-brand-600 font-bold mb-3 text-sm uppercase tracking-widest"><i class="fa-solid fa-comment-dots"></i> Feedback</h5>
+              <p class="text-slate-700 text-sm italic bg-slate-50 p-4 rounded-lg border border-slate-100 leading-relaxed">
+                "Aplikasi berjalan lancar saat materi dibuka, namun saat mencoba fitur kuis, tombol 'Submit' butuh ditekan dua kali."
+              </p>
+            </div>
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <h5 class="text-brand-600 font-bold mb-3 text-sm uppercase tracking-widest"><i class="fa-solid fa-image"></i> Screenshot</h5>
+              <div class="h-24 bg-slate-200 rounded-lg border-2 border-dashed border-slate-300 flex items-center justify-center">
+                <span class="text-slate-400 text-xs font-bold">Bukti_Penggunaan.jpg</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-auto flex justify-end gap-4">
+            <button class="bg-white text-red-500 border border-red-200 hover:bg-red-50 font-bold py-3 px-6 rounded-xl transition shadow-sm text-sm">
+              <i class="fa-solid fa-xmark"></i> Tolak Laporan
+            </button>
+            <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl transition shadow-md text-sm">
+              <i class="fa-solid fa-check-double"></i> Validasi & Beri Poin
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SLIDE TAMBAHAN: TECH STACK -->
+  <div class="slide-16-9">
+    <div class="slide-bg-curved h-[200px] w-full pt-10 px-16 z-10 relative">
+      <div class="bg-promo text-brand-900 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full inline-block mb-3 shadow-md">
+        Di Balik Layar
+      </div>
+      <h2 class="text-4xl font-black text-white drop-shadow-md">Teknologi yang Digunakan</h2>
+    </div>
+
+    <div class="px-16 relative z-20 -mt-8 flex-1 flex items-center pb-8">
+      <div class="grid grid-cols-3 gap-6 w-full">
+
+        <div class="bg-white rounded-3xl p-7 shadow-[0_15px_30px_rgba(0,0,0,0.08)] border border-slate-200 flex flex-col">
+          <div class="w-14 h-14 bg-red-100 rounded-2xl flex items-center justify-center mb-5 shadow-inner text-red-600 text-2xl">
+            <i class="fa-solid fa-server"></i>
+          </div>
+          <h3 class="text-lg font-black text-brand-900 mb-4">Backend</h3>
+          <ul class="space-y-2.5 text-sm font-semibold text-slate-600">
+            <li class="flex items-center gap-2"><i class="fa-brands fa-laravel text-red-500 w-5 text-center"></i> Laravel 13 (PHP 8.3)</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-table-columns text-red-500 w-5 text-center"></i> Filament 5 (Admin Panel)</li>
+            <li class="flex items-center gap-2"><i class="fa-brands fa-google text-red-500 w-5 text-center"></i> Laravel Socialite</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-database text-red-500 w-5 text-center"></i> MySQL & Queue (DB Driver)</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-3xl p-7 shadow-[0_15px_30px_rgba(0,0,0,0.08)] border border-slate-200 flex flex-col">
+          <div class="w-14 h-14 bg-brand-100 rounded-2xl flex items-center justify-center mb-5 shadow-inner text-brand-600 text-2xl">
+            <i class="fa-solid fa-display"></i>
+          </div>
+          <h3 class="text-lg font-black text-brand-900 mb-4">Frontend</h3>
+          <ul class="space-y-2.5 text-sm font-semibold text-slate-600">
+            <li class="flex items-center gap-2"><i class="fa-brands fa-laravel text-brand-500 w-5 text-center"></i> Blade Templating</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-wind text-brand-500 w-5 text-center"></i> Tailwind CSS 4</li>
+            <li class="flex items-center gap-2"><i class="fa-solid fa-bolt text-brand-500 w-5 text-center"></i> Vite 8 (Build Tool)</li>
+          </ul>
+
+          <h3 class="text-lg font-black text-brand-900 mt-6 mb-4 pt-4 border-t-2 border-slate-100">Tools Pendukung</h3>
+          <ul class="space-y-2.5 text-sm font-semibold text-slate-600">
+            <li class="flex items-center gap-2"><i class="fa-solid fa-vial text-brand-500 w-5 text-center"></i> Pest (Testing)</li>
+            <li class="flex items-center gap-2"><i class="fa-brands fa-git-alt text-brand-500 w-5 text-center"></i> Git & GitHub</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-3xl p-7 shadow-[0_15px_30px_rgba(0,0,0,0.08)] border border-slate-200 flex flex-col">
+          <div class="w-14 h-14 bg-yellow-100 rounded-2xl flex items-center justify-center mb-5 shadow-inner text-yellow-600 text-2xl">
+            <i class="fa-solid fa-plug"></i>
+          </div>
+          <h3 class="text-lg font-black text-brand-900 mb-4">Integrasi & Layanan</h3>
+          <ul class="space-y-3 text-sm font-semibold text-slate-600">
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-credit-card text-yellow-600 w-5 text-center mt-0.5"></i>
+              <span><strong class="text-slate-800">Duitku</strong> — payment gateway transaksi paket</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-solid fa-network-wired text-yellow-600 w-5 text-center mt-0.5"></i>
+              <span><strong class="text-slate-800">Ngrok</strong> — tunneling callback payment lokal</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <i class="fa-brands fa-google text-yellow-600 w-5 text-center mt-0.5"></i>
+              <span><strong class="text-slate-800">Google OAuth</strong> — autentikasi sosial login</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE TAMBAHAN: TANTANGAN & KESULITAN -->
+  <div class="slide-16-9">
+    <div class="slide-bg-curved h-[200px] w-full pt-10 px-16 z-10 relative">
+      <div class="bg-white text-brand-900 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full inline-block mb-3 shadow-md">
+        Di Balik Layar
+      </div>
+      <h2 class="text-4xl font-black text-white drop-shadow-md">Tantangan & Kesulitan Selama Pengembangan</h2>
+    </div>
+
+    <div class="px-16 relative z-20 -mt-8 flex-1 flex items-center pb-8">
+      <div class="grid grid-cols-2 gap-6 w-full">
+
+        <div class="bg-white rounded-2xl p-6 shadow-[0_15px_30px_rgba(0,0,0,0.08)] border border-slate-200 border-l-8 border-l-red-500">
+          <h3 class="text-base font-black text-slate-800 mb-1.5 flex items-center gap-2">
+            <i class="fa-solid fa-credit-card text-red-500"></i> Integrasi Payment Gateway
+          </h3>
+          <p class="text-slate-600 text-sm font-medium leading-relaxed">
+            Callback Duitku butuh URL publik, sementara development berjalan lokal. Solusi: gunakan <strong>ngrok</strong> sebagai tunneling, lalu sinkronkan status transaksi sandbox dengan database.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-[0_15px_30px_rgba(0,0,0,0.08)] border border-slate-200 border-l-8 border-l-brand-500">
+          <h3 class="text-base font-black text-slate-800 mb-1.5 flex items-center gap-2">
+            <i class="fa-solid fa-table-columns text-brand-500"></i> Multi-Role & Multi-Panel
+          </h3>
+          <p class="text-slate-600 text-sm font-medium leading-relaxed">
+            Tiga role (Admin, Developer, Tester) dengan tampilan berbeda memunculkan banyak isu <strong>sidebar dan responsiveness</strong> di tiap panel — butuh berkali-kali iterasi perbaikan agar konsisten di light/dark theme.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-[0_15px_30px_rgba(0,0,0,0.08)] border border-slate-200 border-l-8 border-l-yellow-400">
+          <h3 class="text-base font-black text-slate-800 mb-1.5 flex items-center gap-2">
+            <i class="fa-solid fa-language text-yellow-500"></i> Fitur Multi-Bahasa (ID/EN)
+          </h3>
+          <p class="text-slate-600 text-sm font-medium leading-relaxed">
+            Switch bahasa harus konsisten di landing page, halaman auth, hingga dashboard tiap role — termasuk memperbaiki bug "key" terjemahan yang sempat default ke bahasa Indonesia.
+          </p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-[0_15px_30px_rgba(0,0,0,0.08)] border border-slate-200 border-l-8 border-l-purple-500">
+          <h3 class="text-base font-black text-slate-800 mb-1.5 flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-purple-500"></i> Autentikasi & Verifikasi Email
+          </h3>
+          <p class="text-slate-600 text-sm font-medium leading-relaxed">
+            Menyelaraskan login Google (OAuth) dengan akun berbasis password, serta merancang dua alur verifikasi email: <strong>pending registration</strong> dan <strong>resend verification</strong>.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-16-9">
+    <div class="bg-brand-900 w-full h-full flex flex-col relative overflow-hidden">
+
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-50"></div>
+      <div class="absolute -bottom-20 -left-10 text-brand-800/50 text-[20rem] font-black z-0 pointer-events-none transform -rotate-12">
+        <i class="fa-solid fa-rocket"></i>
+      </div>
+
+      <div class="flex-1 flex flex-col items-center justify-center z-10 text-center px-20">
+        <h2 class="text-promo font-black text-5xl mb-6 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)]">Siap Membantu Rilis Aplikasi Anda!</h2>
+        <p class="text-xl font-medium text-blue-100 max-w-4xl leading-relaxed mb-12">
+          PlayTest ID memastikan ekosistem pengujian aplikasi Android yang efisien, memberdayakan ekonomi digital masyarakat, dan mengantarkan karya <i>developer</i> lokal bersaing di pasar global.
+        </p>
+
+        <div class="flex items-center gap-10">
+          <div class="bg-white/10 backdrop-blur-md border border-white/20 p-8 rounded-3xl text-left shadow-2xl">
+            <p class="text-promo font-bold uppercase tracking-widest text-xs mb-2"><i class="fa-solid fa-tags"></i> Investasi Sekali Bayar</p>
+            <p class="text-slate-300 font-semibold text-lg mb-1">Mulai Dari</p>
+            <div class="flex items-end gap-2 text-white">
+              <span class="text-2xl font-bold pb-2">Rp</span>
+              <span class="text-6xl leading-none font-black tracking-tighter drop-shadow-lg">300</span>
+              <span class="text-2xl font-bold pb-2">Ribu</span>
+            </div>
+          </div>
+
+          <div class="bg-promo text-brand-900 p-8 rounded-3xl shadow-[0_15px_30px_rgba(255,215,0,0.3)] flex items-center gap-6 transform hover:scale-105 transition-transform cursor-pointer border-b-8 border-yellow-600">
+            <div class="w-16 h-16 bg-brand-900 rounded-full flex items-center justify-center text-promo shadow-inner">
+              <i class="fa-solid fa-arrow-right text-3xl -rotate-45"></i>
+            </div>
+            <div class="text-left">
+              <p class="font-bold text-sm uppercase tracking-widest opacity-80 mb-1">Kunjungi Website Kami</p>
+              <p class="font-black text-4xl leading-none tracking-tight">playtestid.my.id</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-brand-950 py-6 text-center z-10 border-t border-white/10 flex justify-center gap-10 text-slate-400 font-medium text-sm">
+        <span><i class="fa-brands fa-github text-white"></i> github.com/Wahdaapf/PlayTest-Id</span>
+        <span><i class="fa-solid fa-building-columns text-white"></i> Politeknik Negeri Malang 2026</span>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

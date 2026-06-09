@@ -2,9 +2,12 @@
 
 namespace App\Filament\Developer\Pages;
 
+use App\Models\AiReport;
 use App\Models\Misi;
 use App\Models\MisiAnggota;
 use App\Models\MisiSub;
+use App\Services\GeminiService;
+use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -29,28 +32,168 @@ class PantauProgress extends Page
 
     protected string $view = 'filament.developer.pages.pantau-progress';
 
-    public ?int $selectedMisiId = null;
+    public ?int $selectedMisiId   = null;
     public ?array $selectedSubData = null;
+    public ?int $selectedHariKe   = null;
+    public string $alasanTolak    = '';
+
+    // Slideout tester info panel
+    public ?int   $slideoutMaId  = null;
+    public ?array $slideoutData  = null;
+
+    // Timestamp refresh tracking
+    public string $lastRefreshed = '';
+
+    public function refreshTracking(): void
+    {
+        $this->lastRefreshed = now()->format('H:i:s');
+    }
+
+    // ── SLIDEOUT PANEL ──────────────────────────────────────────
+    public function openSlideout(int $maId): void
+    {
+        $this->slideoutMaId = $maId;
+        $this->slideoutData = $this->buildSlideoutData($maId);
+        $this->alasanTolak  = '';
+    }
+
+    public function closeSlideout(): void
+    {
+        $this->slideoutMaId = null;
+        $this->slideoutData = null;
+    }
+
+    private function buildSlideoutData(int $maId): array
+    {
+        $ma   = MisiAnggota::with('user')->find($maId);
+        $misi = Misi::find($ma?->id_misi);
+
+        if (! $ma || ! $misi) return [];
+
+        $subs = MisiSub::where('id_misi', $ma->id_misi)
+            ->where('id_user', $ma->id_user)
+            ->orderBy('hari_ke')
+            ->get()
+            ->map(fn ($s) => [
+                'id'             => $s->id,
+                'hari_ke'        => $s->hari_ke,
+                'status'         => $s->status,
+                'image'          => $s->image ? '/storage/' . $s->image : null,
+                'catatan_tester' => $s->catatan_tester,
+                'alasan_tolak'   => $s->alasan_tolak,
+                'waktu'          => $s->updated_at?->format('d M Y H:i'),
+            ])->toArray();
+
+        $doneCount    = collect($subs)->where('status', 'done')->count();
+        $pendingCount = collect($subs)->where('status', 'pending')->count();
+        $allDone      = $doneCount >= 14;
+
+        return [
+            'ma_id'         => $ma->id,
+            'tester_nama'   => $ma->user->name ?? '-',
+            'tester_email'  => $ma->user->email ?? '-',
+            'status'        => $ma->status,
+            'done_count'    => $doneCount,
+            'pending_count' => $pendingCount,
+            'all_done'      => $allDone,
+            'misi_id'       => $misi->id,
+            'misi_nama'     => $misi->nama_aplikasi,
+            'subs'          => $subs,
+        ];
+    }
+
+    public function generateAiReport(?int $hariKe = null): void
+    {
+        if (! $this->selectedMisiId) return;
+
+        $misi = Misi::with('paket')->find($this->selectedMisiId);
+        if (! $misi) return;
+
+        if (! $misi->paket?->ai_report) {
+            Notification::make()
+                ->title(__('Fitur Tidak Tersedia'))
+                ->body(__('AI Report hanya tersedia untuk paket Pro. Upgrade paket untuk menggunakan fitur ini.'))
+                ->warning()
+                ->send();
+            return;
+        }
+
+        $query = MisiSub::where('id_misi', $this->selectedMisiId)
+            ->whereNotNull('catatan_tester')
+            ->where('catatan_tester', '!=', '');
+
+        if ($hariKe) {
+            $query->where('hari_ke', $hariKe);
+        }
+
+        $catatanList = $query->pluck('catatan_tester')->toArray();
+
+        if (empty($catatanList)) {
+            Notification::make()
+                ->title(__('Belum Ada Feedback'))
+                ->body($hariKe
+                    ? __('Belum ada catatan tester di hari ke-:hari.', ['hari' => $hariKe])
+                    : __('Belum ada catatan dari tester untuk dianalisis.'))
+                ->warning()
+                ->send();
+            return;
+        }
+
+        $label = $hariKe
+            ? "{$misi->nama_aplikasi} (Hari ke-{$hariKe})"
+            : $misi->nama_aplikasi;
+
+        try {
+            $result = app(GeminiService::class)->analyzeTesterFeedback($label, $catatanList);
+
+            AiReport::updateOrCreate(
+                ['id_misi' => $this->selectedMisiId, 'hari_ke' => $hariKe],
+                ['result' => $result, 'feedback_count' => count($catatanList)]
+            );
+
+            $this->selectedHariKe = $hariKe;
+
+            Notification::make()
+                ->title(__('AI Report Berhasil! ✨'))
+                ->body(__('Dianalisis dari :count feedback', ['count' => count($catatanList)]) . ($hariKe ? " hari ke-{$hariKe}" : '') . '.')
+                ->success()
+                ->send();
+        } catch (\Throwable $e) {
+            Notification::make()
+                ->title(__('Gagal Generate Report'))
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+        }
+    }
+
+    public function switchAiReport(?int $hariKe): void
+    {
+        $this->selectedHariKe = $hariKe;
+    }
 
     public function openValidationModal($subId, $testerNama, $hariKe)
     {
         $sub = MisiSub::find($subId);
         if ($sub) {
             $this->selectedSubData = [
-                'id' => $sub->id,
-                // Gunakan relative path agar tidak terkendala APP_URL di .env saat artisan serve
-                'image' => '/storage/' . $sub->image,
-                'tester_nama' => $testerNama,
-                'hari_ke' => $hariKe,
-                'status' => $sub->status,
-                'desc' => $sub->desc,
+                'id'             => $sub->id,
+                'image'          => '/storage/' . $sub->image,
+                'tester_nama'    => $testerNama,
+                'hari_ke'        => $hariKe,
+                'status'         => $sub->status,
+                'desc'           => $sub->desc,
+                'catatan_tester' => $sub->catatan_tester,
+                'alasan_tolak'   => $sub->alasan_tolak,
             ];
         }
+        $this->alasanTolak = '';
     }
 
     public function closeValidationModal()
     {
         $this->selectedSubData = null;
+        $this->alasanTolak     = '';
     }
 
     public function acceptSubmission()
@@ -58,10 +201,14 @@ class PantauProgress extends Page
         if ($this->selectedSubData) {
             $sub = MisiSub::find($this->selectedSubData['id']);
             if ($sub) {
-                $sub->update(['status' => 'done']);
+                $sub->update(['status' => 'done', 'alasan_tolak' => null]);
                 $this->checkAndFinishMission($sub->id_misi, $sub->id_user);
             }
             $this->closeValidationModal();
+            if ($this->slideoutMaId) {
+                $this->slideoutData = $this->buildSlideoutData($this->slideoutMaId);
+            }
+            Notification::make()->title(__('Screenshot Disetujui ✅'))->success()->send();
         }
     }
 
@@ -70,9 +217,17 @@ class PantauProgress extends Page
         if ($this->selectedSubData) {
             $sub = MisiSub::find($this->selectedSubData['id']);
             if ($sub) {
-                $sub->update(['status' => 'rejected']);
+                $sub->update([
+                    'status'       => 'notdone',
+                    'image'        => null,
+                    'alasan_tolak' => $this->alasanTolak ?: __('Screenshot ditolak oleh developer.'),
+                ]);
             }
             $this->closeValidationModal();
+            if ($this->slideoutMaId) {
+                $this->slideoutData = $this->buildSlideoutData($this->slideoutMaId);
+            }
+            Notification::make()->title(__('Screenshot Ditolak — Tester harus ulang hari ini'))->warning()->send();
         }
     }
 
@@ -80,16 +235,28 @@ class PantauProgress extends Page
     {
         $sub = MisiSub::find($subId);
         if ($sub) {
-            $sub->update(['status' => 'done']);
+            $sub->update(['status' => 'done', 'alasan_tolak' => null]);
             $this->checkAndFinishMission($sub->id_misi, $sub->id_user);
+            if ($this->slideoutMaId) {
+                $this->slideoutData = $this->buildSlideoutData($this->slideoutMaId);
+            }
+            Notification::make()->title(__('Disetujui ✅'))->success()->send();
         }
     }
 
-    public function rejectDirect($subId)
+    public function rejectDirect($subId, string $alasan = '')
     {
         $sub = MisiSub::find($subId);
         if ($sub) {
-            $sub->update(['status' => 'rejected']);
+            $sub->update([
+                'status'       => 'notdone',
+                'image'        => null,
+                'alasan_tolak' => $alasan ?: __('Screenshot ditolak. Silakan upload ulang.'),
+            ]);
+            if ($this->slideoutMaId) {
+                $this->slideoutData = $this->buildSlideoutData($this->slideoutMaId);
+            }
+            Notification::make()->title(__('Ditolak — Tester harus ulang'))->warning()->send();
         }
     }
 
@@ -153,14 +320,16 @@ class PantauProgress extends Page
             if (!$u) continue;
 
             $subs = $semuaSubs->where('id_user', $u->id);
-            
+
             $days = [];
             for ($h = 1; $h <= 14; $h++) {
                 $sub = $subs->firstWhere('hari_ke', $h);
                 if ($sub) {
                     $days[$h] = [
-                        'status' => $sub->status,
-                        'sub_id' => $sub->id,
+                        'status'         => $sub->status,
+                        'sub_id'         => $sub->id,
+                        'catatan_tester' => $sub->catatan_tester,
+                        'has_image'      => ! empty($sub->image),
                     ];
                 } else {
                     $days[$h] = ['status' => 'notdone'];
@@ -183,16 +352,24 @@ class PantauProgress extends Page
             $colors = ['blue', 'amber', 'purple', 'green'];
             $warna = $colors[$misi->id % count($colors)];
 
+            $doneCount    = $subs->where('status', 'done')->count();
+            $pendingCount = $subs->where('status', 'pending')->count();
+            $allDone      = $doneCount >= 14;
+
             $kampanyeList[] = [
-                'id' => $ma->id,
-                'misi_nama' => $misi->nama_aplikasi,
-                'tester_nama' => $u->name,
-                'logo' => $misi->logo,
-                'inisial' => strtoupper(substr($misi->nama_aplikasi, 0, 1) . substr($u->name, 0, 1)),
-                'warna' => $warna,
-                'status' => $ma->status,
-                'hariAktif' => $hariAktif,
-                'days' => $days,
+                'ma_id'         => $ma->id,
+                'misi_nama'     => $misi->nama_aplikasi,
+                'tester_nama'   => $u->name,
+                'tester_email'  => $u->email,
+                'logo'          => $misi->logo,
+                'inisial'       => strtoupper(substr($misi->nama_aplikasi, 0, 1) . substr($u->name, 0, 1)),
+                'warna'         => $warna,
+                'status'        => $ma->status,
+                'hariAktif'     => $hariAktif,
+                'days'          => $days,
+                'done_count'    => $doneCount,
+                'pending_count' => $pendingCount,
+                'all_done'      => $allDone,
             ];
         }
 
@@ -204,11 +381,12 @@ class PantauProgress extends Page
             ->get()
             ->map(function ($sub) {
                 return [
-                    'id' => $sub->id,
-                    'tester_nama' => $sub->user->name ?? 'Unknown',
-                    'hari_ke' => $sub->hari_ke,
-                    'image' => '/storage/' . $sub->image,
-                    'waktu' => $sub->created_at ? $sub->created_at->diffForHumans() : '',
+                    'id'             => $sub->id,
+                    'tester_nama'    => $sub->user->name ?? 'Unknown',
+                    'hari_ke'        => $sub->hari_ke,
+                    'image'          => '/storage/' . $sub->image,
+                    'catatan_tester' => $sub->catatan_tester,
+                    'waktu'          => $sub->created_at ? $sub->created_at->diffForHumans() : '',
                 ];
             })->toArray();
 
@@ -238,13 +416,43 @@ class PantauProgress extends Page
             ->havingRaw('COUNT(*) >= 14')
             ->exists();
 
+        $misi->load('paket');
+        $hasAiFeature = $misi->paket?->ai_report ?? false;
+
+        $allAiReports = AiReport::where('id_misi', $this->selectedMisiId)
+            ->orderBy('hari_ke')
+            ->get();
+
+        $aiReport = $allAiReports->firstWhere('hari_ke', $this->selectedHariKe)
+            ?? $allAiReports->whereStrict('hari_ke', null)->first()
+            ?? $allAiReports->last();
+
+        $hariDenganFeedback = MisiSub::where('id_misi', $this->selectedMisiId)
+            ->whereNotNull('catatan_tester')
+            ->where('catatan_tester', '!=', '')
+            ->distinct()
+            ->pluck('hari_ke')
+            ->sort()
+            ->values();
+
+        $canFinish = count($kampanyeList) > 0 &&
+            collect($kampanyeList)->every(fn ($k) => $k['all_done'] || $k['status'] === 'selesai');
+
         return [
-            'isDetail' => true,
-            'misiDetail' => $misi,
-            'kampanyeList' => $kampanyeList,
+            'isDetail'           => true,
+            'misiDetail'         => $misi,
+            'kampanyeList'       => $kampanyeList,
             'pendingSubmissions' => $pendingSubmissions,
-            'hariToday' => $hariToday,
-            'hasOneCompletedUser' => $hasOneCompletedUser,
+            'hariToday'          => $hariToday,
+            'hasOneCompletedUser'=> $hasOneCompletedUser,
+            'canFinish'          => $canFinish,
+            'slideoutData'       => $this->slideoutData,
+            'lastRefreshed'      => $this->lastRefreshed,
+            'hasAiFeature'       => $hasAiFeature,
+            'aiReport'           => $aiReport,
+            'allAiReports'       => $allAiReports,
+            'hariDenganFeedback' => $hariDenganFeedback,
+            'selectedHariKe'     => $this->selectedHariKe,
         ];
     }
 
