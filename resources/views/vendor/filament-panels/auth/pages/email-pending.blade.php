@@ -35,7 +35,9 @@
             flex-direction: column;
             height: 100dvh;
             font-family: 'Manrope', ui-sans-serif, system-ui, sans-serif;
-            background: linear-gradient(160deg, #3730a3 0%, #4F46E5 38%, #7c3aed 100%);
+            /* MOBILE: rich gradient background replaced by auth-mobile-bg */
+            background: transparent;
+            position: relative;
             overflow-y: auto;
             /* Scroll hanya muncul jika layar sangat-sangat kecil */
         }
@@ -742,7 +744,8 @@
 <body>
 
     <div class="verify-page" id="verify-page">
-
+        <x-auth-mobile-bg />
+        
         {{-- Language Switcher (Fixed top right) --}}
         <div style="position: fixed; top: 1.5rem; right: 1.5rem; z-index: 50; display: flex; gap: 0.375rem; background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); padding: 0.25rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);">
             <a href="{{ route('language.switch', 'en') }}" style="text-decoration: none; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 0.375rem; font-size: 0.625rem; font-weight: 900; transition: all 0.2s; color: {{ App::getLocale() == 'en' ? '#ffffff' : '#94a3b8' }}; background-color: {{ App::getLocale() == 'en' ? '#4F46E5' : 'transparent' }};">EN</a>

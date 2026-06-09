@@ -387,7 +387,7 @@
                           ">
                         @csrf
                         <button type="submit" class="logout-modal-btn logout-modal-btn--confirm" style="width:100%">
-                            {{ __('Ya, Logout') }}
+                            {{ __('Ya, Keluar') }}
                         </button>
                     </form>
                 </div>

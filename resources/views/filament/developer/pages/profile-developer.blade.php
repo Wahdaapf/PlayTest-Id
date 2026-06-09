@@ -232,6 +232,14 @@
   /* Counter target (animated by JS) */
   .prof-counter { display: inline-block; }
 
+  /* ====== Dark Mode Overrides ====== */
+  .dark .fi-main { background-color: transparent !important; }
+  .dark .prof-card { background-color: #1e293b !important; border-color: #334155 !important; }
+  .dark .prof-card > div.border-b { border-color: #334155 !important; }
+  .dark .prof-card h2 { color: #f8fafc !important; }
+  .dark .prof-card p.text-slate-400 { color: #94a3b8 !important; }
+  .dark .prof-card .absolute.inset-0[style*="background"] { opacity: 0.1 !important; }
+
   @media (prefers-reduced-motion: reduce) {
     .prof-hero, .prof-blob, .prof-blob-rev, .prof-status-dot,
     .prof-btn-save, .prof-divider-anim, .prof-aurora, .prof-conic, .prof-conic-2,
@@ -304,7 +312,7 @@
             <p class="text-[11px] font-bold uppercase mb-1.5 flex items-center justify-center sm:justify-start gap-2"
                style="color:#bfdbfe;letter-spacing:0.18em;">
               <span class="w-6 h-px hidden sm:inline-block" style="background:#bfdbfe;"></span>
-              DEVELOPER PANEL
+              {{ __('PANEL DEVELOPER') }}
             </p>
             <h1 class="font-bold text-white mb-2.5 text-2xl sm:text-[34px]" style="line-height:1.1;letter-spacing:-0.02em;">
               {{ Auth::user()->name }}
@@ -312,7 +320,7 @@
             <div class="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
               <span class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full"
                     style="background:linear-gradient(135deg,rgba(59,130,246,.25),rgba(124,58,237,.25));color:#dbeafe;border:1px solid rgba(59,130,246,.3);">
-                💻 Developer
+                💻 {{ __('Developer') }}
               </span>
               <span class="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-full"
                     style="background:rgba(255,255,255,0.12);color:#dbeafe;border:1px solid rgba(255,255,255,.15);">

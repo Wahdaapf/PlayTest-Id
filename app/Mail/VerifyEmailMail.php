@@ -30,7 +30,7 @@ class VerifyEmailMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Verify Your Email Address — PlayTest ID',
+            subject: __('Verifikasi Email Anda — PlayTest ID'),
         );
     }
 

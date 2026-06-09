@@ -7,6 +7,17 @@ use Filament\Pages\Page;
 class TipsBantuanDeveloper extends Page
 {
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-question-mark-circle';
+
+    public static function getNavigationLabel(): string
+    {
+        return __('Tips & Bantuan');
+    }
+
+    public function getTitle(): string | \Illuminate\Contracts\Support\Htmlable
+    {
+        return __('Tips & Bantuan');
+    }
+
     protected static ?string $navigationLabel = 'Tips & Bantuan';
     protected static ?string $title = 'Tips & Bantuan';
     protected static ?string $slug = 'tips-bantuan';

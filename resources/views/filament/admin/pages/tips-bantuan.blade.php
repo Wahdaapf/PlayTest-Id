@@ -1173,7 +1173,7 @@
           // try broader match
           const allLinks = document.querySelectorAll('.fi-sidebar-item a');
           for (const link of allLinks) {
-            if (link.getAttribute('href') === '/admin' || link.textContent.trim().toLowerCase().includes('dashboard')) {
+            if (link.getAttribute('href') === '/admin' || link.textContent.trim().toLowerCase().includes('dashboard') || link.textContent.trim().toLowerCase().includes('dasbor')) {
               steps.push({
                 element: link.closest('.fi-sidebar-item') || link,
                 popover: {
@@ -1214,7 +1214,7 @@
         };
 
         // Step 4: Manajemen Pengguna
-        const pengguna = findSidebarItem(['pengguna']);
+        const pengguna = findSidebarItem(['pengguna', 'user', 'users']);
         if (pengguna) {
           steps.push({
             element: pengguna,
@@ -1228,7 +1228,7 @@
         }
 
         // Step 5: Manajemen Kampanye
-        const kampanye = findSidebarItem(['kampanye']);
+        const kampanye = findSidebarItem(['kampanye', 'campaign', 'campaigns']);
         if (kampanye) {
           steps.push({
             element: kampanye,
@@ -1242,7 +1242,7 @@
         }
 
         // Step 6: Manajemen Paket
-        const paket = findSidebarItem(['paket']);
+        const paket = findSidebarItem(['paket', 'package', 'packages']);
         if (paket) {
           steps.push({
             element: paket,
@@ -1256,7 +1256,7 @@
         }
 
         // Step 7: Pembayaran Developer
-        const pembayaran = findSidebarItem(['pembayaran']);
+        const pembayaran = findSidebarItem(['pembayaran', 'payment', 'payments']);
         if (pembayaran) {
           steps.push({
             element: pembayaran,
@@ -1277,6 +1277,20 @@
             popover: {
               title: {!! json_encode(__('🏦 Withdraw Tester')) !!},
               description: {!! json_encode(__('Proses <strong>penarikan saldo</strong> tester. Verifikasi data rekening tujuan sebelum melakukan transfer.')) !!},
+              side: 'right',
+              align: 'start'
+            }
+          });
+        }
+
+        // Step 8.5: Profil Admin
+        const profil = findSidebarItem(['profil', 'profile']);
+        if (profil) {
+          steps.push({
+            element: profil,
+            popover: {
+              title: {!! json_encode(__('👤 Profil Admin')) !!},
+              description: {!! json_encode(__('Edit <strong>informasi akun</strong> admin Anda: nama, email, dan password. Lihat juga ringkasan statistik.')) !!},
               side: 'right',
               align: 'start'
             }

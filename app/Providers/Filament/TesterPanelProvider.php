@@ -63,39 +63,39 @@ class TesterPanelProvider extends PanelProvider
             ->favicon('/logoheader.png')
             ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
                 return $builder->groups([
-                    NavigationGroup::make('Main')
+                    NavigationGroup::make(__('Utama'))
                         ->items([
-                            NavigationItem::make('Home')
+                            NavigationItem::make(__('Beranda'))
                                 ->icon('heroicon-o-home')
                                 ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.tester-dashboard'))
                                 ->url(fn() => TesterDashboard::getUrl()),
 
-                            NavigationItem::make('Misi Saya')
+                            NavigationItem::make(__('Misi Saya'))
                                 ->icon('heroicon-o-clipboard-document-check')
                                 ->badge(fn() => MisiSaya::getNavigationBadge())
                                 ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.misi-saya'))
                                 ->url(fn() => MisiSaya::getUrl()),
 
-                            NavigationItem::make('Dompet')
+                            NavigationItem::make(__('Dompet'))
                                 ->icon('heroicon-o-credit-card')
                                 ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.dompet'))
                                 ->url(fn() => Dompet::getUrl()),
 
-                            NavigationItem::make('History Misi')
+                            NavigationItem::make(__('Histori Misi'))
                                 ->icon('heroicon-o-clock')
                                 ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.history-misi'))
                                 ->url(fn() => HistoryMisi::getUrl()),
 
                         ]),
 
-                    NavigationGroup::make('Profil & Bantuan')
+                    NavigationGroup::make(__('Profil & Bantuan'))
                         ->items([
-                            NavigationItem::make('Profil Saya')
+                            NavigationItem::make(__('Profil Saya'))
                                 ->icon('heroicon-o-user-circle')
                                 ->url(fn() => ProfileTester::getUrl())
                                 ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.profile-tester')),
 
-                            NavigationItem::make('Tips & Bantuan')
+                            NavigationItem::make(__('Tips & Bantuan'))
                                 ->icon('heroicon-o-question-mark-circle')
                                 ->url(fn() => TipsBantuanTester::getUrl())
                                 ->isActiveWhen(fn() => request()->routeIs('filament.tester.pages.tips-bantuan')),
@@ -126,6 +126,10 @@ class TesterPanelProvider extends PanelProvider
             ->renderHook(
                 'panels::head.end',
                 fn(): string => Blade::render("@vite(['resources/css/app.css', 'resources/css/filament-sidebar.css', 'resources/css/filament-topbar.css'])"),
+            )
+            ->renderHook(
+                \Filament\View\PanelsRenderHook::USER_MENU_PROFILE_BEFORE,
+                fn(): string => view('filament.components.language-switcher')->render(),
             )
 
             // ── Middleware ────────────────────────────────────  

@@ -3,7 +3,7 @@
 {{-- Gmail-safe: table layout, inline styles, no SVG, no flex  --}}
 {{-- ============================================================ --}}
 <!DOCTYPE html>
-<html lang="id" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
     <meta charset="utf-8">
@@ -48,7 +48,7 @@
 
     {{-- Preheader (hidden preview text) --}}
     <div style="display:none; font-size:1px; color:#eef0f7; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;">
-        {{ $title }} — Pemberitahuan dari PlayTest ID.
+        {{ $title }} — {{ __('Pemberitahuan dari PlayTest ID.') }}
     </div>
 
     <!-- Outer wrapper -->
@@ -62,7 +62,7 @@
                     {{-- ---- Brand header ---- --}}
                     <tr>
                         <td style="text-align:center; padding-bottom:24px;">
-                            <img src="{{ asset('logo.png') }}" alt="PlayTest ID" height="42" style="display:inline-block; height:42px; width:auto; border:0;" />
+                            <img src="{{ isset($message) ? $message->embed(public_path('logo.png')) : asset('logo.png') }}" alt="PlayTest ID" height="42" style="display:inline-block; height:42px; width:auto; border:0;" />
                         </td>
                     </tr>
 
@@ -92,7 +92,7 @@
                                         </table>
 
                                         <p style="margin:0 0 6px; font-size:13px; font-weight:700; color:#6366f1; letter-spacing:1.4px; text-transform:uppercase;">
-                                            Pemberitahuan Sistem
+                                            {{ __('Pemberitahuan Sistem') }}
                                         </p>
 
                                         <h1 class="h1-title" style="margin:0 0 12px; font-size:28px; font-weight:800; color:#1e1b4b; letter-spacing:-0.6px; line-height:1.2;">
@@ -100,7 +100,7 @@
                                         </h1>
 
                                         <p style="margin:0; font-size:15px; color:#4b5563; line-height:1.75; font-weight:500;">
-                                            Notifikasi dari platform <strong style="color:#1e1b4b;">PlayTest ID</strong>.
+                                            {!! __('Notifikasi dari platform <strong style="color:#1e1b4b;">PlayTest ID</strong>.') !!}
                                         </p>
                                     </td>
                                 </tr>
@@ -147,7 +147,7 @@
                                                     <table role="presentation" cellspacing="0" cellpadding="0" border="0">
                                                         <tr>
                                                             <td style="background-color:#eef2ff; border:1px solid #c7d2fe; border-radius:9999px; padding:6px 14px; font-size:12px; font-weight:700; color:#4F46E5;">
-                                                                &#128274;&nbsp; Email ini dikirim otomatis oleh sistem
+                                                                &#128274;&nbsp; {{ __('Email ini dikirim otomatis oleh sistem') }}
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -164,8 +164,7 @@
 
                                         {{-- Security note --}}
                                         <p style="margin:0; font-size:13px; color:#6b7280; text-align:center; line-height:1.7; font-weight:500;">
-                                            Email ini dikirim secara otomatis. Harap tidak membalas email ini.<br>
-                                            Jika Anda merasa tidak mengenal email ini, abaikan saja.
+                                            {!! __('Email ini dikirim secara otomatis. Harap tidak membalas email ini.<br>Jika Anda merasa tidak mengenal email ini, abaikan saja.') !!}
                                         </p>
 
                                     </td>
@@ -182,18 +181,17 @@
                                 PlayTest ID
                             </p>
                             <p style="margin:0; font-size:12px; color:#9ca3af; line-height:1.7; font-weight:500;">
-                                Anda menerima email ini karena akun Anda terdaftar<br>
-                                di platform PlayTest ID.
+                                {!! __('Anda menerima email ini karena akun Anda terdaftar<br>di platform PlayTest ID.') !!}
                             </p>
                             <p style="margin:14px 0 0; font-size:12px;">
-                                <a href="{{ config('app.url') }}" style="color:#6b7280; text-decoration:none; margin:0 10px; font-weight:600;">Home</a>
+                                <a href="{{ config('app.url') }}" style="color:#6b7280; text-decoration:none; margin:0 10px; font-weight:600;">{{ __('Beranda') }}</a>
                                 <span style="color:#d1d5db;">&middot;</span>
-                                <a href="{{ config('app.url') }}/privacy" style="color:#6b7280; text-decoration:none; margin:0 10px; font-weight:600;">Privacy</a>
+                                <a href="{{ config('app.url') }}/privacy" style="color:#6b7280; text-decoration:none; margin:0 10px; font-weight:600;">{{ __('Privasi') }}</a>
                                 <span style="color:#d1d5db;">&middot;</span>
-                                <a href="{{ config('app.url') }}/terms" style="color:#6b7280; text-decoration:none; margin:0 10px; font-weight:600;">Terms</a>
+                                <a href="{{ config('app.url') }}/terms" style="color:#6b7280; text-decoration:none; margin:0 10px; font-weight:600;">{{ __('Syarat') }}</a>
                             </p>
                             <p style="margin:14px 0 0; font-size:11px; color:#9ca3af;">
-                                &copy; {{ date('Y') }} PlayTest ID. All rights reserved.
+                                {!! __('&copy; :year PlayTest ID. Hak cipta dilindungi undang-undang.', ['year' => date('Y')]) !!}
                             </p>
                         </td>
                     </tr>

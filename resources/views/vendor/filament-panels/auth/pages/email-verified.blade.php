@@ -518,6 +518,8 @@
         <a href="{{ route('language.switch', 'id') }}" style="text-decoration: none; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; border-radius: 0.375rem; font-size: 0.625rem; font-weight: 900; transition: all 0.2s; color: {{ App::getLocale() == 'id' ? '#ffffff' : '#94a3b8' }}; background-color: {{ App::getLocale() == 'id' ? '#4F46E5' : 'transparent' }};">ID</a>
     </div>
 
+    <x-auth-mobile-bg />
+
     <!-- Confetti -->
     <div class="confetti-wrap" id="confetti-wrap"></div>
 

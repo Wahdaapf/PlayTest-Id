@@ -4,7 +4,7 @@
 {{-- Used in: App\Notifications\VerifyEmailNotification         --}}
 {{-- ============================================================ --}}
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
     <meta charset="utf-8">
@@ -13,7 +13,7 @@
     <meta name="x-apple-disable-message-reformatting">
     <meta name="color-scheme" content="light only">
     <meta name="supported-color-schemes" content="light only">
-    <title>Verify Your Email — PlayTest ID</title>
+    <title>{{ __('Verifikasi Email Anda — PlayTest ID') }}</title>
     <!--[if mso]>
     <noscript>
         <xml>
@@ -51,7 +51,7 @@
 
     {{-- Preheader --}}
     <div style="display:none; font-size:1px; color:#eef0f7; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;">
-        Welcome to PlayTest ID! Verify your email to activate your account and start earning.
+        {{ __('Selamat datang di PlayTest ID! Verifikasi email Anda untuk mengaktifkan akun dan mulai menghasilkan.') }}
     </div>
 
     <!-- Outer wrapper -->
@@ -65,7 +65,7 @@
                     {{-- ──────────── Brand Header ──────────── --}}
                     <tr>
                         <td style="text-align:center; padding-bottom:24px;">
-                            <img src="{{ asset('logo.png') }}" alt="PlayTest ID" height="42" style="display:inline-block; height:42px; width:auto; border:0;" />
+                            <img src="{{ isset($message) ? $message->embed(public_path('logo.png')) : asset('logo.png') }}" alt="PlayTest ID" height="42" style="display:inline-block; height:42px; width:auto; border:0;" />
                         </td>
                     </tr>
 
@@ -97,23 +97,22 @@
                                         {{-- Greeting + headline --}}
                                         @if(!empty($userName))
                                         <p style="margin:0 0 8px; font-size:13px; font-weight:700; color:#6366f1; letter-spacing:1.4px; text-transform:uppercase;">
-                                            &#127881;&nbsp; Welcome Aboard
+                                            &#127881;&nbsp; {{ __('Selamat Datang') }}
                                         </p>
                                         <h1 class="h1-title" style="margin:0 0 12px; font-size:30px; font-weight:800; color:#1e1b4b; letter-spacing:-0.6px; line-height:1.2;">
-                                            Hi, {{ $userName }}!
+                                            {{ __('Hai, :name!', ['name' => $userName]) }}
                                         </h1>
                                         @else
                                         <p style="margin:0 0 8px; font-size:13px; font-weight:700; color:#6366f1; letter-spacing:1.4px; text-transform:uppercase;">
-                                            One Last Step
+                                            {{ __('Satu Langkah Lagi') }}
                                         </p>
                                         <h1 class="h1-title" style="margin:0 0 12px; font-size:30px; font-weight:800; color:#1e1b4b; letter-spacing:-0.6px; line-height:1.2;">
-                                            Verify Your Email
+                                            {{ __('Verifikasi Email Anda') }}
                                         </h1>
                                         @endif
 
                                         <p style="margin:0; font-size:15px; color:#4b5563; line-height:1.75; font-weight:500;">
-                                            You're almost there! Confirm your email to activate your<br>
-                                            <strong style="color:#4F46E5;">PlayTest ID</strong> account and start earning by testing apps.
+                                            {!! __('Anda hampir selesai! Konfirmasi email Anda untuk mengaktifkan<br>akun <strong style="color:#4F46E5;">PlayTest ID</strong> Anda dan mulai menghasilkan dengan menguji aplikasi.') !!}
                                         </p>
                                     </td>
                                 </tr>
@@ -129,13 +128,13 @@
                                                     <!--[if mso]>
                                                     <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ $url }}" style="height:54px;v-text-anchor:middle;width:260px;" arcsize="26%" fillcolor="#4F46E5" stroke="f">
                                                     <w:anchorlock/>
-                                                    <center style="color:#ffffff;font-family:'Segoe UI',sans-serif;font-size:16px;font-weight:700;">Verify My Email</center>
+                                                    <center style="color:#ffffff;font-family:'Segoe UI',sans-serif;font-size:16px;font-weight:700;">{{ __('Verifikasi Email Saya') }}</center>
                                                     </v:roundrect>
                                                     <![endif]-->
                                                     <!--[if !mso]><!-->
                                                     <a href="{{ $url }}" target="_blank" class="email-cta"
                                                         style="display:inline-block; background:linear-gradient(135deg,#4F46E5 0%,#7c3aed 100%); background-color:#4F46E5; color:#ffffff; text-decoration:none; font-size:16px; font-weight:800; padding:17px 44px; border-radius:14px; letter-spacing:0.3px;">
-                                                        &#10003;&nbsp; Verify My Email Address
+                                                        &#10003;&nbsp; {{ __('Verifikasi Alamat Email Saya') }}
                                                     </a>
                                                     <!--<![endif]-->
                                                 </td>
@@ -149,7 +148,7 @@
                                                     <table role="presentation" cellspacing="0" cellpadding="0" border="0">
                                                         <tr>
                                                             <td style="background-color:#eef2ff; border:1px solid #c7d2fe; border-radius:9999px; padding:6px 14px; font-size:12px; font-weight:700; color:#4F46E5;">
-                                                                &#128336;&nbsp; Expires in 60 minutes
+                                                                &#128336;&nbsp; {{ __('Kedaluwarsa dalam 60 menit') }}
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -158,7 +157,7 @@
                                                     <table role="presentation" cellspacing="0" cellpadding="0" border="0">
                                                         <tr>
                                                             <td style="background-color:#eef2ff; border:1px solid #c7d2fe; border-radius:9999px; padding:6px 14px; font-size:12px; font-weight:700; color:#4F46E5;">
-                                                                &#128737;&nbsp; Single-use link
+                                                                &#128737;&nbsp; {{ __('Tautan sekali pakai') }}
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -168,7 +167,7 @@
 
                                         {{-- Section title --}}
                                         <p style="margin:0 0 18px; font-size:13px; font-weight:800; color:#1e1b4b; text-align:center; text-transform:uppercase; letter-spacing:1.2px;">
-                                            What happens next?
+                                            {{ __('Apa yang terjadi selanjutnya?') }}
                                         </p>
 
                                         {{-- Steps --}}
@@ -185,12 +184,12 @@
                                                         </tr>
                                                         <tr>
                                                             <td style="padding-top:10px; font-size:12px; font-weight:800; color:#1e1b4b; text-align:center; letter-spacing:0.2px;">
-                                                                Click Button
+                                                                {{ __('Klik Tombol') }}
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td style="padding-top:2px; font-size:11px; color:#9ca3af; text-align:center;">
-                                                                Confirm it's you
+                                                                {{ __('Konfirmasi itu Anda') }}
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -208,12 +207,12 @@
                                                         </tr>
                                                         <tr>
                                                             <td style="padding-top:10px; font-size:12px; font-weight:800; color:#1e1b4b; text-align:center; letter-spacing:0.2px;">
-                                                                Email Verified
+                                                                {{ __('Email Diverifikasi') }}
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td style="padding-top:2px; font-size:11px; color:#9ca3af; text-align:center;">
-                                                                Account activated
+                                                                {{ __('Akun diaktifkan') }}
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -231,12 +230,12 @@
                                                         </tr>
                                                         <tr>
                                                             <td style="padding-top:10px; font-size:12px; font-weight:800; color:#1e1b4b; text-align:center; letter-spacing:0.2px;">
-                                                                Start Earning
+                                                                {{ __('Mulai Menghasilkan') }}
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td style="padding-top:2px; font-size:11px; color:#9ca3af; text-align:center;">
-                                                                Test &amp; get paid
+                                                                {{ __('Uji & dapatkan bayaran') }}
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -253,8 +252,7 @@
 
                                         {{-- Security note --}}
                                         <p style="margin:0 0 18px; font-size:13px; color:#6b7280; text-align:center; line-height:1.7; font-weight:500;">
-                                            If you didn't create an account, you can safely ignore this email.<br>
-                                            No changes will be made to any account.
+                                            {!! __('Jika Anda tidak membuat akun, Anda dapat mengabaikan email ini dengan aman.<br>Tidak ada perubahan yang akan dilakukan pada akun mana pun.') !!}
                                         </p>
 
                                         {{-- Fallback URL --}}
@@ -262,7 +260,7 @@
                                             <tr>
                                                 <td style="background-color:#f9fafb; border:1px solid #e5e7eb; border-radius:12px; padding:14px 18px;">
                                                     <p style="margin:0 0 6px; font-size:11px; font-weight:700; color:#9ca3af; text-transform:uppercase; letter-spacing:0.8px;">
-                                                        Button not working? Copy this link:
+                                                        {{ __('Tombol tidak berfungsi? Salin tautan ini:') }}
                                                     </p>
                                                     <p style="margin:0; font-size:12px; color:#4F46E5; word-break:break-all; line-height:1.55;">
                                                         <a href="{{ $url }}" style="color:#4F46E5; text-decoration:none;" target="_blank">{{ $url }}</a>
@@ -285,18 +283,17 @@
                                 PlayTest ID
                             </p>
                             <p style="margin:0; font-size:12px; color:#9ca3af; line-height:1.7; font-weight:500;">
-                                You received this because an account was created<br>
-                                with this email address.
+                                {!! __('Anda menerima email ini karena akun dibuat<br>dengan alamat email ini.') !!}
                             </p>
                             <p style="margin:14px 0 0; font-size:12px;">
-                                <a href="{{ config('app.url') }}" style="color:#6b7280; text-decoration:none; margin:0 10px; font-weight:600;">Home</a>
+                                <a href="{{ config('app.url') }}" style="color:#6b7280; text-decoration:none; margin:0 10px; font-weight:600;">{{ __('Beranda') }}</a>
                                 <span style="color:#d1d5db;">&middot;</span>
-                                <a href="{{ config('app.url') }}/privacy" style="color:#6b7280; text-decoration:none; margin:0 10px; font-weight:600;">Privacy</a>
+                                <a href="{{ config('app.url') }}/privacy" style="color:#6b7280; text-decoration:none; margin:0 10px; font-weight:600;">{{ __('Privasi') }}</a>
                                 <span style="color:#d1d5db;">&middot;</span>
-                                <a href="{{ config('app.url') }}/terms" style="color:#6b7280; text-decoration:none; margin:0 10px; font-weight:600;">Terms</a>
+                                <a href="{{ config('app.url') }}/terms" style="color:#6b7280; text-decoration:none; margin:0 10px; font-weight:600;">{{ __('Syarat') }}</a>
                             </p>
                             <p style="margin:14px 0 0; font-size:11px; color:#9ca3af;">
-                                &copy; {{ date('Y') }} PlayTest ID. All rights reserved.
+                                {!! __('&copy; :year PlayTest ID. Hak cipta dilindungi undang-undang.', ['year' => date('Y')]) !!}
                             </p>
                         </td>
                     </tr>
