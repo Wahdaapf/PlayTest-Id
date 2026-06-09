@@ -694,6 +694,15 @@
     .tb-grid-bg, .tb-particles span, .tb-shoot, .tb-waves svg, .tb-scan,
     .tb-stars i, .tb-card, .tb-card-emoji, .tb-stat-pill { animation: none !important; }
   }
+
+  /* ══════════════════════════════════════
+     ADDITIONAL DARK MODE FIXES
+  ══════════════════════════════════════ */
+  .dark kbd {
+    background: rgba(30,41,59,.8) !important;
+    border-color: rgba(71,85,105,.4) !important;
+    color: #94a3b8 !important;
+  }
 </style>
 @endpush
 

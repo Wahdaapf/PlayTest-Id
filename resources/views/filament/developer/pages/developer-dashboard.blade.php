@@ -27,11 +27,13 @@
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+    .dark .dev-stat-card { background: #1e293b; border-color: #334155; }
 
     .dev-stat-card:hover {
       transform: translateY(-1px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
     }
+    .dark .dev-stat-card:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, .4); }
 
     .dev-panel {
       background: #fff;
@@ -40,6 +42,7 @@
       overflow: hidden;
       box-shadow: 0 1px 3px rgba(0, 0, 0, .06);
     }
+    .dark .dev-panel { background: #1e293b; border-color: #334155; }
 
     .dev-panel-header {
       padding: 1rem 1.25rem;
@@ -50,6 +53,7 @@
       flex-wrap: wrap;
       gap: 0.75rem;
     }
+    .dark .dev-panel-header { border-color: #334155; }
 
     .prog-track {
       width: 100%;
@@ -59,6 +63,7 @@
       overflow: hidden;
       margin-top: 12px;
     }
+    .dark .prog-track { background: #334155; }
 
     .prog-fill {
       height: 100%;
@@ -78,23 +83,14 @@
       border-radius: 999px;
     }
 
-    .status-progress {
-      background: #f0fdf4;
-      color: #15803d;
-      border: 1px solid #bbf7d0;
-    }
+    .status-progress { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+    .dark .status-progress { background: rgba(21,128,61,0.15); color: #86efac; border-color: rgba(74,222,128,0.2); }
 
-    .status-pending {
-      background: #fffbeb;
-      color: #b45309;
-      border: 1px solid #fde68a;
-    }
+    .status-pending { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+    .dark .status-pending { background: rgba(180,83,9,0.15); color: #fde047; border-color: rgba(250,204,21,0.2); }
 
-    .status-selesai {
-      background: #faf5ff;
-      color: #7e22ce;
-      border: 1px solid #e9d5ff;
-    }
+    .status-selesai { background: #faf5ff; color: #7e22ce; border: 1px solid #e9d5ff; }
+    .dark .status-selesai { background: rgba(126,34,206,0.15); color: #d8b4fe; border-color: rgba(192,132,252,0.2); }
 
     .app-icon {
       width: 36px;
@@ -108,20 +104,14 @@
       flex-shrink: 0;
     }
 
-    .icon-blue {
-      background: #eff6ff;
-      color: #2563eb;
-    }
-
-    .icon-amber {
-      background: #fffbeb;
-      color: #d97706;
-    }
-
-    .icon-purple {
-      background: #faf5ff;
-      color: #7e22ce;
-    }
+    .icon-blue { background: #eff6ff; color: #2563eb; }
+    .dark .icon-blue { background: rgba(37,99,235,0.2); color: #93c5fd; }
+    
+    .icon-amber { background: #fffbeb; color: #d97706; }
+    .dark .icon-amber { background: rgba(217,119,6,0.2); color: #fcd34d; }
+    
+    .icon-purple { background: #faf5ff; color: #7e22ce; }
+    .dark .icon-purple { background: rgba(126,34,206,0.2); color: #d8b4fe; }
 
     .btn-detail {
       display: inline-flex;
@@ -137,12 +127,10 @@
       cursor: pointer;
       transition: all .15s;
     }
+    .dark .btn-detail { color: #94a3b8; border-color: #475569; }
 
-    .btn-detail:hover {
-      background: #eff6ff;
-      border-color: #bfdbfe;
-      color: #2563eb;
-    }
+    .btn-detail:hover { background: #eff6ff; border-color: #bfdbfe; color: #2563eb; }
+    .dark .btn-detail:hover { background: rgba(37,99,235,0.15); border-color: #3b82f6; color: #93c5fd; }
 
     .day-cell {
       border-radius: 5px;
@@ -153,35 +141,23 @@
       height: 32px;
     }
 
-    .day-done {
-      background: #dbeafe;
-    }
+    .day-done { background: #dbeafe; }
+    .dark .day-done { background: rgba(37,99,235,0.2); }
+    
+    .day-today { background: #2563eb; }
+    
+    .day-future { background: #f1f5f9; }
+    .dark .day-future { background: #334155; }
 
-    .day-today {
-      background: #2563eb;
-    }
+    .day-num { font-size: 8px; font-weight: 600; }
 
-    .day-future {
-      background: #f1f5f9;
-    }
+    .day-done .day-num { color: #1d4ed8; }
+    .dark .day-done .day-num { color: #93c5fd; }
 
-    .day-num {
-      font-size: 8px;
-      font-weight: 600;
-    }
+    .day-today .day-num { color: #fff; font-weight: 800; }
 
-    .day-done .day-num {
-      color: #1d4ed8;
-    }
-
-    .day-today .day-num {
-      color: #fff;
-      font-weight: 800;
-    }
-
-    .day-future .day-num {
-      color: #94a3b8;
-    }
+    .day-future .day-num { color: #94a3b8; }
+    .dark .day-future .day-num { color: #64748b; }
 
     .dev-sort-btn {
       display: inline-flex;
@@ -200,24 +176,15 @@
       font-family: 'Inter', sans-serif;
       white-space: nowrap;
     }
+    .dev-sort-btn:hover { color: #2563eb; }
+    .dark .dev-sort-btn:hover { color: #60a5fa; }
+    
+    .dev-sort-btn.active { color: #2563eb; }
+    .dark .dev-sort-btn.active { color: #60a5fa; }
 
-    .dev-sort-btn:hover {
-      color: #2563eb;
-    }
+    .dev-sort-icon { font-size: .95rem !important; line-height: 1; }
 
-    .dev-sort-btn.active {
-      color: #2563eb;
-    }
-
-    .dev-sort-icon {
-      font-size: .95rem !important;
-      line-height: 1;
-    }
-
-    .dev-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+    .dev-table { width: 100%; border-collapse: collapse; }
 
     .dev-table th {
       background: #f8fafc;
@@ -231,6 +198,7 @@
       border-bottom: 1px solid #f1f5f9;
       white-space: nowrap;
     }
+    .dark .dev-table th { background: #0f172a; border-color: #334155; }
 
     .dev-table td {
       padding: 0.875rem 1.25rem;
@@ -239,14 +207,12 @@
       color: #475569;
       white-space: nowrap;
     }
+    .dark .dev-table td { border-color: #1e293b; color: #cbd5e1; }
 
-    .tbl-row {
-      transition: background .15s;
-    }
+    .tbl-row { transition: background .15s; }
 
-    .tbl-row:hover td {
-      background: #fafafa;
-    }
+    .tbl-row:hover td { background: #fafafa; }
+    .dark .tbl-row:hover td { background: rgba(255,255,255,0.02); }
 
     .modal-overlay {
       position: fixed;
@@ -335,26 +301,26 @@
     {{-- Welcome Row --}}
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div>
-        <h1 class="text-2xl font-black text-slate-800">{{ __('Selamat datang kembali,') }} <span class="text-brand-gradient">Developer!</span> 👋</h1>
-        <p class="text-slate-500 text-sm mt-1.5">{{ __('Berikut adalah ringkasan pengujian Anda hari ini.') }}</p>
+        <h1 class="text-2xl font-black text-slate-800 dark:text-white">{{ __('Selamat datang kembali,') }} <span class="text-brand-gradient">Developer!</span> 👋</h1>
+        <p class="text-slate-500 dark:text-slate-400 text-sm mt-1.5">{{ __('Berikut adalah ringkasan pengujian Anda hari ini.') }}</p>
       </div>
       <a href="{{ url('developer/misis/create') }}"
-        class="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 text-sm font-bold text-white rounded-xl"
+        class="shrink-0 inline-flex items-center gap-2 px-4 py-2.5 text-sm font-bold text-white rounded-xl transition-transform hover:scale-105"
         style="background:linear-gradient(135deg,#1d4ed8,#2563eb);box-shadow:0 4px 14px rgba(37,99,235,.3);">
         <x-heroicon-o-plus class="w-4 h-4" /> {{ __('Test Case Baru') }}
       </a>
     </div>
 
     {{-- Stat Cards --}}
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-5">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
       <div class="dev-stat-card" style="border-top:4px solid #2563eb;">
         <div class="flex items-start justify-between mb-5">
           <p class="text-slate-400 font-bold uppercase tracking-widest" style="font-size:10.5px;">{{ __('Pengujian Aktif') }}</p>
-          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#eff6ff;">
-            <x-heroicon-o-play-circle class="w-5 h-5 text-blue-600" />
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-50 dark:bg-blue-900/20">
+            <x-heroicon-o-play-circle class="w-5 h-5 text-blue-600 dark:text-blue-400" />
           </div>
         </div>
-        <p class="font-black text-slate-800" style="font-size:48px;line-height:1;">{{ $statAktif }}</p>
+        <p class="font-black text-slate-800 dark:text-white" style="font-size:48px;line-height:1;">{{ $statAktif }}</p>
         <div class="mt-3 flex items-center gap-2">
           <span class="text-green-500 text-xs font-semibold"><x-heroicon-m-arrow-trending-up class="w-3 h-3 inline" /> +1</span>
           <span class="text-slate-400 text-xs">{{ __('dari bulan lalu') }}</span>
@@ -368,11 +334,11 @@
       <div class="dev-stat-card" style="border-top:4px solid #22c55e;">
         <div class="flex items-start justify-between mb-5">
           <p class="text-slate-400 font-bold uppercase tracking-widest" style="font-size:10.5px;">{{ __('Pengujian Selesai') }}</p>
-          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#f0fdf4;">
-            <x-heroicon-o-check-circle class="w-5 h-5 text-green-600" />
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-green-50 dark:bg-green-900/20">
+            <x-heroicon-o-check-circle class="w-5 h-5 text-green-600 dark:text-green-400" />
           </div>
         </div>
-        <p class="font-black text-slate-800" style="font-size:48px;line-height:1;">{{ $statSelesai }}</p>
+        <p class="font-black text-slate-800 dark:text-white" style="font-size:48px;line-height:1;">{{ $statSelesai }}</p>
         <div class="mt-3 flex items-center gap-2">
           <span class="text-green-500 text-xs font-semibold"><x-heroicon-m-check class="w-3 h-3 inline" /> {{ __('Lulus') }}</span>
           <span class="text-slate-400 text-xs">Google Play Console</span>
@@ -386,11 +352,11 @@
       <div class="dev-stat-card" style="border-top:4px solid #a855f7;">
         <div class="flex items-start justify-between mb-5">
           <p class="text-slate-400 font-bold uppercase tracking-widest" style="font-size:10.5px;">{{ __('Total Tester Direkrut') }}</p>
-          <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:#faf5ff;">
-            <x-heroicon-o-user-group class="w-5 h-5 text-purple-600" />
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-purple-50 dark:bg-purple-900/20">
+            <x-heroicon-o-user-group class="w-5 h-5 text-purple-600 dark:text-purple-400" />
           </div>
         </div>
-        <p class="font-black text-slate-800" style="font-size:48px;line-height:1;">{{ $statTester }}</p>
+        <p class="font-black text-slate-800 dark:text-white" style="font-size:48px;line-height:1;">{{ $statTester }}</p>
         <div class="mt-3 flex items-center gap-2">
           <span class="text-purple-500 text-xs font-semibold"><x-heroicon-m-users class="w-3 h-3 inline" /> {{ __('Aktif') }}</span>
           <span class="text-slate-400 text-xs">{{ __('dari seluruh kampanye') }}</span>
@@ -403,28 +369,28 @@
     </div>
 
     {{-- 14-Day Tracker --}}
-    <div class="dev-panel">
+    <div class="dev-panel overflow-x-auto">
       <div class="dev-panel-header">
         <div>
-          <h2 class="text-slate-800 font-bold text-base">{{ __('Pelacak Progres 14 Hari') }}</h2>
-          <p class="text-slate-500 text-xs mt-0.5">{{ __('Pantau keaktifan harian setiap sesi pengujian aktif') }}</p>
+          <h2 class="text-slate-800 dark:text-white font-bold text-base">{{ __('Pelacak Progres 14 Hari') }}</h2>
+          <p class="text-slate-500 dark:text-slate-400 text-xs mt-0.5">{{ __('Pantau keaktifan harian setiap sesi pengujian aktif') }}</p>
         </div>
         <div class="flex items-center gap-4">
-          <span class="flex items-center gap-1.5 text-xs text-slate-500">
-            <span class="inline-block w-2.5 h-2.5 rounded-sm" style="background:#dbeafe;"></span>{{ __('Aktif') }}
+          <span class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+            <span class="inline-block w-2.5 h-2.5 rounded-sm day-done"></span>{{ __('Aktif') }}
           </span>
-          <span class="flex items-center gap-1.5 text-xs text-slate-500">
-            <span class="inline-block w-2.5 h-2.5 rounded-sm" style="background:#2563eb;"></span>{{ __('Hari Ini') }}
+          <span class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+            <span class="inline-block w-2.5 h-2.5 rounded-sm day-today"></span>{{ __('Hari Ini') }}
           </span>
-          <span class="flex items-center gap-1.5 text-xs text-slate-500">
-            <span class="inline-block w-2.5 h-2.5 rounded-sm" style="background:#f1f5f9;"></span>{{ __('Mendatang') }}
+          <span class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
+            <span class="inline-block w-2.5 h-2.5 rounded-sm day-future"></span>{{ __('Mendatang') }}
           </span>
         </div>
       </div>
-      <div class="px-6 py-5 space-y-6">
+      <div class="px-6 py-5 space-y-6 min-w-[700px]">
         @foreach ($kampanyeList as $idx => $k)
         @if ($idx > 0)
-        <hr style="border:none;border-top:1px solid #f1f5f9;">@endif
+        <hr class="border-t border-slate-100 dark:border-slate-800" style="border-bottom:none;border-left:none;border-right:none;">@endif
         <div>
           <div class="flex items-center justify-between mb-3">
             <div class="flex items-center gap-3">
@@ -434,8 +400,8 @@
               <div class="app-icon icon-{{ $k['warna'] }}">{{ $k['inisial'] }}</div>
               @endif
               <div>
-                <p class="text-slate-800 text-sm font-semibold">{{ $k['nama'] }}</p>
-                <p class="text-slate-500" style="font-size:11px;">
+                <p class="text-slate-800 dark:text-white text-sm font-semibold">{{ $k['nama'] }}</p>
+                <p class="text-slate-500 dark:text-slate-400" style="font-size:11px;">
                   {{ $k['versi'] }} &middot;
                   @if($k['status']==='progress') {{ __('Hari ke-:aktif dari :total', ['aktif' => $k['hariAktif'], 'total' => $k['totalHari']]) }}
                   @else {{ __('Menunggu konfirmasi tester') }} @endif
@@ -458,28 +424,27 @@
               } elseif ($k['status']==='selesai' ) { $cls='day-done' ; }
               @endphp
               <div class="day-cell {{ $cls }}"><span class="day-num">{{ $h }}</span></div>
-          @endfor
+            @endfor
+          </div>
         </div>
+        @endforeach
       </div>
-      @endforeach
     </div>
-  </div>
 
   {{-- Recent Applications Table --}}
   <div class="dev-panel">
     <div class="dev-panel-header">
       <div>
-        <h2 class="text-slate-800 font-bold text-base">{{ __('Aplikasi Terbaru') }}</h2>
-        <p class="text-slate-500 text-xs mt-0.5">{{ __('Daftar aplikasi yang sedang atau sudah dalam sesi pengujian') }}</p>
+        <h2 class="text-slate-800 dark:text-white font-bold text-base">{{ __('Aplikasi Terbaru') }}</h2>
+        <p class="text-slate-500 dark:text-slate-400 text-xs mt-0.5">{{ __('Daftar aplikasi yang sedang atau sudah dalam sesi pengujian') }}</p>
       </div>
       <div class="flex items-center gap-2 flex-wrap">
         <div class="relative">
           <x-heroicon-o-calendar-days class="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-          <input type="date" x-model="filterTanggal" class="text-xs rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-200"
+          <input type="date" x-model="filterTanggal" class="text-xs rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-200 dark:focus:ring-blue-900 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300"
             style="padding:7px 12px 7px 30px;background:#f8fafc;border:1px solid #e2e8f0;color:#64748b;width:148px;" />
         </div>
-        <button class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-blue-600 rounded-xl hover:bg-blue-50 transition"
-          style="border:1px solid #bfdbfe;">
+        <button class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-blue-600 dark:text-blue-400 rounded-xl hover:bg-blue-50 dark:hover:bg-blue-900/20 border border-blue-200 dark:border-blue-800 transition">
           {{ __('Lihat Semua') }} <x-heroicon-m-arrow-right class="w-3 h-3" />
         </button>
       </div>
@@ -521,7 +486,7 @@
                 <div class="app-icon icon-{{ $a['warna'] }}">{{ $a['inisial'] }}</div>
                 @endif
                 <div>
-                  <p class="text-slate-800 font-semibold text-sm">{{ $a['nama'] }}</p>
+                  <p class="text-slate-800 dark:text-white font-semibold text-sm">{{ $a['nama'] }}</p>
                   <p class="text-slate-400" style="font-size:11px;">{{ $a['versi'] }}</p>
                 </div>
               </div>
@@ -529,7 +494,7 @@
             <td>
               <div class="flex items-center gap-1.5">
                 <x-heroicon-o-device-phone-mobile class="w-4 h-4 text-green-500" />
-                <span class="text-slate-600 text-xs">Android</span>
+                <span class="text-slate-600 dark:text-slate-400 text-xs">Android</span>
               </div>
             </td>
             <td>
@@ -541,7 +506,7 @@
                     @else<x-heroicon-m-check class="w-2.5 h-2.5" />@endif
                     {{ $a['label'] }}
                   </span>
-                  <span class="text-slate-500 text-xs">{{ $a['tester'] }} {{ __('Tester') }}</span>
+                  <span class="text-slate-500 dark:text-slate-400 text-xs">{{ $a['tester'] }} {{ __('Tester') }}</span>
                 </div>
                 <div class="prog-track mt-0">
                   <div class="prog-fill @if($a['status']==='progress') bg-green-500 @elseif($a['status']==='pending') bg-amber-400 @else bg-purple-500 @endif"
@@ -549,15 +514,15 @@
                 </div>
               </div>
             </td>
-            <td class="text-slate-500" style="font-size:12px;">{{ $a['tanggal'] }}</td>
+            <td class="text-slate-500 dark:text-slate-400" style="font-size:12px;">{{ $a['tanggal'] }}</td>
             <td>
               <button class="btn-detail"><x-heroicon-o-eye class="w-3.5 h-3.5" /> {{ __('Detail') }}</button>
             </td>
           </tr>
           @empty
           <tr>
-            <td colspan="5" class="px-6 py-10 text-center text-slate-400 text-sm">
-              <x-heroicon-o-inbox class="w-8 h-8 mx-auto mb-2 text-slate-200" />
+            <td colspan="5" class="px-6 py-10 text-center text-slate-400 text-sm border-b-0">
+              <x-heroicon-o-inbox class="w-8 h-8 mx-auto mb-2 text-slate-200 dark:text-slate-700" />
               {{ __('Belum ada aplikasi.') }}
             </td>
           </tr>
@@ -565,14 +530,14 @@
         </tbody>
       </table>
     </div>
-    <div class="flex items-center justify-between px-6 py-4" style="border-top:1px solid #f1f5f9;">
-      <p class="text-slate-400 text-xs">{{ __('Menampilkan') }} <strong class="text-slate-600">{{ count($aplikasiList) }}</strong> {{ __('aplikasi') }}</p>
+    <div class="flex items-center justify-between px-6 py-4 border-t border-slate-100 dark:border-slate-800">
+      <p class="text-slate-400 text-xs">{{ __('Menampilkan') }} <strong class="text-slate-600 dark:text-slate-300">{{ count($aplikasiList) }}</strong> {{ __('aplikasi') }}</p>
       <div class="flex items-center gap-1.5">
-        <button class="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400" style="border:1px solid #e2e8f0;" disabled>
+        <button class="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400 border border-slate-200 dark:border-slate-700 dark:hover:bg-slate-800" disabled>
           <x-heroicon-m-chevron-left class="w-3 h-3" />
         </button>
         <button class="w-7 h-7 rounded-lg text-white text-xs font-bold flex items-center justify-center" style="background:#2563eb;">1</button>
-        <button class="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400" style="border:1px solid #e2e8f0;" disabled>
+        <button class="w-7 h-7 rounded-lg flex items-center justify-center text-slate-400 border border-slate-200 dark:border-slate-700 dark:hover:bg-slate-800" disabled>
           <x-heroicon-m-chevron-right class="w-3 h-3" />
         </button>
       </div>

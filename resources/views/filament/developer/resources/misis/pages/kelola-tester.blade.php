@@ -157,6 +157,59 @@
         .mp-empty-icon { width: 56px; height: 56px; background: #f1f5f9; border-radius: 16px; margin: 0 auto 14px; display: flex; align-items: center; justify-content: center; }
 
         [x-cloak] { display: none !important; }
+
+        /* ══ DARK MODE OVERRIDES ══ */
+        .dark .mp-stat, .dark .mp-table-wrap { background: #1e293b; border-color: #334155; }
+        .dark .mp-stat-value { color: #f8fafc !important; }
+        .dark .mp-stat-label, .dark .mp-stat-sub { color: #94a3b8; }
+        .dark .mp-filter-bar { border-color: #334155; }
+        .dark .mp-input, .dark .mp-select { background: #0f172a; border-color: #334155; color: #f8fafc; }
+        .dark .mp-input:focus, .dark .mp-select:focus { background: #1e293b; border-color: #3b82f6; }
+        .dark .mp-tab { color: #94a3b8; }
+        .dark .mp-tab.active { color: #60a5fa; border-bottom-color: #60a5fa; }
+        .dark .mp-tab.inactive:hover { color: #cbd5e1; }
+        .dark .mp-btn-ghost { background: #0f172a; color: #94a3b8; border-color: #334155; }
+        .dark .mp-btn-ghost:hover { background: #334155; color: #f8fafc; }
+        .dark .mp-table thead tr { background: #0f172a; border-color: #334155; }
+        .dark .mp-table td { border-color: #334155; color: #cbd5e1; }
+        .dark .mp-table tbody tr:hover { background: #0f172a; }
+        .dark .mp-sort-btn { color: #94a3b8; }
+        .dark .mp-sort-btn:hover, .dark .mp-sort-btn.active { color: #f8fafc; }
+        .dark .mp-pagi { border-color: #334155; color: #94a3b8; }
+        .dark .mp-pagi-btn { background: #0f172a; border-color: #334155; color: #94a3b8; }
+        .dark .mp-pagi-btn:hover { background: #334155; color: #f8fafc; }
+        .dark .mp-pagi-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+        .dark .mp-empty-icon { background: #0f172a; }
+        
+        .dark .text-slate-900, .dark h1, .dark h3 { color: #f8fafc !important; }
+        .dark .text-slate-800 { color: #e2e8f0 !important; }
+        .dark .text-slate-500 { color: #94a3b8 !important; }
+        .dark p[style*="color:#1e293b"] { color: #f8fafc !important; }
+        .dark p[style*="color:#94a3b8"], .dark span[style*="color:#64748b"] { color: #94a3b8 !important; }
+        .dark div[style*="border-bottom:1px solid #e2e8f0"] { border-color: #334155 !important; }
+        
+        .dark span[style*="background:#f1f5f9"] { background: #334155 !important; color: #cbd5e1 !important; }
+        .dark span[style*="background:#f0fdf4"] { background: rgba(22,163,74,0.2) !important; color: #86efac !important; }
+        .dark span[style*="background:#fffbeb"] { background: rgba(217,119,6,0.2) !important; color: #fcd34d !important; }
+        .dark span[style*="background:#fff1f2"] { background: rgba(225,29,72,0.2) !important; color: #fda4af !important; }
+        
+        .dark .mp-badge-accepted { background: rgba(22,163,74,0.2); color: #86efac; }
+        .dark .mp-badge-progress { background: rgba(202,138,4,0.2); color: #fde047; }
+        .dark .mp-badge-selesai { background: rgba(21,128,61,0.2); color: #86efac; }
+        .dark .mp-badge-pending, .dark .mp-badge-reviewing, .dark .mp-badge-submitted { background: rgba(37,99,235,0.2); color: #93c5fd; }
+        .dark .mp-badge-rejected, .dark .mp-badge-failed { background: rgba(190,18,60,0.2); color: #fda4af; }
+        
+        .dark .mp-action-approve { background: rgba(22,163,74,0.2); border-color: rgba(74,222,128,0.2); color: #86efac; }
+        .dark .mp-action-approve:hover { background: rgba(22,163,74,0.3); }
+        .dark .mp-action-danger { background: rgba(225,29,72,0.2); border-color: rgba(251,113,133,0.2); color: #fda4af; }
+        .dark .mp-action-danger:hover { background: rgba(225,29,72,0.3); }
+
+        /* Responsive additions */
+        @media (max-width: 640px) {
+            .mp-pagi { flex-direction: column; gap: 1rem; justify-content: center; text-align: center; }
+            .mp-filter-bar { flex-direction: column; align-items: stretch; }
+            .mp-search-wrap, .mp-select, .mp-btn-ghost { width: 100%; max-width: 100% !important; }
+        }
     </style>
     @endpush
 

@@ -29,7 +29,7 @@ class ListMisis extends Page
     {
         if (empty($this->link_aplikasi)) {
             \Filament\Notifications\Notification::make()
-                ->title('Link Aplikasi Harus Diisi')
+                ->title(__('Link Aplikasi Harus Diisi'))
                 ->danger()
                 ->send();
             return;
@@ -100,13 +100,26 @@ class ListMisis extends Page
         }
 
         \Filament\Notifications\Notification::make()
-            ->title('Misi Berhasil Dimulai')
-            ->body('Status misi telah diubah menjadi running dan sub-misi tester telah dibuat.')
+            ->title(__('Misi Berhasil Dimulai'))
+            ->body(__('Status misi telah diubah menjadi running dan sub-misi tester telah dibuat.'))
             ->success()
             ->send();
             
         $this->link_aplikasi = null;
         $this->dispatch('close-modal-mulai');
+    }
+
+    public function hapusMisi($id)
+    {
+        $record = Misi::find($id);
+        if (!$record || $record->id_user !== Auth::id()) return;
+
+        $record->delete();
+
+        \Filament\Notifications\Notification::make()
+            ->title(__('Aplikasi Berhasil Dihapus'))
+            ->success()
+            ->send();
     }
 
     public function getViewData(): array

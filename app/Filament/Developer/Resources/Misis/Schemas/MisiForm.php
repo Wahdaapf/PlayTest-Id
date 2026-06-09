@@ -23,6 +23,60 @@ class MisiForm
 {
     public static function configure(Schema $schema): Schema
     {
+        $uploadMisiSchema = [
+            View::make('filament.developer.components.upload-misi')
+                ->schema([
+                    TextInput::make('nama_aplikasi')
+                        ->label(__('Nama Aplikasi'))
+                        ->placeholder(__('Contoh: Aplikasi Kerenku'))
+                        ->required()
+                        ->maxLength(255)
+                        ->columnSpanFull(),
+
+                    FileUpload::make('logo')
+                        ->label(__('Logo Aplikasi'))
+                        ->disk('public')
+                        ->directory('logos')
+                        ->image()
+                        ->imageEditor()
+                        ->circleCropper()
+                        ->required()
+                        ->columnSpanFull(),
+
+                    RichEditor::make('instruksi')
+                        ->label(__('Instruksi untuk Penguji'))
+                        ->placeholder(__('Tuliskan langkah-langkah detail pengujian di sini...'))
+                        ->toolbarButtons([
+                            'bold',
+                            'italic',
+                            'link',
+                            'h2',
+                            'h3',
+                            'bulletList',
+                            'orderedList',
+                            'blockquote',
+                            'undo',
+                            'redo',
+                        ])
+                        ->columnSpanFull(),
+                ])
+                ->columnSpanFull(),
+
+            Hidden::make('link_aplikasi')
+                ->default('-'),
+
+            Hidden::make('kapasitas')
+                ->default(0),
+
+            Hidden::make('point')
+                ->default(0)
+                ->live(),
+        ];
+
+        if ($schema->getOperation() === 'edit') {
+            return $schema->components($uploadMisiSchema);
+        }
+
         return $schema
             ->components([
                 Wizard::make([
@@ -30,68 +84,17 @@ class MisiForm
                     // ══════════════════════════════════════════════
                     //  STEP 1 — Upload Misi
                     // ══════════════════════════════════════════════
-                    Step::make(__('Unggah Misi'))
+                    Step::make(__('Unggah Aplikasi'))
                         ->icon('heroicon-o-document-text')
-                        ->description(__('Lengkapi informasi aplikasi yang ingin ditest'))
-                        ->schema([
-                            Section::make()
-                                ->schema([
-                                    TextInput::make('nama_aplikasi')
-                                        ->label(__('Nama Aplikasi'))
-                                        ->placeholder(__('Contoh: My Awesome App'))
-                                        ->required()
-                                        ->maxLength(255)
-                                        ->columnSpanFull(),
-
-                                    FileUpload::make('logo')
-                                        ->label(__('Logo Aplikasi'))
-                                        ->disk('public')
-                                        ->directory('logos')
-                                        ->image()
-                                        ->imageEditor()
-                                        ->circleCropper()
-                                        ->required()
-                                        ->columnSpanFull(),
-
-                                    Hidden::make('link_aplikasi')
-                                        ->default('-'),
-
-                                    RichEditor::make('instruksi')
-                                        ->label(__('Instruksi untuk Tester'))
-                                        ->placeholder(__('Tuliskan langkah-langkah detail pengetesan di sini...'))
-                                        ->toolbarButtons([
-                                            'bold',
-                                            'italic',
-                                            'link',
-                                            'h2',
-                                            'h3',
-                                            'bulletList',
-                                            'orderedList',
-                                            'blockquote',
-                                            'undo',
-                                            'redo',
-                                        ])
-                                        ->columnSpanFull(),
-
-                                    Hidden::make('kapasitas')
-                                        ->default(0),
-
-                                    Hidden::make('point')
-                                        ->default(0)
-                                        ->live(),
-                                ]),
-                        ]),
+                        ->schema($uploadMisiSchema),
 
                     // ══════════════════════════════════════════════
                     //  STEP 2 — Pilih Package
                     // ══════════════════════════════════════════════
-                    Step::make(__('Pilih Package'))
+                    Step::make(__('Pilih Paket'))
                         ->icon('heroicon-o-squares-2x2')
-                        ->description(__('Pilih paket yang sesuai kebutuhanmu'))
                         ->hiddenOn('edit')
                         ->schema([
-                            Section::make()
-                                ->schema([
                                     Hidden::make('id_paket')
                                         ->required()
                                         ->live()
@@ -104,39 +107,27 @@ class MisiForm
 
                                     View::make('filament.developer.components.package-selection')
                                         ->columnSpanFull(),
-                                ]),
                         ]),
 
                     // ══════════════════════════════════════════════
                     //  STEP 3 — Pembayaran
                     // ══════════════════════════════════════════════
-                    Step::make(__('Pembayaran'))
+                    Step::make(__('Lakukan Pembayaran'))
                         ->icon('heroicon-o-banknotes')
-                        ->description(__('Lakukan pembayaran untuk mengaktifkan misi'))
                         ->hiddenOn('edit')
                         ->schema([
                             Grid::make(3)
                                 ->schema([
 
                                     // ── Kolom Kiri: Info Duitku ──────────
-                                    Section::make(__('Metode Pembayaran'))
-                                        ->icon('heroicon-o-credit-card')
-                                        ->description(__('Pilih metode pembayaran yang akan digunakan. Anda akan diarahkan ke halaman pembayaran Duitku setelah menekan tombol submit.'))
-                                        ->schema([
-                                            Hidden::make('payment_method')
-                                                ->required(),
-                                            View::make('filament.developer.components.payment-methods')
-                                                ->columnSpanFull(),
-                                        ])
+                                    Hidden::make('payment_method')
+                                        ->required(),
+
+                                    View::make('filament.developer.components.payment-methods')
                                         ->columnSpan(2),
 
                                     // ── Kolom Kanan: Ringkasan ──────────────────
-                                    Section::make(__('Ringkasan'))
-                                        ->icon('heroicon-o-receipt-percent')
-                                        ->schema([
-                                            View::make('filament.developer.components.payment-summary')
-                                                ->columnSpanFull(),
-                                        ])
+                                    View::make('filament.developer.components.payment-summary')
                                         ->columnSpan(1),
                                 ]),
                         ]),

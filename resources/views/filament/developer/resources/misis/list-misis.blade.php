@@ -128,6 +128,8 @@
     .mk-btn-users:hover   { background: #dcfce7; }
     .mk-btn-start   { background: #eff6ff; border-color: #bfdbfe; color: #2563eb; }
     .mk-btn-start:hover   { background: #dbeafe; }
+    .mk-btn-delete  { background: #fef2f2; border-color: #fecaca; color: #dc2626; }
+    .mk-btn-delete:hover  { background: #fee2f2; }
 
     /* ══ SORT HEADER BUTTON ══ */
     .mk-sort-btn { display: inline-flex; align-items: center; gap: 3px; background: none; border: none; cursor: pointer; font-size: .72rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: .07em; padding: 0; transition: color 0.2s; font-family: 'Inter', sans-serif; white-space: nowrap; }
@@ -174,6 +176,12 @@
         .mk-modal-footer button { width: 100%; justify-content: center; }
         .mk-modal-footer .flex { flex-direction: column; width: 100%; }
     }
+
+    /* ══ DARK MODE OVERRIDES ══ */
+    .dark .mk-modal-box { background: #1e293b !important; }
+    .dark .mk-modal-header { border-bottom-color: #334155 !important; }
+    .dark .mk-modal-footer { background: transparent !important; border-top-color: #334155 !important; }
+    .dark .mk-modal-backdrop { background: rgba(0,0,0,0.75) !important; }
 </style>
 @endpush
 
@@ -433,6 +441,10 @@
                     <span class="material-symbols-outlined text-[1rem]">play_circle</span>
                 </button>
                 @endif
+
+                <button @click="bukaDeleteKonfirmasi({{ $k['id'] }}, '{{ addslashes($k['nama']) }}')" class="mk-action-btn mk-btn-delete" title="{{ __('Hapus Aplikasi') }}">
+                    <span class="material-symbols-outlined text-[1rem]">delete</span>
+                </button>
             </div>
 
         </div>
@@ -604,6 +616,9 @@
                 <span class="material-symbols-outlined text-[1rem]">play_circle</span>
             </button>
             @endif
+            <button @click="bukaDeleteKonfirmasi({{ $k['id'] }}, '{{ addslashes($k['nama']) }}')" class="mk-action-btn mk-btn-delete" title="{{ __('Hapus Aplikasi') }}">
+                <span class="material-symbols-outlined text-[1rem]">delete</span>
+            </button>
         </div>
 
     </div>
@@ -803,6 +818,49 @@
     </div>
 </div>{{-- end modal mulai --}}
 
+{{-- ══════════════════════════════════════════════════════
+     MODAL HAPUS KAMPANYE/MISI
+══════════════════════════════════════════════════════ --}}
+<div class="mk-modal-overlay" x-show="deleteK.terbuka" x-cloak style="display:none;"
+    x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+    @click.self="deleteK.terbuka=false">
+    <div class="mk-modal-box dark:bg-slate-800 dark:border dark:border-slate-700"
+        x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-90 translate-y-6" x-transition:enter-end="opacity-100 scale-100 translate-y-0">
+        <div class="mk-modal-header dark:border-slate-700">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-[1.5rem] text-red-500">delete_forever</span>
+                <p class="text-sm font-bold mp-sora text-slate-800 dark:text-white">{{ __('Hapus Aplikasi') }}</p>
+            </div>
+            <button @click="deleteK.terbuka=false" class="w-8 h-8 rounded-lg flex items-center justify-center transition-colors bg-slate-50 hover:bg-slate-200 border border-slate-200 dark:bg-slate-700 dark:border-slate-600 dark:hover:bg-slate-600">
+                <span class="material-symbols-outlined text-[1rem] text-slate-500 dark:text-slate-400">close</span>
+            </button>
+        </div>
+        <div class="mk-modal-body">
+            <div class="p-4 rounded-xl border border-red-200 dark:border-red-900/50 mb-4 bg-red-50 dark:bg-red-900/20">
+                <div class="flex items-start gap-3">
+                    <span class="material-symbols-outlined text-[1.3rem] text-red-500 mt-0.5">warning</span>
+                    <div>
+                        <p class="text-sm font-semibold text-red-700 dark:text-red-400 mb-1">{{ __('Tindakan ini tidak dapat dibatalkan!') }}</p>
+                        <p class="text-xs text-red-600 dark:text-red-300 leading-relaxed">{{ __('Anda akan menghapus aplikasi') }} <strong x-text="'«' + deleteK.nama + '»'"></strong>. {{ __('Semua data yang terkait akan ikut terhapus secara permanen.') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-2">
+                <label class="text-sm font-semibold text-slate-800 dark:text-slate-200">{{ __('Ketik nama aplikasi untuk mengonfirmasi:') }}</label>
+                <input type="text" class="mp-input w-full dark:bg-slate-900 dark:border-slate-700 dark:text-white dark:focus:border-blue-500" :placeholder="deleteK.nama" x-model="deleteK.konfTeks">
+            </div>
+        </div>
+        <div class="mk-modal-footer flex-col sm:flex-row dark:border-slate-700 dark:bg-slate-900/50">
+            <button @click="deleteK.terbuka=false" class="mp-btn mp-btn-ghost w-full sm:w-auto dark:text-slate-300 dark:border-slate-600 dark:bg-slate-800 dark:hover:bg-slate-700">{{ __('Batal') }}</button>
+            <button class="mp-btn mp-btn-primary w-full sm:w-auto bg-red-500 hover:bg-red-600 text-white disabled:opacity-50 disabled:cursor-not-allowed dark:bg-red-600 dark:hover:bg-red-700 border-none" :disabled="deleteK.konfTeks !== deleteK.nama" @click="konfirmasiDelete()">
+                <span class="material-symbols-outlined text-[1.1rem]">delete_forever</span>
+                {{ __('Ya, Hapus Sekarang') }}
+            </button>
+        </div>
+    </div>
+</div>{{-- end modal delete --}}
+
 </div>{{-- end Alpine root --}}
 
 @push('scripts')
@@ -824,6 +882,8 @@ function listMisisApp() {
         
         modalMulaiTerbuka: false,
         idMisiMulai: null,
+        
+        deleteK: { terbuka: false, id: null, nama: '', konfTeks: '' },
 
         init() {
             let el = document.getElementById('kampanye-data');
@@ -858,6 +918,15 @@ function listMisisApp() {
             if (this.idMisiMulai) {
                 this.$wire.mulaiMisi(this.idMisiMulai);
             }
+        },
+
+        bukaDeleteKonfirmasi(id, nama) {
+            this.deleteK = { terbuka: true, id, nama, konfTeks: '' };
+        },
+        konfirmasiDelete() {
+            if (this.deleteK.konfTeks !== this.deleteK.nama) return;
+            this.$wire.hapusMisi(this.deleteK.id);
+            this.deleteK.terbuka = false;
         },
 
         tampilKard(status, nama) {

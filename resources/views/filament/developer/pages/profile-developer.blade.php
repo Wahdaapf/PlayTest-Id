@@ -232,6 +232,14 @@
   /* Counter target (animated by JS) */
   .prof-counter { display: inline-block; }
 
+  /* ====== Dark Mode Overrides ====== */
+  .dark .fi-main { background-color: transparent !important; }
+  .dark .prof-card { background-color: #1e293b !important; border-color: #334155 !important; }
+  .dark .prof-card > div.border-b { border-color: #334155 !important; }
+  .dark .prof-card h2 { color: #f8fafc !important; }
+  .dark .prof-card p.text-slate-400 { color: #94a3b8 !important; }
+  .dark .prof-card .absolute.inset-0[style*="background"] { opacity: 0.1 !important; }
+
   @media (prefers-reduced-motion: reduce) {
     .prof-hero, .prof-blob, .prof-blob-rev, .prof-status-dot,
     .prof-btn-save, .prof-divider-anim, .prof-aurora, .prof-conic, .prof-conic-2,
