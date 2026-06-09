@@ -15,6 +15,7 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Schemas\Schema;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Textarea;
 
 class MisiSaya extends Page implements HasForms
 {
@@ -56,6 +57,13 @@ class MisiSaya extends Page implements HasForms
                     ->directory('task-screenshots')
                     ->imageEditor()
                     ->helperText(__('Upload screenshot bukti task di sini (maks. 10MB)')),
+
+                Textarea::make('catatan_tester')
+                    ->label(__('Catatan / Feedback (Opsional)'))
+                    ->placeholder(__('Tuliskan bug yang ditemukan, saran UI/UX, atau pengalaman menggunakan aplikasi...'))
+                    ->rows(4)
+                    ->maxLength(1000)
+                    ->helperText(__('Catatan ini akan membantu developer meningkatkan kualitas aplikasinya.')),
             ])
             ->statePath('data');
     }
@@ -245,9 +253,11 @@ class MisiSaya extends Page implements HasForms
 
         // Update record
         $currentSub->update([
-            'image' => $path,
-            'desc' => 'Daily Task Submission',
-            'status' => 'pending',
+            'image'          => $path,
+            'desc'           => 'Daily Task Submission',
+            'catatan_tester' => $data['catatan_tester'] ?? null,
+            'alasan_tolak'   => null,
+            'status'         => 'pending',
         ]);
 
         Notification::make()

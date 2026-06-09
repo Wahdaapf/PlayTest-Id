@@ -5,28 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class MisiSub extends Model
+class AiReport extends Model
 {
-    protected $table = 'misi_sub';
+    protected $table = 'ai_reports';
 
     protected $fillable = [
         'id_misi',
-        'id_user',
         'hari_ke',
-        'image',
-        'desc',
-        'catatan_tester',
-        'alasan_tolak',
-        'status',
+        'result',
+        'feedback_count',
     ];
 
     public function misi(): BelongsTo
     {
         return $this->belongsTo(Misi::class, 'id_misi');
-    }
-
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class, 'id_user');
     }
 }
