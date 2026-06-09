@@ -196,15 +196,21 @@ class KelolaTester extends Page
 
             \Filament\Actions\Action::make('input_link')
                 ->label(__('Input Link Aplikasi'))
-                ->icon('heroicon-o-link')
+                ->icon('heroicon-o-play')
                 ->color('success')
                 ->visible(fn () => in_array($this->record->status, ['open', 'closed']))
+                ->modalHeading(__('Mulai Pengujian'))
+                ->modalDescription(__('Masukkan URL aplikasi Anda (seperti Google Play Store) di bawah ini. Setelah Anda memulai, kami akan mengirim email pemberitahuan ke semua tester yang telah disetujui agar mereka segera mendownload dan menguji aplikasi Anda selama 14 hari.'))
+                ->modalSubmitActionLabel(__('Mulai Misi Sekarang'))
+                ->modalIcon('heroicon-o-rocket-launch')
                 ->form([
                     \Filament\Forms\Components\TextInput::make('link_aplikasi')
                         ->label(__('Link Aplikasi (Misal: Google Play URL)'))
+                        ->placeholder('https://play.google.com/store/apps/details?id=com.example.app')
                         ->required()
                         ->url()
-                        ->default($this->record->link_aplikasi),
+                        ->default($this->record->link_aplikasi)
+                        ->helperText(__('Link ini akan dikirimkan dan dilihat oleh seluruh tester aktif Anda.')),
                 ])
                 ->action(function (array $data) {
                     if ($this->record->paket && $this->record->paket->trusted_badge) {
