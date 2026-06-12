@@ -364,7 +364,7 @@
                         </thead>
                         <tbody>
                             @foreach($stats['testerList'] as $idx => $t)
-                                <tr data-id="{{ $t['id'] }}" 
+                                <tr data-id="{{ $t['id_misi_anggota'] }}"
                                     data-nama="{{ strtolower($t['nama']) }}" 
                                     data-status="{{ $t['raw_status'] }}" 
                                     data-tanggal="{{ \Carbon\Carbon::parse($t['tanggal'])->timestamp }}"
@@ -408,11 +408,11 @@
                                     <td class="text-center">
                                         <div class="flex items-center justify-center gap-2">
                                             @if(in_array($t['raw_status'], ['pending', 'reviewing']))
-                                                <button class="mp-action-btn mp-action-approve" title="{{ __('Terima') }}" wire:click="terimaTester({{ $t['id'] }})" wire:loading.attr="disabled">
+                                                <button class="mp-action-btn mp-action-approve" title="{{ __('Terima') }}" wire:click="terimaTester({{ $t['id_misi_anggota'] }})" wire:loading.attr="disabled">
                                                     <span class="material-symbols-outlined text-[1.1rem]">check_circle</span>
                                                     <div class="mp-tooltip">{{ __('Terima Tester') }}</div>
                                                 </button>
-                                                <button class="mp-action-btn mp-action-danger" title="{{ __('Tolak') }}" wire:click="tolakTester({{ $t['id'] }})" wire:loading.attr="disabled" wire:confirm="{{ __('Yakin ingin menolak tester ini?') }}">
+                                                <button class="mp-action-btn mp-action-danger" title="{{ __('Tolak') }}" wire:click="tolakTester({{ $t['id_misi_anggota'] }})" wire:loading.attr="disabled" wire:confirm="{{ __('Yakin ingin menolak tester ini?') }}">
                                                     <span class="material-symbols-outlined text-[1.1rem]">cancel</span>
                                                     <div class="mp-tooltip">{{ __('Tolak Tester') }}</div>
                                                 </button>
