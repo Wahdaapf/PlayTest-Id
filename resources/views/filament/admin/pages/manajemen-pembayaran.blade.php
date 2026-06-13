@@ -388,15 +388,26 @@
         }
 
         .tk-btn-export {
-            background: #0f172a;
+            background: linear-gradient(135deg, #10b981, #059669);
             color: #fff;
-            border: 1px solid #0f172a;
+            border: none;
         }
 
         .tk-btn-export:hover {
-            background: #1e293b;
+            background: linear-gradient(135deg, #059669, #047857);
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+        }
+
+        .dark .tk-btn-export {
+            background: linear-gradient(135deg, #34d399, #10b981) !important;
+            color: #064e3b !important;
+            border: none !important;
+        }
+
+        .dark .tk-btn-export:hover {
+            background: linear-gradient(135deg, #6ee7b7, #34d399) !important;
+            box-shadow: 0 4px 12px rgba(52, 211, 153, 0.35) !important;
         }
 
         .tk-btn:disabled {

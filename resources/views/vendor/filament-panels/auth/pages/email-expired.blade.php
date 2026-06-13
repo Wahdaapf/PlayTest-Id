@@ -692,7 +692,7 @@
             <div class="verify-mobile-header-logo">
                 <img src="{{ asset('logo.png') }}" alt="PlayTest ID" style="height: 2.5rem; width: auto; object-fit: contain;" />
             </div>
-            <p class="verify-mobile-header-tagline">{{ __('Lulus Closed Testing Lebih Cepat') }}</p>
+            <p class="verify-mobile-header-tagline">{{ __('Lulus Pengujian Tertutup Lebih Cepat') }}</p>
         </div>
 
         {{-- ======================================================= --}}

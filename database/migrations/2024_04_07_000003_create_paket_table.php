@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->integer('point')->default(0);
             $table->boolean('aktif')->default(true);
             $table->boolean('trusted_badge')->default(false);
+            $table->boolean('ai_report')->default(false);
             $table->timestamps();
         });
     }

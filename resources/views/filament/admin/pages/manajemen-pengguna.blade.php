@@ -264,6 +264,29 @@
             transform: translateY(-1px);
         }
 
+        .mp-btn-purple {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            color: #fff;
+            border: none;
+        }
+
+        .mp-btn-purple:hover {
+            background: linear-gradient(135deg, #7c3aed, #5b21b6);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.35);
+        }
+
+        .dark .mp-btn-purple {
+            background: linear-gradient(135deg, #a78bfa, #8b5cf6) !important;
+            color: #4c1d95 !important;
+            border: none !important;
+        }
+
+        .dark .mp-btn-purple:hover {
+            background: linear-gradient(135deg, #c4b5fd, #a78bfa) !important;
+            box-shadow: 0 4px 12px rgba(167, 139, 250, 0.35) !important;
+        }
+
         .mp-btn-ghost {
             background: #f1f5f9;
             color: #475569;
@@ -706,7 +729,7 @@
                 <h1 class="mp-sora text-xl font-bold text-slate-900">{{ __('Manajemen Pengguna') }}</h1>
                 <p class="text-sm text-slate-500 mt-0.5">{{ __('Kelola semua Developer dan Tester yang terdaftar di platform') }}</p>
             </div>
-            <a href="{{ route('admin.export.pengguna') }}" class="mp-btn mp-btn-primary w-full sm:w-auto justify-center">
+            <a href="{{ route('admin.export.pengguna') }}" class="mp-btn mp-btn-purple w-full sm:w-auto justify-center">
                 <span class="material-symbols-outlined text-[1.1rem]">download</span>
                 {{ __('Ekspor CSV') }}
             </a>

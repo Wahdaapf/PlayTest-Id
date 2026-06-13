@@ -360,6 +360,22 @@
             color: #94a3b8;
             margin-top: 1px;
         }
+
+        .adm-export-icon-purple {
+            background: #f5f3ff;
+            color: #8b5cf6;
+        }
+
+        .adm-export-badge-purple {
+            background: #f5f3ff;
+            color: #8b5cf6;
+        }
+
+        .dark .adm-export-icon-purple,
+        .dark .adm-export-badge-purple {
+            background: rgba(139, 92, 246, 0.2) !important;
+            color: #a78bfa !important;
+        }
     </style>
     @endpush
 
@@ -410,8 +426,8 @@
 
                         {{-- Export Pengguna CSV --}}
                         <a href="{{ route('admin.export.pengguna') }}" class="adm-export-item" @click="openExport=false" id="export-pengguna">
-                            <div class="adm-export-icon" style="background:#eff6ff;">
-                                <svg style="width:15px;height:15px;color:#2563eb;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                            <div class="adm-export-icon adm-export-icon-purple">
+                                <svg style="width:15px;height:15px;color:inherit;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                     <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
                                     <circle cx="9" cy="7" r="4" />
                                     <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
@@ -421,7 +437,7 @@
                                 <div class="adm-export-item-label">{{ __('Ekspor Pengguna') }}</div>
                                 <div class="adm-export-item-sub">{{ __('Semua pengguna — .csv') }}</div>
                             </div>
-                            <span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:9999px;background:#eff6ff;color:#2563eb;">CSV</span>
+                            <span class="adm-export-badge-purple" style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:9999px;">CSV</span>
                         </a>
 
                         {{-- Export Kampanye CSV --}}

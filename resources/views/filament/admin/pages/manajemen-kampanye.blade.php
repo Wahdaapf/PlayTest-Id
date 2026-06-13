@@ -74,6 +74,10 @@
     .mp-btn:active { transform: scale(0.95); }
     .mp-btn-primary { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #fff; }
     .mp-btn-primary:hover { box-shadow: 0 6px 16px rgba(37,99,235,0.35); transform: translateY(-1px); }
+    .mp-btn-yellow { background: linear-gradient(135deg, #eab308, #ca8a04); color: #fff; }
+    .mp-btn-yellow:hover { box-shadow: 0 6px 16px rgba(234,179,8,0.35); transform: translateY(-1px); }
+    .dark .mp-btn-yellow { background: linear-gradient(135deg, #facc15, #eab308); color: #0f172a; }
+    .dark .mp-btn-yellow:hover { box-shadow: 0 6px 16px rgba(250,204,21,0.25); transform: translateY(-1px); }
     .mp-btn-ghost { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
     .mp-btn-ghost:hover { background: #e2e8f0; color: #1e293b; }
 
@@ -215,7 +219,7 @@
             </button>
         </div>
         {{-- Export --}}
-        <a href="{{ route('admin.export.kampanye') }}" class="mp-btn mp-btn-primary w-full sm:w-auto justify-center">
+        <a href="{{ route('admin.export.kampanye') }}" class="mp-btn mp-btn-yellow w-full sm:w-auto justify-center">
             <span class="material-symbols-outlined text-[1.1rem]">download</span>
             {{ __('Ekspor CSV') }}
         </a>

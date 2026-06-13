@@ -381,15 +381,15 @@
         }
 
         .mw-btn-export {
-            background: #f0fdf4;
-            color: #10b981;
-            border: 1px solid #10b981;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            border: none;
         }
 
         .mw-btn-export:hover {
-            background: #dcfce7;
+            background: linear-gradient(135deg, #059669, #047857);
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
         }
 
         .mw-btn:disabled {
@@ -1145,14 +1145,14 @@
         }
 
         .dark .mw-btn-export {
-            background: #064e3b !important;
-            border-color: #059669 !important;
-            color: #34d399 !important;
+            background: linear-gradient(135deg, #34d399, #10b981) !important;
+            color: #064e3b !important;
+            border: none !important;
         }
 
         .dark .mw-btn-export:hover {
-            background: #065f46 !important;
-            color: #6ee7b7 !important;
+            background: linear-gradient(135deg, #6ee7b7, #34d399) !important;
+            box-shadow: 0 4px 12px rgba(52, 211, 153, 0.35) !important;
         }
 
         .dark .mw-detail-section {

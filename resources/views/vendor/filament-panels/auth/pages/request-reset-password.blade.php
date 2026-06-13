@@ -810,7 +810,7 @@
             <div class="fp-mobile-header-logo">
                 <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-10 w-auto object-contain" />
             </div>
-            <p class="fp-mobile-header-tagline">{{ __('Lulus Closed Testing Lebih Cepat') }}</p>
+            <p class="fp-mobile-header-tagline">{{ __('Lulus Pengujian Tertutup Lebih Cepat') }}</p>
         </div>
 
         {{-- ======================================================= --}}

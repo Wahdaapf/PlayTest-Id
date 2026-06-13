@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="id" class="scroll-smooth">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PlayTest ID – Closed Testing Partner for Indonesian Developers & Testers</title>
+  <title>{{ __('PlayTest ID – Mitra Pengujian Tertutup untuk Developer & Tester') }}</title>
   <link rel="icon" href="{{ asset('logoheader.png') }}" type="image/png" />
 
   <!-- ─── Google Fonts: Inter ─── -->
@@ -481,19 +481,19 @@
         <!-- Badge -->
         <div class="inline-flex items-center gap-2 bg-white/10 border border-white/25 text-white text-xs font-semibold px-4 py-2 rounded-full">
           <span class="w-2 h-2 bg-green-400 rounded-full animate-pulseDot"></span>
-          {{ __("Platform Closed Testing #1 di Indonesia") }}
+          {{ __("Platform Pengujian Tertutup #1") }}
         </div>
 
         <!-- Headline -->
         <h1 class="text-4xl sm:text-5xl lg:text-5xl font-black leading-tight tracking-tight">
           {{ __('Lulus Uji Coba 14 Hari') }}<br />
-          <span class="text-brand-200">{{ __('Closed Testing') }}</span><br />
+          <span class="text-brand-200">{{ __('Pengujian Tertutup') }}</span><br />
           {{ __('di Google Play Tanpa Ribet') }}
         </h1>
 
         <!-- Sub-headline -->
         <p class="text-lg text-blue-100 leading-relaxed max-w-lg">
-          {{ __('PlayTest ID adalah platform kolaborasi antara') }} <strong class="text-white">Developers</strong> {{ __('yang membutuhkan tester aktif dan') }} <strong class="text-white">Testers</strong> {{ __('yang ingin berkontribusi sambil belajar — dibangun di atas konsep') }} <em>{{ __('Project Based Learning') }}</em>.
+          {{ __('PlayTest ID adalah platform kolaborasi antara') }} <strong class="text-white">Developer</strong> {{ __('yang membutuhkan tester aktif dan') }} <strong class="text-white">Tester</strong> {{ __('yang ingin berkontribusi sambil belajar — dibangun di atas konsep') }} <em>{{ __('Pembelajaran Berbasis Proyek') }}</em>.
         </p>
 
         <!-- Dual CTA -->
@@ -535,7 +535,7 @@
           <div class="flex items-center justify-between mb-5">
             <div>
               <p class="text-xs text-blue-200 font-medium uppercase tracking-widest">{{ __('Kampanye Aktif') }}</p>
-              <p class="text-lg font-bold mt-0.5">{{ __('MyApp – Closed Testing') }}</p>
+              <p class="text-lg font-bold mt-0.5">{{ __('AplikasiKu – Pengujian Tertutup') }}</p>
             </div>
             <div class="w-10 h-10 bg-green-400/20 rounded-xl flex items-center justify-center">
               <i class="fa-solid fa-circle-check text-green-400 text-lg"></i>
@@ -578,16 +578,16 @@
             <p class="text-xs text-blue-100 font-semibold uppercase tracking-widest mb-3">{{ __('Aktivitas Harian') }}</p>
             <div class="flex items-end gap-1.5 h-14">
               <!-- 14 bar mini chart – all active -->
-              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:60%;" title="Day 1"></div>
-              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:80%;" title="Day 2"></div>
-              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:55%;" title="Day 3"></div>
-              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:90%;" title="Day 4"></div>
-              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:70%;" title="Day 5"></div>
-              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:85%;" title="Day 6"></div>
-              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:65%;" title="Day 7"></div>
-              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:75%;" title="Day 8"></div>
-              <div class="flex-1 bg-white/50   rounded-t-sm" style="height:100%;" title="Day 9 – Today"></div>
-              <div class="flex-1 bg-white/20   rounded-t-sm" style="height:30%;" title="Day 10 – Upcoming"></div>
+              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:60%;" title="Hari 1"></div>
+              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:80%;" title="Hari 2"></div>
+              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:55%;" title="Hari 3"></div>
+              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:90%;" title="Hari 4"></div>
+              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:70%;" title="Hari 5"></div>
+              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:85%;" title="Hari 6"></div>
+              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:65%;" title="Hari 7"></div>
+              <div class="flex-1 bg-green-400/60 rounded-t-sm" style="height:75%;" title="Hari 8"></div>
+              <div class="flex-1 bg-white/50   rounded-t-sm" style="height:100%;" title="Hari 9 – Hari Ini"></div>
+              <div class="flex-1 bg-white/20   rounded-t-sm" style="height:30%;" title="Hari 10 – Mendatang"></div>
               <div class="flex-1 bg-white/20   rounded-t-sm" style="height:20%;"></div>
               <div class="flex-1 bg-white/20   rounded-t-sm" style="height:20%;"></div>
               <div class="flex-1 bg-white/20   rounded-t-sm" style="height:20%;"></div>
@@ -620,7 +620,7 @@
       <div class="text-center mb-14 reveal">
         <span class="text-brand-600 font-semibold text-sm uppercase tracking-widest">{{ __('Cara Kerja') }}</span>
         <h2 class="text-3xl sm:text-4xl font-black text-slate-800 dark:text-white mt-2">{{ __('Tiga Langkah Mudah') }}</h2>
-        <p class="text-slate-500 dark:text-slate-400 mt-3 max-w-xl mx-auto">{{ __('Proses yang sederhana, transparan, dan terpantau sepenuhnya untuk memastikan aplikasi Anda lulus closed testing dengan sukses.') }}</p>
+        <p class="text-slate-500 dark:text-slate-400 mt-3 max-w-xl mx-auto">{{ __('Proses yang sederhana, transparan, dan terpantau sepenuhnya untuk memastikan aplikasi Anda lulus pengujian tertutup dengan sukses.') }}</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -632,7 +632,7 @@
             <i class="fa-solid fa-upload text-brand-600 dark:text-brand-400 text-2xl"></i>
           </div>
           <h3 class="font-bold text-lg text-slate-800 dark:text-white mb-2">{{ __('Daftar & Unggah Aplikasi') }}</h3>
-          <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Developer mendaftar, memilih paket, dan mengirimkan tautan aplikasi Google Play untuk closed testing.') }}</p>
+          <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Developer mendaftar, memilih paket, dan mengirimkan tautan aplikasi Google Play untuk pengujian tertutup.') }}</p>
         </div>
 
         <!-- Step 2 -->
@@ -642,7 +642,7 @@
             <i class="fa-solid fa-users text-green-600 dark:text-green-400 text-2xl"></i>
           </div>
           <h3 class="font-bold text-lg text-slate-800 dark:text-white mb-2">{{ __('20 Tester Bergabung') }}</h3>
-          <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Our platform automatically connects 20 verified active testers to your app\'s testing session.') }}</p>
+          <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Platform kami secara otomatis menghubungkan 20 tester aktif yang terverifikasi ke sesi pengujian aplikasi Anda.') }}</p>
         </div>
 
         <!-- Step 3 -->
@@ -703,7 +703,7 @@
               <i class="fa-solid fa-calendar-check text-green-600 dark:text-green-400 text-xl"></i>
             </div>
             <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Validasi 14 Hari Otomatis') }}</h4>
-            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('A real-time dashboard monitors each tester\'s activity for 14 consecutive days as required by Google Play Console.') }}</p>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Dasbor real-time memantau aktivitas setiap tester selama 14 hari berturut-turut sesuai persyaratan Google Play Console.') }}</p>
           </div>
 
           <!-- Benefit 3 -->
@@ -712,7 +712,7 @@
               <i class="fa-solid fa-shield-halved text-red-500 dark:text-red-400 text-xl"></i>
             </div>
             <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Hindari Penolakan Google') }}</h4>
-            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Our structured process ensures all of Google\'s technical requirements are met so your app won\'t be rejected at launch.') }}</p>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Proses terstruktur kami memastikan semua persyaratan teknis Google terpenuhi sehingga aplikasi Anda tidak akan ditolak saat peluncuran.') }}</p>
           </div>
 
         </div>
@@ -727,7 +727,7 @@
               <i class="fa-solid fa-star text-yellow-500 dark:text-yellow-400 text-xl"></i>
             </div>
             <h4 class="font-bold text-slate-800 dark:text-white mb-2">{{ __('Akses Awal Aplikasi') }}</h4>
-            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Jadilah yang pertama mencoba aplikasi inovatif dari developer Indonesia sebelum resmi diluncurkan ke publik.') }}</p>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Jadilah yang pertama mencoba aplikasi inovatif sebelum resmi diluncurkan ke publik.') }}</p>
           </div>
 
           <!-- Benefit 2 -->
@@ -768,7 +768,7 @@
       <div class="text-center mb-14 reveal">
         <span class="text-brand-600 dark:text-brand-400 font-semibold text-sm uppercase tracking-widest">{{ __('Harga') }}</span>
         <h2 class="text-3xl sm:text-4xl font-black text-slate-800 dark:text-white mt-2">{{ __('Pilih Paket Pengujian Anda') }}</h2>
-        <p class="text-slate-500 dark:text-slate-400 mt-3 max-w-xl mx-auto">{{ __('Investasi sekali bayar untuk memastikan aplikasi Anda lulus closed testing dengan sukses dan siap diluncurkan ke jutaan pengguna.') }}</p>
+        <p class="text-slate-500 dark:text-slate-400 mt-3 max-w-xl mx-auto">{{ __('Investasi sekali bayar untuk memastikan aplikasi Anda lulus pengujian tertutup dengan sukses dan siap diluncurkan ke jutaan pengguna.') }}</p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -780,7 +780,7 @@
             <div class="inline-flex items-center gap-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4">
               <i class="fa-solid fa-seedling text-green-500"></i> {{ __('Paket Starter') }}
             </div>
-            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Solusi dasar untuk memenuhi persyaratan Google Play Closed Testing.') }}</p>
+            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{{ __('Solusi dasar untuk memenuhi persyaratan Pengujian Tertutup Google Play.') }}</p>
           </div>
 
           <!-- Price -->
@@ -843,8 +843,8 @@
               <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Semua Fitur Paket Starter') }}</span></li>
               <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Laporan Bug & UX Mendalam per Tester') }}</span></li>
               <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Antrean Prioritas (Mulai Lebih Cepat)') }}</span></li>
-              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Review Komprehensif dari Setiap Tester') }}</span></li>
-              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Dukungan Prioritas via Live Chat') }}</span></li>
+              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Ulasan Komprehensif dari Setiap Tester') }}</span></li>
+              <li><i class="fa-solid fa-circle-check text-brand-500"></i><span>{{ __('Dukungan Prioritas via Obrolan Langsung') }}</span></li>
             </ul>
 
             <a href="#" class="relative block w-full text-center py-3.5 rounded-xl font-bold text-white bg-gradient-to-r from-brand-600 to-brand-500 shadow-lg shadow-brand-200 dark:shadow-brand-900/50 hover:shadow-brand-300 hover:from-brand-700 hover:to-brand-600 transition duration-300 text-sm">
@@ -881,7 +881,7 @@
 
       <div class="text-center mb-10 reveal">
         <span class="text-brand-600 dark:text-brand-400 font-semibold text-sm uppercase tracking-widest">{{ __('Testimoni') }}</span>
-        <h2 class="text-2xl sm:text-3xl font-black text-slate-800 dark:text-white mt-2">{{ __('Dipercaya oleh Developer & Tester Indonesia') }}</h2>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-800 dark:text-white mt-2">{{ __('Dipercaya oleh Developer & Tester') }}</h2>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -890,7 +890,7 @@
           <div class="flex gap-1 text-yellow-400 mb-3 text-sm">
             <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
           </div>
-          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">"{{ __('Saya pernah mencoba platform lain dan gagal. Dengan PlayTest ID, aplikasi saya lulus dalam 14 hari dan sekarang sudah live di Play Store!') }}"</p>
+          <p class="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">"{{ __('Saya pernah mencoba platform lain dan gagal. Dengan PlayTest ID, aplikasi saya lulus dalam 14 hari dan sekarang sudah rilis di Play Store!') }}"</p>
           <div class="flex items-center gap-3">
             <div class="w-9 h-9 bg-brand-200 dark:bg-brand-900/50 rounded-full flex items-center justify-center font-bold text-brand-700 dark:text-brand-300 text-sm">RD</div>
             <div>
@@ -952,7 +952,7 @@
       </h2>
 
       <p class="text-blue-100 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
-        {{ __('Atau Anda ingin mulai membantu developer lain sambil membangun pengalaman QA Anda? Bergabunglah dengan') }} <strong class="text-white">PlayTest ID</strong> {{ __('now and become part of Indonesia\'s best testing ecosystem.') }}
+        {{ __('Atau Anda ingin mulai membantu developer lain sambil membangun pengalaman QA Anda? Bergabunglah dengan') }} <strong class="text-white">PlayTest ID</strong> {{ __('sekarang dan jadilah bagian dari ekosistem pengujian terbaik.') }}
       </p>
 
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -994,7 +994,7 @@
           <div class="flex items-center mb-4">
             <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-12 w-auto object-contain" />
           </div>
-          <p class="text-sm leading-relaxed max-w-xs">{{ __('Platform kolaborasi untuk Developer dan Tester Indonesia berbasis Project Based Learning untuk memenuhi persyaratan Google Play Closed Testing.') }}</p>
+          <p class="text-sm leading-relaxed max-w-xs">{{ __('Platform kolaborasi untuk Developer dan Tester berbasis Pembelajaran Berbasis Proyek untuk memenuhi persyaratan Pengujian Tertutup Google Play.') }}</p>
           <div class="flex gap-3 mt-5">
             <a href="#" class="w-9 h-9 bg-slate-800 rounded-xl flex items-center justify-center hover:bg-brand-600 transition duration-200" aria-label="Instagram">
               <i class="fa-brands fa-instagram text-sm"></i>
@@ -1039,7 +1039,7 @@
       <!-- Bottom bar -->
       <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
         <p>© 2026 <span class="text-slate-400 font-semibold">PlayTest ID</span>. {{ __('Hak cipta dilindungi undang-undang.') }}</p>
-        <p>{{ __('Dibuat dengan') }} <i class="fa-solid fa-heart text-red-500 mx-1"></i> {{ __('untuk Developer & Tester Indonesia.') }}</p>
+        <p>{{ __('Dibuat dengan') }} <i class="fa-solid fa-heart text-red-500 mx-1"></i> {{ __('untuk Developer & Tester.') }}</p>
       </div>
 
     </div>

@@ -916,7 +916,7 @@
             <div class="login-mobile-header-logo">
                 <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-10 w-auto object-contain" />
             </div>
-            <p class="login-mobile-header-tagline">{{ __('Lulus Closed Testing Lebih Cepat') }}</p>
+            <p class="login-mobile-header-tagline">{{ __('Lulus Pengujian Tertutup Lebih Cepat') }}</p>
         </div>
 
         {{-- ======================================================= --}}
@@ -936,7 +936,7 @@
                 {{-- Desktop-only extended hero --}}
                 <div class="login-hero-extended">
                     <h2 class="login-hero-title">
-                        {{ __('Lulus Closed Testing Lebih Cepat.') }}
+                        {{ __('Lulus Pengujian Tertutup Lebih Cepat.') }}
                     </h2>
                     <p class="login-hero-desc">
                         {{ __('Penuhi syarat 20 tester selama 14 hari dari Google Play tanpa pusing.') }}

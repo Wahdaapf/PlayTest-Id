@@ -15,6 +15,8 @@ return new class extends Migration
             $table->integer('hari_ke')->default(1);
             $table->string('image')->nullable();
             $table->text('desc')->nullable();
+            $table->text('catatan_tester')->nullable();
+            $table->text('alasan_tolak')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();
         });

@@ -670,7 +670,7 @@
             <div class="rp-mobile-header-logo">
                 <img src="{{ asset('logo.png') }}" alt="PlayTest ID" class="h-10 w-auto object-contain" />
             </div>
-            <p class="rp-mobile-header-tagline">{{ __('Lulus Closed Testing Lebih Cepat') }}</p>
+            <p class="rp-mobile-header-tagline">{{ __('Lulus Pengujian Tertutup Lebih Cepat') }}</p>
         </div>
 
         {{-- LEFT PANEL — HERO (desktop only) --}}

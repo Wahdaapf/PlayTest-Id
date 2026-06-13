@@ -122,6 +122,15 @@ Route::get('/email/expired', function () {
     return view('vendor.filament-panels.auth.pages.email-expired', compact('panel'));
 })->name('email.expired');
 
+Route::get('/password-reset/expired', function () {
+    $panel = request()->query('panel', 'tester');
+    $allowedPanels = ['tester', 'developer', 'admin'];
+    if (!in_array($panel, $allowedPanels, true)) {
+        $panel = 'tester';
+    }
+    return view('vendor.filament-panels.auth.pages.password-expired', compact('panel'));
+})->name('password-reset.expired');
+
 // ── D. Success Page ──────────────────────────────────────────────────────
 
 Route::get('/email/verified', function () {
